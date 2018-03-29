@@ -1,6 +1,7 @@
 <?php
 
 require_once('model/PostManager.php');
+require_once('model/CommentManager.php');
 
 function home()
 {
@@ -27,8 +28,10 @@ function listPosts()
 function listPost()
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
+	$commentManager = new \Philippe\Blog\Model\CommentManager();
 
     $post = $postManager->getPost($_GET['id']);
+    $comments = $commentManager->getComments($_GET['id']);
     
 
     require('view/frontend/blog_post.php');

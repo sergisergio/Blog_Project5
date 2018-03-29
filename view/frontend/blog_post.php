@@ -169,8 +169,49 @@
           </form>
         </div>
         <!-- /.comment-form-wrapper --> 
+
+        <div class="blog-posts">
+          <div class="post box">
+                <h3>Ajouter un commentaire</h3>
+
+                <form action="#" method="post">
+    <div>
+        <label for="member_pseudo">Auteur</label><br />
+        <input type="text" id="member_pseudo" name="member_pseudo" />
+    </div>
+    <div>
+        <label for="content">Commentaire</label><br />
+        <textarea id="content" name="content"></textarea>
+    </div>
+    <div>
+        <input class="btn btn-default" type="submit" />
+    </div>
+</form>
+          </div>
+          </div>
+
+         <div class="divide20"></div>
+
+        <div class="blog-posts">
+          <div class="post box">
+                <h3>Commentaires</h3>
+
+                <?php
+        while ($comment = $comments->fetch())
+        {
+        ?>
+            <p><strong><?= htmlspecialchars($comment['member_pseudo']) ?></strong> le <?= $comment['creation_date_fr'] ?></p>
+            <p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
+        <?php
+        }
+        ?>
+          </div>
+        </div>
+
+        <div class="divide20"></div>
+        </div>
         
-      </div>
+      
       <!-- /.content -->
       
       <aside class="col-md-4 col-sm-12 sidebar">
@@ -266,7 +307,7 @@
       </aside>
       <!-- /column .sidebar --> 
       
-    </div>
+    
     <!-- /.blog --> 
     
   </div>
