@@ -1,5 +1,6 @@
 <?php
 
+/* Je charge les fichiers model pour que les fonctions soient en mémoire*/
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 
@@ -35,4 +36,40 @@ function listPost()
     
 
     require('view/frontend/blog_post.php');
+}
+function addComment($postId, $memberPseudo, $content)
+{
+	$commentManager = new \Philippe\Blog\Model\CommentManager();
+	$affectedLines = $commentManager->postComment($postId, $memberPseudo, $content);
+
+	if ($affectedLines === false) {
+        throw new Exception('Impossible d\'ajouter le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=blogpost&id=' . $postId);
+    }
+}
+function modifyCommentPage($commentId)
+{
+	$postManager = new \Philippe\Blog\Model\PostManager();
+	$commentManager = new \Philippe\Blog\Model\CommentManager();
+
+	$comment = $commentManager->getComment($commentId);
+	$post = $postManager->getPost($comment['post_id']);
+
+	require('view/frontend/modifyView.php');
+}
+function modifyComment($commentId, $memberPseudo, $content)
+{
+    $commentManager = new \Philippe\Blog\Model\CommentManager();
+
+    $success = $commentManager->modifyComment($commentId, $memberPseudo, $content);
+    $comment = $commentManager->getComment($commentId);
+
+    if ($success === false) {
+        throw new Exception('Impossible de modifier le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=blogpost&id=' . $comment['post_id']);
+    }
 }

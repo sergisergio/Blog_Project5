@@ -8,8 +8,8 @@
   <div class="container inner">
       <div class="blog box mgbottom row" style="margin-bottom: 50px;">
         <div class="col-md-12">
-            <p class="pull-right"><btn class="btn btn-default"><a href="connexion.php">Connexion</a></btn></p>
-            <p class="pull-right"><btn class="btn btn-default"><a href="inscription.php">Inscription</a></btn>&nbsp;&nbsp;</p>
+            <p class="pull-right"><btn class="btn btn-default"><a href="index.php?action=connexion">Connexion</a></btn></p>
+            <p class="pull-right"><btn class="btn btn-default"><a href="index.php?action=registration">Inscription</a></btn>&nbsp;&nbsp;</p>
             
           
         </div>
@@ -174,7 +174,7 @@
           <div class="post box">
                 <h3>Ajouter un commentaire</h3>
 
-                <form action="#" method="post">
+                <form action="index.php?action=addcomment&amp;id=<?= $post['id'] ?>" method="post">
     <div>
         <label for="member_pseudo">Auteur</label><br />
         <input type="text" id="member_pseudo" name="member_pseudo" />
@@ -201,7 +201,8 @@
         {
         ?>
             <p><strong><?= htmlspecialchars($comment['member_pseudo']) ?></strong> le <?= $comment['creation_date_fr'] ?></p>
-            <p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
+            <p><?= nl2br(htmlspecialchars($comment['content'])) ?><a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a></p>
+
         <?php
         }
         ?>
