@@ -11,23 +11,15 @@
                                 <?php include "includes/management.php"; ?>
 
                                 <h2 class="text-center">Gestion des articles</h2>
-                <?php
-                    while ($data = $posts->fetch())
-                    {
-                    ?>
+                
                         <div class="post box">
             <div class="row">
-                    <h2 class="post-title"><a href="blog-post.php"><?php echo htmlspecialchars($data['title']); ?></a></h2>
-                    <btn class="btn btn-default" style="float: right;"><a href="index.php?action=deletePost">Supprimer</a></btn>
-                    <btn class="btn btn-default" style="float: right;"><a href="index.php?action=modifyPost">Modifier</a></btn>
+                    Formulaire de l'article à modifier
 
 
             </div>
         </div>
-                     <?php
-                } // Fin de la boucle des billets
-                $posts->closeCursor();
-                ?>
+                    
                                                    
                 </div>
                 <!-- /.container -->

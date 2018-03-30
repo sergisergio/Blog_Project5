@@ -18,7 +18,9 @@ function indexManagement()
 
 /* fonction qui fait appel à la page de gestion des articles */
 function managePosts()
-{
+{	
+	$postManager = new \Philippe\Blog\Model\PostManager();
+	$posts = $postManager->getPosts();
 	require('view/backend/post_mgmt.php');
 }
 
@@ -32,4 +34,10 @@ function manageComments()
 function manageUsers()
 {
 	require('view/backend/user_mgmt.php');
+}
+
+/* fonction qui fait appel à la page de modification de gestion des articles */
+function modifyPost()
+{
+	require('view/backend/modifyPostView.php');
 }

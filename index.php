@@ -125,6 +125,11 @@ try {
             /* alors j'exécute la fonction manageUsers qui se trouve dans le contrôleur backend */
             manageUsers();
         }
+        /* ...et que cette action est égale à modifyPost */
+        elseif ($_GET['action'] == 'modifyPost') {
+            /* alors j'exécute la fonction manageUsers qui se trouve dans le contrôleur backend */
+            modifyPost();
+        }
 
      
     }

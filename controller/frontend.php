@@ -47,6 +47,7 @@ function listPost()
     
 
     require('view/frontend/blog_post.php');
+}
 
 /* fonction qui fait appel à l'instance$commentmanager qui va utiliser la fonction postcomment afin d'ajouter un commentaire dans la base de données. 3 paramètres sont utilisés : postId, pseudo et contenu . Une fois ajouté, on retourne à la même page. */
 function addComment($postId, $memberPseudo, $content)
