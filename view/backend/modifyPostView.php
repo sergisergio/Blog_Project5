@@ -14,8 +14,36 @@
                 
                         <div class="post box">
             <div class="row">
-                    Formulaire de l'article à modifier
+                    <h2>Modifier l'article</h2>
 
+
+                    <form action="" method="post">
+                        <div>
+                            <label for="title">Titre</label><br />
+                            <input type="text" id="title" name="title" value="<?= htmlspecialchars($post['title']) ?>" />
+                        </div>
+
+                        <div>
+                            <label for="intro">Intro</label><br />
+                            <input type="text" id="intro" name="intro" value="<?= htmlspecialchars($post['intro']) ?>" />
+                        </div>
+
+                        <div>
+                            <label for="member_pseudo">Auteur</label><br />
+                            <input type="text" id="member_pseudo" name="member_pseudo" value="<?= htmlspecialchars($post['member_pseudo']) ?>" />
+                        </div>
+
+                        <div>
+                            <label for="content">Article</label><br />
+                            <input type="text" id="content" name="content" value="<?= htmlspecialchars($post['content']) ?>" />
+                        </div>
+
+                        <div>
+                            <input type="submit" />
+                        </div>
+                    </form>
+
+                    
 
             </div>
         </div>
