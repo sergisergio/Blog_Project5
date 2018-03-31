@@ -17,7 +17,7 @@
                     <h2>Modifier l'article</h2>
 
 
-                    <form action="" method="post">
+                    <form action="index.php?action=modifiedPost&amp;id=<?= $post['id'] ?>" method="post">
                         <div>
                             <label for="title">Titre</label><br />
                             <input type="text" id="title" name="title" value="<?= htmlspecialchars($post['title']) ?>" />
@@ -35,7 +35,7 @@
 
                         <div>
                             <label for="content">Article</label><br />
-                            <input type="text" id="content" name="content" value="<?= htmlspecialchars($post['content']) ?>" />
+                            <textarea id="content" name="content"><?= htmlspecialchars($post['content']) ?></textarea>
                         </div>
 
                         <div>

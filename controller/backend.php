@@ -56,3 +56,28 @@ function addedPost($title, $intro, $memberPseudo, $content)
     }
 
 }
+function modifiedPost($postId, $title, $intro, $memberPseudo, $content)
+{
+	$postManager = new \Philippe\Blog\Model\PostManager();
+	$success = $postManager->modifyPost($postId, $title, $intro, $memberPseudo, $content);
+	$post = $postManager->getPost($_GET['id']);
+
+	if ($success === false) {
+		throw new Exception('Impossible de modifier l\'article');
+	}
+	else {
+		header('Location: index.php?action=manage_posts');
+	}
+}
+function deletedPost($postId)
+{
+	$postManager = new \Philippe\Blog\Model\PostManager();
+	$success = $postManager->deletePost($_GET['id']);
+
+	if ($success === false) {
+		throw new Exception('Impossible de supprimer l\'article');
+	}
+	else {
+		header('Location: index.php?action=manage_posts');
+	}
+}

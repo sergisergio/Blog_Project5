@@ -131,7 +131,7 @@ try {
                 /* Si les champs pseudo et commentaire sont bien remplis */
                 if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
                     /* alors j'exécute la fonction addComment qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    addedPost($_POST['title'], $_POST['intro'],$_POST['member_pseudo'], $_POST['content']);
+                    addedPost($_POST['title'], $_POST['intro'], $_POST['member_pseudo'], $_POST['content']);
                 }
                 /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */
                 else {
@@ -154,6 +154,34 @@ try {
             
             
             
+        }
+        /* ...et que cette action est égale à modifyPost */
+        elseif ($_GET['action'] == 'modifiedPost') {
+            /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
+                    /* alors j'exécute la fonction modifiedPost qui se trouve dans le contrôleur backend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
+                    modifiedPost($_GET['id'], $_POST['title'], $_POST['intro'], $_POST['member_pseudo'], $_POST['content']);
+                }
+                /*  */
+                else {
+                throw new Exception('Tous les champs ne sont pas remplis');
+                }
+            }
+            else {
+                throw new Exception('Pas d\'identifiant d\'article envoyé');
+            }
+            /* Si il n'y a pas de paramètre 'id', j'indique qu'aucun commentaire ne peut être affiché */
+            
+            
+            
+        }
+        elseif ($_GET['action'] == 'deletePost') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                deletedPost($postId);
+
+            }
+
         }
 
      

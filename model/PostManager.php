@@ -41,7 +41,7 @@ class PostManager extends Manager
 		return $post;
 	}
 
-	/* Je crée une fonction qui va récupérer un seul article en fonction de son identifiant */
+	/* Je crée une fonction qui me permettre d'ajouter un article */
 	public function addPost($title, $intro, $memberPseudo, $content){
 
 		/* A revoir */
@@ -54,4 +54,32 @@ class PostManager extends Manager
 		
 		return $affectedPost;
 	}
+	/* Je crée une fonction qui me permettre de modifier un article */
+	public function modifyPost($postId, $title, $intro, $memberPseudo, $content){
+
+		/* A revoir */
+		$db = $this->dbConnect();
+
+		/* Fonction prepare à revoir */
+		$post = $db->prepare('UPDATE Post SET title = ?, intro = ?, member_pseudo = ?, content = ?, creation_date = NOW() WHERE id = ?');
+
+		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content, $postId));
+		
+		return $affectedPost;
+	}
+	/* Je crée une fonction qui me permettre de modifier un article */
+	public function deletePost($postId){
+
+		/* A revoir */
+		$db = $this->dbConnect();
+
+		/* Fonction prepare à revoir */
+		$post = $db->prepare('DELETE FROM Post WHERE id = ?');
+
+		$affectedPost = $post->execute(array($postId));
+		
+		return $affectedPost;
+	}
+
+	
 }
