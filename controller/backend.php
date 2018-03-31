@@ -54,7 +54,6 @@ function addedPost($title, $intro, $memberPseudo, $content)
     else {
         header('Location: index.php?action=manage_posts');
     }
-
 }
 function modifiedPost($postId, $title, $intro, $memberPseudo, $content)
 {

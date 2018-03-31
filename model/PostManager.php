@@ -41,7 +41,11 @@ class PostManager extends Manager
 		return $post;
 	}
 
+
 	/* Je crée une fonction qui me permettre d'ajouter un article */
+
+	/* Je crée une fonction qui va récupérer un seul article en fonction de son identifiant */
+
 	public function addPost($title, $intro, $memberPseudo, $content){
 
 		/* A revoir */
@@ -82,4 +86,5 @@ class PostManager extends Manager
 	}
 
 	
+
 }

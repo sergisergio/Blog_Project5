@@ -18,6 +18,8 @@
 
 
                     <form action="index.php?action=modifiedPost&amp;id=<?= $post['id'] ?>" method="post">
+
+                    <form action="" method="post">
                         <div>
                             <label for="title">Titre</label><br />
                             <input type="text" id="title" name="title" value="<?= htmlspecialchars($post['title']) ?>" />
@@ -35,7 +37,9 @@
 
                         <div>
                             <label for="content">Article</label><br />
+
                             <textarea id="content" name="content"><?= htmlspecialchars($post['content']) ?></textarea>
+
                         </div>
 
                         <div>
