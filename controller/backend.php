@@ -37,7 +37,22 @@ function manageUsers()
 }
 
 /* fonction qui fait appel à la page de modification de gestion des articles */
-function modifyPost()
+function modifyPost($postId)
 {
+	$postManager = new \Philippe\Blog\Model\PostManager();
+	$post = $postManager->getPost($_GET['id']);
 	require('view/backend/modifyPostView.php');
+}
+function addedPost($title, $intro, $memberPseudo, $content)
+{
+	$postManager = new \Philippe\Blog\Model\PostManager();
+	$affectedPost = $postManager->addPost($title, $intro, $memberPseudo, $content);
+
+	if ($affectedPost === false) {
+        throw new Exception('Impossible d\'ajouter l\'article');
+    }
+    else {
+        header('Location: index.php?action=manage_posts');
+    }
+
 }

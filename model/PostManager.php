@@ -40,4 +40,18 @@ class PostManager extends Manager
 		$post = $req->fetch();
 		return $post;
 	}
+
+	/* Je crée une fonction qui va récupérer un seul article en fonction de son identifiant */
+	public function addPost($title, $intro, $memberPseudo, $content){
+
+		/* A revoir */
+		$db = $this->dbConnect();
+
+		/* Fonction prepare à revoir */
+		$post = $db->prepare('INSERT INTO Post(title, intro, member_pseudo, content, creation_date) VALUES(?, ?, ?, ?, NOW()) ');
+
+		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content));
+		
+		return $affectedPost;
+	}
 }
