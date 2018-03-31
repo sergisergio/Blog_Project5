@@ -3,6 +3,7 @@
 /* Je charge les fichiers model pour que les fonctions soient en mémoire*/
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
+require_once('model/UserManager.php');
 /* L'instruction require_once est identique à require mis à part que PHP vérifie si le fichier a déjà été inclus, et si c'est le cas, ne l'inclut pas une deuxième fois. */
 
 /* fonction qui fait appel à la page d'accueil */

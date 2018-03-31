@@ -3,6 +3,8 @@
 /* Je charge les fichiers model pour que les fonctions soient en mémoire*/
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
+require_once('model/UserManager.php');
+
 
 /* fonction qui fait appel à la page de connexion administrateur*/
 function connexionAdmin()
@@ -33,6 +35,8 @@ function manageComments()
 /* fonction qui fait appel à la page de gestion des membres */
 function manageUsers()
 {
+	$userManager = new \Philippe\Blog\Model\UserManager();
+	$req = $userManager->getUsers();
 	require('view/backend/user_mgmt.php');
 }
 
