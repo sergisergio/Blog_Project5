@@ -9,7 +9,11 @@ require_once("model/Manager.php");
 /* Je crée une classe Postmanager qui hérite de la classe Manager */
 class UserManager extends Manager
 {
-	/* Je crée une fonction qui va récupérer tous les articles */
+	
+									/* **********************************************************************
+                                    *                      RECUPERER TOUS LES MEMBRES                       *
+                                    ************************************************************************/
+
 	public function getUsers()
 	{
 		/* A revoir */
@@ -22,7 +26,10 @@ class UserManager extends Manager
 		return $req;
 	}
 
-	/* Je crée une fonction qui va récupérer un seul article en fonction de son identifiant */
+									/* **********************************************************************
+                                    *                      RECUPERER UN SEUL MEMBRE                         *
+                                    ************************************************************************/
+
 	public function getUser($postId){
 
 		/* A revoir */
@@ -41,13 +48,29 @@ class UserManager extends Manager
 		return $post;
 	}
 
+									/* **********************************************************************
+                                    *                           MODIFIER UN MEMBRE                         	*
+                                    ************************************************************************/
 	
-	/* Je crée une fonction qui me permettre de modifier un article */
 	public function modifyuser(){
+
+		/* A revoir */
+		$db = $this->dbConnect();
+
+		/* Fonction prepare à revoir */
+		$post = $db->prepare('UPDATE Post SET title = ?, intro = ?, member_pseudo = ?, content = ?, creation_date = NOW() WHERE id = ?');
+
+		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content, $postId));
+		
+		return $affectedPost;
 
 	
 	}
-	/* Je crée une fonction qui me permettre de modifier un article */
+	
+									/* **********************************************************************
+                                    *                           SUPPRIMER UN MEMBRE                         *
+                                    ************************************************************************/
+
 	public function deleteUser($postId){
 
 		

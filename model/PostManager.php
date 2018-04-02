@@ -9,7 +9,10 @@ require_once("model/Manager.php");
 /* Je crée une classe Postmanager qui hérite de la classe Manager */
 class PostManager extends Manager
 {
-	/* Je crée une fonction qui va récupérer tous les articles */
+									/* **********************************************************************
+                                    *                        RECUPERER TOUS LES ARTICLES                    *
+                                    ************************************************************************/
+
 	public function getPosts()
 	{
 		/* A revoir */
@@ -22,14 +25,17 @@ class PostManager extends Manager
 		return $req;
 	}
 
-	/* Je crée une fonction qui va récupérer un seul article en fonction de son identifiant */
+									/* **********************************************************************
+                                    *                        RECUPERER UN SEUL ARTICLE                      *
+                                    ************************************************************************/
+
 	public function getPost($postId){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$req = $db->prepare('SELECT id, title, intro, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		$req = $db->prepare('SELECT id, title, intro, content, member_pseudo, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
 			FROM Post 
 			WHERE id = ?
 			');
@@ -42,9 +48,11 @@ class PostManager extends Manager
 	}
 
 
-	/* Je crée une fonction qui me permettre d'ajouter un article */
-
-	/* Je crée une fonction qui va récupérer un seul article en fonction de son identifiant */
+	
+									/* **********************************************************************
+                                    *                        AJOUTER UN ARTICLE                      		*
+                                    ************************************************************************/
+	
 
 	public function addPost($title, $intro, $memberPseudo, $content){
 
@@ -58,7 +66,10 @@ class PostManager extends Manager
 		
 		return $affectedPost;
 	}
-	/* Je crée une fonction qui me permettre de modifier un article */
+	
+									/* **********************************************************************
+                                    *                        MODIFIER UN ARTICLE                      		*
+                                    ************************************************************************/
 	public function modifyPost($postId, $title, $intro, $memberPseudo, $content){
 
 		/* A revoir */
@@ -71,7 +82,11 @@ class PostManager extends Manager
 		
 		return $affectedPost;
 	}
-	/* Je crée une fonction qui me permettre de modifier un article */
+
+									/* **********************************************************************
+                                    *                        EFFACER UN ARTICLE                      		*
+                                    ************************************************************************/
+
 	public function deletePost($postId){
 
 		/* A revoir */

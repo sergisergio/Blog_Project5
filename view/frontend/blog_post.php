@@ -201,7 +201,7 @@
         {
         ?>
             <p><strong><?= htmlspecialchars($comment['member_pseudo']) ?></strong> le <?= $comment['creation_date_fr'] ?></p>
-            <p><?= nl2br(htmlspecialchars($comment['content'])) ?><a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a></p>
+            <p><?= nl2br(htmlspecialchars($comment['content'])) ?><a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a><a href="index.php?action=deleteCommentPage&amp;id=<?= $comment['id'] ?>"> (Supprimer)</a></p>
 
         <?php
         }

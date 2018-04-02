@@ -1,0 +1,99 @@
+<?php $title = 'Gestion des articles'; ?>
+<?php ob_start(); ?>
+
+    <body class="full-layout">
+        <!--<div id="preloader"><div id="status"><div class="loadcircle"></div></div></div>-->
+        <div class="body-wrapper">
+            <?php include "view/frontend/includes/nav.php"; ?>
+                <!-- /#home -->
+                <div class="container">
+                    
+                                <?php include "view/backend/includes/management.php"; ?>
+
+                                <h2 class="text-center">Gestion des commentaires</h2>
+                
+                        <div class="post box">
+            <div class="row">
+                    <div class="blog-posts">
+          <div class="post box">
+            <div class="meta"><span class="date">date de dernière publication</span><em>le <?= $post['creation_date_fr'] ?></em></div>
+            
+            
+                <div class="news">
+                    <h3>
+                        <?= htmlspecialchars($post['title']) ?>
+        
+                    </h3>
+    
+                    <p>
+                        <?= nl2br(htmlspecialchars($post['intro'])) ?>
+                    </p>
+                </div>
+           
+            
+            
+            <div class="divide20"></div>
+              
+          </div>
+          <!-- /.post --> 
+        </div>
+
+
+                    
+
+                    
+
+            </div>
+        </div>
+
+        <div class="blog-posts">
+          <div class="post box">
+                <h3>Ajouter un commentaire</h3>
+
+                <form action="index.php?action=adminAddcomment&amp;id=<?= $post['id'] ?>" method="post">
+    <div>
+        <label for="member_pseudo">Auteur</label><br />
+        <input type="text" id="member_pseudo" name="member_pseudo" />
+    </div>
+    <div>
+        <label for="content">Commentaire</label><br />
+        <textarea id="content" name="content"></textarea>
+    </div>
+    <div>
+        <input class="btn btn-default" type="submit" />
+    </div>
+</form>
+          </div>
+          </div>
+
+          <div class="blog-posts">
+          <div class="post box">
+                <h3>Commentaires</h3>
+
+                <?php
+        while ($comment = $comments->fetch())
+        {
+        ?>
+            <p><strong><?= htmlspecialchars($comment['member_pseudo']) ?></strong> le <?= $comment['creation_date_fr'] ?></p>
+            <p><?= nl2br(htmlspecialchars($comment['content'])) ?><a href="index.php?action=adminModifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a><a href="index.php?action=adminDeleteCommentPage&amp;id=<?= $comment['id'] ?>"> (Supprimer)</a></p>
+
+
+        <?php
+        }
+        ?>
+          </div>
+        </div>
+
+
+                    
+                                                   
+                </div>
+                <!-- /.container -->
+        </div>
+        <!-- /.body-wrapper -->
+        <?php include "view/frontend/includes/foot.php"; ?>
+    </body>
+
+    <?php $content = ob_get_clean(); ?>
+
+    <?php require('view/backend/template.php'); ?>

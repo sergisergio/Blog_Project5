@@ -9,7 +9,11 @@ require_once("model/Manager.php");
 /* Je crée une classe Commentmanager qui hérite de la classe Manager */
 class CommentManager extends Manager
 {
-	/* Je crée une fonction qui va récupérer tous les commentaires */
+	
+									/* **********************************************************************
+                                    *                  RECUPERER TOUS LES COMMENTAIRES                      *
+                                    ************************************************************************/
+
 	public function getComments($postId)
 	{
 		/* A revoir */
@@ -23,7 +27,10 @@ class CommentManager extends Manager
 		return $comments;
 	}
 
-	/* Je crée une fonction qui va récupérer un commentaire en fonction de son identifiant */
+									/* **********************************************************************
+                                    *                  RECUPERER UN SEUL COMMENTAIRE                        *
+                                    ************************************************************************/
+
 	public function getComment($commentId){
 
 		/* A revoir */
@@ -41,7 +48,10 @@ class CommentManager extends Manager
 		
 	}
 
-	/* Je crée une fonction qui va envoyer un commentaire dans la base de données */
+									/* **********************************************************************
+                                    *                      AJOUTER UN  COMMENTAIRE                          *
+                                    ************************************************************************/
+
 	public function postComment($postId, $memberPseudo, $content){
 
 		/* A revoir */
@@ -54,11 +64,23 @@ class CommentManager extends Manager
         return $affectedLines;
 	}
 
-	public function deleteComment(){
+									/* **********************************************************************
+                                    *                      SUPPRIMER UN  COMMENTAIRE                        *
+                                    ************************************************************************/
+	public function deleteComment($commentId){
 
 		/* A revoir */
 		$db = $this->dbConnect();
+
+		$comments = $db->prepare('DELETE FROM Comment WHERE id = ?');
+
+		$affectedComment = $comments->execute(array($commentId));
+
+		return $affectedComment;
 	}
+									/* **********************************************************************
+                                    *                      MODIFIER UN  COMMENTAIRE                         *
+                                    ************************************************************************/
 	public function modifyComment($commentId, $memberPseudo, $content)
     {
 

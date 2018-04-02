@@ -8,7 +8,7 @@
                 <!-- /#home -->
                 <div class="container">
                     
-                                <?php include "includes/management.php"; ?>
+                                <?php include "view/backend/includes/management.php"; ?>
 
                                 <h2 class="text-center">Gestion des articles</h2>
                 
@@ -62,4 +62,4 @@
 
     <?php $content = ob_get_clean(); ?>
 
-    <?php require('template.php'); ?>
+    <?php require('view/backend/template.php'); ?>

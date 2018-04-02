@@ -8,9 +8,9 @@
                 <!-- /#home -->
                 <div class="container">
                     
-                                <?php include "includes/management.php"; ?>
+                                <?php include "view/backend/includes/management.php"; ?>
 
-                                <h2>Modifier/supprimer un membre</h2>
+                                <h2 class="text-center">Modifier/supprimer un membre</h2>
                                 <?php
                     while ($data = $req->fetch())
                     {
@@ -19,8 +19,8 @@
             <div class="row">
                     <h2 class="post-title"><a href="blog-post.php"><?php echo htmlspecialchars($data['pseudo']); ?></a></h2>
 
-                    <btn class="btn btn-default" style="float: right;"><a href="#">Supprimer</a></btn>
-                    <btn class="btn btn-default" style="float: right;"><a href="#">Modifier</a></btn>
+                    <btn class="btn btn-default" style="float: right;"><a href="index.php?action=deleteUser&amp;id=<?= $data['id'] ?>">Supprimer</a></btn>
+                    <btn class="btn btn-default" style="float: right;"><a href="index.php?action=modifyUser&amp;id=<?= $data['id'] ?>">Modifier</a></btn>
 
                    
 
@@ -41,4 +41,4 @@
 
     <?php $content = ob_get_clean(); ?>
 
-    <?php require('template.php'); ?>
+    <?php require('view/backend/template.php'); ?>

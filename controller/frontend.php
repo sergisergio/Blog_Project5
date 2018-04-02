@@ -6,16 +6,19 @@ require_once('model/CommentManager.php');
 require_once('model/UserManager.php');
 /* L'instruction require_once est identique à require mis à part que PHP vérifie si le fichier a déjà été inclus, et si c'est le cas, ne l'inclut pas une deuxième fois. */
 
+
+                                    /* **********************************************************************
+                                    *                              PAGE D'ACCUEIL                           *
+                                    ************************************************************************/
 /* fonction qui fait appel à la page d'accueil */
 function home()
 {
     require('view/frontend/home.php');
 }
 
-/*function blog()
-{
-	require('view/frontend/blog.php');
-}*/
+                                     /* **********************************************************************
+                                     *                              CONNEXION                                *
+                                     ************************************************************************/
 
 /* fonction qui fait appel à la page de connexion */
 function connexion()
@@ -23,12 +26,20 @@ function connexion()
 	require('view/frontend/connexion.php');
 }
 
+                                    /* **********************************************************************
+                                    *                              INSCRIPTION                              *
+                                    ************************************************************************/
+
 /* fonction qui fait appel à la page d'inscription */
 function registration()
 {
 	require('view/frontend/registration.php');
 }
 
+
+                                    /* **********************************************************************
+                                    *                           TOUS LES BLOG POSTS                         *
+                                    ************************************************************************/
 /* fonction qui fait appel à l'instance $postmanager qui utilise la fonction getPosts et va donc récupérer tous les articles : le résultat est mémorisé dans la variable posts et la page blog est affichée. */
 function listPosts()
 {
@@ -36,6 +47,10 @@ function listPosts()
 	$posts = $postManager->getPosts();
 	require('view/frontend/blog.php');
 }
+
+                                    /* **********************************************************************
+                                    *                          AFFICHER UN SEUL BLOG POST                   *
+                                    ************************************************************************/
 
 /* fonction qui fait appel à 2 instances. L'instance $postmanager utilise la fonction getpost pour récupérer un article en fonction de son identifiant. L'instance $commentmanager utilise la fonction getcomments pour récupérer les commentaires en fonction de l'identifiant de l'article. Puis la page blog_post est affichée. */
 function listPost()
@@ -50,6 +65,9 @@ function listPost()
     require('view/frontend/blog_post.php');
 }
 
+                                    /* **********************************************************************
+                                    *                          AJOUTER UN COMMENTAIRE                       *
+                                    ************************************************************************/
 /* fonction qui fait appel à l'instance$commentmanager qui va utiliser la fonction postcomment afin d'ajouter un commentaire dans la base de données. 3 paramètres sont utilisés : postId, pseudo et contenu . Une fois ajouté, on retourne à la même page. */
 function addComment($postId, $memberPseudo, $content)
 {
@@ -64,6 +82,9 @@ function addComment($postId, $memberPseudo, $content)
     }
 }
 
+                                    /* **********************************************************************
+                                    *              AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE            *
+                                    ************************************************************************/
 /* fonction qui fait appel à 2 instances. L'instance $commentmanager utilise la fonction getcomment qui va récupérer un commentaire en fonction de son identifiant et l'instance $postmanager récupère l'article en fonction de son identifiant. Puis on affiche la page de modification du commentaire */
 /* A Revoir */
 function modifyCommentPage($commentId)
@@ -76,6 +97,28 @@ function modifyCommentPage($commentId)
 
 	require('view/frontend/modifyView.php');
 }
+                                    /* **********************************************************************
+                                    *                          SUPPRIMER UN COMMENTAIRE                     *
+                                    ************************************************************************/
+function deletedCommentPage($commentId)
+{
+
+    $commentManager = new \Philippe\Blog\Model\CommentManager();
+    $postManager = new \Philippe\Blog\Model\PostManager();
+    $success = $commentManager->deleteComment($commentId);
+    $post = $postManager->getPost($_GET['id']);
+    $comments = $commentManager->getComments($_GET['id']);
+
+    if ($success === false) {
+        throw new Exception('Impossible de supprimer le commentaire');
+    }
+    else {
+        header('Location: index.php?action=blogpost&id=' . $post['post_id']);
+    }
+}
+                                    /* **********************************************************************
+                                    *                          MODIFIER UN COMMENTAIRE                      *
+                                    ************************************************************************/
 /* fonction qui utilise une seule instance $commentmanager mais 2 fonctions. L'instance utilise la fonction getComment pour récupérer le commentaire en fonction de son identifiant, puis la fonction modifycomment qui va nous permettre de mettre à jour le commentaire dans la base de données. Une fois modifié, on retourne à la page de l'article en question... */
 function modifyComment($commentId, $memberPseudo, $content)
 {
