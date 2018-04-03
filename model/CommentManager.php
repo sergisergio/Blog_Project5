@@ -13,7 +13,6 @@ class CommentManager extends Manager
 									/* **********************************************************************
                                     *                  RECUPERER TOUS LES COMMENTAIRES                      *
                                     ************************************************************************/
-
 	public function getComments($postId)
 	{
 		/* A revoir */
@@ -30,7 +29,6 @@ class CommentManager extends Manager
 									/* **********************************************************************
                                     *                  RECUPERER UN SEUL COMMENTAIRE                        *
                                     ************************************************************************/
-
 	public function getComment($commentId){
 
 		/* A revoir */
@@ -45,13 +43,11 @@ class CommentManager extends Manager
         $comment = $req->fetch();
 
         return $comment;
-		
-	}
+		}
 
 									/* **********************************************************************
                                     *                      AJOUTER UN  COMMENTAIRE                          *
                                     ************************************************************************/
-
 	public function postComment($postId, $memberPseudo, $content){
 
 		/* A revoir */
@@ -78,6 +74,7 @@ class CommentManager extends Manager
 
 		return $affectedComment;
 	}
+	
 									/* **********************************************************************
                                     *                      MODIFIER UN  COMMENTAIRE                         *
                                     ************************************************************************/

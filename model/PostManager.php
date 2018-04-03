@@ -12,7 +12,6 @@ class PostManager extends Manager
 									/* **********************************************************************
                                     *                        RECUPERER TOUS LES ARTICLES                    *
                                     ************************************************************************/
-
 	public function getPosts()
 	{
 		/* A revoir */
@@ -28,7 +27,6 @@ class PostManager extends Manager
 									/* **********************************************************************
                                     *                        RECUPERER UN SEUL ARTICLE                      *
                                     ************************************************************************/
-
 	public function getPost($postId){
 
 		/* A revoir */
@@ -47,13 +45,9 @@ class PostManager extends Manager
 		return $post;
 	}
 
-
-	
 									/* **********************************************************************
                                     *                        AJOUTER UN ARTICLE                      		*
                                     ************************************************************************/
-	
-
 	public function addPost($title, $intro, $memberPseudo, $content){
 
 		/* A revoir */
@@ -86,7 +80,6 @@ class PostManager extends Manager
 									/* **********************************************************************
                                     *                        EFFACER UN ARTICLE                      		*
                                     ************************************************************************/
-
 	public function deletePost($postId){
 
 		/* A revoir */
@@ -99,7 +92,4 @@ class PostManager extends Manager
 		
 		return $affectedPost;
 	}
-
-	
-
 }

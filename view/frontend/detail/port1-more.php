@@ -1,5 +1,5 @@
 <div class="cbp-loadMore-block1">
-  <li class="cbp-item frame html"> <a class="cbp-caption cbp-singlePage"  href="ajax/post1.php">
+  <li class="cbp-item frame html"> <a class="cbp-caption cbp-singlePage"  href="detail/post1.php">
     <div class="cbp-caption-defaultWrap"> <img src="projets/architecture/assets/img/archi1.jpg" alt=""> </div>
     <div class="cbp-caption-activeWrap">
       <div class="cbp-l-caption-alignCenter">

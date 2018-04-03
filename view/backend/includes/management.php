@@ -3,8 +3,7 @@
                     <h2 class="section-title text-center">Espace administrateur</h2>
                     <p></p>
                     
-                   
-                    <div class="divide30"></div>
+                   <div class="divide30"></div>
 
                     <ul class="nav nav-tabs menuadmin">
                         <li class="nav-item">

@@ -55,7 +55,7 @@ function addedPost($title, $intro, $memberPseudo, $content)
                                     *              AFFICHER LA PAGE DE MODIFICATION DES ARTICLES            *
                                     ************************************************************************/
 /* fonction qui fait appel à la page de modification de gestion des articles */
-function modifyPost($postId)
+function modifyPostPage($postId)
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$post = $postManager->getPost($_GET['id']);
@@ -65,7 +65,7 @@ function modifyPost($postId)
 									/* **********************************************************************
                                     *                        MODIFIER UN ARTICLE                            *
                                     ************************************************************************/
-function modifiedPost($postId, $title, $intro, $memberPseudo, $content)
+function modifyPost($postId, $title, $intro, $memberPseudo, $content)
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$success = $postManager->modifyPost($postId, $title, $intro, $memberPseudo, $content);
@@ -95,8 +95,6 @@ function deletedPost($postId)
 	}
 }
 
-
-
 									/* **********************************************************************
                                     *                    PAGE DE GESTION DES COMMENTAIRES                   *
                                     ************************************************************************/
@@ -121,9 +119,10 @@ function adminAddComment($postId, $memberPseudo, $content)
         throw new Exception('Impossible d\'ajouter le commentaire !');
     }
     else {
-        header('Location: index.php?action=adminModifyComment&id=' . $postId);
+        header('Location: index.php?action=adminListPost&id=' . $postId);
     }
 }
+
 									/* **********************************************************************
                                     *                 AFFICHER LES COMMENTAIRES D'UN ARTICLE                *
                                     ************************************************************************/
@@ -139,6 +138,7 @@ function AdminListPost()
 
     require('view/backend/Comments/modifyCommentView.php');
 }
+
 									/* **********************************************************************
                                     *               AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE           *
                                     ************************************************************************/
@@ -168,21 +168,32 @@ function adminModifyComment($commentId, $memberPseudo, $content)
         throw new Exception('Impossible de modifier le commentaire !');
     }
     else {
-        header('Location: index.php?action=adminModifyComment&id=' . $postId);
+        header('Location: index.php?action=adminListPost&id=' . $comment['post_id']);
     }
 }
-
-									
 
 									/* **********************************************************************
                                     *                         SUPPRIMER UN COMMENTAIRE                      *
                                     ************************************************************************/
-function adminDeleteComment()
+ 
+function adminDeletedCommentPage($commentId)
 {
+
+    $commentManager = new \Philippe\Blog\Model\CommentManager();
+
+    $comment = $commentManager->getComment($commentId);
     
+    $success = $commentManager->deleteComment($commentId);
+    
+    
+
+    if ($success === false) {
+        throw new Exception('Impossible de supprimer le commentaire');
+    }
+    else {
+        header('Location: index.php?action=adminListPost&id=' . $comment['post_id']);
+    }
 }
-
-
 
 									/* **********************************************************************
                                     *                    PAGE DE GESTION DES MEMBRES                   *
@@ -195,8 +206,6 @@ function manageUsers()
 	require('view/backend/Users/user_mgmt.php');
 }
 
-
-
 									/* **********************************************************************
                                     *                         SUPPRIMER UN MEMBRE                           *
                                     ************************************************************************/
@@ -208,6 +217,7 @@ function deletedUser()
 	$req = $userManager->getUsers();
 	require('view/backend/Users/user_mgmt.php');
 }
+									
 									/* **********************************************************************
                                     *             AFFICHER LA PAGE DE MODIFICATION D'UN MEMBRE              *
                                     ************************************************************************/
@@ -217,6 +227,7 @@ function modifyUser()
 	$req = $userManager->getUser($_GET['id']);
 	require('view/backend/Users/modifyUserView.php');
 }
+									
 									/* **********************************************************************
                                     *                           MODIFIER UN MEMBRE                          *
                                     ************************************************************************/

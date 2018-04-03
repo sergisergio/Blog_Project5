@@ -12,7 +12,7 @@
     <meta prefix="og: http://ogp.me/ns#" property="og:image" content="http://philippetraon.com/public/images/ogimage.png" />
     <meta property="og:image:width" content="180" />
     <link rel="icon" type="image/ico" href="public/images/Philippe.ico" />
-    <!--<link rel="shortcut icon" href="#">-->
+    
     <title>Philippe Traon - Développeur web</title>
     <!-- Bootstrap core CSS -->
     <link href="public/css/bootstrap.min.css" rel="stylesheet">

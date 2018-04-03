@@ -6,17 +6,15 @@
         <div class="body-wrapper">
             <?php include "includes/nav.php"; ?>
                 <!-- /#home -->
-                <div class="container">
-                    
-                                <?php include "includes/form_inscription.php"; ?>
-                                   
-                </div>
+            <div class="container">
+                <?php include "includes/form_inscription.php"; ?>
+            </div>
                 <!-- /.container -->
         </div>
         <!-- /.body-wrapper -->
         <?php include "includes/foot.php"; ?>
     </body>
 
-    <?php $content = ob_get_clean(); ?>
+<?php $content = ob_get_clean(); ?>
 
-    <?php require('template.php'); ?>
+<?php require('template.php'); ?>

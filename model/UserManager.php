@@ -13,7 +13,6 @@ class UserManager extends Manager
 									/* **********************************************************************
                                     *                      RECUPERER TOUS LES MEMBRES                       *
                                     ************************************************************************/
-
 	public function getUsers()
 	{
 		/* A revoir */
@@ -29,7 +28,6 @@ class UserManager extends Manager
 									/* **********************************************************************
                                     *                      RECUPERER UN SEUL MEMBRE                         *
                                     ************************************************************************/
-
 	public function getUser($postId){
 
 		/* A revoir */
@@ -51,7 +49,6 @@ class UserManager extends Manager
 									/* **********************************************************************
                                     *                           MODIFIER UN MEMBRE                         	*
                                     ************************************************************************/
-	
 	public function modifyuser(){
 
 		/* A revoir */
@@ -70,13 +67,9 @@ class UserManager extends Manager
 									/* **********************************************************************
                                     *                           SUPPRIMER UN MEMBRE                         *
                                     ************************************************************************/
-
 	public function deleteUser($postId){
 
 		
 
 	}
-
-	
-
 }

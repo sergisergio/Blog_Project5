@@ -16,10 +16,9 @@ function home()
     require('view/frontend/home.php');
 }
 
-                                     /* **********************************************************************
+                                    /* **********************************************************************
                                      *                              CONNEXION                                *
                                      ************************************************************************/
-
 /* fonction qui fait appel à la page de connexion */
 function connexion()
 {
@@ -29,13 +28,11 @@ function connexion()
                                     /* **********************************************************************
                                     *                              INSCRIPTION                              *
                                     ************************************************************************/
-
 /* fonction qui fait appel à la page d'inscription */
 function registration()
 {
 	require('view/frontend/registration.php');
 }
-
 
                                     /* **********************************************************************
                                     *                           TOUS LES BLOG POSTS                         *
@@ -51,7 +48,6 @@ function listPosts()
                                     /* **********************************************************************
                                     *                          AFFICHER UN SEUL BLOG POST                   *
                                     ************************************************************************/
-
 /* fonction qui fait appel à 2 instances. L'instance $postmanager utilise la fonction getpost pour récupérer un article en fonction de son identifiant. L'instance $commentmanager utilise la fonction getcomments pour récupérer les commentaires en fonction de l'identifiant de l'article. Puis la page blog_post est affichée. */
 function listPost()
 {
@@ -97,6 +93,7 @@ function modifyCommentPage($commentId)
 
 	require('view/frontend/modifyView.php');
 }
+
                                     /* **********************************************************************
                                     *                          SUPPRIMER UN COMMENTAIRE                     *
                                     ************************************************************************/
@@ -104,18 +101,21 @@ function deletedCommentPage($commentId)
 {
 
     $commentManager = new \Philippe\Blog\Model\CommentManager();
-    $postManager = new \Philippe\Blog\Model\PostManager();
+
+    $comment = $commentManager->getComment($commentId);
+    
     $success = $commentManager->deleteComment($commentId);
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
+    
+    
 
     if ($success === false) {
         throw new Exception('Impossible de supprimer le commentaire');
     }
     else {
-        header('Location: index.php?action=blogpost&id=' . $post['post_id']);
+        header('Location: index.php?action=blogpost&id=' . $comment['post_id']);
     }
 }
+
                                     /* **********************************************************************
                                     *                          MODIFIER UN COMMENTAIRE                      *
                                     ************************************************************************/
