@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="divide20"></div>
-          <div class="blog-posts">
+          <div class="blog-posts" id="comments">
             <div class="post box">
               <h3>Commentaires</h3>
                 <?php
@@ -85,7 +85,7 @@
               <p>
                 <?= nl2br(htmlspecialchars($comment['content'])) ?>
                 <a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a>
-                <a href="index.php?action=deleteCommentPage&amp;id=<?= $comment['id'] ?>"> (Supprimer)</a>
+                <a href="index.php?action=deleteCommentPage&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
               </p>
                 <?php
                 }
@@ -116,15 +116,7 @@
     </div>
   </div>
 <!-- /.body-wrapper --> 
-  <script src="public/js/jquery.min.js"></script> 
-  <script src="public/js/bootstrap.min.js"></script> 
-  <script src="public/js/jquery.themepunch.tools.min.js"></script> 
-  <script src="public/js/classie.js"></script> 
-  <script src="public/js/plugins.js"></script> 
-  <script src="public/js/scripts.js"></script>  
-  <script>
-	 $.backstretch(["public/images/art/react2.png"]);
-  </script>
+  <?php include "view/frontend/includes/foot.php"; ?>
 </body>
 <?php $content = ob_get_clean(); ?>
 

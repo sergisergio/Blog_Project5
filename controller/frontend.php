@@ -74,7 +74,7 @@ function addComment($postId, $memberPseudo, $content)
         throw new Exception('Impossible d\'ajouter le commentaire !');
     }
     else {
-        header('Location: index.php?action=blogpost&id=' . $postId);
+        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
     }
 }
 
@@ -112,7 +112,7 @@ function deletedCommentPage($commentId)
         throw new Exception('Impossible de supprimer le commentaire');
     }
     else {
-        header('Location: index.php?action=blogpost&id=' . $comment['post_id']);
+        header('Location: index.php?action=blogpost&id=' . $comment['post_id'] . '#comments');
     }
 }
 
@@ -131,6 +131,6 @@ function modifyComment($commentId, $memberPseudo, $content)
         throw new Exception('Impossible de modifier le commentaire !');
     }
     else {
-        header('Location: index.php?action=blogpost&id=' . $comment['post_id']);
+        header('Location: index.php?action=blogpost&id=' . $comment['post_id'] . '#comments');
     }
 }

@@ -49,14 +49,15 @@
                     {
                     ?>
                         
-                    <div class="post box">
+                    
+                    <div class="post box" id="viewposts">
                         <div class="row">
                             <h2 class="post-title">
                                 <a href="blog-post.php"><?php echo htmlspecialchars($data['title']); ?></a>
                             </h2>
 
                         <btn class="btn btn-default" style="float: right;">
-                            <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>">Supprimer</a>
+                            <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>"   data-toggle='confirmation' id="important_action">Supprimer</a>
                         </btn>
                         <btn class="btn btn-default" style="float: right;">
                             <a href="index.php?action=modifyPostPage&amp;id=<?= $data['id'] ?>">Modifier</a>
@@ -72,6 +73,7 @@
                 </div>
                 <!-- /.container -->
         </div>
+        
         <!-- /.body-wrapper -->
         <?php include "view/frontend/includes/foot.php"; ?>
     </body>

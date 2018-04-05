@@ -1,9 +1,13 @@
+    
+    
     <script src="public/js/jquery.min.js"></script>
     <script src="public/js/bootstrap.min.js"></script>
+    <script src="public/js/jquery.popconfirm.js"></script>
     <script src="public/js/jquery.themepunch.tools.min.js"></script>
     <script src="public/js/classie.js"></script>
     <script src="public/js/plugins.js"></script>
     <script src="public/js/scripts.js"></script>
+
     <script>
         $.backstretch(["public/images/art/react2.png"]);
     </script>
@@ -35,4 +39,24 @@
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
         ga('create', 'UA-101090553-1', 'auto');
         ga('send', 'pageview');
+    </script>
+    <script>
+        ////////// Simple usage //////////
+        $(".popconfirm").popConfirm();
+
+        ///////// Complete usage //////////
+
+        // (example jquery click event)
+        //$('#important_action').click(function() {
+            //alert('You clicked, and valided this button !');
+        //});
+
+        // Full featured example
+        $("[data-toggle='confirmation']").popConfirm({
+            title: "Certain ?",
+            content: "Dernière chance !",
+            placement: "bottom",
+            yesBtn: 'Oui',
+          noBtn: 'Non'// (top, right, bottom, left)
+        });
     </script>

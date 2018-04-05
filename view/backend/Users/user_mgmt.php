@@ -23,7 +23,7 @@
                                 </h2>
 
                                 <btn class="btn btn-default" style="float: right;">
-                                    <a href="index.php?action=deleteUser&amp;id=<?= $data['id'] ?>">Supprimer</a>
+                                    <a href="index.php?action=deleteUser&amp;id=<?= $data['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
                                 </btn>
                                 <btn class="btn btn-default" style="float: right;">
                                     <a href="index.php?action=modifyUser&amp;id=<?= $data['id'] ?>">Modifier</a>

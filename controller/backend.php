@@ -47,7 +47,7 @@ function addedPost($title, $intro, $memberPseudo, $content)
         throw new Exception('Impossible d\'ajouter l\'article');
     }
     else {
-        header('Location: index.php?action=manage_posts');
+        header('Location: index.php?action=manage_posts#viewposts');
     }
 }
 						
@@ -75,7 +75,7 @@ function modifyPost($postId, $title, $intro, $memberPseudo, $content)
 		throw new Exception('Impossible de modifier l\'article');
 	}
 	else {
-		header('Location: index.php?action=manage_posts');
+		header('Location: index.php?action=manage_posts#viewposts');
 	}
 }
 
@@ -91,7 +91,7 @@ function deletedPost($postId)
 		throw new Exception('Impossible de supprimer l\'article');
 	}
 	else {
-		header('Location: index.php?action=manage_posts');
+		header('Location: index.php?action=manage_posts#viewposts');
 	}
 }
 
@@ -119,7 +119,7 @@ function adminAddComment($postId, $memberPseudo, $content)
         throw new Exception('Impossible d\'ajouter le commentaire !');
     }
     else {
-        header('Location: index.php?action=adminListPost&id=' . $postId);
+        header('Location: index.php?action=adminListPost&id=' . $postId . '#viewcomments');
     }
 }
 
@@ -168,7 +168,7 @@ function adminModifyComment($commentId, $memberPseudo, $content)
         throw new Exception('Impossible de modifier le commentaire !');
     }
     else {
-        header('Location: index.php?action=adminListPost&id=' . $comment['post_id']);
+        header('Location: index.php?action=adminListPost&id=' . $comment['post_id']  . '#viewcomments');
     }
 }
 
@@ -191,7 +191,7 @@ function adminDeletedCommentPage($commentId)
         throw new Exception('Impossible de supprimer le commentaire');
     }
     else {
-        header('Location: index.php?action=adminListPost&id=' . $comment['post_id']);
+        header('Location: index.php?action=adminListPost&id=' . $comment['post_id'] . '#viewcomments');
     }
 }
 

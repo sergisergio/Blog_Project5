@@ -33,7 +33,7 @@
                   <div class="meta">  
                     <!--<span class="category">Journal</span>-->
                     <span class="date">date de dernière publication</span> : 
-                    <?= ($data['last_updated_fr']);?>
+                    <?= ($data['creation_date_fr']);?>
                     <!--<span class="comments"><a href="#">8 <i class="icon-chat-1"></i></a></span>-->
                   </div>
                   <h2 class="post-title"><a href="blog-post.php"><?php echo htmlspecialchars($data['title']); ?></a></h2>
@@ -137,15 +137,7 @@
   </div>
     
 <!-- /.body-wrapper --> 
-  <script src="public/js/jquery.min.js"></script> 
-  <script src="public/js/bootstrap.min.js"></script> 
-  <script src="public/js/jquery.themepunch.tools.min.js"></script> 
-  <script src="public/js/classie.js"></script> 
-  <script src="public/js/plugins.js"></script> 
-  <script src="public/js/scripts.js"></script>  
-  <script>
-	 $.backstretch(["public/images/art/react2.png"]);
-  </script>
+  <?php include "view/frontend/includes/foot.php"; ?>
 </body>
 <?php $content = ob_get_clean(); ?>
 

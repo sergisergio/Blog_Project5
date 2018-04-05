@@ -62,6 +62,19 @@
             -webkit-transition: width 1.5s ease-in-out !important;
             transition: width 1.5s ease-in-out !important;
         }
+        .popover-title {
+            background: #9cbc68;
+            text-align: center;
+        }
+        .popover-content {
+            padding: 9px 14px;
+            color: #111;
+            text-align: center;
+        }
+        .popover-content .btn {
+            color: #111 !important;
+            border: 1px solid #111;
+        }
     </style>
 </head>
 

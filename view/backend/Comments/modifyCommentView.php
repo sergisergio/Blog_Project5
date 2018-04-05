@@ -55,7 +55,7 @@
                                 </div>
                             </div>
 
-                            <div class="blog-posts">
+                            <div class="blog-posts" id="viewcomments">
                                 <div class="post box">
                                     <h3>Commentaires</h3>
 
@@ -66,7 +66,7 @@
                                         <p><strong><?= htmlspecialchars($comment['member_pseudo']) ?></strong> le <?= $comment['creation_date_fr'] ?></p>
                                         <p><?= nl2br(htmlspecialchars($comment['content'])) ?>
                                             <a href="index.php?action=adminModifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a>
-                                            <a href="index.php?action=adminDeleteCommentPage&amp;id=<?= $comment['id'] ?>"> (Supprimer)</a>
+                                            <a href="index.php?action=adminDeleteCommentPage&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
                                         </p>
                                         <?php
                                         }
