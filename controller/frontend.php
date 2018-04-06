@@ -26,13 +26,75 @@ function connexion()
 }
 
                                     /* **********************************************************************
-                                    *                              INSCRIPTION                              *
+                                    *                              PAGE INSCRIPTION                         *
                                     ************************************************************************/
 /* fonction qui fait appel à la page d'inscription */
 function registration()
 {
+    
 	require('view/frontend/registration.php');
 }
+
+                                    /* **********************************************************************
+                                    *                              INSCRIPTION                              *
+                                    ************************************************************************/
+
+function addUser($pseudo, $email, $passe)
+{
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $users = $userManager->register($pseudo, $email, $passe);
+    /* if ($users === false) {
+        throw new Exception('Inscription impossible !');
+    } 
+    
+    else {
+        header('Location: index.php?action=confirmRegistration');
+    } */
+}
+
+                                    /* **********************************************************************
+                                    *                              DOUBLON PSEUDO                           *
+                                    ************************************************************************/
+
+function checkExistPseudo($pseudo) {
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $user = $userManager->existPseudo($pseudo);
+
+     if ($user) {
+        throw new Exception('Ce pseudo est déjà pris');
+    }
+    /* else {
+        header('Location: index.php?action=confirmRegistration');
+    } */
+}
+
+                                    /* **********************************************************************
+                                    *                              DOUBLON MAIL                           *
+                                    ************************************************************************/
+
+function checkExistMail($email) {
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $usermail = $userManager->existMail($email);
+
+     if ($usermail) {
+        throw new Exception('Cet email est déjà pris');
+    }
+    /* else {
+        header('Location: index.php?action=confirmRegistration');
+    } */
+}
+
+                                    /* **********************************************************************
+                                    *                       CONFIRMATION INSCRIPTION                        *
+                                    ************************************************************************/
+/* fonction qui fait appel à la page d'inscription */
+function confirmRegistration()
+{
+    
+    require('view/frontend/confirmRegistration.php');
+}
+
+
 
                                     /* **********************************************************************
                                     *                           TOUS LES BLOG POSTS                         *

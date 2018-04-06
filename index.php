@@ -127,7 +127,101 @@ try {
         /* ...et que cette action est égale à registration */
         elseif ($_GET['action'] == 'registration') {
              /* alors j'exécute la fonction registration qui se trouve dans le contrôleur frontend */
-    		registration();
+             registration();
+        }
+            
+        
+
+        /* ******************************************** FORMULAIRE INSCRIPTION REMPLI ************************************************/
+
+        elseif ($_GET['action'] == 'addUser') {
+             
+             /*if (!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['passe']) && !empty($_POST['passe2'])) {
+
+                $pseudo = htmlspecialchars($_POST['pseudo']);
+                $email = htmlspecialchars($_POST['email']);
+                $passe = sha1($_POST['passe']);
+                $passe2 = sha1($_POST['passe2']);
+
+                $pseudolength = strlen($pseudo);
+                if($pseudolength <= 255) {
+                    if($passe == $passe2) {
+                        addUser($pseudo, $email, $passe);
+                    }
+                    else {
+                        throw new Exception ('Veuillez entrer des mots de passe identiques');
+                    }
+                }
+                else {
+                    throw new Exception('Votre pseudo ne doit pas dépasser 255 caractères');
+                }
+            }
+            else {
+                throw new Exception('Tous les champs ne sont pas remplis !');
+            }*/
+            if (!empty($_POST)) {
+                $pseudo = $_POST['pseudo'];
+                $email = $_POST['email'];
+                $passe = $_POST['passe'];
+                $passe2 = $_POST['passe2'];
+                $errors = array();
+                 function debug($variable){
+                    echo '<pre>' . print_r($variable, true) .'</pre>';
+                } 
+                
+                // valider le pseudo
+                if(empty($_POST['pseudo']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST['pseudo'])) {
+                    $errors['pseudo'] = "Votre pseudo n'est pas valide (caractères alphanumériques et underscore permis...";
+                    echo $errors['pseudo'] . '<br />';
+                }
+                if (checkExistPseudo($pseudo)) {
+                    
+                    $errors['pseudo'] = 'Ce pseudo est déjà pris';
+                    echo $errors['pseudo'] . '<br />';
+                     
+                }
+                
+                // Vérifier le format de l'e-mail
+                // constante FILTER (retourne true ou false)
+                if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+
+                    $errors['email'] = "Votre email n'est pas valide";
+                    echo $errors['email'] . '<br />';
+                }
+                if (checkExistMail($email)) {
+                    
+                    $errors['email'] = 'Cet email est déjà pris';
+                    echo $errors['email'] . '<br />';
+                     
+                }
+
+                if (empty($_POST['passe']) || $_POST['passe'] != $_POST['passe2']) {
+                    $errors['passe'] = "Vous devez entrer un mot de passe valide.";
+                    echo $errors['passe'] . '<br />';
+                }
+
+                if(empty($errors)) {
+                    
+                    addUser($pseudo, $email, $passe); 
+                    throw new Exception('check tes mails !');
+                }
+                
+                 // debug($errors); 
+
+                
+
+
+
+            }
+        }
+        
+
+        /* ******************************************** INSCRIPTION UTILISATEUR ************************************************/
+
+        /* ...et que cette action est égale à registration */
+        elseif ($_GET['action'] == 'confirmRegistration') {
+             /* alors j'exécute la fonction registration qui se trouve dans le contrôleur frontend */
+             confirmRegistration();
         }
 
 

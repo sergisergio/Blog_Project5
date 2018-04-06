@@ -72,4 +72,79 @@ class UserManager extends Manager
 		
 
 	}
+
+									/* **********************************************************************
+                                    *                           INSCRIPTION                         		*
+                                    ************************************************************************/
+	public function register($pseudo, $email, $passe){
+
+		/* A revoir */
+		$db = $this->dbConnect();
+		
+		/* Fonction prepare à revoir */
+		$post = $db->prepare('INSERT INTO Member(pseudo, email, password, confirmation_token registration_date) VALUES(?, ?, ?, ?, NOW()) ');
+
+		    $passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
+
+		    function str_random($length){
+		    	$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+		    	return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
+		    }
+
+		    $token = str_random(100);
+
+
+		    $user_id = $db->lastInsertId();
+
+
+		$registeredMember = $post->execute(array($pseudo, $email, $passe, $token));
+
+		mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration?id=$user_id&token=$token");
+		
+		return $registeredMember;
+
+	}
+
+									/* **********************************************************************
+                                    *                       LE PSEUDO EST-IL DEJA PRIS ?                    *
+                                    ************************************************************************/
+
+    public function existPseudo($pseudo) {
+
+    	$db = $this->dbConnect();
+
+    	$req = $db->prepare('SELECT id FROM Member WHERE pseudo = ?');
+
+    	$req->execute([$_POST['pseudo']]);
+
+    	$user = $req->fetch();
+
+    	return $user;
+
+    	
+    	
+    	
+    }
+
+    								/* **********************************************************************
+                                    *                       LE PSEUDO EST-IL DEJA PRIS ?                    *
+                                    ************************************************************************/
+
+    public function existMail($email) {
+
+    	$db = $this->dbConnect();
+
+    	$req = $db->prepare('SELECT id FROM Member WHERE email = ?');
+
+    	$req->execute([$_POST['email']]);
+
+    	$usermail = $req->fetch();
+
+    	return $usermail;
+
+    	
+    	
+    	
+    }
+
 }

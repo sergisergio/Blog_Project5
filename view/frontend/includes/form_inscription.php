@@ -6,25 +6,42 @@
         <div class="divide30"></div>
             <div class="form-container">
                 <div class="response alert alert-success"></div>
-                    <form class="forms" action="#" method="post">
+
+                <?php if(!empty($errors)): ?>
+                <div class=" response alert alert-danger">
+
+                    <p> Vous n'avez pas rempli le formulaire correctement </p>
+
+                    <?php foreach($errors as $error): ?>
+
+                    <ul>
+                    <li><?= $error; ?></li><br />
+                    </ul>
+
+                    
+                    <?php endforeach; ?>
+
+                </div>
+                <?php endif; ?>
+                    <form class="forms" action="index.php?action=addUser" method="post">
                         <fieldset>
                             <div class="row">
                                 <div class="col-md-offset-3 col-md-6 col-sm-12">
                                     <div class="form-row text-input-row name-field">
                                         <label>Pseudo</label>
-                                        <input type="text" name="pseudo" class="text-input defaultText required" /> 
+                                        <input type="text" placeholder="Votre pseudo" name="pseudo" class="text-input defaultText " /> 
                                     </div>
                                     <div class="form-row text-input-row email-field">
                                         <label>Email</label>
-                                        <input type="text" name="email" class="text-input defaultText required email" /> 
+                                        <input type="text" placeholder="Votre e-mail" name="email" class="text-input defaultText  email" /> 
                                     </div>
                                     <div class="form-row text-input-row subject-field">
                                         <label>Mot de passe</label>
-                                        <input type="password" name="passe" class="text-input defaultText" /> 
+                                        <input type="password" placeholder="Votre mot de passe" name="passe" class="text-input defaultText" /> 
                                     </div>
                                     <div class="form-row text-input-row subject-field">
                                         <label>Confirmer votre mot de passe</label>
-                                        <input type="password" name="passe2" class="text-input defaultText" /> 
+                                        <input type="password" placeholder="Confirmez votre mot de passe" name="passe2" class="text-input defaultText" /> 
                                     </div>
                                 </div>
                                     
