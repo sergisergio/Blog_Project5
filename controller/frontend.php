@@ -61,7 +61,8 @@ function checkExistPseudo($pseudo) {
     $user = $userManager->existPseudo($pseudo);
 
      if ($user) {
-        throw new Exception('Ce pseudo est déjà pris');
+        // throw new Exception('Ce pseudo est déjà pris');
+        echo '<div class="alert alert-danger">' . 'Ce pseudo est déjà utilisé' . '</div>';
     }
     /* else {
         header('Location: index.php?action=confirmRegistration');
@@ -77,7 +78,8 @@ function checkExistMail($email) {
     $usermail = $userManager->existMail($email);
 
      if ($usermail) {
-        throw new Exception('Cet email est déjà pris');
+        // throw new Exception('Cet email est déjà pris');
+        echo '<div class="alert alert-danger">' . 'Cet email est déjà utilisé' . '</div>';
     }
     /* else {
         header('Location: index.php?action=confirmRegistration');

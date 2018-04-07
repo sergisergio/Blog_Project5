@@ -5,9 +5,9 @@
                     
         <div class="divide30"></div>
             <div class="form-container">
-                <div class="response alert alert-success"></div>
+                 <div class="response alert"></div>
 
-                <?php if(!empty($errors)): ?>
+                <!-- <?php if(!empty($errors)): ?>
                 <div class=" response alert alert-danger">
 
                     <p> Vous n'avez pas rempli le formulaire correctement </p>
@@ -22,7 +22,7 @@
                     <?php endforeach; ?>
 
                 </div>
-                <?php endif; ?>
+                <?php endif; ?> -->
                     <form class="forms" action="index.php?action=addUser" method="post">
                         <fieldset>
                             <div class="row">

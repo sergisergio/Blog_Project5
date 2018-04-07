@@ -172,12 +172,12 @@ try {
                 // valider le pseudo
                 if(empty($_POST['pseudo']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST['pseudo'])) {
                     $errors['pseudo'] = "Votre pseudo n'est pas valide (caractères alphanumériques et underscore permis...";
-                    echo $errors['pseudo'] . '<br />';
+                    echo '<div class="alert alert-danger">' . $errors['pseudo'] . '</div>';
                 }
                 if (checkExistPseudo($pseudo)) {
                     
                     $errors['pseudo'] = 'Ce pseudo est déjà pris';
-                    echo $errors['pseudo'] . '<br />';
+                    echo '<div class="alert alert-danger">' . $errors['pseudo'] . '</div>';
                      
                 }
                 
@@ -186,24 +186,24 @@ try {
                 if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 
                     $errors['email'] = "Votre email n'est pas valide";
-                    echo $errors['email'] . '<br />';
+                    echo '<div class="alert alert-danger">' . $errors['email'] . '</div>';
                 }
                 if (checkExistMail($email)) {
                     
                     $errors['email'] = 'Cet email est déjà pris';
-                    echo $errors['email'] . '<br />';
+                    echo '<div class="alert alert-danger">' . $errors['email'] . '</div>';
                      
                 }
 
                 if (empty($_POST['passe']) || $_POST['passe'] != $_POST['passe2']) {
                     $errors['passe'] = "Vous devez entrer un mot de passe valide.";
-                    echo $errors['passe'] . '<br />';
+                    echo '<div class="alert alert-danger">' . $errors['passe'] . '</div>' . '<br />';
                 }
 
                 if(empty($errors)) {
                     
                     addUser($pseudo, $email, $passe); 
-                    throw new Exception('check tes mails !');
+                    echo '<div class="alert alert-success">' . 'Check tes mails !' . '</div>' . '<br />';
                 }
                 
                  // debug($errors); 

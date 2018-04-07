@@ -82,7 +82,7 @@ class UserManager extends Manager
 		$db = $this->dbConnect();
 		
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('INSERT INTO Member(pseudo, email, password, confirmation_token registration_date) VALUES(?, ?, ?, ?, NOW()) ');
+		$post = $db->prepare('INSERT INTO Member(pseudo, email, password, confirmation_token, registration_date) VALUES(?, ?, ?, ?, NOW())');
 
 		    $passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
 
@@ -99,7 +99,7 @@ class UserManager extends Manager
 
 		$registeredMember = $post->execute(array($pseudo, $email, $passe, $token));
 
-		mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration?id=$user_id&token=$token");
+		mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=registration&id=117&token=$token");
 		
 		return $registeredMember;
 
