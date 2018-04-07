@@ -8,9 +8,9 @@
         <div class="container">
             <div class="divide30"></div>
             <div class="col-md-offset-2 col-md-6 col-sm-12">
-            <p class="text-center">Votre inscription a bien été prise en compte<br />
-                Vous devriez avoir reçu un mail avec un lien de confirmation. <br />
-            Cliquez sur ce lien afin de valider votre inscription ! </p>
+            <p class="text-center">Votre inscription a bien été prise en compte.<br />
+                Bienvenue sur le site !
+                 </p>
         </div>
 
         </div>

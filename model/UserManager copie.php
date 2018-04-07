@@ -99,7 +99,7 @@ class UserManager extends Manager
 
 		$registeredMember = $post->execute(array($pseudo, $email, $passe, $token));
 
-		mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://projet5.philippetraon.com/index.php?action=registration&id=117&token=$token");
+		mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://projet5.philippetraon.com/index.php?action=confirmRegistration&id=117&token=$token");
 		
 		return $registeredMember;
 

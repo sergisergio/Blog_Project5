@@ -43,13 +43,14 @@ function addUser($pseudo, $email, $passe)
 {
     $userManager = new \Philippe\Blog\Model\UserManager();
     $users = $userManager->register($pseudo, $email, $passe);
-    /* if ($users === false) {
+     if ($users === false) {
         throw new Exception('Inscription impossible !');
     } 
     
     else {
-        header('Location: index.php?action=confirmRegistration');
-    } */
+        echo '<div class="alert alert-success">' . 'Check tes mails !' . '</div>' . '<br />';
+        // header('Location: index.php?action=confirmRegistration');
+    } 
 }
 
                                     /* **********************************************************************

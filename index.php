@@ -203,7 +203,7 @@ try {
                 if(empty($errors)) {
                     
                     addUser($pseudo, $email, $passe); 
-                    echo '<div class="alert alert-success">' . 'Check tes mails !' . '</div>' . '<br />';
+                    
                 }
                 
                  // debug($errors); 
