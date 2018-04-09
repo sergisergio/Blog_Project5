@@ -114,15 +114,33 @@ try {
             }
         }
 
-        /* ******************************************** CONNEXION UTILISATEUR ************************************************/
+        /* ******************************************** PAGE CONNEXION UTILISATEUR ************************************************/
 
         /* ...et que cette action est égale à modifyComment */
     	elseif ($_GET['action'] == 'connexion') {
              /* alors j'exécute la fonction connexion qui se trouve dans le contrôleur frontend */
     		connexion();
         }
+
+        /* ******************************************** CONNEXION UTILISATEUR ************************************************/
+
+        /* ...et que cette action est égale à modifyComment */
+        elseif ($_GET['action'] == 'connected') {
+             /* alors j'exécute la fonction connexion qui se trouve dans le contrôleur frontend */
+
+            connected($_POST['pseudo'], $_POST['passe']);
+        }
+
+        /* ******************************************** DECONNEXION UTILISATEUR ************************************************/
+
+        /* ...et que cette action est égale à modifyComment */
+        elseif ($_GET['action'] == 'disconnected') {
+             /* alors j'exécute la fonction connexion qui se trouve dans le contrôleur frontend */
+
+            disconnected();
+        }
         
-        /* ******************************************** INSCRIPTION UTILISATEUR ************************************************/
+        /* ******************************************** PAGE INSCRIPTION UTILISATEUR ************************************************/
 
         /* ...et que cette action est égale à registration */
         elseif ($_GET['action'] == 'registration') {

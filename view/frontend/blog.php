@@ -37,6 +37,7 @@
                     <!--<span class="comments"><a href="#">8 <i class="icon-chat-1"></i></a></span>-->
                   </div>
                   <h2 class="post-title"><a href="blog-post.php"><?php echo htmlspecialchars($data['title']); ?></a></h2>
+                  <!--<img style="float: left;" class="img-responsive" href="<?php ?>" />-->
                   <p><?php echo htmlspecialchars($data['intro']); ?></p>
                   <hr>
                   <p class="pull-right">

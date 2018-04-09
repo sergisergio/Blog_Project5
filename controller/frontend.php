@@ -17,7 +17,7 @@ function home()
 }
 
                                     /* **********************************************************************
-                                     *                              CONNEXION                                *
+                                     *                              PAGE CONNEXION                          *
                                      ************************************************************************/
 /* fonction qui fait appel à la page de connexion */
 function connexion()
@@ -51,6 +51,28 @@ function addUser($pseudo, $email, $passe)
         echo '<div class="alert alert-success">' . 'Check tes mails !' . '</div>' . '<br />';
         // header('Location: index.php?action=confirmRegistration');
     } 
+}
+
+                                    /* **********************************************************************
+                                    *                              CONNEXION                                *
+                                    ************************************************************************/
+
+function connected($pseudo,$passe) {
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $users = $userManager->connect($pseudo,$passe);
+
+    
+
+        
+}
+
+                                    /* **********************************************************************
+                                    *                              DECONNEXION                              *
+                                    ************************************************************************/
+
+function disconnected($pseudo,$passe) {
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $users = $userManager->disconnect($pseudo,$passe);
 }
 
                                     /* **********************************************************************

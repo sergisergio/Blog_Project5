@@ -127,7 +127,7 @@ class UserManager extends Manager
     }
 
     								/* **********************************************************************
-                                    *                       LE PSEUDO EST-IL DEJA PRIS ?                    *
+                                    *                       L'EMAIL EST-IL DEJA PRIS ?                    	*
                                     ************************************************************************/
 
     public function existMail($email) {
@@ -145,6 +145,54 @@ class UserManager extends Manager
     	
     	
     	
+    }
+    								/* **********************************************************************
+                                    *                           CONNEXION                         			*
+                                    ************************************************************************/
+	public function connect($pseudo, $passe){
+
+		$db = $this->dbConnect();
+
+		
+
+		$req = $db->prepare('SELECT id, password FROM Member WHERE pseudo = :pseudo');
+
+
+		$req->execute(array('pseudo' => $pseudo));
+
+		$result = $req->fetch();
+
+		// Comparaison du pass envoyé via le formulaire avec la base
+		$isPasswordCorrect = password_verify($_POST['passe'], $result['password']);
+
+		if (!$result) {
+            echo 'Mauvais identifiant ou mot de passe';
+        }
+        else {
+            if ($isPasswordCorrect) {
+                session_start();
+                $_SESSION['id'] = $result['id'];
+                $_SESSION['pseudo'] = $pseudo;
+                echo 'Vous êtes connecté !';
+            }
+            else {
+                echo 'Mauvais identifiant ou mot de passe';
+            }
+        }
+		
+
+	}
+
+									/* **********************************************************************
+                                    *                           DECONNEXION                         		*
+                                    ************************************************************************/
+
+    public function disconnect(){
+
+    	// Suppression des variables de session et de la session
+		$_SESSION = array();
+		session_destroy();
+
     }
 
 }

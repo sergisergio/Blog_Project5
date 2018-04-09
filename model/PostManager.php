@@ -18,7 +18,7 @@ class PostManager extends Manager
 		$db = $this->dbConnect();
 
 		/* Fonction query à revoir */
-		$req = $db->query('SELECT id, title, intro, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		$req = $db->query('SELECT id, title, intro, content, file_extension, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
 			FROM Post 
 			ORDER BY creation_date DESC LIMIT 0, 5');
 		return $req;

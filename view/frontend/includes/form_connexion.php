@@ -2,23 +2,24 @@
     <div class="box">
         <h2 class="section-title text-center">Connexion</h2>
             <p></p>
-                    
+              
+                 
                    
             <div class="divide30"></div>
             <div class="form-container">
             <div class="response alert alert-success"></div>
-            <form class="forms" action="#" method="post">
+            <form class="forms" action="index.php?action=connected" method="post">
                 <fieldset>
                     <div class="row">
                         <div class="col-md-offset-3 col-md-6 col-sm-12">
                             <div class="form-row text-input-row name-field">
                                 <label>Pseudo</label>
-                                <input type="text" name="name" class="text-input defaultText required" /> 
+                                <input type="text" name="pseudo" class="text-input defaultText required" /> 
                             </div>
                                         
                             <div class="form-row text-input-row subject-field">
                                 <label>Mot de passe</label>
-                                <input type="password" name="password" class="text-input defaultText" /> 
+                                <input type="password" name="passe" class="text-input defaultText" /> 
                             </div>
                                         
                         </div>
@@ -42,6 +43,7 @@
                     </div>
                 </fieldset>
             </form>
+
             </div>
                     <!-- /.form-container -->
     </div>

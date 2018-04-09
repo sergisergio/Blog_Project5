@@ -26,9 +26,13 @@
                 <span class="date">date de dernière publication</span><em>le <?= $post['creation_date_fr'] ?></em>
               </div>
               <div class="news">
+
                 <h3>
                   <?= htmlspecialchars($post['title']) ?>
                 </h3>
+                <!--<figure class="frame">
+                <img style="float: left;" class="img-responsive" href="https://images.pexels.com/photos/87452/flowers-background-butterflies-beautiful-87452.jpeg?auto=compress&cs=tinysrgb&h=350" />
+                </figure>-->
                 <p>
                   <?= nl2br(htmlspecialchars($post['content'])) ?>
                 </p>
