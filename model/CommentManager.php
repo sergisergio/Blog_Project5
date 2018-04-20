@@ -1,5 +1,14 @@
 <?php
 
+/* ************************* RESUME *************************************
+
+1 . Récupérer tous les commentaires
+2 . Récupérer un seul commentaire
+3 . Ajouter un commentaire
+4 . Supprimer un commentaire
+5 . Modifier un commentaire
+************************************************************************/
+
 /* Je crée un emplacement pour éviter les conflits avec d'autres développeurs */
 namespace Philippe\Blog\Model;
 
@@ -9,32 +18,30 @@ require_once("model/Manager.php");
 /* Je crée une classe Commentmanager qui hérite de la classe Manager */
 class CommentManager extends Manager
 {
-	
-									/* **********************************************************************
-                                    *                  RECUPERER TOUS LES COMMENTAIRES                      *
-                                    ************************************************************************/
+/* **********************************************************************
+*              1 . RECUPERER TOUS LES COMMENTAIRES                      *
+************************************************************************/
 	public function getComments($postId)
 	{
 		/* A revoir */
 		$db = $this->dbConnect();
-		$comments = $db->prepare('SELECT id, member_pseudo, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr 
-			FROM Comment 
+		$comments = $db->prepare('SELECT id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr 
+			FROM Comments 
 			WHERE post_id = ?
 			ORDER BY creation_date DESC LIMIT 0, 5');
 		$comments->execute(array($postId));
 		
 		return $comments;
 	}
-
-									/* **********************************************************************
-                                    *                  RECUPERER UN SEUL COMMENTAIRE                        *
-                                    ************************************************************************/
+/* **********************************************************************
+*              2 . RECUPERER UN SEUL COMMENTAIRE                        *
+************************************************************************/
 	public function getComment($commentId){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 		/* Fonction prepare à revoir */
-		 $req = $db->prepare('SELECT id, post_id, member_pseudo, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM Comment WHERE id = ?');
+		 $req = $db->prepare('SELECT id, post_id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM Comments WHERE id = ?');
 
 		 /* Fonction execute à revoir */
         $req->execute(array($commentId));
@@ -44,47 +51,43 @@ class CommentManager extends Manager
 
         return $comment;
 		}
-
-									/* **********************************************************************
-                                    *                      AJOUTER UN  COMMENTAIRE                          *
-                                    ************************************************************************/
+/* **********************************************************************
+*                  3 . AJOUTER UN  COMMENTAIRE                          *
+************************************************************************/
 	public function postComment($postId, $memberPseudo, $content){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 		/* Fonction prepare à revoir */
-		$comments = $db->prepare('INSERT INTO Comment(post_id, member_pseudo, content, creation_date) VALUES(?, ?, ?, NOW())');
+		$comments = $db->prepare('INSERT INTO Comments(post_id, author, content, creation_date) VALUES(?, ?, ?, NOW())');
 		/* Fonction execute à revoir */
 		$affectedLines = $comments->execute(array($postId, $memberPseudo, $content));
 
         return $affectedLines;
 	}
-
-									/* **********************************************************************
-                                    *                      SUPPRIMER UN  COMMENTAIRE                        *
-                                    ************************************************************************/
-	public function deleteComment($commentId){
+/* **********************************************************************
+*                     4 . SUPPRIMER UN  COMMENTAIRE                     *   ************************************************************************/
+	public function deleteCommentRequest($commentId){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
-		$comments = $db->prepare('DELETE FROM Comment WHERE id = ?');
+		$comments = $db->prepare('DELETE FROM Comments WHERE id = ?');
 
 		$affectedComment = $comments->execute(array($commentId));
 
 		return $affectedComment;
 	}
-	
-									/* **********************************************************************
-                                    *                      MODIFIER UN  COMMENTAIRE                         *
-                                    ************************************************************************/
+/* **********************************************************************
+*                  5 . MODIFIER UN  COMMENTAIRE                         *
+************************************************************************/
 	public function modifyComment($commentId, $memberPseudo, $content)
     {
 
     	/* A revoir */
         $db = $this->dbConnect();
         /* Fonction prepare à revoir */
-        $comments = $db->prepare('UPDATE Comment SET member_pseudo = ?, content = ?, creation_date = NOW() WHERE  id = ?');
+        $comments = $db->prepare('UPDATE Comments SET author = ?, content = ?, creation_date = NOW() WHERE  id = ?');
         /* Fonction execute à revoir */
         $affectedLines = $comments->execute(array($memberPseudo, $content, $commentId));
 

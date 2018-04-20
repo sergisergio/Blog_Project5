@@ -1,5 +1,18 @@
 <?php
 
+/* ************************* RESUME *************************************
+
+1 . Récupérer tous les membres
+2 . Récupérer un seul membre
+3 . Modifier un membre
+4 . Supprimer un membre
+5 . Inscription
+6 . Le pseudo est-il déjà pris ?
+7 . L'email est-il déjà pris ?
+8 . Connexion
+9 . Déconnexion
+************************************************************************/
+
 /* Je crée un emplacement pour éviter les conflits avec d'autres développeurs */
 namespace Philippe\Blog\Model;
 
@@ -9,10 +22,9 @@ require_once("model/Manager.php");
 /* Je crée une classe Postmanager qui hérite de la classe Manager */
 class UserManager extends Manager
 {
-	
-									/* **********************************************************************
-                                    *                      RECUPERER TOUS LES MEMBRES                       *
-                                    ************************************************************************/
+/* **********************************************************************
+*                  1 . RECUPERER TOUS LES MEMBRES                       *
+************************************************************************/
 	public function getUsers()
 	{
 		/* A revoir */
@@ -20,69 +32,72 @@ class UserManager extends Manager
 
 		/* Fonction query à revoir */
 		$req = $db->query('SELECT * 
-			FROM Member 
-			ORDER BY pseudo ASC LIMIT 0, 15');
+			FROM Users 
+			ORDER BY pseudo ASC LIMIT 15');
 		return $req;
 	}
 
-									/* **********************************************************************
-                                    *                      RECUPERER UN SEUL MEMBRE                         *
-                                    ************************************************************************/
-	public function getUser($postId){
+/* **********************************************************************
+*                  2 . RECUPERER UN SEUL MEMBRE                         *
+************************************************************************/
+	public function getUser($userId){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$req = $db->prepare('SELECT id, title, intro, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
-			FROM Post 
+		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, is_active
+			FROM Users 
 			WHERE id = ?
 			');
 
 		/* Fonction execute à revoir */
-		$req->execute(array($postId));
+		$req->execute(array($userId));
 		/* Fonction fetch à revoir */
 		$post = $req->fetch();
 		return $post;
 	}
-
-									/* **********************************************************************
-                                    *                           MODIFIER UN MEMBRE                         	*
-                                    ************************************************************************/
-	public function modifyuser(){
+/* **********************************************************************
+*                       3 . MODIFIER UN MEMBRE                         	*
+************************************************************************/
+	public function modifyUserRequest($userId){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('UPDATE Post SET title = ?, intro = ?, member_pseudo = ?, content = ?, creation_date = NOW() WHERE id = ?');
+		$post = $db->prepare('UPDATE Users SET title = ?, intro = ?, member_pseudo = ?, content = ?, creation_date = NOW() WHERE id = ?');
 
 		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content, $postId));
 		
 		return $affectedPost;
 
-	
 	}
 	
-									/* **********************************************************************
-                                    *                           SUPPRIMER UN MEMBRE                         *
-                                    ************************************************************************/
-	public function deleteUser($postId){
+/* **********************************************************************
+*                       4 . SUPPRIMER UN MEMBRE                         *
+************************************************************************/
+	public function deleteUserRequest($userId){
+        $db = $this->dbConnect();
 
+		/* Fonction prepare à revoir */
+		$post = $db->prepare('DELETE FROM Users WHERE id = ?');
+
+		$affectedUser = $post->execute(array($userId));
 		
+		return $affectedUser;
+    }
 
-	}
-
-									/* **********************************************************************
-                                    *                           INSCRIPTION                         		*
-                                    ************************************************************************/
-	public function register($pseudo, $email, $passe){
+/* **********************************************************************
+*                         5 . INSCRIPTION                         		*
+************************************************************************/
+	public function addUserRequest($pseudo, $email, $passe){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 		
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('INSERT INTO Member(pseudo, email, password, confirmation_token, registration_date) VALUES(?, ?, ?, ?, NOW())');
+		$post = $db->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token, registration_date) VALUES(?, ?, ?, ?, NOW())');
 
 		    $passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
 
@@ -93,27 +108,45 @@ class UserManager extends Manager
 
 		    $token = str_random(100);
 
-
-		    $user_id = $db->lastInsertId();
-
-
 		$registeredMember = $post->execute(array($pseudo, $email, $passe, $token));
-
-		mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=117&token=$token");
+        
+        $user_id = $db->lastInsertId();
+        
+        /* test mail local */
+		//mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
+        
+        /* test mail serveur */
+        mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
+        
 		
 		return $registeredMember;
 
 	}
+    
+/* **********************************************************************
+*                5 . CONFIRMATION INSCRIPTION                           *
+************************************************************************/
+    
+    public function confirmRegistrationRequest($userId) {
+        
+        $db = $this->dbConnect();
+        
+        $req = $db->prepare('SELECT * FROM Users WHERE id = ?'); 
+        $req->execute([$userId]);
+        $user = $req->fetch();
+        
+        return $user;
+    }
 
-									/* **********************************************************************
-                                    *                       LE PSEUDO EST-IL DEJA PRIS ?                    *
-                                    ************************************************************************/
+/* **********************************************************************
+*                   6 . LE PSEUDO EST-IL DEJA PRIS ?                    *
+************************************************************************/
 
     public function existPseudo($pseudo) {
 
     	$db = $this->dbConnect();
 
-    	$req = $db->prepare('SELECT id FROM Member WHERE pseudo = ?');
+    	$req = $db->prepare('SELECT id FROM Users WHERE pseudo = ?');
 
     	$req->execute([$_POST['pseudo']]);
 
@@ -121,20 +154,17 @@ class UserManager extends Manager
 
     	return $user;
 
-    	
-    	
-    	
     }
 
-    								/* **********************************************************************
-                                    *                       L'EMAIL EST-IL DEJA PRIS ?                    	*
-                                    ************************************************************************/
+/* **********************************************************************
+*                    7 . L'EMAIL EST-IL DEJA PRIS ?                    	*
+************************************************************************/
 
     public function existMail($email) {
 
     	$db = $this->dbConnect();
 
-    	$req = $db->prepare('SELECT id FROM Member WHERE email = ?');
+    	$req = $db->prepare('SELECT id FROM Users WHERE email = ?');
 
     	$req->execute([$_POST['email']]);
 
@@ -142,57 +172,52 @@ class UserManager extends Manager
 
     	return $usermail;
 
-    	
-    	
-    	
     }
-    								/* **********************************************************************
-                                    *                           CONNEXION                         			*
-                                    ************************************************************************/
-	public function connect($pseudo, $passe){
+/* **********************************************************************
+*                        8 . CONNEXION                         			*
+************************************************************************/
+	public function loginRequest($pseudo, $passe){
 
 		$db = $this->dbConnect();
 
+		$req = $db->prepare('SELECT * FROM Users WHERE pseudo = :pseudo');
+
+        $req->execute(array('pseudo' => $pseudo));
+
+		$user = $req->fetch();
+        
+        return $user;
+        
+       
+
 		
-
-		$req = $db->prepare('SELECT id, password FROM Member WHERE pseudo = :pseudo');
-
-
-		$req->execute(array('pseudo' => $pseudo));
-
-		$result = $req->fetch();
-
-		// Comparaison du pass envoyé via le formulaire avec la base
-		$isPasswordCorrect = password_verify($_POST['passe'], $result['password']);
-
-		if (!$result) {
-            echo 'Mauvais identifiant ou mot de passe';
-        }
-        else {
-            if ($isPasswordCorrect) {
-                session_start();
-                $_SESSION['id'] = $result['id'];
-                $_SESSION['pseudo'] = $pseudo;
-                echo 'Vous êtes connecté !';
-            }
-            else {
-                echo 'Mauvais identifiant ou mot de passe';
-            }
-        }
 		
+    }
 
-	}
+/* **********************************************************************
+*                         9 . DECONNEXION                         		*
+************************************************************************/
 
-									/* **********************************************************************
-                                    *                           DECONNEXION                         		*
-                                    ************************************************************************/
-
-    public function disconnect(){
+    public function logOffRequest(){
 
     	// Suppression des variables de session et de la session
 		$_SESSION = array();
 		session_destroy();
 
     }
+    
+/* **********************************************************************
+*                         9 . MAIL RESET PASSWORD                         		*
+************************************************************************/
 
+    public function mailResetPassword() {
+        
+        $db = $this->dbConnect();
+        
+        $req = $db->prepare('SELECT * FROM Users where email = ? ');
+        $req->execute([$_POST['email']]);
+        $user = $req->fetch();
+        return $user;
+    }
+    
 }

@@ -10,7 +10,7 @@ class Manager
 	protected function dbConnect()
 	{
 		/* Je crée une variable db qui est une instance de la classe PDO (voir DOC !!!!! )*/
-		$db = new \PDO('mysql:host=localhost;dbname=Project5_OC;charset=utf8', 'root', 'root');
+		$db = new \PDO('mysql:host=localhost;dbname=Projet5;charset=utf8', 'root', 'root');
 		return $db;
 	}
 }

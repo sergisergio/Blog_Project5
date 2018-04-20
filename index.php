@@ -1,5 +1,71 @@
 <?php
 
+/* ***************** RESUME *******************
+
+    1 . Page listant l'ensemble des blog posts (blog). ========================> OK
+        (==>listPosts()==>getPosts)
+    2 . Page qui affiche un blog post (blogpost).  ============================> OK
+        (==>listPost()==>getPost et getComments)
+    3 . Ajouter un commentaire (addComment).  =================================> OK
+        (==>addComment() ==> postComment)
+    4 . Afficher la page pour modifier un commentaire (modifyCommentPage). ====> OK
+        (modifyCommentPage() ==> getComment et getPost)
+    5 . Supprimer un commentaire (deleteComment). =============================> OK
+        (deleteComment() ==> getComment et deletedComment)
+    6 . Modifier un commentaire (modifyComment).  =============================> OK
+        (modifyComment() ==> getComment et modifyComment)
+    7 . Afficher la page de connexion (loginPage).  ===========================> OK
+        (loginPage() ==> juste un require)
+    8 . Se connecter (login).  ==========================================> TO CHECK
+        (login() ==> loginRequest)
+    9 . Se déconnecter (logoff). ========================================> TO CHECK
+    
+    10 . Afficher la page d'inscription utilisateur (signupPage).  ============> OK
+        (signupPage() ==> juste un require)
+    11 . Traitement du formulaire d'inscription (addUser). ====================> OK
+    
+    12 . Confirmation inscription utilisateur (confirmRegistration).=====> TO CHECK
+    
+    13 . Afficher la page de connexion administrateur (loginAdmin). ===========> OK
+    
+    14 . Afficher la page d'accueil administrateur (index_management). ========> OK
+    
+    15 . Afficher la rubrique articles (manage_posts). ========================> OK
+    
+    16 . Afficher la rubrique commentaires (manage_comments). =================> OK
+    
+    17 . Afficher la rubrique membres (manage_users). =========================> OK
+    
+    18 . Ajouter un article (addPost). ========================================> OK
+    
+    19 . Afficher la page pour modifier un article (modifyPostPage).  =========> OK
+        (modifyPostPage() ==> getComment et require ModifyPostView)
+    20 . Modifier un article (modifyPost).  ===================================> OK
+        (modifyPost() ==> getPost et ModifyPostRequest)
+    21 . Supprimer un article (deletePost).  ==================================> OK
+        (deletePost() ==> deletePost et deletePostRequest)
+    22 . Supprimer un membre (deleteUser). ====================================> OK
+    
+    23 . Afficher la page pour modifier un membre (modifyUserPage). ===========> OK
+    
+    24 . Modifier un membre (modifyUser). ===============================> TO CHECK
+    
+    25 . Afficher un post et ses commentaires (adminViewPost). ================> OK
+        (adminViewPost() ==> getPost et getComments, require MCview)
+    26 . Ajouter un commentaire (admin AddComment).  ==========================> OK
+        (adminAddComment() ==> postComment et redirection)
+    27 . Afficher page de modif commentaire (adminModifyCommentPage). =========> OK
+        (adminModify... ==> getPost et getComment, Location)
+    28 . Modifier un commentaire (adminModifyComment).  =======================> OK
+        (adminModifyComment() ==> getComment et modifyComment)
+    29 . Supprimer un commentaire (adminDeleteComment). =======================> OK
+        (adminDeleteComment() ==> getComment et adminDeleteRequest)
+    30 . Page d'accueil par défaut. ===========================================> OK
+    
+    31 . Afficher la page mot de passe oublié
+
+   *************** FIN RESUME *****************/
+
 /* Je charge les fichiers controller pour que les fonctions soient en mémoire*/
 require('controller/frontend.php');
 require('controller/backend.php');
@@ -11,40 +77,33 @@ try {
         /* Si il y a une action... */
     if (isset($_GET['action']))  {
 
+    /* **********************************************************************
+    *                              FRONT-END                                *
+    ************************************************************************/
 
+        /* ********** 1. PAGE LISTANT L'ENSEMBLE DES BLOG POSTS **********************/
 
-                                                        /* **********************************************************************
-                                                        *                              FRONT-END                                *
-                                                        ************************************************************************/
-
-
-        /* **************************************** PAGE LISTANT L'ENSEMBLE DES BLOG POSTS ***************************************/
-
-        /* ...et que cette action est égale à blog */
     	if ($_GET['action'] == 'blog') {
             /* alors j'exécute la fonction listPosts qui se trouve dans le contrôleur frontend */ 
     		listPosts();
     	}
 
-        /* **************************************** PAGE AFFICHANT UN BLOG POST *************************************************/
+        /* ********** 2. PAGE AFFICHANT UN BLOG POST *********************************/
 
-        /* ...et que cette action est égale à blogpost */
         elseif ($_GET['action'] == 'blogpost') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
              if (isset($_GET['id']) && $_GET['id'] > 0) {
                 /* alors j'exécute la fonction listPost qui se trouve dans le contrôleur frontend */ 
                 listPost();
-
-            }
+             }
                 /* Sinon j'envoie un message d'erreur */
             else {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
         }
 
-        /* **************************************** AJOUTER UN COMMENTAIRE ******************************************************/
+        /* ********** 3 . AJOUTER UN COMMENTAIRE *************************************/
 
-        /* ...et que cette action est égale à addcomment */
         elseif ($_GET['action'] == 'addcomment') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -65,9 +124,8 @@ try {
             }
         }
 
-        /* ******************************** AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE ***************************************/
+        /* ********** 4 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE *************/
 
-        /* ...et que cette action est égale à modifyCommentpage */
         elseif ($_GET['action'] == 'modifyCommentPage') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -80,21 +138,19 @@ try {
             }
         }
 
-        /* ******************************** AFFICHER LA PAGE POUR EFFACER UN COMMENTAIRE ***************************************/
+        /* ********** 5 . AFFICHER LA PAGE POUR EFFACER UN COMMENTAIRE **************/
 
-        /* ...et que cette action est égale à modifyCommentpage */
-        elseif ($_GET['action'] == 'deleteCommentPage') {
+        elseif ($_GET['action'] == 'deleteComment') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 /* alors j'exécute la fonction modifyCommentPage qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id') */ 
-                deletedCommentPage($_GET['id']);
+                deletedComment($_GET['id']);
             }
             
         }
 
-        /* ******************************************** MODIFIER UN COMMENTAIRE ************************************************/
+        /* ********** 6 . MODIFIER UN COMMENTAIRE **********************************/
 
-        /* ...et que cette action est égale à modifyComment */
         elseif ($_GET['action'] == 'modifyComment') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -114,69 +170,40 @@ try {
             }
         }
 
-        /* ******************************************** PAGE CONNEXION UTILISATEUR ************************************************/
+        /* *********** 7 . PAGE CONNEXION UTILISATEUR *******************************/
 
-        /* ...et que cette action est égale à modifyComment */
-    	elseif ($_GET['action'] == 'connexion') {
+    	elseif ($_GET['action'] == 'loginPage') {
              /* alors j'exécute la fonction connexion qui se trouve dans le contrôleur frontend */
-    		connexion();
+    		loginPage();
         }
 
-        /* ******************************************** CONNEXION UTILISATEUR ************************************************/
+        /* *********** 8 . CONNEXION UTILISATEUR ************************************/
 
-        /* ...et que cette action est égale à modifyComment */
-        elseif ($_GET['action'] == 'connected') {
+        elseif ($_GET['action'] == 'login') {
              /* alors j'exécute la fonction connexion qui se trouve dans le contrôleur frontend */
 
-            connected($_POST['pseudo'], $_POST['passe']);
+            login($_POST['pseudo'], $_POST['passe']);
         }
 
-        /* ******************************************** DECONNEXION UTILISATEUR ************************************************/
+        /* *********** 9 . DECONNEXION UTILISATEUR *********************************/
 
-        /* ...et que cette action est égale à modifyComment */
-        elseif ($_GET['action'] == 'disconnected') {
+        elseif ($_GET['action'] == 'logoff') {
              /* alors j'exécute la fonction connexion qui se trouve dans le contrôleur frontend */
 
-            disconnected();
+            logoff();
         }
         
-        /* ******************************************** PAGE INSCRIPTION UTILISATEUR ************************************************/
+        /* *********** 10 . PAGE INSCRIPTION UTILISATEUR ****************************/
 
-        /* ...et que cette action est égale à registration */
-        elseif ($_GET['action'] == 'registration') {
+        elseif ($_GET['action'] == 'signupPage') {
              /* alors j'exécute la fonction registration qui se trouve dans le contrôleur frontend */
-             registration();
+             signupPage();
         }
             
-        
-
-        /* ******************************************** FORMULAIRE INSCRIPTION REMPLI ************************************************/
+        /* ************ 11 . FORMULAIRE INSCRIPTION REMPLI **************************/
 
         elseif ($_GET['action'] == 'addUser') {
              
-             /*if (!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['passe']) && !empty($_POST['passe2'])) {
-
-                $pseudo = htmlspecialchars($_POST['pseudo']);
-                $email = htmlspecialchars($_POST['email']);
-                $passe = sha1($_POST['passe']);
-                $passe2 = sha1($_POST['passe2']);
-
-                $pseudolength = strlen($pseudo);
-                if($pseudolength <= 255) {
-                    if($passe == $passe2) {
-                        addUser($pseudo, $email, $passe);
-                    }
-                    else {
-                        throw new Exception ('Veuillez entrer des mots de passe identiques');
-                    }
-                }
-                else {
-                    throw new Exception('Votre pseudo ne doit pas dépasser 255 caractères');
-                }
-            }
-            else {
-                throw new Exception('Tous les champs ne sont pas remplis !');
-            }*/
             if (!empty($_POST)) {
                 $pseudo = $_POST['pseudo'];
                 $email = $_POST['email'];
@@ -225,93 +252,76 @@ try {
                 }
                 
                  // debug($errors); 
-
-                
-
-
-
             }
         }
-        
 
-        /* ******************************************** INSCRIPTION UTILISATEUR ************************************************/
+        /* ************** 12 . CONFIRMATION INSCRIPTION UTILISATEUR ******************/
 
-        /* ...et que cette action est égale à registration */
         elseif ($_GET['action'] == 'confirmRegistration') {
              /* alors j'exécute la fonction registration qui se trouve dans le contrôleur frontend */
-             confirmRegistration();
+            if (isset($_GET['id']) && isset($_GET['token'])) {
+                  confirmRegistration($_GET['id'], $_GET['token']); 
+            }
+            else {
+                echo 'Aucun id ou token...';
+            }
         }
 
+        /* **********************************************************************
+        *                              BACK-END                                *
+        ************************************************************************/
 
-                                                            /* **********************************************************************
-                                                            *                              BACK-END                                *
-                                                            ************************************************************************/
 
+        /* ************** 13 . CONNEXION ADMINISTRATEUR *********************************/
 
-        /* ******************************************** CONNEXION ADMINISTRATEUR ************************************************/
-
-        /* ...et que cette action est égale à administration */
-        elseif ($_GET['action'] == 'administration') {
+        elseif ($_GET['action'] == 'loginAdmin') {
              /* alors j'exécute la fonction connexionAdmin qui se trouve dans le contrôleur backend */
-            connexionAdmin();
+            loginAdmin();
         }
 
-        /* ********************************** AFFICHER LA PAGE D'ACCUEIL ADMINISTRATEUR *****************************************/
+        /* ************** 14 . AFFICHER LA PAGE D'ACCUEIL ADMINISTRATEUR ****************/
 
-        /* ...et que cette action est égale à index_management */
         elseif ($_GET['action'] == 'index_management') {
              /* alors j'exécute la fonction indexManagement qui se trouve dans le contrôleur backend */
             indexManagement();
         }
 
-        /* ********************************** AFFICHER LA RUBRIQUE ARTICLES *****************************************************/
+        /* ************** 15 . AFFICHER LA RUBRIQUE ARTICLES ***************************/
 
-        /* ...et que cette action est égale à manage_posts */
         elseif ($_GET['action'] == 'manage_posts') {
             /* alors j'exécute la fonction managePosts qui se trouve dans le contrôleur backend */
             managePosts();
         }
 
-        /* ********************************** AFFICHER LA RUBRIQUE COMMENTAIRES *************************************************/
+        /* ************** 16 . AFFICHER LA RUBRIQUE COMMENTAIRES ***********************/
 
-        /* ...et que cette action est égale à manage_comments */
         elseif ($_GET['action'] == 'manage_comments') {
             /* alors j'exécute la fonction manageComments qui se trouve dans le contrôleur backend */
-            
             manageComments();
             }
         
-        /* ********************************** AFFICHER LA RUBRIQUE MEMBRES ******************************************************/
+        /* ************** 17 . AFFICHER LA RUBRIQUE MEMBRES ****************************/
 
-        /* ...et que cette action est égale à manage_users */
         elseif ($_GET['action'] == 'manage_users') {
             /* alors j'exécute la fonction manageUsers qui se trouve dans le contrôleur backend */
             manageUsers();
         }
 
-        /* ********************************** AJOUTER UN ARTICLE ****************************************************************/
+        /* ************** 18 . AJOUTER UN ARTICLE **************************************/
 
-        /* ...et que cette action est égale à manage_users */
         elseif ($_GET['action'] == 'addpost') {
           
-                /* Si les champs pseudo et commentaire sont bien remplis */
                 if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
                     /* alors j'exécute la fonction addComment qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-
-                    addedPost($_POST['title'], $_POST['intro'], $_POST['member_pseudo'], $_POST['content']);
-
-                    
+                    addPost($_POST['title'], $_POST['intro'], $_POST['member_pseudo'], $_POST['content']);
                 }
                 /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */
                 else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
-            
         }
 
-        /* ********************************** AFFICHER LA PAGE POUR MODIFIER UN ARTICLE *******************************************/
-
-        /* ...et que cette action est égale à modifyPost */
+        /* *********** 19 . AFFICHER LA PAGE POUR MODIFIER UN ARTICLE *******************/
         elseif ($_GET['action'] == 'modifyPostPage') {
             /* alors j'exécute la fonction manageUsers qui se trouve dans le contrôleur backend */
               if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -323,12 +333,11 @@ try {
                 throw new Exception('Aucun identifiant d\'article envoyé');
                 }
             /* Si il n'y a pas de paramètre 'id', j'indique qu'aucun commentaire ne peut être affiché */
-            
         }
 
-        /* ********************************** MODIFIER UN ARTICLE ****************************************************************/
+        /* ************ 20 . MODIFIER UN ARTICLE *****************************************/
 
-        /* ...et que cette action est égale à modifyPost */
+        
         elseif ($_GET['action'] == 'modifyPost') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -345,28 +354,36 @@ try {
                 throw new Exception('Pas d\'identifiant d\'article envoyé');
             }
             /* Si il n'y a pas de paramètre 'id', j'indique qu'aucun commentaire ne peut être affiché */
-            
         }
 
-        /* ********************************** EFFACER UN ARTICLE ****************************************************************/
+        /* ************ 21. EFFACER UN ARTICLE ******************************************/
 
         elseif ($_GET['action'] == 'deletePost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                deletedPost($_GET['id']);
+                deletePost($_GET['id']);
 
             }
         }
 
-        /* ********************************** EFFACER UN MEMBRE ****************************************************************/
+        /* ************ 22 . EFFACER UN MEMBRE ******************************************/
 
         elseif ($_GET['action'] == 'deleteUser') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                deletedUser($_GET['id']);
+                deleteUser($_GET['id']);
 
             }
         }
 
-        /* ********************************** AFFICHER LA PAGE POUR MODIFIER UN MEMBRE ******************************************/
+        /* ************ 23 . AFFICHER LA PAGE POUR MODIFIER UN MEMBRE *******************/
+
+        elseif ($_GET['action'] == 'modifyUserPage') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                modifyUserPage($_GET['id']);
+
+            }
+        }
+
+        /* ************ 24 . MODIFIER UN MEMBRE *****************************************/
 
         elseif ($_GET['action'] == 'modifyUser') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -375,28 +392,16 @@ try {
             }
         }
 
-        /* ********************************** MODIFIER UN MEMBRE ***************************************************************/
+        /* ************ 25 . AFFICHER L'ENSEMBLE DES BLOG POSTS *************************/
 
-        elseif ($_GET['action'] == 'modifiedUser') {
+        elseif ($_GET['action'] == 'adminViewPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                modifiedUser($_GET['id']);
-
+                AdminViewPost();
             }
         }
 
-        /* ********************************** AFFICHER L'ENSEMBLE DES BLOG POSTS ***********************************************/
+        /* ************ AJOUTER UN COMMENTAIRE *************************************/
 
-        elseif ($_GET['action'] == 'adminListPost') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                AdminListPost();
-            }
-        }
-
-        
-
-        /* ********************************** AJOUTER UN COMMENTAIRE **********************************************************/
-
-        /* ...et que cette action est égale à addcomment */
         elseif ($_GET['action'] == 'adminAddComment') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -416,9 +421,8 @@ try {
             }
         }
 
-        /* ********************************** AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE ************************************/
+        /* ******** 27 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE ******************/
 
-        /* ...et que cette action est égale à modifyCommentpage */
         elseif ($_GET['action'] == 'adminModifyCommentPage') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -431,7 +435,7 @@ try {
             }
         }
 
-        /* ********************************** MODIFIER UN COMMENTAIRE **********************************************************/
+        /* ********* 28 . MODIFIER UN COMMENTAIRE ****************************************/
 
         elseif ($_GET['action'] == 'adminModifyComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -453,25 +457,30 @@ try {
             
         }
 
-        /* ********************************** SUPPRIMER UN COMMENTAIRE **********************************************************/
+        /* ********* 29 . SUPPRIMER UN COMMENTAIRE ***************************************/
 
-        elseif ($_GET['action'] == 'adminDeleteCommentPage') {
+        elseif ($_GET['action'] == 'adminDeleteComment') {
                     /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 /* alors j'exécute la fonction modifyCommentPage qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id') */ 
-                adminDeletedCommentPage($_GET['id']);
+                adminDeleteComment($_GET['id']);
             }
-                }    
+        }    
+        
+        /* ********* 30 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE **********************/
+        
+        elseif ($_GET['action'] == 'forgetPassword') {
+            forgetPassword();
+        }
     }
 
-        /* ********************************** PAGE D'ACCUEIL *********************************************************************/
+        /* *********** 30 . PAGE D'ACCUEIL ***********************************************/
 
     /* Sinon, par défaut, si il n'y a pas d'"action", alors j'exécute la fonction home qui affichera la page d'accueil */ 
     else {
     home();
     }
 }
-
 
 /* Si rien de tout cela ne fonctionne, je dois récupérer un message */
 catch(Exception $e) {

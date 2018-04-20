@@ -18,15 +18,19 @@
                     ?>
                         <div class="post box">
                             <div class="row">
+                                <a href="#"></a>
                                 <h2 class="post-title">
-                                    <a href="blog-post.php"><?php echo htmlspecialchars($data['pseudo']); ?></a>
+                                    <?php echo htmlspecialchars($data['pseudo']); ?>
                                 </h2>
+                                <h5 class="post-title">
+                                    <?php echo htmlspecialchars($data['email']); ?>
+                                </h5>
 
                                 <btn class="btn btn-default" style="float: right;">
                                     <a href="index.php?action=deleteUser&amp;id=<?= $data['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
                                 </btn>
                                 <btn class="btn btn-default" style="float: right;">
-                                    <a href="index.php?action=modifyUser&amp;id=<?= $data['id'] ?>">Modifier</a>
+                                    <a href="index.php?action=modifyUserPage&amp;id=<?= $data['id'] ?>">Modifier</a>
                                 </btn>
                             </div>
                         </div>

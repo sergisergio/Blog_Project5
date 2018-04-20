@@ -10,12 +10,12 @@
         <div class="col-md-12">
           <p class="pull-right">
             <btn class="btn btn-default">
-              <a href="index.php?action=connexion">Connexion</a>
+              <a href="index.php?action=loginPage">Connexion</a>
             </btn>
           </p>
           <p class="pull-right">
             <btn class="btn btn-default">
-              <a href="index.php?action=registration">Inscription</a>
+              <a href="index.php?action=signupPage">Inscription</a>
             </btn>&nbsp;&nbsp;
           </p>
         </div>

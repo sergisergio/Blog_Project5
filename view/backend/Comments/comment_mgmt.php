@@ -17,7 +17,7 @@
 
                                 
                     <div class="post box">
-                        <a href="index.php?action=adminListPost&amp;id=<?= $data['id'] ?>">
+                        <a href="index.php?action=adminViewPost&amp;id=<?= $data['id'] ?>">
                         <div class="row">
                             <h2 class="post-title"><?php echo htmlspecialchars($data['title']); ?></h2>
                         </div>

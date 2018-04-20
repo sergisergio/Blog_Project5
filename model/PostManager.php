@@ -1,5 +1,13 @@
 <?php
 
+/* ************************* RESUME *************************************
+
+1 . Récupérer tous les articles
+2 . Récupérer un seul article
+3 . Ajouter un article
+4 . Modifier un article
+5 . Effacer un article
+************************************************************************/
 /* Je crée un emplacement pour éviter les conflits avec d'autres développeurs */
 namespace Philippe\Blog\Model;
 
@@ -9,32 +17,31 @@ require_once("model/Manager.php");
 /* Je crée une classe Postmanager qui hérite de la classe Manager */
 class PostManager extends Manager
 {
-									/* **********************************************************************
-                                    *                        RECUPERER TOUS LES ARTICLES                    *
-                                    ************************************************************************/
+/* **********************************************************************
+*                    1 . RECUPERER TOUS LES ARTICLES                    *
+************************************************************************/
 	public function getPosts()
 	{
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction query à revoir */
-		$req = $db->query('SELECT id, title, intro, content, file_extension, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
-			FROM Post 
-			ORDER BY creation_date DESC LIMIT 0, 5');
+		$req = $db->query('SELECT id, title, intro, content, author, file_extension, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+			FROM Posts
+			ORDER BY creation_date DESC LIMIT 5');
 		return $req;
 	}
-
-									/* **********************************************************************
-                                    *                        RECUPERER UN SEUL ARTICLE                      *
-                                    ************************************************************************/
+/* **********************************************************************
+*                    2 . RECUPERER UN SEUL ARTICLE                      *
+************************************************************************/
 	public function getPost($postId){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$req = $db->prepare('SELECT id, title, intro, content, member_pseudo, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
-			FROM Post 
+		$req = $db->prepare('SELECT id, title, intro, content, author, file_extension, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+			FROM Posts 
 			WHERE id = ?
 			');
 
@@ -44,49 +51,47 @@ class PostManager extends Manager
 		$post = $req->fetch();
 		return $post;
 	}
-
-									/* **********************************************************************
-                                    *                        AJOUTER UN ARTICLE                      		*
-                                    ************************************************************************/
-	public function addPost($title, $intro, $memberPseudo, $content){
+/* **********************************************************************
+*                     3 . AJOUTER UN ARTICLE                      		*
+************************************************************************/
+	public function addPostRequest($title, $intro, $memberPseudo, $content){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('INSERT INTO Post(title, intro, member_pseudo, content, creation_date) VALUES(?, ?, ?, ?, NOW()) ');
+		$post = $db->prepare('INSERT INTO Posts(title, intro, author, content, creation_date) VALUES(?, ?, ?, ?, NOW()) ');
 
 		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content));
 		
 		return $affectedPost;
 	}
-	
-									/* **********************************************************************
-                                    *                        MODIFIER UN ARTICLE                      		*
-                                    ************************************************************************/
-	public function modifyPost($postId, $title, $intro, $memberPseudo, $content){
+/* **********************************************************************
+*                     4 . MODIFIER UN ARTICLE                      		*
+************************************************************************/
+	public function modifyPostRequest($postId, $title, $intro, $memberPseudo, $content){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('UPDATE Post SET title = ?, intro = ?, member_pseudo = ?, content = ?, creation_date = NOW() WHERE id = ?');
+		$post = $db->prepare('UPDATE Posts SET title = ?, intro = ?, author = ?, content = ?, creation_date = NOW() WHERE id = ?');
 
 		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content, $postId));
 		
 		return $affectedPost;
 	}
 
-									/* **********************************************************************
-                                    *                        EFFACER UN ARTICLE                      		*
-                                    ************************************************************************/
-	public function deletePost($postId){
+/* **********************************************************************
+*                      5 . EFFACER UN ARTICLE                      		*
+************************************************************************/
+	public function deletePostRequest($postId){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('DELETE FROM Post WHERE id = ?');
+		$post = $db->prepare('DELETE FROM Posts WHERE id = ?');
 
 		$affectedPost = $post->execute(array($postId));
 		

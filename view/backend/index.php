@@ -8,7 +8,7 @@
                 
                 <div class="container">
                     
-                    <?php include "view/frontend/includes/form_connexion.php"; ?>
+                    <?php include "view/frontend/includes/form_login.php"; ?>
                                    
                 </div>
                 <!-- /.container -->

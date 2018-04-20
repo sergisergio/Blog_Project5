@@ -7,7 +7,7 @@
             <?php include "includes/nav.php"; ?>
                 <!-- /#home -->
             <div class="container">
-                <?php include "includes/form_inscription.php"; ?>
+                <?php include "includes/form_signup.php"; ?>
             </div>
                 <!-- /.container -->
         </div>

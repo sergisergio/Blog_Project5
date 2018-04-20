@@ -1,3 +1,11 @@
+<?php
+
+    if(isset($_SESSION['pseudo'])) {
+        header('Location:index.php?action=blog');
+        exit();
+    }
+?>
+
 <?php $title = 'Connexion'; ?>
 <?php ob_start(); ?>
 
@@ -6,7 +14,7 @@
         <?php include "includes/nav.php"; ?>
             <!-- /#home -->
         <div class="container">
-            <?php include "includes/form_connexion.php"; ?>
+            <?php include "includes/form_login.php"; ?>
         </div>
             <!-- /.container -->
     </div>
