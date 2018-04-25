@@ -41,8 +41,8 @@
 
                                     <form action="index.php?action=adminAddComment&amp;id=<?= $post['id'] ?>" method="post">
                                         <div>
-                                            <label for="member_pseudo">Auteur</label><br />
-                                            <input type="text" id="member_pseudo" name="member_pseudo" />
+                                            <label for="author">Auteur</label><br />
+                                            <input type="text" id="author" name="author" />
                                         </div>
                                         <div>
                                             <label for="content">Commentaire</label><br />
@@ -63,7 +63,7 @@
                                         while ($comment = $comments->fetch())
                                         {
                                         ?>
-                                        <p><strong><?= htmlspecialchars($comment['member_pseudo']) ?></strong> le <?= $comment['creation_date_fr'] ?></p>
+                                        <p><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['creation_date_fr'] ?></p>
                                         <p><?= nl2br(htmlspecialchars($comment['content'])) ?>
                                             <a href="index.php?action=adminModifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a>
                                             <a href="index.php?action=adminDeleteComment&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>

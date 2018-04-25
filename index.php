@@ -108,10 +108,10 @@ try {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 /* Si les champs pseudo et commentaire sont bien remplis */
-                if (!empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
+                if (!empty($_POST['author']) && !empty($_POST['content'])) {
                     /* alors j'exécute la fonction addComment qui se trouve dans le contrôleur frontend
                     ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    addComment($_GET['id'], $_POST['member_pseudo'], $_POST['content']);
+                    addComment($_GET['id'], $_POST['author'], $_POST['content']);
                 }
                 /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */
                 else {
@@ -144,7 +144,7 @@ try {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 /* alors j'exécute la fonction modifyCommentPage qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id') */ 
-                deletedComment($_GET['id']);
+                deleteComment($_GET['id']);
             }
             
         }
@@ -155,9 +155,9 @@ try {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 /* Si les champs pseudo et commentaire ont bien été remplis */
-                if (!empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
+                if (!empty($_POST['author']) && !empty($_POST['content'])) {
                     /* alors j'exécute la fonction modifyComment qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    modifyComment($_GET['id'], $_POST['member_pseudo'], $_POST['content']);
+                    modifyComment($_GET['id'], $_POST['author'], $_POST['content']);
                 }
                 /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */
                 else {
@@ -261,6 +261,7 @@ try {
              /* alors j'exécute la fonction registration qui se trouve dans le contrôleur frontend */
             if (isset($_GET['id']) && isset($_GET['token'])) {
                   confirmRegistration($_GET['id'], $_GET['token']); 
+                  
             }
             else {
                 echo 'Aucun id ou token...';
@@ -274,9 +275,19 @@ try {
 
         /* ************** 13 . CONNEXION ADMINISTRATEUR *********************************/
 
-        elseif ($_GET['action'] == 'loginAdmin') {
-             /* alors j'exécute la fonction connexionAdmin qui se trouve dans le contrôleur backend */
-            loginAdmin();
+        elseif ($_GET['action'] == 'loginAdminPage') {
+            loginAdminPage();
+            
+        }
+
+        elseif ($_GET['action'] == 'adminLogin') {
+
+            if (isset($_POST['pseudo']) && isset($_POST['passe'])) {
+            loginAdmin($_POST['pseudo'], $_POST['passe']);
+            }
+            else {
+                echo 'Veuillez remplir tous les champs';
+            }
         }
 
         /* ************** 14 . AFFICHER LA PAGE D'ACCUEIL ADMINISTRATEUR ****************/
@@ -311,9 +322,9 @@ try {
 
         elseif ($_GET['action'] == 'addpost') {
           
-                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
+                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['author']) && !empty($_POST['content'])) {
                     /* alors j'exécute la fonction addComment qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    addPost($_POST['title'], $_POST['intro'], $_POST['member_pseudo'], $_POST['content']);
+                    addPost($_POST['title'], $_POST['intro'], $_POST['author'], $_POST['content']);
                 }
                 /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */
                 else {
@@ -341,9 +352,9 @@ try {
         elseif ($_GET['action'] == 'modifyPost') {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
+                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['author']) && !empty($_POST['content'])) {
                     /* alors j'exécute la fonction modifiedPost qui se trouve dans le contrôleur backend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    modifyPost($_GET['id'], $_POST['title'], $_POST['intro'], $_POST['member_pseudo'], $_POST['content']);
+                    modifyPost($_GET['id'], $_POST['title'], $_POST['intro'], $_POST['author'], $_POST['content']);
                 }
                 /*  */
                 else {
@@ -406,9 +417,9 @@ try {
             /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 /* Si les champs pseudo et commentaire sont bien remplis */
-                if (!empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
+                if (!empty($_POST['author']) && !empty($_POST['content'])) {
                     /* alors j'exécute la fonction addAddComment qui se trouve dans le contrôleur backend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    adminAddComment($_GET['id'], $_POST['member_pseudo'], $_POST['content']);
+                    adminAddComment($_GET['id'], $_POST['author'], $_POST['content']);
                 }
                 /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */
                 else {
@@ -440,9 +451,9 @@ try {
         elseif ($_GET['action'] == 'adminModifyComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 /* Si les champs pseudo et commentaire ont bien été remplis */
-                if (!empty($_POST['member_pseudo']) && !empty($_POST['content'])) {
+                if (!empty($_POST['author']) && !empty($_POST['content'])) {
                     /* alors j'exécute la fonction modifyComment qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    adminModifyComment($_GET['id'], $_POST['member_pseudo'], $_POST['content']);
+                    adminModifyComment($_GET['id'], $_POST['author'], $_POST['content']);
                 }
                    
                 /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */

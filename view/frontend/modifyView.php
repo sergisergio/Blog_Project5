@@ -38,8 +38,8 @@
             <h2>Modifier le commentaire</h2>
             <form action="index.php?action=modifyComment&amp;id=<?= $comment['id'] ?>" method="post">
               <div>
-                <label for="member_pseudo">Auteur</label><br />
-                <input type="text" id="member_pseudo" name="member_pseudo" value="<?= htmlspecialchars($comment['member_pseudo']) ?>" />
+                <label for="author">Auteur</label><br />
+                <input type="text" id="author" name="author" value="<?= htmlspecialchars($comment['author']) ?>" />
               </div>
               <div>
                 <label for="content">Commentaire</label><br />

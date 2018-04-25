@@ -60,7 +60,7 @@ function addUser($pseudo, $email, $passe)
     $userManager = new \Philippe\Blog\Model\UserManager();
     $users = $userManager->addUserRequest($pseudo, $email, $passe);
      if ($users === false) {
-        throw new Exception('Inscription impossible !');
+        echo '<div class="alert alert-danger">' . 'Inscription impossible !' . '</div>' . '<br />';
     } 
     
     else {
@@ -76,24 +76,19 @@ function login($pseudo,$passe) {
     $userManager = new \Philippe\Blog\Model\UserManager();
     $user = $userManager->loginRequest($pseudo,$passe);
     
-         if(!empty($_POST) && !empty($_POST['pseudo']) && !empty($_POST['passe'])) {
-            if(password_verify($_POST['passe'], $user['password'])) {
-                $_SESSION['pseudo'] = $user;
-                // header('Location:view/frontend/blog.php');
-                echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';
-                
-            }
-            else {
-                echo '<div class="alert alert-danger">' . 'Mauvais identifiant ou mot de passe' . '</div>' . '<br />';
-            }
+    if(!empty($_POST) && !empty($_POST['pseudo']) && !empty($_POST['passe'])) {
+        if(password_verify($_POST['passe'], $user['password'])) {
+                // $_SESSION['pseudo'] = $user;
+                // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
+               // echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';
         }
+        else {
+            echo '<div class="alert alert-danger">' . 'Mauvais identifiant ou mot de passe' . '</div>' . '<br />';
+        }
+    }
     else {
         echo '<div class="alert alert-danger">' . 'Veuillez remplir tous les champs !' . '</div>' . '<br />';
     }
-    
-    
-        
-    
 }
 /* **********************************************************************
 *                          6 . DECONNEXION                              *
@@ -146,22 +141,34 @@ function confirmRegistration($userId, $userToken)
 {
     $userManager = new \Philippe\Blog\Model\UserManager();
     $user = $userManager->getUser($userId);
+     // $activeUser = $userManager->setActiveRequest($userId);
     
-    /*var_dump($user);
-    var_dump($userToken);
-    die();*/
     
     if ($user &&  $user['confirmation_token'] == $userToken) {
-        echo 'Votre compte a bien été validé';
-        // update champ active à 1
         
-        header('Location : http://projet5.philippetraon.com/index.php?action=blog');
+         require('view/frontend/login.php');
+         echo '<script>alert ("Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !") ;</script>';
+        // update champ active à 1
+         $userManager->setActiveRequest($userId);
     }
     else {
-        echo 'Ce token n\'est plus valide';
+        echo '<script>alert ("Ce token n est plus valide ! Veuillez réessayer !");</script>';
+         require('view/frontend/signup.php');
     }
-    require('view/frontend/confirmRegistration.php');
+    
 }
+
+/* **********************************************************************
+*                    PASSER USER EN ACTIF.                              *
+************************************************************************/
+
+function setActiveUser($userId)
+{
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $activeUser = $userManager->setActiveRequest($userId);
+}
+
+
 
 /* **********************************************************************
 *                      10 . TOUS LES BLOG POSTS                         *
@@ -194,10 +201,10 @@ function listPost()
 *                     12 . AJOUTER UN COMMENTAIRE                       *
 ************************************************************************/
 /* fonction qui fait appel à l'instance$commentmanager qui va utiliser la fonction postcomment afin d'ajouter un commentaire dans la base de données. 3 paramètres sont utilisés : postId, pseudo et contenu . Une fois ajouté, on retourne à la même page. */
-function addComment($postId, $memberPseudo, $content)
+function addComment($postId, $author, $content)
 {
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
-	$affectedLines = $commentManager->postComment($postId, $memberPseudo, $content);
+	$affectedLines = $commentManager->postComment($postId, $author, $content);
 
 	if ($affectedLines === false) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
@@ -226,14 +233,14 @@ function modifyCommentPage($commentId)
 /* **********************************************************************
 *                     14 . SUPPRIMER UN COMMENTAIRE                     *
 ************************************************************************/
-function deletedComment($commentId)
+function deleteComment($commentId)
 {
 
     $commentManager = new \Philippe\Blog\Model\CommentManager();
 
     $comment = $commentManager->getComment($commentId);
     
-    $success = $commentManager->deleteComment($commentId);
+    $success = $commentManager->deleteCommentRequest($commentId);
     
     if ($success === false) {
         throw new Exception('Impossible de supprimer le commentaire');
@@ -247,11 +254,11 @@ function deletedComment($commentId)
 *                     15 . MODIFIER UN COMMENTAIRE                      *
 ************************************************************************/
 /* fonction qui utilise une seule instance $commentmanager mais 2 fonctions. L'instance utilise la fonction getComment pour récupérer le commentaire en fonction de son identifiant, puis la fonction modifycomment qui va nous permettre de mettre à jour le commentaire dans la base de données. Une fois modifié, on retourne à la page de l'article en question... */
-function modifyComment($commentId, $memberPseudo, $content)
+function modifyComment($commentId, $author, $content)
 {
     $commentManager = new \Philippe\Blog\Model\CommentManager();
 
-    $success = $commentManager->modifyComment($commentId, $memberPseudo, $content);
+    $success = $commentManager->modifyComment($commentId, $author, $content);
     $comment = $commentManager->getComment($commentId);
 
     if ($success === false) {

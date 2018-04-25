@@ -75,6 +75,9 @@
             color: #111 !important;
             border: 1px solid #111;
         }
+        input {
+            background-color: rgba(30,30,31,0.85);
+        }
     </style>
 </head>
 

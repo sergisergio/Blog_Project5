@@ -54,19 +54,20 @@ class CommentManager extends Manager
 /* **********************************************************************
 *                  3 . AJOUTER UN  COMMENTAIRE                          *
 ************************************************************************/
-	public function postComment($postId, $memberPseudo, $content){
+	public function postComment($postId, $author, $content){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 		/* Fonction prepare à revoir */
 		$comments = $db->prepare('INSERT INTO Comments(post_id, author, content, creation_date) VALUES(?, ?, ?, NOW())');
 		/* Fonction execute à revoir */
-		$affectedLines = $comments->execute(array($postId, $memberPseudo, $content));
+		$affectedLines = $comments->execute(array($postId, $author, $content));
 
         return $affectedLines;
 	}
 /* **********************************************************************
-*                     4 . SUPPRIMER UN  COMMENTAIRE                     *   ************************************************************************/
+*                     4 . SUPPRIMER UN  COMMENTAIRE                     *   
+************************************************************************/
 	public function deleteCommentRequest($commentId){
 
 		/* A revoir */
@@ -81,7 +82,7 @@ class CommentManager extends Manager
 /* **********************************************************************
 *                  5 . MODIFIER UN  COMMENTAIRE                         *
 ************************************************************************/
-	public function modifyComment($commentId, $memberPseudo, $content)
+	public function modifyComment($commentId, $author, $content)
     {
 
     	/* A revoir */
@@ -89,7 +90,7 @@ class CommentManager extends Manager
         /* Fonction prepare à revoir */
         $comments = $db->prepare('UPDATE Comments SET author = ?, content = ?, creation_date = NOW() WHERE  id = ?');
         /* Fonction execute à revoir */
-        $affectedLines = $comments->execute(array($memberPseudo, $content, $commentId));
+        $affectedLines = $comments->execute(array($author, $content, $commentId));
 
         return $affectedLines;
     }

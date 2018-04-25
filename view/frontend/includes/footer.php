@@ -1,7 +1,7 @@
 <footer class="footer box">
     <p class="pull-left">
         <btn class="btn btn-default">
-            <a href="index.php?action=loginAdmin">Administration</a>
+            <a href="index.php?action=loginAdminPage">Administration</a>
         </btn>
     </p>
                 

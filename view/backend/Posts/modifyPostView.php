@@ -29,8 +29,8 @@
                             </div>
 
                             <div>
-                                <label for="member_pseudo">Auteur</label><br />
-                                <input type="text" id="member_pseudo" name="member_pseudo" value="<?= htmlspecialchars($post['member_pseudo']) ?>" />
+                                <label for="author">Auteur</label><br />
+                                <input type="text" id="author" name="author" value="<?= htmlspecialchars($post['author']) ?>" />
                             </div>
 
                             <div>

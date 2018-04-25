@@ -5,7 +5,7 @@
         <div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
-            <form class="forms" action="index.php?action=login" method="post">
+            <form class="forms" action="index.php?action=adminLogin" method="post">
                 <fieldset>
                     <div class="row">
                         <div class="col-md-offset-3 col-md-6 col-sm-12">
@@ -13,14 +13,14 @@
                                 <label>Pseudo</label>
                                 <input type="text" name="pseudo" class="text-input defaultText required" /> </div>
                             <div class="form-row text-input-row subject-field">
-                                <label>Mot de passe</label> <a class="pull-right" href="index.php?action=forgetPassword"> (Mot de passe oublié ? )</a>
+                                <label>Mot de passe</label>
                                 <input type="password" name="passe" class="text-input defaultText" /> </div>
                         </div>
                         <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                            <div class="pull-right">
-                                <input type="checkbox" name="remember" value="1" />
-                                <label class="">Se souvenir de moi</label>
-                            
+                            <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="remember" value="1" /> <p>Se souvenir de moi </p></label>
+                            <p class="pull-right"><a href="index.php?action=forgetPassword">Mot de passe oublié ?</a></p>
                             </div>
                         </div>
                         

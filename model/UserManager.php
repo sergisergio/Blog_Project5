@@ -58,6 +58,29 @@ class UserManager extends Manager
 		return $post;
 	}
 /* **********************************************************************
+*                  2 . RECUPERER AUTORISATION                         *
+************************************************************************/
+
+	public function getAuthorization($pseudo){
+
+		/* A revoir */
+		$db = $this->dbConnect();
+
+		/* Fonction prepare à revoir */
+		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, is_active
+			FROM Users 
+			WHERE pseudo = ?
+			');
+
+		/* Fonction execute à revoir */
+		$req->execute(array($pseudo));
+		/* Fonction fetch à revoir */
+		$access = $req->fetch();
+		return $access;
+	}
+
+
+/* **********************************************************************
 *                       3 . MODIFIER UN MEMBRE                         	*
 ************************************************************************/
 	public function modifyUserRequest($userId){
@@ -66,9 +89,9 @@ class UserManager extends Manager
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('UPDATE Users SET title = ?, intro = ?, member_pseudo = ?, content = ?, creation_date = NOW() WHERE id = ?');
+		$post = $db->prepare('UPDATE Users SET title = ?, intro = ?, author = ?, content = ?, creation_date = NOW() WHERE id = ?');
 
-		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content, $postId));
+		$affectedPost = $post->execute(array($title, $intro, $author, $content, $postId));
 		
 		return $affectedPost;
 
@@ -116,7 +139,7 @@ class UserManager extends Manager
 		//mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
         
         /* test mail serveur */
-        mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
+        mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
         
 		
 		return $registeredMember;
@@ -127,7 +150,7 @@ class UserManager extends Manager
 *                5 . CONFIRMATION INSCRIPTION                           *
 ************************************************************************/
     
-    public function confirmRegistrationRequest($userId) {
+    /*public function confirmRegistrationRequest($userId) {
         
         $db = $this->dbConnect();
         
@@ -136,7 +159,21 @@ class UserManager extends Manager
         $user = $req->fetch();
         
         return $user;
-    }
+    }*/
+
+/* **********************************************************************
+*                5 . CONFIRMATION INSCRIPTION                           *
+************************************************************************/
+
+	public function setActiveRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET is_active = 1 WHERE id = ?');
+
+		$activeUser = $req->execute(array($userId));
+
+		return $activeUser;
+	}
 
 /* **********************************************************************
 *                   6 . LE PSEUDO EST-IL DEJA PRIS ?                    *

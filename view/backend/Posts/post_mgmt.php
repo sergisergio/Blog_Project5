@@ -29,7 +29,7 @@
 
                             <div>
                                 <label for="member_pseudo">Auteur</label><br />
-                                <input type="text" id="member_pseudo" name="member_pseudo" value="" />
+                                <input type="text" id="member_pseudo" name="author" value="" />
                             </div>
 
                             <div>

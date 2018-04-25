@@ -30,10 +30,33 @@ require_once('model/UserManager.php');
 *                1 . PAGE DE CONNEXION ADMINISTRATEUR                   *
 ************************************************************************/
 /* fonction qui fait appel à la page de connexion administrateur*/
-function loginAdmin()
+function loginAdminPage()
 {
+
 	require('view/backend/index.php');
 }
+
+function loginAdmin($pseudo, $passe) {
+	$userManager = new \Philippe\Blog\Model\UserManager();
+	$access = $userManager->getAuthorization($pseudo);
+
+	// Si authorization = 1 Alors Accès OK Sinon Accès pas ok
+	if(password_verify($_POST['passe'], $access['password'])) {
+		if ($access['authorization'] == 1) {
+			// créer une session userId et vérifier l'autorisation : si celle-ci est OK, on reste sur la page sinon redirection vers page non connecté.
+			header('Location : view/backend/index_management.php');
+			exit;
+			// require('view/backend/index_management.php');
+		}
+		else {
+			echo '<div class="alert alert-danger">' . 'Vous n\'avez pas les droits pour accéder à la partie administrateur' . '</div>';
+		}
+	}
+	else {
+		echo '<div class="alert alert-danger">' . 'identifiant ou mot de passe incorrect' . '</div>';
+	}
+}
+
 
 /* **********************************************************************
 *                2 . PAGE D'ACCUEIL ADMINISTRATEUR                      *
@@ -56,10 +79,10 @@ function managePosts()
 /* **********************************************************************
 *                       4 . AJOUTER UN ARTICLE                          *
 ************************************************************************/
-function addPost($title, $intro, $memberPseudo, $content)
+function addPost($title, $intro, $author, $content)
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$affectedPost = $postManager->addPostRequest($title, $intro, $memberPseudo, $content);
+	$affectedPost = $postManager->addPostRequest($title, $intro, $author, $content);
 
 	if ($affectedPost === false) {
         throw new Exception('Impossible d\'ajouter l\'article');
@@ -81,10 +104,10 @@ function modifyPostPage($postId)
 /* **********************************************************************
 *                    6 . MODIFIER UN ARTICLE                            *
 ************************************************************************/
-function modifyPost($postId, $title, $intro, $memberPseudo, $content)
+function modifyPost($postId, $title, $intro, $author, $content)
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$success = $postManager->modifyPostRequest($postId, $title, $intro, $memberPseudo, $content);
+	$success = $postManager->modifyPostRequest($postId, $title, $intro, $author, $content);
 	$post = $postManager->getPost($_GET['id']);
 
 	if ($success === false) {
@@ -123,10 +146,10 @@ function manageComments()
 *                     9 . AJOUTER UN COMMENTAIRE                        *
 ************************************************************************/
 /* fonction qui fait appel à l'instance$commentmanager qui va utiliser la fonction postcomment afin d'ajouter un commentaire dans la base de données. 3 paramètres sont utilisés : postId, pseudo et contenu . Une fois ajouté, on retourne à la même page. */
-function adminAddComment($postId, $memberPseudo, $content)
+function adminAddComment($postId, $author, $content)
 {
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
-	$affectedLines = $commentManager->postComment($postId, $memberPseudo, $content);
+	$affectedLines = $commentManager->postComment($postId, $author, $content);
 
 	if ($affectedLines === false) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
@@ -167,11 +190,11 @@ function AdminModifyCommentPage($commentId)
 *                    12 . MODIFIER UN COMMENTAIRE                       *
 ************************************************************************/
 /* fonction qui utilise une seule instance $commentmanager mais 2 fonctions. L'instance utilise la fonction getComment pour récupérer le commentaire en fonction de son identifiant, puis la fonction modifycomment qui va nous permettre de mettre à jour le commentaire dans la base de données. Une fois modifié, on retourne à la page de l'article en question... */
-function adminModifyComment($commentId, $memberPseudo, $content)
+function adminModifyComment($commentId, $author, $content)
 {
     $commentManager = new \Philippe\Blog\Model\CommentManager();
 
-    $success = $commentManager->modifyComment($commentId, $memberPseudo, $content);
+    $success = $commentManager->modifyComment($commentId, $author, $content);
     $comment = $commentManager->getComment($commentId);
 
     if ($success === false) {

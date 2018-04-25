@@ -54,7 +54,7 @@ class PostManager extends Manager
 /* **********************************************************************
 *                     3 . AJOUTER UN ARTICLE                      		*
 ************************************************************************/
-	public function addPostRequest($title, $intro, $memberPseudo, $content){
+	public function addPostRequest($title, $intro, $author, $content){
 
 		/* A revoir */
 		$db = $this->dbConnect();
@@ -62,14 +62,14 @@ class PostManager extends Manager
 		/* Fonction prepare à revoir */
 		$post = $db->prepare('INSERT INTO Posts(title, intro, author, content, creation_date) VALUES(?, ?, ?, ?, NOW()) ');
 
-		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content));
+		$affectedPost = $post->execute(array($title, $intro, $author, $content));
 		
 		return $affectedPost;
 	}
 /* **********************************************************************
 *                     4 . MODIFIER UN ARTICLE                      		*
 ************************************************************************/
-	public function modifyPostRequest($postId, $title, $intro, $memberPseudo, $content){
+	public function modifyPostRequest($postId, $title, $intro, $author, $content){
 
 		/* A revoir */
 		$db = $this->dbConnect();
@@ -77,7 +77,7 @@ class PostManager extends Manager
 		/* Fonction prepare à revoir */
 		$post = $db->prepare('UPDATE Posts SET title = ?, intro = ?, author = ?, content = ?, creation_date = NOW() WHERE id = ?');
 
-		$affectedPost = $post->execute(array($title, $intro, $memberPseudo, $content, $postId));
+		$affectedPost = $post->execute(array($title, $intro, $author, $content, $postId));
 		
 		return $affectedPost;
 	}
