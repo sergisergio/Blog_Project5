@@ -493,6 +493,10 @@ try {
                 echo 'Veuillez renseigner votre email';
             }
         }
+
+        elseif ($_GET['action'] == 'profilePage') {
+            profilePage();
+        }
     }
 
         /* *********** 30 . PAGE D'ACCUEIL ***********************************************/

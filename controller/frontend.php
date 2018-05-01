@@ -51,6 +51,12 @@ function signupPage()
     
 	require('view/frontend/signup.php');
 }
+
+function profilePage()
+{
+    
+    require('view/frontend/profile.php');
+}
 /* **********************************************************************
 *                          4 . INSCRIPTION                              *
 ************************************************************************/
@@ -82,6 +88,12 @@ function login($pseudo,$passe) {
             if ($user['is_active'] == 1) {
             session_start();
             $_SESSION['pseudo'] = $user['pseudo'];
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['prenom'] = $user['first_name'];
+            $_SESSION['nom'] = $user['last_name'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['password'] = $user['password'];
+            $_SESSION['autorisation'] = $user['authorization'];
             echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
             // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
                // echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';

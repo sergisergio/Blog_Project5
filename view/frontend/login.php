@@ -1,3 +1,13 @@
+<?php if(session_status() == PHP_SESSION_NONE){
+        session_start();
+    }
+    if(isset($_SESSION['pseudo'])){
+        
+        header('Location: index.php?action=blog');
+        exit();
+    }
+?>
+
 <?php $title = 'Connexion'; ?>
 
 <?php ob_start(); ?>

@@ -88,7 +88,7 @@ if(session_status() == PHP_SESSION_NONE){
                                 </p>
                                 <p>
                                     <?= nl2br(htmlspecialchars($comment['content'])) ?> 
-                                    <?php if (isset($_SESSION['pseudo'])): ?>
+                                    <?php if (isset($_SESSION['pseudo']) && ($_SESSION['id'] == $comment['author'])): ?>
                                     <a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a> 
                                     <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a> 
                                     <?php endif; ?>
