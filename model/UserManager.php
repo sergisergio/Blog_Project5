@@ -120,18 +120,18 @@ class UserManager extends Manager
 		$db = $this->dbConnect();
 		
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(?, ?, ?, ?');
+		$post = $db->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(?, ?, ?, ?)');
 
-		    $passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
+		$passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
 
-		    function str_random($length){
-		    	$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-		    	return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
-		    }
+		function str_random($length){
+		   	$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+		    return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
+		}
 
 		    $token = str_random(100);
 
-		$registeredMember = $post->execute(array($pseudo, $email, $passe, $token));
+		$users = $post->execute(array($pseudo, $email, $passe, $token));
         
         $user_id = $db->lastInsertId();
         
@@ -142,7 +142,7 @@ class UserManager extends Manager
         mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
         
 		
-		return $registeredMember;
+		return $users;
 
 	}
     

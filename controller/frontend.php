@@ -79,12 +79,16 @@ function login($pseudo,$passe) {
     if(!empty($_POST) && !empty($_POST['pseudo']) && !empty($_POST['passe'])) {
 
         if(password_verify($_POST['passe'], $user['password'])) {
+            if ($user['is_active'] == 1) {
             session_start();
             $_SESSION['pseudo'] = $user['pseudo'];
             echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
             // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
                // echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';
-            
+            }
+            else {
+                echo '<div class="alert alert-danger">' . 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !' . '</div>' . '<br />';
+            }
             
         }
         else {
