@@ -8,14 +8,9 @@
             <?php include "includes/nav.php"; ?>
                 <!-- /#home -->
             <div class="container">
-                <?php include "includes/form_signup.php"; ?>
+                <?php include "forms/form_signup.php"; ?>
             </div>
                 <!-- /.container -->
         </div>
-        <!-- /.body-wrapper -->
-        <?php include "includes/foot.php"; ?>
-    </body>
-
 <?php $content = ob_get_clean(); ?>
-
 <?php require('template.php'); ?>

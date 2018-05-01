@@ -36,19 +36,7 @@
               </p>
             </div>
             <h2>Modifier le commentaire</h2>
-            <form action="index.php?action=modifyComment&amp;id=<?= $comment['id'] ?>" method="post">
-              <div>
-                <label for="author">Auteur</label><br />
-                <input type="text" id="author" name="author" value="<?= htmlspecialchars($comment['author']) ?>" />
-              </div>
-              <div>
-                <label for="content">Commentaire</label><br />
-                <textarea id="content" name="content"><?= htmlspecialchars($comment['content']) ?></textarea>
-              </div>
-              <div>
-                <input type="submit" />
-              </div>
-            </form>
+            <?php include "forms/form_modifycomment.php"; ?>
             <div class="divide20"></div>
           </div>
           <!-- /.post --> 
@@ -63,9 +51,7 @@
       <!-- /.content -->
       <aside class="col-md-4 col-sm-12 sidebar">
         <div class="sidebox box widget">
-          <form class="searchform" method="get">
-            <input type="text" id="s2" name="s" value="Rechercher" onfocus="this.value=''" onblur="this.value='Rechercher'"/>
-          </form>
+          <?php include "forms/form_search.php"; ?>
         </div>
         <div class="clearfix"></div>       
       </aside>
@@ -80,17 +66,5 @@
         </div>
       </div>
   </div>
-<!-- /.body-wrapper --> 
-  <script src="public/js/jquery.min.js"></script> 
-  <script src="public/js/bootstrap.min.js"></script> 
-  <script src="public/js/jquery.themepunch.tools.min.js"></script> 
-  <script src="public/js/classie.js"></script> 
-  <script src="public/js/plugins.js"></script> 
-  <script src="public/js/scripts.js"></script>  
-  <script>
-	 $.backstretch(["public/images/art/react2.png"]);
-  </script>
-</body>
 <?php $content = ob_get_clean(); ?>
-
 <?php require('template.php'); ?>

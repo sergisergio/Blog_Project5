@@ -138,12 +138,7 @@
                         }
                     </script>
                 </div>
-                            <!-- /column -->
-                            <!-- /column -->
-                            <!-- /column -->
                 <div class="divide30"></div>
-                            <!-- /column -->
-                            <!-- /column -->
             </div>
                         <!-- /.row -->
         </div>

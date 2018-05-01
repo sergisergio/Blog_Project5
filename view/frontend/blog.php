@@ -1,3 +1,8 @@
+<?php
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+?>
 <?php $title = 'Mon blog'; ?>
 <?php ob_start(); ?>
 <body class="full-layout">
@@ -8,6 +13,19 @@
     <div class="container inner">
       <div class="blog box mgbottom row" style="margin-bottom: 50px;">
         <div class="col-md-12">
+          <?php if (isset($_SESSION['pseudo'])): ?>
+            <p class="pull-left">
+            <btn class="btn btn-default">
+              <a href="index.php?action=profilePage">Voir mon profil</a>
+            </btn>
+            </p>
+
+            <p class="pull-right">
+            <btn class="btn btn-default">
+              <a href="index.php?action=logout">Déconnexion</a>
+            </btn>
+          </p>
+          <?php else: ?> 
           <p class="pull-right">
             <btn class="btn btn-default">
               <a href="index.php?action=loginPage">Connexion</a>
@@ -18,6 +36,7 @@
               <a href="index.php?action=signupPage">Inscription</a>
             </btn>&nbsp;&nbsp;
           </p>
+          <?php endif; ?>
         </div>
       </div>
       <div class="blog list-view row">
@@ -33,12 +52,19 @@
                   <div class="meta">  
                     <!--<span class="category">Journal</span>-->
                     <span class="date">date de dernière publication</span> : 
-                    <?= ($data['creation_date_fr']);?>
+                    <?php
+                    if (isset($data['last_updated_fr'])) {
+                      echo ($data['last_updated_fr']);
+                    }
+                    else
+                      echo ($data['creation_date_fr']);
+                    ?>
                     <!--<span class="comments"><a href="#">8 <i class="icon-chat-1"></i></a></span>-->
                   </div>
-                  <h2 class="post-title"><a href="blog-post.php"><?php echo htmlspecialchars($data['title']); ?></a></h2>
-                  <img src="<?= $data['file_extension'] ?>" class="img-responsive" />
-                  <p><?php echo htmlspecialchars($data['intro']); ?></p>
+                  <h2 class="post-title"><?= htmlspecialchars($data['title']); ?></h2>
+                  <h3 class="post-title">Auteur : <?= ($data['author']); ?></h3>
+                  <img src="<?= $data['file_extension']; ?>" class="img-responsive" />
+                  <p><?= htmlspecialchars($data['intro']); ?></p>
                   <hr>
                   <p class="pull-right">
                     <a href="index.php?action=blogpost&amp;id=<?= $data['id'] ?>">Voir plus</a>
@@ -78,9 +104,8 @@
         <!-- /.widget -->
         
         <div class="sidebox box widget">
-          <form class="searchform" method="get">
-            <input type="text" id="s2" name="s" value="Rechercher" onfocus="this.value=''" onblur="this.value='Rechercher'"/>
-          </form>
+          
+          <?php include "forms/form_search.php"; ?>
         </div>
         <!-- /.widget -->
         
@@ -136,10 +161,5 @@
     </div>
     
   </div>
-    
-<!-- /.body-wrapper --> 
-  <?php include "view/frontend/includes/foot.php"; ?>
-</body>
 <?php $content = ob_get_clean(); ?>
-
 <?php require('template.php'); ?>

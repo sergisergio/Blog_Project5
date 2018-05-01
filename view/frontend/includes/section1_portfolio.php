@@ -158,7 +158,7 @@
         </div>
                     <!-- /.cbp-l-grid-masonry -->
         <div class="cbp-l-loadMore-button"> 
-            <a href="detail/port1-more.php" class="cbp-l-loadMore-button-link btn">VOIR PLUS</a> 
+            <a href="../detail/port1-more.php" class="cbp-l-loadMore-button-link btn">VOIR PLUS</a> 
         </div>
     </div>
                 <!-- /.box -->

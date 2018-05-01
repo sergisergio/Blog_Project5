@@ -75,7 +75,7 @@ class PostManager extends Manager
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('UPDATE Posts SET title = ?, intro = ?, author = ?, content = ?, creation_date = NOW() WHERE id = ?');
+		$post = $db->prepare('UPDATE Posts SET title = ?, intro = ?, author = ?, content = ?, last_updated = NOW() WHERE id = ?');
 
 		$affectedPost = $post->execute(array($title, $intro, $author, $content, $postId));
 		

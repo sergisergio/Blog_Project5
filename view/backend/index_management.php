@@ -6,17 +6,12 @@
         <div class="body-wrapper">
             <?php include "view/frontend/includes/nav.php"; ?>
                 
-                <div class="container">
+            <div class="container">
                     
-                                <?php include "includes/management.php"; ?>
+                <?php include "includes/management.php"; ?>
                                    
-                </div>
+            </div>
                 <!-- /.container -->
         </div>
-        <!-- /.body-wrapper -->
-        <?php include "view/frontend/includes/foot.php"; ?>
-    </body>
-
-    <?php $content = ob_get_clean(); ?>
-
-    <?php require('template.php'); ?>
+<?php $content = ob_get_clean(); ?>
+<?php require('template.php'); ?>

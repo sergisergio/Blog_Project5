@@ -1,6 +1,6 @@
 <section id="contact">
     <div class="box">
-        <h2 class="section-title text-center">Connexion</h2>
+        <h2 class="section-title text-center">Administration</h2>
         <p></p>
         <div class="divide30"></div>
         <div class="form-container">
@@ -14,13 +14,15 @@
                                 <input type="text" name="pseudo" class="text-input defaultText required" /> </div>
                             <div class="form-row text-input-row subject-field">
                                 <label>Mot de passe</label>
+                                <a class="pull-right" href="index.php?action=forgetPasswordPage">(Mot de passe oublié ?)</a>
                                 <input type="password" name="passe" class="text-input defaultText" /> </div>
+
                         </div>
                         <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                             <label>
                                 <input type="checkbox" name="remember" value="1" /> <p>Se souvenir de moi </p></label>
-                            <p class="pull-right"><a href="index.php?action=forgetPassword">Mot de passe oublié ?</a></p>
+                            
                             </div>
                         </div>
                         

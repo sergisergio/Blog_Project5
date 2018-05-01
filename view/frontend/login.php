@@ -1,12 +1,5 @@
-<?php
-
-    if(isset($_SESSION['pseudo'])) {
-        header('Location:index.php?action=blog');
-        exit();
-    }
-?>
-
 <?php $title = 'Connexion'; ?>
+
 <?php ob_start(); ?>
 
 <body class="full-layout">
@@ -14,14 +7,11 @@
         <?php include "includes/nav.php"; ?>
             <!-- /#home -->
         <div class="container">
-            <?php include "includes/form_login.php"; ?>
+
+            <?php include "forms/form_login.php"; ?>
+            
         </div>
             <!-- /.container -->
     </div>
-    <!-- /.body-wrapper -->
-    <?php include "includes/foot.php"; ?>
-</body>
-
 <?php $content = ob_get_clean(); ?>
-
 <?php require('template.php'); ?>

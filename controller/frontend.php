@@ -77,14 +77,20 @@ function login($pseudo,$passe) {
     $user = $userManager->loginRequest($pseudo,$passe);
     
     if(!empty($_POST) && !empty($_POST['pseudo']) && !empty($_POST['passe'])) {
+
         if(password_verify($_POST['passe'], $user['password'])) {
-                // $_SESSION['pseudo'] = $user;
-                // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
+            session_start();
+            $_SESSION['pseudo'] = $user['pseudo'];
+            echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
+            // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
                // echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';
+            
+            
         }
         else {
             echo '<div class="alert alert-danger">' . 'Mauvais identifiant ou mot de passe' . '</div>' . '<br />';
         }
+
     }
     else {
         echo '<div class="alert alert-danger">' . 'Veuillez remplir tous les champs !' . '</div>' . '<br />';
@@ -94,9 +100,10 @@ function login($pseudo,$passe) {
 *                          6 . DECONNEXION                              *
 ************************************************************************/
 
-function logoff($pseudo,$passe) {
+function logout() {
     $userManager = new \Philippe\Blog\Model\UserManager();
-    $users = $userManager->logoffRequest($pseudo,$passe);
+    $users = $userManager->logoutRequest();
+    echo '<div class="alert alert-success">' . ' A bientôt !' . '</div>' . '<br />';
 }
 
 /* **********************************************************************
@@ -207,7 +214,7 @@ function addComment($postId, $author, $content)
 	$affectedLines = $commentManager->postComment($postId, $author, $content);
 
 	if ($affectedLines === false) {
-        throw new Exception('Impossible d\'ajouter le commentaire !');
+        echo '<div class="alert alert-danger">' . 'Vous devez être inscrit pour ajouter un commentaires' . '</div>';
     }
     else {
         header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
@@ -270,10 +277,21 @@ function modifyComment($commentId, $author, $content)
 }
 
 /* **********************************************************************
-*             16. AFFICHER LA PAGE MODIFICATION MOT DE PASSE            *
+*             16. AFFICHER LA PAGE MOT DE PASSE OUBLIE                  *
 ************************************************************************/
 
-function forgetPassword()
+function forgetPasswordPage()
 {
     require('view/frontend/forget.php');
+}
+
+/* **********************************************************************
+*             17. AFFICHER LA PAGE MODIFICATION MOT DE PASSE            *
+************************************************************************/
+
+function forgetPassword($email)
+{
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $forgetPassword = $userManager->forgetPasswordRequest($email);
+
 }

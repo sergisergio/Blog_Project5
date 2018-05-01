@@ -25,10 +25,11 @@ class CommentManager extends Manager
 	{
 		/* A revoir */
 		$db = $this->dbConnect();
-		$comments = $db->prepare('SELECT id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr 
+		$comments = $db->prepare('SELECT id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
 			FROM Comments 
 			WHERE post_id = ?
-			ORDER BY creation_date DESC LIMIT 0, 5');
+			ORDER BY creation_date 
+				DESC LIMIT 0, 5');
 		$comments->execute(array($postId));
 		
 		return $comments;
@@ -41,7 +42,9 @@ class CommentManager extends Manager
 		/* A revoir */
 		$db = $this->dbConnect();
 		/* Fonction prepare à revoir */
-		 $req = $db->prepare('SELECT id, post_id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM Comments WHERE id = ?');
+		 $req = $db->prepare('SELECT id, post_id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		 	FROM Comments 
+		 	WHERE id = ?');
 
 		 /* Fonction execute à revoir */
         $req->execute(array($commentId));
@@ -88,7 +91,7 @@ class CommentManager extends Manager
     	/* A revoir */
         $db = $this->dbConnect();
         /* Fonction prepare à revoir */
-        $comments = $db->prepare('UPDATE Comments SET author = ?, content = ?, creation_date = NOW() WHERE  id = ?');
+        $comments = $db->prepare('UPDATE Comments SET author = ?, content = ?, last_updated = NOW() WHERE  id = ?');
         /* Fonction execute à revoir */
         $affectedLines = $comments->execute(array($author, $content, $commentId));
 

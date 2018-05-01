@@ -26,52 +26,43 @@
                 <?php include "includes/section1_portfolio.php"; ?>
                 <?php include "includes/section2_about.php"; ?>
                 <?php include "includes/section3_skills.php"; ?>
-                <?php include "includes/section4_contact.php"; ?>
+                <section id="contact">
+                    <div class="box">
+                        <h2 class="section-title">Me contacter</h2>
+                        <p></p>
+                        <div class="divide20"></div>
+                        <div class="row text-center services-2">
+                            <div class="col-md-3 col-sm-12"> <i class="budicon-map"></i>
+                                <p>17 Place Saint-Pierre
+                                <br /> 75018 PARIS</p>
+                            </div>
+                            <div class="col-md-3 col-sm-12"> <i class="budicon-telephone"></i>
+                                <p>01 42 76 03 81</p>
+                            </div>
+                            <div class="col-md-3 col-sm-12"> <i class="budicon-mobile"></i>
+                                <p>06 47 51 22 85</p>
+                            </div>
+                            <div class="col-md-3 col-sm-12"> <i class="budicon-mail"></i>
+                                <p> <a class="nocolor" href="mailto:#">contact@philippetraon.com</a> </p>
+                            </div>
+                        </div>
+                    <!-- /.services-2 -->
+                        <div class="divide30"></div>
+                        <div class="form-container">
+                            <div class="response alert alert-success"></div>
+
+                            <?php include "forms/form_contact.php"; ?>
+
+                        </div>
+                    <!-- /.form-container -->
+                    </div>
+                <!-- /.box -->
+                </section>
+            <!-- /#contact -->
                 <?php include "includes/footer.php"; ?>
             </div>
                     <!-- /.container -->
         </div>
         <!-- /.body-wrapper -->
-        
-    <script src="public/js/jquery.min.js"></script>
-    <script src="public/js/bootstrap.min.js"></script>
-    <script src="public/js/jquery.themepunch.tools.min.js"></script>
-    <script src="public/js/classie.js"></script>
-    <script src="public/js/plugins.js"></script>
-    <script src="public/js/scripts.js"></script>
-    <script>
-        $.backstretch(["public/images/art/react2.png"]);
-    </script>
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip({
-                trigger: 'manual'
-            }).tooltip('show');
-        });
-        $(window).scroll(function () {
-            if ($(window).scrollTop() > 2600) { // scroll down abit and get the action   
-                $(".progress-bar").each(function () {
-                    each_bar_width = $(this).attr('aria-valuenow');
-                    $(this).width(each_bar_width + '%');
-                });
-            }
-        });
-    </script>
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-101090553-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-    </body>
-    <?php $content = ob_get_clean(); ?>
-
-    <?php require('template.php'); ?>
+<?php $content = ob_get_clean(); ?>
+<?php require('template.php'); ?>

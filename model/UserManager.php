@@ -120,7 +120,7 @@ class UserManager extends Manager
 		$db = $this->dbConnect();
 		
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token, registration_date) VALUES(?, ?, ?, ?, NOW())');
+		$post = $db->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(?, ?, ?, ?');
 
 		    $passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
 
@@ -168,7 +168,7 @@ class UserManager extends Manager
 	public function setActiveRequest($userId) {
 		$db = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET is_active = 1 WHERE id = ?');
+		$req = $db->prepare('UPDATE Users SET is_active = 1, confirmation_token = NULL, registration_date = NOW() WHERE id = ?');
 
 		$activeUser = $req->execute(array($userId));
 
@@ -224,22 +224,19 @@ class UserManager extends Manager
 		$user = $req->fetch();
         
         return $user;
-        
-       
 
-		
-		
-    }
+	}
 
 /* **********************************************************************
 *                         9 . DECONNEXION                         		*
 ************************************************************************/
 
-    public function logOffRequest(){
+    public function logoutRequest(){
 
     	// Suppression des variables de session et de la session
-		$_SESSION = array();
-		session_destroy();
+		session_start();
+		unset($_SESSION['pseudo']);
+		header('Location: index.php?action=blog');
 
     }
     
@@ -247,7 +244,7 @@ class UserManager extends Manager
 *                         9 . MAIL RESET PASSWORD                         		*
 ************************************************************************/
 
-    public function mailResetPassword() {
+    public function forgetPasswordRequest($email) {
         
         $db = $this->dbConnect();
         

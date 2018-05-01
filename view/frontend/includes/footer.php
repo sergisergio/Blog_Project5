@@ -4,7 +4,6 @@
             <a href="index.php?action=loginAdminPage">Administration</a>
         </btn>
     </p>
-                
     <ul class="social pull-right">
         <li>
             <a href="https://fr.pinterest.com/ptraon/" target="_blank"><i class="icon-s-pinterest"></i></a>

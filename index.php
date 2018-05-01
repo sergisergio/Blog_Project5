@@ -187,10 +187,10 @@ try {
 
         /* *********** 9 . DECONNEXION UTILISATEUR *********************************/
 
-        elseif ($_GET['action'] == 'logoff') {
+        elseif ($_GET['action'] == 'logout') {
              /* alors j'exécute la fonction connexion qui se trouve dans le contrôleur frontend */
 
-            logoff();
+            logout();
         }
         
         /* *********** 10 . PAGE INSCRIPTION UTILISATEUR ****************************/
@@ -480,8 +480,18 @@ try {
         
         /* ********* 30 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE **********************/
         
+        elseif ($_GET['action'] == 'forgetPasswordPage') {
+            forgetPasswordPage();
+        }
+        /* ***************** 30 . MODIFIER LE MOT DE PASSE **********************/
+        
         elseif ($_GET['action'] == 'forgetPassword') {
-            forgetPassword();
+            if (isset($_POST['email'])) {
+            forgetPassword($_POST['email']);
+            }
+            else {
+                echo 'Veuillez renseigner votre email';
+            }
         }
     }
 

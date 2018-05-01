@@ -1,40 +1,35 @@
 <?php $title = 'Connexion'; ?>
 <?php ob_start(); ?>
 
-    <body class="full-layout">
-        <div class="body-wrapper">
-            <?php include "view/frontend/includes/nav.php"; ?>
-                <div class="container">
-                    
-                    <?php include "view/backend/includes/management.php"; ?>
+<body class="full-layout">
+    <div class="body-wrapper">
+        <?php include "view/frontend/includes/nav.php"; ?>
+        <div class="container">
 
-                    <h2 class="text-center">Gestion des commentaires</h2>
+            <?php include "view/backend/includes/management.php"; ?>
 
-                    <?php
-                        while ($data = $posts->fetch())
-                    {
-                    ?>
+            <h2 class="text-center">Gestion des commentaires</h2>
 
-                                
-                    <div class="post box">
-                        <a href="index.php?action=adminViewPost&amp;id=<?= $data['id'] ?>">
-                        <div class="row">
-                            <h2 class="post-title"><?php echo htmlspecialchars($data['title']); ?></h2>
-                        </div>
-                        </a>
+            <?php
+            while ($data = $posts->fetch())
+            {
+            ?>
+
+            <div class="post box">
+                <a href="index.php?action=adminViewPost&amp;id=<?= $data['id'] ?>">
+                    <div class="row">
+                        <h2 class="post-title"><?php echo htmlspecialchars($data['title']); ?></h2>
                     </div>
-                    <?php
-                    } 
-                    $posts->closeCursor();
-                    ?>
-                
-                </div>
-                                   
+                </a>
+            </div>
+
+            <?php
+            } 
+            $posts->closeCursor();
+            ?>
+
         </div>
-                
-        <?php include "view/frontend/includes/foot.php"; ?>
-    </body>
+    </div>
 
-    <?php $content = ob_get_clean(); ?>
-
-    <?php require('view/backend/template.php'); ?>
+<?php $content = ob_get_clean(); ?>
+<?php require('view/backend/template.php'); ?>
