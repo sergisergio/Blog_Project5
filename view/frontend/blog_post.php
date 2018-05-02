@@ -1,8 +1,3 @@
-<?php
-if(session_status() == PHP_SESSION_NONE){
-    session_start();
-}
-?>
 <?php $title = 'Article'; ?>
 <?php ob_start(); ?>
 
@@ -19,10 +14,11 @@ if(session_status() == PHP_SESSION_NONE){
                         </btn>
                         </p>
                         <p class="pull-right">
-                        <btn class="btn btn-default">
-                          <a href="index.php?action=logout">Déconnexion</a>
-                        </btn>
-                        </p>
+                                            <btn style="float: right;" class="btn btn-default"> <a href="index.php?action=logout">Déconnexion</a> </btn>
+                                            <?php if ($_SESSION['avatar'] != ''): ?> <img style="width: 10%;float: right;margin: 0 20px;" class="img-responsive img-circle" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+                                                <?php else: ?> <img style="width: 5%;float: right;margin: 0 20px;" class="img-responsive img-circle" style="width: 5%;" src="public/images/avatar/avatardefaut.png" />
+                                                    <?php endif; ?>
+                                        </p>
                         <?php else: ?> 
                         <p class="pull-right">
                             <btn class="btn btn-default"> <a href="index.php?action=loginPage">Connexion</a> </btn>
@@ -63,9 +59,13 @@ if(session_status() == PHP_SESSION_NONE){
                         <div class="divide20"></div>
                         <div class="blog-posts">
                             <div class="post box">
+                                
                                 <h3>Ajouter un commentaire</h3>
-                                        
+                                <?php if (isset($_SESSION['pseudo'])): ?>       
                                 <?php include "forms/form_addcomment.php"; ?>
+                                <?php else: ?> 
+                                <p>Vous devez être inscrit et connecté pour ajouter un commentaire !</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="divide20"></div>
@@ -84,11 +84,11 @@ if(session_status() == PHP_SESSION_NONE){
                                     }
                                     else
                                       echo ($comment['creation_date_fr']);
-                                ?> 
+                                    ?> 
                                 </p>
                                 <p>
                                     <?= nl2br(htmlspecialchars($comment['content'])) ?> 
-                                    <?php if (isset($_SESSION['pseudo']) && ($_SESSION['id'] == $comment['author'])): ?>
+                                    <?php if (isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $comment['author'])): ?>
                                     <a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a> 
                                     <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a> 
                                     <?php endif; ?>

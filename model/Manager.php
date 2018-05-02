@@ -1,5 +1,4 @@
 <?php
-
 /* Je crée un emplacement pour éviter les conflits avec d'autres développeurs */
 namespace Philippe\Blog\Model;
 

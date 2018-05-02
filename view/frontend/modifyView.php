@@ -7,16 +7,23 @@
   <div class="container inner">
     <div class="blog box mgbottom row" style="margin-bottom: 50px;">
       <div class="col-md-12">
-        <p class="pull-right">
-          <btn class="btn btn-default">
-            <a href="index.php?action=connexion">Connexion</a>
-          </btn>
-        </p>
-        <p class="pull-right">
-          <btn class="btn btn-default">
-            <a href="index.php?action=registration">Inscription</a>
-          </btn>&nbsp;&nbsp;
-        </p>
+        <?php if (isset($_SESSION['pseudo'])): ?>
+                                        <p class="pull-left">
+                                            <btn class="btn btn-default"> <a href="index.php?action=profilePage">Voir mon profil</a> </btn>
+                                        </p>
+                                        <p class="pull-right">
+                                            <btn style="float: right;" class="btn btn-default"> <a href="index.php?action=logout">Déconnexion</a> </btn>
+                                            <?php if ($_SESSION['avatar'] != ''): ?> <img style="width: 10%;float: right;margin: 0 20px;" class="img-responsive img-circle" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+                                                <?php else: ?> <img style="width: 5%;float: right;margin: 0 20px;" class="img-responsive img-circle" src="public/images/avatar/avatardefaut.png" />
+                                                    <?php endif; ?>
+                                        </p>
+                                        <?php else: ?>
+                                            <p class="pull-right">
+                                                <btn class="btn btn-default"> <a href="index.php?action=loginPage">Connexion</a> </btn>
+                                            </p>
+                                            <p class="pull-right">
+                                                <btn class="btn btn-default"> <a href="index.php?action=signupPage">Inscription</a> </btn>&nbsp;&nbsp; </p>
+                                            <?php endif; ?>
       </div>
     </div>
     <div class="single blog row">

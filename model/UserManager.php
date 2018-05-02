@@ -254,4 +254,22 @@ class UserManager extends Manager
         return $user;
     }
     
+    /* **********************************************************************
+*                         9 . MAIL RESET PASSWORD                         		*
+************************************************************************/
+
+    public function rememberRequest($rememberToken) {
+        
+        $db = $this->dbConnect();
+        
+        function str_random($length){
+		   	$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+		    return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
+		}
+        $rememberToken = str_random(100);
+        $req = $db->prepare('UPDATE users SET remember_token = ? WHERE id = ?');
+        $req->execute([$rememberToken, $user['id']]);
+        setcookie('remember', $user['id'] . '==' . $rememberToken . sha1($user['id'] . 'cookieTraon'), time() + 60 * 60 * 24 * 7);
+    }
+    
 }

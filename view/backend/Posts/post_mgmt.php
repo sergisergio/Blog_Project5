@@ -29,7 +29,7 @@
                 <div class="post box" id="viewposts">
                     <div class="row">
                         <h2 class="post-title">
-                            <a href="blog-post.php"><?php echo htmlspecialchars($data['title']); ?></a>
+                            <a href="index.php?action=blogpost&amp;id=<?= $data['id'] ?>" target="_blank"><?php echo htmlspecialchars($data['title']); ?></a>
                         </h2>
 
                         <btn class="btn btn-default" style="float: right;">

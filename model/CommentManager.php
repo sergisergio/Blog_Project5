@@ -25,11 +25,12 @@ class CommentManager extends Manager
 	{
 		/* A revoir */
 		$db = $this->dbConnect();
-		$comments = $db->prepare('SELECT id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
-			FROM Comments 
-			WHERE post_id = ?
+		$comments = $db->prepare('SELECT c.id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+			FROM Comments c
+            INNER JOIN Users u ON u.id = c.author
+			WHERE c.post_id = ?
 			ORDER BY creation_date 
-				DESC LIMIT 0, 5');
+            DESC LIMIT 0, 5');
 		$comments->execute(array($postId));
 		
 		return $comments;
@@ -42,9 +43,10 @@ class CommentManager extends Manager
 		/* A revoir */
 		$db = $this->dbConnect();
 		/* Fonction prepare à revoir */
-		 $req = $db->prepare('SELECT id, post_id, author, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
-		 	FROM Comments 
-		 	WHERE id = ?');
+		 $req = $db->prepare('SELECT c.id, c.post_id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		 	FROM Comments c
+            INNER JOIN Users u ON u.id = c.author
+		 	WHERE c.id = ?');
 
 		 /* Fonction execute à revoir */
         $req->execute(array($commentId));
@@ -62,7 +64,9 @@ class CommentManager extends Manager
 		/* A revoir */
 		$db = $this->dbConnect();
 		/* Fonction prepare à revoir */
-		$comments = $db->prepare('INSERT INTO Comments(post_id, author, content, creation_date) VALUES(?, ?, ?, NOW())');
+		$comments = $db->prepare('INSERT INTO Comments c 
+        INNER JOIN Users u ON u.id = c.author
+        (c.post_id AS post_id, u.id AS author, c.content AS content, c.creation_date) VALUES(?, ?, ?, NOW())');
 		/* Fonction execute à revoir */
 		$affectedLines = $comments->execute(array($postId, $author, $content));
 

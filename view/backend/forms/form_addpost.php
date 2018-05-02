@@ -9,10 +9,10 @@
         <input type="text" id="intro" name="intro" value="" />
     </div>
 
-    <div>
+    <!--<div>
         <label for="member_pseudo">Auteur</label><br />
         <input type="text" id="member_pseudo" name="author" value="" />
-    </div>
+    </div>-->
 
     <div>
         <label for="content">Article</label><br />

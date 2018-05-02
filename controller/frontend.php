@@ -5,60 +5,68 @@
 1 . Page d'accueil
 2 . Page de connexion
 3 . Page d'inscription
-4 . Inscription
-5 . Connexion
-6 . Déconnexion
-7 . Doublon pseudo
-8 . Doublon Email
-9 . Confirmation inscription
-10 . Tous les Blog Posts
-11 . Afficher un seul Blog Post
-12 . Ajouter un commentaire
-13 . Afficher la page pour modifier un commentaire
-14 . Supprimer un commentaire
-15 . Modifier un commentaire
+4 . Page de profil
+5 . Inscription
+6 . Connexion
+7 . Se souvenir de moi
+8 . Déconnexion
+9 . Doublon pseudo
+10 . Doublon Email
+11 . Confirmation inscription
+12 . passer user en actif
+13 . Tous les Blog Posts
+14 . Afficher un seul Blog Post
+15 . Ajouter un commentaire
+16 . Afficher la page pour modifier un commentaire
+17 . Supprimer un commentaire
+18 . Modifier un commentaire
 ************************************************************************/
 
-/* Je charge les fichiers model pour que les fonctions soient en mémoire*/
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 require_once('model/UserManager.php');
 /* L'instruction require_once est identique à require mis à part que PHP vérifie si le fichier a déjà été inclus, et si c'est le cas, ne l'inclut pas une deuxième fois. */
 
-
 /* **********************************************************************
 *                         1 .  PAGE D'ACCUEIL                           *
 ************************************************************************/
-/* fonction qui fait appel à la page d'accueil */
+
 function home()
 {
     require('view/frontend/home.php');
 }
+
 /* **********************************************************************
 *                         2 . PAGE CONNEXION                            *
 ************************************************************************/
-/* fonction qui fait appel à la page de connexion */
+
 function loginPage()
 {
 	require('view/frontend/login.php');
 }
+
 /* **********************************************************************
 *                          3 . PAGE INSCRIPTION                         *
 ************************************************************************/
-/* fonction qui fait appel à la page d'inscription */
+
 function signupPage()
 {
     
 	require('view/frontend/signup.php');
 }
 
+/* **********************************************************************
+*                          4 . PAGE PROFIL                         *
+************************************************************************/
+
 function profilePage()
 {
     
     require('view/frontend/profile.php');
 }
+
 /* **********************************************************************
-*                          4 . INSCRIPTION                              *
+*                          5 . INSCRIPTION                              *
 ************************************************************************/
 
 function addUser($pseudo, $email, $passe)
@@ -74,8 +82,9 @@ function addUser($pseudo, $email, $passe)
         // header('Location: index.php?action=confirmRegistration');
     } 
 }
+
 /* **********************************************************************
-*                          5 . CONNEXION                                *
+*                          6 . CONNEXION                                *
 ************************************************************************/
 
 function login($pseudo,$passe) {
@@ -86,7 +95,7 @@ function login($pseudo,$passe) {
 
         if(password_verify($_POST['passe'], $user['password'])) {
             if ($user['is_active'] == 1) {
-            session_start();
+            
             $_SESSION['pseudo'] = $user['pseudo'];
             $_SESSION['id'] = $user['id'];
             $_SESSION['prenom'] = $user['first_name'];
@@ -94,26 +103,37 @@ function login($pseudo,$passe) {
             $_SESSION['email'] = $user['email'];
             $_SESSION['password'] = $user['password'];
             $_SESSION['autorisation'] = $user['authorization'];
+            $_SESSION['avatar'] = $user['avatar'];
             echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
-            // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
+         // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
                // echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';
+            // header('Location: http://localhost:8888/Blog_Project5/index.php?action=blog');
+            // exit;
             }
             else {
                 echo '<div class="alert alert-danger">' . 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !' . '</div>' . '<br />';
             }
-            
         }
         else {
             echo '<div class="alert alert-danger">' . 'Mauvais identifiant ou mot de passe' . '</div>' . '<br />';
         }
-
     }
     else {
         echo '<div class="alert alert-danger">' . 'Veuillez remplir tous les champs !' . '</div>' . '<br />';
     }
 }
+
 /* **********************************************************************
-*                          6 . DECONNEXION                              *
+*                 7 . SE SOUVENIR DE MOI                                *
+************************************************************************/
+
+function remember($rememberToken) {
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $users = $userManager->rememberRequest($rememberToken);
+}
+
+/* **********************************************************************
+*                          8 . DECONNEXION                              *
 ************************************************************************/
 
 function logout() {
@@ -123,7 +143,7 @@ function logout() {
 }
 
 /* **********************************************************************
-*                          7 . DOUBLON PSEUDO                           *
+*                          9 . DOUBLON PSEUDO                           *
 ************************************************************************/
 
 function checkExistPseudo($pseudo) {
@@ -131,7 +151,6 @@ function checkExistPseudo($pseudo) {
     $user = $userManager->existPseudo($pseudo);
 
      if ($user) {
-        // throw new Exception('Ce pseudo est déjà pris');
         echo '<div class="alert alert-danger">' . 'Ce pseudo est déjà utilisé' . '</div>';
     }
     /* else {
@@ -140,7 +159,7 @@ function checkExistPseudo($pseudo) {
 }
 
 /* **********************************************************************
-*                            8 . DOUBLON MAIL                           *
+*                            10 . DOUBLON MAIL                           *
 ************************************************************************/
 
 function checkExistMail($email) {
@@ -148,7 +167,6 @@ function checkExistMail($email) {
     $usermail = $userManager->existMail($email);
 
      if ($usermail) {
-        // throw new Exception('Cet email est déjà pris');
         echo '<div class="alert alert-danger">' . 'Cet email est déjà utilisé' . '</div>';
     }
     /* else {
@@ -157,16 +175,14 @@ function checkExistMail($email) {
 }
 
 /* **********************************************************************
-*                   9 . CONFIRMATION INSCRIPTION                        *
+*                   11 . CONFIRMATION INSCRIPTION                        *
 ************************************************************************/
-/* fonction qui fait appel à la page d'inscription */
+
 function confirmRegistration($userId, $userToken)
 {
     $userManager = new \Philippe\Blog\Model\UserManager();
     $user = $userManager->getUser($userId);
-     // $activeUser = $userManager->setActiveRequest($userId);
-    
-    
+     
     if ($user &&  $user['confirmation_token'] == $userToken) {
         
          require('view/frontend/login.php');
@@ -182,7 +198,7 @@ function confirmRegistration($userId, $userToken)
 }
 
 /* **********************************************************************
-*                    PASSER USER EN ACTIF.                              *
+*                    12 . PASSER USER EN ACTIF.                         *
 ************************************************************************/
 
 function setActiveUser($userId)
@@ -191,23 +207,21 @@ function setActiveUser($userId)
     $activeUser = $userManager->setActiveRequest($userId);
 }
 
-
-
 /* **********************************************************************
-*                      10 . TOUS LES BLOG POSTS                         *
+*                      13 . TOUS LES BLOG POSTS                         *
 ************************************************************************/
-/* fonction qui fait appel à l'instance $postmanager qui utilise la fonction getPosts et va donc récupérer tous les articles : le résultat est mémorisé dans la variable posts et la page blog est affichée. */
+
 function listPosts()
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$posts = $postManager->getPosts();
-	require('view/frontend/blog.php');
+    require('view/frontend/blog.php');
 }
 
 /* **********************************************************************
-*                     11 . AFFICHER UN SEUL BLOG POST                   *
+*                     14 . AFFICHER UN SEUL BLOG POST                   *
 ************************************************************************/
-/* fonction qui fait appel à 2 instances. L'instance $postmanager utilise la fonction getpost pour récupérer un article en fonction de son identifiant. L'instance $commentmanager utilise la fonction getcomments pour récupérer les commentaires en fonction de l'identifiant de l'article. Puis la page blog_post est affichée. */
+
 function listPost()
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
@@ -216,14 +230,13 @@ function listPost()
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
     
-
     require('view/frontend/blog_post.php');
 }
 
 /* **********************************************************************
-*                     12 . AJOUTER UN COMMENTAIRE                       *
+*                     15 . AJOUTER UN COMMENTAIRE                       *
 ************************************************************************/
-/* fonction qui fait appel à l'instance$commentmanager qui va utiliser la fonction postcomment afin d'ajouter un commentaire dans la base de données. 3 paramètres sont utilisés : postId, pseudo et contenu . Une fois ajouté, on retourne à la même page. */
+
 function addComment($postId, $author, $content)
 {
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
@@ -238,10 +251,9 @@ function addComment($postId, $author, $content)
 }
 
 /* **********************************************************************
-*         13 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE            *
+*         16 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE            *
 ************************************************************************/
-/* fonction qui fait appel à 2 instances. L'instance $commentmanager utilise la fonction getcomment qui va récupérer un commentaire en fonction de son identifiant et l'instance $postmanager récupère l'article en fonction de son identifiant. Puis on affiche la page de modification du commentaire */
-/* A Revoir */
+
 function modifyCommentPage($commentId)
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
@@ -254,7 +266,7 @@ function modifyCommentPage($commentId)
 }
 
 /* **********************************************************************
-*                     14 . SUPPRIMER UN COMMENTAIRE                     *
+*                     17 . SUPPRIMER UN COMMENTAIRE                     *
 ************************************************************************/
 function deleteComment($commentId)
 {
@@ -274,9 +286,9 @@ function deleteComment($commentId)
 }
 
 /* **********************************************************************
-*                     15 . MODIFIER UN COMMENTAIRE                      *
+*                     18 . MODIFIER UN COMMENTAIRE                      *
 ************************************************************************/
-/* fonction qui utilise une seule instance $commentmanager mais 2 fonctions. L'instance utilise la fonction getComment pour récupérer le commentaire en fonction de son identifiant, puis la fonction modifycomment qui va nous permettre de mettre à jour le commentaire dans la base de données. Une fois modifié, on retourne à la page de l'article en question... */
+
 function modifyComment($commentId, $author, $content)
 {
     $commentManager = new \Philippe\Blog\Model\CommentManager();
@@ -293,7 +305,7 @@ function modifyComment($commentId, $author, $content)
 }
 
 /* **********************************************************************
-*             16. AFFICHER LA PAGE MOT DE PASSE OUBLIE                  *
+*             19. AFFICHER LA PAGE MOT DE PASSE OUBLIE                  *
 ************************************************************************/
 
 function forgetPasswordPage()
@@ -302,7 +314,7 @@ function forgetPasswordPage()
 }
 
 /* **********************************************************************
-*             17. AFFICHER LA PAGE MODIFICATION MOT DE PASSE            *
+*             20. AFFICHER LA PAGE MODIFICATION MOT DE PASSE            *
 ************************************************************************/
 
 function forgetPassword($email)

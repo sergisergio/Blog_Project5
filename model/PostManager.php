@@ -26,8 +26,9 @@ class PostManager extends Manager
 		$db = $this->dbConnect();
 
 		/* Fonction query à revoir */
-		$req = $db->query('SELECT id, title, intro, content, author, file_extension, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
-			FROM Posts
+		$req = $db->query('SELECT p.id, p.title, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+			FROM Posts p
+            INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT 5');
 		return $req;
 	}
@@ -40,10 +41,10 @@ class PostManager extends Manager
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$req = $db->prepare('SELECT id, title, intro, content, author, file_extension, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
-			FROM Posts 
-			WHERE id = ?
-			');
+		$req = $db->prepare('SELECT p.id, p.title, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+			FROM Posts p
+            INNER JOIN Users u ON u.id = p.author
+			WHERE p.id = ?');
 
 		/* Fonction execute à revoir */
 		$req->execute(array($postId));

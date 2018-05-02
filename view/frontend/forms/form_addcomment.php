@@ -1,9 +1,9 @@
 <form action="index.php?action=addcomment&amp;id=<?= $post['id'] ?>" method="post">
-    <div>
+    <!--<div>
         <label for="author">Auteur</label>
         <br />
-        <input type="text" id="author" name="author" />
-    </div>
+        <input type="text" id="author" name="author" value=""/>
+    </div>-->
     <div>
         <label for="content">Commentaire</label>
         <br />
