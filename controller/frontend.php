@@ -293,7 +293,7 @@ function modifyComment($commentId, $author, $content)
 {
     $commentManager = new \Philippe\Blog\Model\CommentManager();
 
-    $success = $commentManager->modifyComment($commentId, $author, $content);
+    $success = $commentManager->modifyCommentRequest($commentId, $author, $content);
     $comment = $commentManager->getComment($commentId);
 
     if ($success === false) {

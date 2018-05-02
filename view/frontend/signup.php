@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <?php $title = 'Inscription'; ?>
 <?php ob_start(); ?>
 

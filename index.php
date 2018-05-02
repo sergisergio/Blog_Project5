@@ -6,13 +6,10 @@ session_start();
 
     1 . Page d'accueil du blog (blog). ========================================> OK
     2 . Page qui affiche un blog post (blogpost).  ============================> OK
-    3 . Ajouter un commentaire (addComment).  =================================> ?
-        JOINTURE A FAIRE DANS LA REQUETE ?
-    4 . Afficher la page pour modifier un commentaire (modifyCommentPage). ====> ?
-        SUPPRIMER LE CHAMP AUTEUR
+    3 . Ajouter un commentaire (addComment).  =================================> OK
+    4 . Afficher la page pour modifier un commentaire (modifyCommentPage). ====> OK
     5 . Supprimer un commentaire (deleteComment). =============================> OK
-    6 . Modifier un commentaire (modifyComment).  =============================> ?
-        JOINTURE A FAIRE DANS LA REQUETE ?
+    6 . Modifier un commentaire (modifyComment).  =============================> OK
     7 . Afficher la page de connexion (loginPage).  ===========================> OK
     8 . Se connecter (login).  ================================================> ?
         PROBLEME DE REDIRECTION
@@ -25,24 +22,16 @@ session_start();
     15 . Afficher la rubrique commentaires (manage_comments). =================> OK
     16 . Afficher la rubrique membres (manage_users). =========================> OK
     17 . Ajouter un article (addPost). ========================================> ?
-         A. j'ai retiré le champ auteur (idem JOINTURE).
          B. Mettre un substring pour l'intro
     18 . Afficher la page pour modifier un article (modifyPostPage).  =========> OK
     19 . Modifier un article (modifyPost).  ===================================> ?
-         A. j'ai retiré le champ auteur (idem JOINTURE).
          B. Mettre un substring pour l'intro
     20 . Supprimer un article (deletePost).  ==================================> OK
     21 . Supprimer un membre (deleteUser). ====================================> OK
     22 . Afficher la page pour modifier un membre (modifyUserPage). ===========> OK
-    23 . Modifier un membre (modifyUser). =====================================> ?
-         Utilité ? ajouter mode admin ?
+    23 . Modifier un membre (modifyUser). =====================================> OK
     24 . Afficher un post et ses commentaires (adminViewPost). ================> OK
-    25 . Ajouter un commentaire (adminAddComment).  ==========================> ?
-        Voir numéro 3
-    26 . Afficher page de modif commentaire (adminModifyCommentPage). =========> OK
-    27 . Modifier un commentaire (adminModifyComment).  =======================> ?
-        Voir numéro 6
-    28 . Supprimer un commentaire (adminDeleteComment). =======================> OK
+    
     29 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE ============================> OK
     30 . Modifier le mot de passe =============================================> ?
          En cours
@@ -88,7 +77,7 @@ try {
         elseif ($_GET['action'] == 'addcomment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_POST['content'])) { 
-                    addComment($_GET['id'], $_SESSION['pseudo'], $_POST['content']);
+                    addComment($_GET['id'], $_SESSION['id'], $_POST['content']);
                 }
                 else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
@@ -122,8 +111,8 @@ try {
 
         elseif ($_GET['action'] == 'modifyComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['author']) && !empty($_POST['content'])) { 
-                    modifyComment($_GET['id'], $_POST['author'], $_POST['content']);
+                if (!empty($_POST['content'])) { 
+                    modifyComment($_GET['id'], $_SESSION['id'], $_POST['content']);
                 }
                 else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
@@ -237,8 +226,8 @@ try {
 
         elseif ($_GET['action'] == 'addpost') {
           
-                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['author']) && !empty($_POST['content'])) {
-                    addPost($_POST['title'], $_POST['intro'], $_POST['author'], $_POST['content']);
+                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['content'])) {
+                    addPost($_POST['title'], $_POST['intro'], $_SESSION['id'], $_POST['content']);
                 }
                 else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
@@ -263,13 +252,10 @@ try {
 
         
         elseif ($_GET['action'] == 'modifyPost') {
-            /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['author']) && !empty($_POST['content'])) {
-                    /* alors j'exécute la fonction modifiedPost qui se trouve dans le contrôleur backend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    modifyPost($_GET['id'], $_POST['title'], $_POST['intro'], $_POST['author'], $_POST['content']);
+                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['content'])) { 
+                    modifyPost($_GET['id'], $_POST['title'], $_POST['intro'], $_SESSION['id'], $_POST['content']);
                 }
-                /*  */
                 else {
                 throw new Exception('Tous les champs ne sont pas remplis');
                 }
@@ -322,74 +308,7 @@ try {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 AdminViewPost();
             }
-        }
-
-        /* ****************** 25. AJOUTER UN COMMENTAIRE *************************************/
-
-        elseif ($_GET['action'] == 'adminAddComment') {
-            /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                /* Si les champs pseudo et commentaire sont bien remplis */
-                if (!empty($_POST['author']) && !empty($_POST['content'])) {
-                    /* alors j'exécute la fonction addAddComment qui se trouve dans le contrôleur backend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    adminAddComment($_GET['id'], $_POST['author'], $_POST['content']);
-                }
-                /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */
-                else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
-                }
-            }
-            /* Si il n'y a pas de paramètre 'id', j'indique qu'aucun article ne peut être affiché */
-            else {
-                throw new Exception('Aucun identifiant de billet envoyé');
-            }
-        }
-
-        /* ******** 26. . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE ******************/
-
-        elseif ($_GET['action'] == 'adminModifyCommentPage') {
-            /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                /* alors j'exécute la fonction modifyCommentPage qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id') */ 
-                adminModifyCommentPage($_GET['id']);
-            }
-            /* Si il n'y a pas de paramètre 'id', j'indique qu'aucun commentaire ne peut être affiché */
-            else {
-                throw new Exception('Aucun identifiant de commentaire envoyé');
-            }
-        }
-
-        /* ********* 27 . MODIFIER UN COMMENTAIRE ****************************************/
-
-        elseif ($_GET['action'] == 'adminModifyComment') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                /* Si les champs pseudo et commentaire ont bien été remplis */
-                if (!empty($_POST['author']) && !empty($_POST['content'])) {
-                    /* alors j'exécute la fonction modifyComment qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id', les paramètre de formulaire 'pseudo' et 'contenu') */ 
-                    adminModifyComment($_GET['id'], $_POST['author'], $_POST['content']);
-                }
-                   
-                /* Si les champs pseudo et commentaire ne sont pas remplis, je l'indique à l'utilisateur */
-                else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
-                }
-            }
-                     /* Sinon j'envoie un message d'erreur */
-            else {
-                throw new Exception('Aucun identifiant de commentaire envoyé');
-            }
-            
-        }
-
-        /* ********* 28 . SUPPRIMER UN COMMENTAIRE ***************************************/
-
-        elseif ($_GET['action'] == 'adminDeleteComment') {
-                    /* Si il y a un paramètre URL 'id' et que celui-ci est supérieur à 0 */
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                /* alors j'exécute la fonction modifyCommentPage qui se trouve dans le contrôleur frontend ( avec en paramètre, le paramètre URL 'id') */ 
-                adminDeleteComment($_GET['id']);
-            }
-        }    
+        }   
         
         /* ********* 29 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE **********************/
         

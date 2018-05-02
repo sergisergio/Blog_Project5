@@ -119,23 +119,6 @@ function manageComments()
 }
 
 /* **********************************************************************
-*                     9 . AJOUTER UN COMMENTAIRE                        *
-************************************************************************/
-
-function adminAddComment($postId, $author, $content)
-{
-	$commentManager = new \Philippe\Blog\Model\CommentManager();
-	$affectedLines = $commentManager->postComment($postId, $author, $content);
-
-	if ($affectedLines === false) {
-        throw new Exception('Impossible d\'ajouter le commentaire !');
-    }
-    else {
-        header('Location: index.php?action=adminViewPost&id=' . $postId . '#viewcomments');
-    }
-}
-
-/* **********************************************************************
 *            10 . AFFICHER LES COMMENTAIRES D'UN ARTICLE                *
 ************************************************************************/
 
@@ -148,58 +131,6 @@ function AdminViewPost()
     $comments = $commentManager->getComments($_GET['id']);
     
     require('view/backend/Comments/modifyCommentPage.php');
-}
-/* **********************************************************************
-*          11 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE           *
-************************************************************************/
-
-function AdminModifyCommentPage($commentId)
-{
-	$postManager = new \Philippe\Blog\Model\PostManager();
-	$commentManager = new \Philippe\Blog\Model\CommentManager();
-
-	$comment = $commentManager->getComment($commentId);
-	$post = $postManager->getPost($comment['post_id']);
-
-	require('view/backend/Comments/modifyComment.php');
-}
-
-/* **********************************************************************
-*                    12 . MODIFIER UN COMMENTAIRE                       *
-************************************************************************/
-
-function adminModifyComment($commentId, $author, $content)
-{
-    $commentManager = new \Philippe\Blog\Model\CommentManager();
-
-    $success = $commentManager->modifyComment($commentId, $author, $content);
-    $comment = $commentManager->getComment($commentId);
-
-    if ($success === false) {
-        throw new Exception('Impossible de modifier le commentaire !');
-    }
-    else {
-        header('Location: index.php?action=adminViewPost&id=' . $comment['post_id']  . '#viewcomments');
-    }
-}
-
-/* **********************************************************************
-*                    13 . SUPPRIMER UN COMMENTAIRE                      *
-************************************************************************/
- 
-function adminDeleteComment($commentId)
-{
-
-    $commentManager = new \Philippe\Blog\Model\CommentManager();
-    $comment = $commentManager->getComment($commentId);
-    $success = $commentManager->deleteCommentRequest($commentId);
-    
-    if ($success === false) {
-        throw new Exception('Impossible de supprimer le commentaire');
-    }
-    else {
-        header('Location: index.php?action=adminViewPost&id=' . $comment['post_id'] . '#viewcomments');
-    }
 }
 
 /* **********************************************************************

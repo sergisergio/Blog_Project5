@@ -64,9 +64,7 @@ class CommentManager extends Manager
 		/* A revoir */
 		$db = $this->dbConnect();
 		/* Fonction prepare à revoir */
-		$comments = $db->prepare('INSERT INTO Comments c 
-        INNER JOIN Users u ON u.id = c.author
-        (c.post_id AS post_id, u.id AS author, c.content AS content, c.creation_date) VALUES(?, ?, ?, NOW())');
+		$comments = $db->prepare('INSERT INTO Comments (post_id, author, content, creation_date) VALUES(?, ?, ?, NOW())');
 		/* Fonction execute à revoir */
 		$affectedLines = $comments->execute(array($postId, $author, $content));
 
@@ -89,7 +87,7 @@ class CommentManager extends Manager
 /* **********************************************************************
 *                  5 . MODIFIER UN  COMMENTAIRE                         *
 ************************************************************************/
-	public function modifyComment($commentId, $author, $content)
+	public function modifyCommentRequest($commentId, $author, $content)
     {
 
     	/* A revoir */

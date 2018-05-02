@@ -10,11 +10,6 @@
     </div>
 
     <div>
-        <label for="author">Auteur</label><br />
-        <input type="text" id="author" name="author" value="<?= htmlspecialchars($post['author']) ?>" />
-    </div>
-
-    <div>
         <label for="content">Article</label><br />
 
         <textarea id="content" name="content"><?= htmlspecialchars($post['content']) ?></textarea>

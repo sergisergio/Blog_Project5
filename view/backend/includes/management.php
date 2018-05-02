@@ -1,6 +1,24 @@
 <section id="contact">
   <div class="box">
-    <h2 class="section-title text-center">Espace administrateur</h2>
+    <div class="col-md-12">
+                        <?php if (isset($_SESSION['pseudo'])): ?>
+                        <p class="pull-center">
+                        <h2>Espace administrateur</h2>
+                        </p>
+                        <p class="pull-right">
+                                            <btn style="float: right;" class="btn btn-default"> <a href="index.php?action=logout">Déconnexion</a> </btn>
+                                            <?php if ($_SESSION['avatar'] != ''): ?> <img style="width: 10%;float: right;margin: 0 20px;" class="img-responsive img-circle" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+                                                <?php else: ?> <img style="width: 5%;float: right;margin: 0 20px;" class="img-responsive img-circle" style="width: 5%;" src="public/images/avatar/avatardefaut.png" />
+                                                    <?php endif; ?>
+                                        </p>
+                        <?php else: ?> 
+                        <p class="pull-right">
+                            <btn class="btn btn-default"> <a href="index.php?action=loginPage">Connexion</a> </btn>
+                        </p>
+                        <p class="pull-right">
+                            <btn class="btn btn-default"> <a href="index.php?action=signupPage">Inscription</a> </btn>&nbsp;&nbsp; </p>
+                        <?php endif; ?>
+                    </div>
     <p></p>
     <div class="divide30"></div>
     <ul class="nav nav-tabs menuadmin">
