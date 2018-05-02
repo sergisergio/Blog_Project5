@@ -2,8 +2,7 @@
         session_start();
     }
     if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ){
-        $_SESSION['flash']['danger'] = "Vous n'avez pas le droit d'accéder à cette page";
-        header('Location: index.php?action=blog');
+        header('Location: index.php?action=noAdmin');
         exit();
     }
 ?>
