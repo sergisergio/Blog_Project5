@@ -5,16 +5,6 @@
     </div>
 
     <div>
-        <label for="intro">Intro</label><br />
-        <input type="text" id="intro" name="intro" value="" />
-    </div>
-
-    <!--<div>
-        <label for="member_pseudo">Auteur</label><br />
-        <input type="text" id="member_pseudo" name="author" value="" />
-    </div>-->
-
-    <div>
         <label for="content">Article</label><br />
         <textarea type="text" id="content" name="content" value=""></textarea>
     </div>

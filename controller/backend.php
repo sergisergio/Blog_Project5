@@ -57,10 +57,10 @@ function managePosts()
 *                       4 . AJOUTER UN ARTICLE                          *
 ************************************************************************/
 
-function addPost($title, $intro, $author, $content)
+function addPost($title, $author, $content)
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$affectedPost = $postManager->addPostRequest($title, $intro, $author, $content);
+	$affectedPost = $postManager->addPostRequest($title, $author, $content);
 
 	if ($affectedPost === false) {
         throw new Exception('Impossible d\'ajouter l\'article');
@@ -85,10 +85,10 @@ function modifyPostPage($postId)
 *                    6 . MODIFIER UN ARTICLE                            *
 ************************************************************************/
 
-function modifyPost($postId, $title, $intro, $author, $content)
+function modifyPost($postId, $title, $author, $content)
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$success = $postManager->modifyPostRequest($postId, $title, $intro, $author, $content);
+	$success = $postManager->modifyPostRequest($postId, $title, $author, $content);
 	$post = $postManager->getPost($_GET['id']);
 
 	if ($success === false) {

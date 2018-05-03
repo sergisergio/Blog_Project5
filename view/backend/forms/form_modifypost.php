@@ -5,11 +5,6 @@
     </div>
 
     <div>
-        <label for="intro">Intro</label><br />
-        <input type="text" id="intro" name="intro" value="<?= htmlspecialchars($post['intro']) ?>" />
-    </div>
-
-    <div>
         <label for="content">Article</label><br />
 
         <textarea id="content" name="content"><?= htmlspecialchars($post['content']) ?></textarea>

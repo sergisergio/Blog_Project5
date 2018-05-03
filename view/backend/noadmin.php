@@ -38,7 +38,7 @@
                                 <div class="alert alert-danger">Vous n'avez pas les droits pour accéder à cette page...</div>
                                 </div>
                                 <!-- /.container -->
-                                <btn class="btn btn-default"><a href="index.php?action=home">Accueil</a></btn>
+                                <btn class="btn btn-default"><a href="index.php">Accueil</a></btn>
                                 <btn class="btn btn-default"><a href="index.php?action=blog">blog</a></btn>
                             </div>
                         </section>

@@ -21,11 +21,9 @@ session_start();
     14 . Afficher la rubrique articles (manage_posts). ========================> OK
     15 . Afficher la rubrique commentaires (manage_comments). =================> OK
     16 . Afficher la rubrique membres (manage_users). =========================> OK
-    17 . Ajouter un article (addPost). ========================================> ?
-         B. Mettre un substring pour l'intro
+    17 . Ajouter un article (addPost). ========================================> OK
     18 . Afficher la page pour modifier un article (modifyPostPage).  =========> OK
-    19 . Modifier un article (modifyPost).  ===================================> ?
-         B. Mettre un substring pour l'intro
+    19 . Modifier un article (modifyPost).  ===================================> OK
     20 . Supprimer un article (deletePost).  ==================================> OK
     21 . Supprimer un membre (deleteUser). ====================================> OK
     22 . Afficher la page pour modifier un membre (modifyUserPage). ===========> OK
@@ -232,8 +230,8 @@ try {
 
         elseif ($_GET['action'] == 'addpost') {
           
-                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['content'])) {
-                    addPost($_POST['title'], $_POST['intro'], $_SESSION['id'], $_POST['content']);
+                if (!empty($_POST['title']) && !empty($_POST['content'])) {
+                    addPost($_POST['title'], $_SESSION['id'], $_POST['content']);
                 }
                 else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
@@ -259,8 +257,8 @@ try {
         
         elseif ($_GET['action'] == 'modifyPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['title']) && !empty($_POST['intro']) && !empty($_POST['content'])) { 
-                    modifyPost($_GET['id'], $_POST['title'], $_POST['intro'], $_SESSION['id'], $_POST['content']);
+                if (!empty($_POST['title']) && !empty($_POST['content'])) { 
+                    modifyPost($_GET['id'], $_POST['title'], $_SESSION['id'], $_POST['content']);
                 }
                 else {
                 throw new Exception('Tous les champs ne sont pas remplis');
