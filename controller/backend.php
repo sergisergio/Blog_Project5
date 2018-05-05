@@ -18,6 +18,8 @@
 15 . Supprimer un membre
 16 . Afficher la page de modification d'un membre
 17 . Modifier un membre
+18 . Valider un commentaire
+19 . Donner les droits admin à un membre
 ************************************************************************/
 
 require_once('model/PostManager.php');
@@ -57,10 +59,10 @@ function managePosts()
 *                       4 . AJOUTER UN ARTICLE                          *
 ************************************************************************/
 
-function addPost($title, $author, $content)
+function addPost($title, $author, $content, $image)
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$affectedPost = $postManager->addPostRequest($title, $author, $content);
+	$affectedPost = $postManager->addPostRequest($title, $author, $content, $image);
 
 	if ($affectedPost === false) {
         throw new Exception('Impossible d\'ajouter l\'article');
@@ -122,8 +124,8 @@ function deletePost($postId)
 
 function manageComments()
 {
-	$postManager = new \Philippe\Blog\Model\PostManager();
-	$posts = $postManager->getPosts();
+	$commentManager = new \Philippe\Blog\Model\CommentManager();
+	$submittedcomments = $commentManager->submittedCommentRequest();
 	require('view/backend/Comments/comment_mgmt.php');
 }
 
@@ -195,4 +197,70 @@ function modifyUser($userId)
 	else {
 		header('Location: index.php?action=manage_posts');
 	}
+}
+
+/* **********************************************************************
+*                  18 . VALIDER UN COMMENTAIRE                          *
+************************************************************************/
+
+function validateComment($commentId)
+{
+	$commentManager = new \Philippe\Blog\Model\CommentManager();
+	$validated = $commentManager->validateCommentRequest($_GET['id']);
+	if ($validated === false) {
+		throw new Exception('Impossible de valider le commentaire');
+	}
+	else {
+		header('Location: index.php?action=manage_comments');
+	}
+}
+
+/* **********************************************************************
+*                     17 . SUPPRIMER UN COMMENTAIRE                     *
+************************************************************************/
+function adminDeleteComment($commentId)
+{
+
+    $commentManager = new \Philippe\Blog\Model\CommentManager();
+
+    $comment = $commentManager->getComment($commentId);
+    
+    $success = $commentManager->deleteCommentRequest($commentId);
+    
+    if ($success === false) {
+        throw new Exception('Impossible de supprimer le commentaire');
+    }
+    else {
+        header('Location: index.php?action=manage_comments');
+    }
+}
+/* **********************************************************************
+*        19 . DONNER LES DROITS ADMIN A UN MEMBRE                       *
+************************************************************************/
+function giveAdminRights($userId)
+{
+	$userManager = new \Philippe\Blog\Model\UserManager();
+	$adminRights = $userManager->giveAdminRightsRequest($userId);
+	
+	if ($adminRights === false) {
+        throw new Exception('Impossible de donner les droits admin');
+    }
+    else {
+        header('Location: index.php?action=manage_users');
+    }
+}
+/* **********************************************************************
+*        16 . RETIRER LES DROITS ADMIN A UN MEMBRE                       *
+************************************************************************/
+function stopAdminRights($userId)
+{
+	$userManager = new \Philippe\Blog\Model\UserManager();
+	$adminRights = $userManager->stopAdminRightsRequest($userId);
+	
+	if ($adminRights === false) {
+        throw new Exception('Impossible de retirer les droits admin');
+    }
+    else {
+        header('Location: index.php?action=manage_users');
+    }
 }

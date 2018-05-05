@@ -104,6 +104,7 @@ function login($pseudo,$passe) {
             $_SESSION['password'] = $user['password'];
             $_SESSION['autorisation'] = $user['authorization'];
             $_SESSION['avatar'] = $user['avatar'];
+            $_SESSION['registration_date'] = $user['registration_date'];
             echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
          // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
                // echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';
@@ -215,7 +216,9 @@ function listPosts()
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$posts = $postManager->getPosts();
+    $posts1 = $postManager->getPosts();
     require('view/frontend/blog.php');
+
 }
 
 /* **********************************************************************
@@ -226,9 +229,13 @@ function listPost()
 {
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
+    $userManager = new \Philippe\Blog\Model\UserManager();
 
+    $posts1 = $postManager->getPosts();
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
+    $user = $userManager->getUser($_GET['id']);
+    $count = $commentManager->countCommentRequest();
     
     require('view/frontend/blog_post.php');
 }
@@ -321,5 +328,16 @@ function forgetPassword($email)
 {
     $userManager = new \Philippe\Blog\Model\UserManager();
     $forgetPassword = $userManager->forgetPasswordRequest($email);
+
+}
+
+/* **********************************************************************
+*                  21. SUPPRIMER MON COMPTE                             *
+************************************************************************/
+
+function deleteAccount($userId)
+{
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $deleteAccount = $userManager->deleteAccountRequest($userId);
 
 }

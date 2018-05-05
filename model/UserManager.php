@@ -5,12 +5,15 @@
 1 . Récupérer tous les membres
 2 . Récupérer un seul membre
 3 . Modifier un membre
-4 . Supprimer un membre
+4 . Supprimer un membre (backend)
 5 . Inscription
 6 . Le pseudo est-il déjà pris ?
 7 . L'email est-il déjà pris ?
 8 . Connexion
 9 . Déconnexion
+10 . Supprimer mon compte (frontend)
+11 . Donner les droits admin à un membre
+12 . Retirer les droits admin à un membre
 ************************************************************************/
 
 /* Je crée un emplacement pour éviter les conflits avec d'autres développeurs */
@@ -241,7 +244,7 @@ class UserManager extends Manager
     }
     
 /* **********************************************************************
-*                         9 . MAIL RESET PASSWORD                         		*
+*                         9 . MAIL RESET PASSWORD                       *
 ************************************************************************/
 
     public function forgetPasswordRequest($email) {
@@ -254,8 +257,8 @@ class UserManager extends Manager
         return $user;
     }
     
-    /* **********************************************************************
-*                         9 . MAIL RESET PASSWORD                         		*
+/* **********************************************************************
+*                         9 . MAIL RESET PASSWORD                       *
 ************************************************************************/
 
     public function rememberRequest($rememberToken) {
@@ -271,5 +274,47 @@ class UserManager extends Manager
         $req->execute([$rememberToken, $user['id']]);
         setcookie('remember', $user['id'] . '==' . $rememberToken . sha1($user['id'] . 'cookieTraon'), time() + 60 * 60 * 24 * 7);
     }
+
+/* **********************************************************************
+*                       10 . SUPPRIMER MON COMPTE                        *
+************************************************************************/
+	public function deleteAccountRequest($userId){
+        $db = $this->dbConnect();
+
+		/* Fonction prepare à revoir */
+		$post = $db->prepare('DELETE FROM Users WHERE id = ?');
+
+		$deleteAccount = $post->execute(array($userId));
+		
+		return $deleteAccount;
+    }
+
+/* **********************************************************************
+*                11. DONNER DROITS ADMIN                                *
+************************************************************************/
+
+	public function giveAdminRightsRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET authorization = 1 WHERE id = ?');
+
+		$adminRights = $req->execute(array($userId));
+
+		return $adminRights;
+	}
+
+/* **********************************************************************
+*                12. RETIRER DROITS ADMIN                               *
+************************************************************************/
+
+	public function stopAdminRightsRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET authorization = 0 WHERE id = ?');
+
+		$adminRights = $req->execute(array($userId));
+
+		return $adminRights;
+	}
     
 }

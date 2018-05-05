@@ -11,6 +11,6 @@
     </div>
 
     <div>
-        <input type="submit" />
+        <input class="btn btn-default" type="submit" style="width: 100px;display: block; margin: 0 auto;"/>
     </div>
 </form>

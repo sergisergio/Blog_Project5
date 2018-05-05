@@ -17,49 +17,48 @@ session_start();
     10 . Afficher la page d'inscription utilisateur (signupPage).  ============> OK
     11 . Traitement du formulaire d'inscription (addUser). ====================> OK
     12 . Confirmation inscription utilisateur (confirmRegistration).===========> OK
-    13 . Afficher la page d'accueil administrateur (index_management). ========> OK
-    14 . Afficher la rubrique articles (manage_posts). ========================> OK
-    15 . Afficher la rubrique commentaires (manage_comments). =================> OK
-    16 . Afficher la rubrique membres (manage_users). =========================> OK
-    17 . Ajouter un article (addPost). ========================================> OK
-    18 . Afficher la page pour modifier un article (modifyPostPage).  =========> OK
-    19 . Modifier un article (modifyPost).  ===================================> OK
-    20 . Supprimer un article (deletePost).  ==================================> OK
-    21 . Supprimer un membre (deleteUser). ====================================> OK
-    22 . Afficher la page pour modifier un membre (modifyUserPage). ===========> OK
-    23 . Modifier un membre (modifyUser). =====================================> OK
-    24 . Afficher un post et ses commentaires (adminViewPost). ================> OK
-    
+    13 . Supprimer mon compte (deleteAccount) =================================> OK
+    14 . Pas les droits administrateur ========================================> OK
+    15 . Afficher la page d'accueil administrateur (index_management). ========> OK
+    16 . Afficher la rubrique articles (manage_posts). ========================> OK
+    17 . Afficher la rubrique commentaires (manage_comments). =================> OK
+    18 . Afficher la rubrique membres (manage_users). =========================> OK
+    19 . Ajouter un article (addPost). ========================================> OK
+    20 . Afficher la page pour modifier un article (modifyPostPage).  =========> OK
+    21 . Modifier un article (modifyPost).  ===================================> OK
+    22 . Supprimer un article (deletePost).  ==================================> OK
+    23 . Supprimer un membre (deleteUser). ====================================> OK
+    24 . Afficher la page pour modifier un membre (modifyUserPage). ===========> OK
+    25 . Modifier un membre (modifyUser). =====================================> OK
+    26 . Afficher un post et ses commentaires (adminViewPost). ================> OK
+    27 . Valider un commentaire. ==============================================> OK
+    28 . Supprimer un commentaire =============================================> OK
     29 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE ============================> OK
     30 . Modifier le mot de passe =============================================> ?
          En cours
     31 . Afficher la page du profil ===========================================> OK
-    32 . Page d'accueil =======================================================> OK
+    32 . Donner droits admin à un membre ======================================> OK
+    33 . Retirer droits admin à un membre =====================================> OK
+    34 . Page d'accueil =======================================================> OK
 
-   *************** FIN RESUME *****************/
+*************** FIN RESUME *****************/
 
-/* Je charge les fichiers controller pour que les fonctions soient en mémoire*/
 require('controller/frontend.php');
 require('controller/backend.php');
 
-/* Puis je teste le paramètre action pour savoir quel contrôleur appeler.
-Par défaut, si il n'ya pas d'action, j'exécute la fonction home() qui appelera la page d'accueil. */
-// die();
 try {
-        /* Si il y a une action... */
     if (isset($_GET['action']))  {
-
     /* **********************************************************************
     *                              FRONT-END                                *
     ************************************************************************/
 
-        /* ********** 1. PAGE LISTANT L'ENSEMBLE DES BLOG POSTS **********************/
+    /* ********** 1. PAGE LISTANT L'ENSEMBLE DES BLOG POSTS ****************/
         
         if ($_GET['action'] == 'blog') {
              listPosts();
     	}
 
-        /* ********** 2. PAGE AFFICHANT UN BLOG POST *********************************/
+    /* ********** 2. PAGE AFFICHANT UN BLOG POST ***************************/
         
         elseif ($_GET['action'] == 'blogpost') {
              if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -70,7 +69,7 @@ try {
             }
         }
 
-        /* ********** 3 . AJOUTER UN COMMENTAIRE *************************************/
+    /* ********** 3 . AJOUTER UN COMMENTAIRE *******************************/
         
         elseif ($_GET['action'] == 'addcomment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -86,7 +85,7 @@ try {
             }
         }
 
-        /* ********** 4 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE *************/
+    /* ******* 4 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE **********/
 
         elseif ($_GET['action'] == 'modifyCommentPage') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -97,7 +96,7 @@ try {
             }
         }
 
-        /* ********** 5 . AFFICHER LA PAGE POUR EFFACER UN COMMENTAIRE **************/
+    /* ******* 5 . AFFICHER LA PAGE POUR EFFACER UN COMMENTAIRE ***********/
 
         elseif ($_GET['action'] == 'deleteComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -105,7 +104,7 @@ try {
             }
         }
 
-        /* ********** 6 . MODIFIER UN COMMENTAIRE **********************************/
+    /* ******* 6 . MODIFIER UN COMMENTAIRE ********************************/
 
         elseif ($_GET['action'] == 'modifyComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -121,31 +120,31 @@ try {
             }
         }
 
-        /* *********** 7 . PAGE CONNEXION UTILISATEUR *******************************/
+    /* ******* 7 . PAGE CONNEXION UTILISATEUR *****************************/
 
     	elseif ($_GET['action'] == 'loginPage') {
     		loginPage();
         }
 
-        /* *********** 8 . CONNEXION UTILISATEUR ************************************/
+    /* ******* 8 . CONNEXION UTILISATEUR **********************************/
 
         elseif ($_GET['action'] == 'login') {
             login($_POST['pseudo'], $_POST['passe']);
         }
 
-        /* *********** 9 . DECONNEXION UTILISATEUR *********************************/
+    /* ******* 9 . DECONNEXION UTILISATEUR ********************************/
 
         elseif ($_GET['action'] == 'logout') {
             logout();
         }
         
-        /* *********** 10 . PAGE INSCRIPTION UTILISATEUR ****************************/
+    /* ******* 10 . PAGE INSCRIPTION UTILISATEUR **************************/
 
         elseif ($_GET['action'] == 'signupPage') {
              signupPage();
         }
             
-        /* ************ 11 . FORMULAIRE INSCRIPTION REMPLI **************************/
+    /* ******* 11 . FORMULAIRE INSCRIPTION REMPLI *************************/
 
         elseif ($_GET['action'] == 'addUser') {
              if (!empty($_POST)) {
@@ -180,7 +179,7 @@ try {
                 }
         }
 
-        /* ************** 12 . CONFIRMATION INSCRIPTION UTILISATEUR ******************/
+    /* ******* 12 . CONFIRMATION INSCRIPTION UTILISATEUR ******************/
 
         elseif ($_GET['action'] == 'confirmRegistration') {
             if (isset($_GET['id']) && isset($_GET['token'])) {
@@ -191,54 +190,79 @@ try {
             }
         }
 
-        /* **********************************************************************
-        *                              BACK-END                                *
-        ************************************************************************/
+    /* ************** 13 . SUPPRIMER MON COMPTE ***************************/
+
+        elseif ($_GET['action'] == 'deleteAccount') {
+            if (isset($_SESSION['id'])) {
+                  deleteAccount($_SESSION['id']); 
+            }
+            else {
+                echo 'Aucun id';
+            }
+        }
+
+    /* **********************************************************************
+    *                              BACK-END                                 *
+    ************************************************************************/
         
-        /* ************** 13 . AFFICHER LA PAGE D'ACCUEIL ADMINISTRATEUR ****************/
+    /* ********* 14 . PAS LES DROITS ADMINISTRATEUR ************************/
 
         elseif ($_GET['action'] == 'noAdmin') {
             noAdmin();
         }
 
-
-        /* ************** 13 . AFFICHER LA PAGE D'ACCUEIL ADMINISTRATEUR ****************/
+    /* ******** 15 . AFFICHER LA PAGE D'ACCUEIL ADMINISTRATEUR *************/
 
         elseif ($_GET['action'] == 'index_management') {
             indexManagement();
         }
 
-        /* ************** 14 . AFFICHER LA RUBRIQUE ARTICLES ***************************/
+    /* *********** 16 . AFFICHER LA RUBRIQUE ARTICLES **********************/
 
         elseif ($_GET['action'] == 'manage_posts') {
             managePosts();
         }
 
-        /* ************** 15 . AFFICHER LA RUBRIQUE COMMENTAIRES ***********************/
+    /* ************** 17 . AFFICHER LA RUBRIQUE COMMENTAIRES ***************/
 
         elseif ($_GET['action'] == 'manage_comments') {
             manageComments();
             }
         
-        /* ************** 16 . AFFICHER LA RUBRIQUE MEMBRES ****************************/
+    /* ************** 18 . AFFICHER LA RUBRIQUE MEMBRES ********************/
 
         elseif ($_GET['action'] == 'manage_users') {
             manageUsers();
         }
 
-        /* ************** 17 . AJOUTER UN ARTICLE **************************************/
+    /* ************** 19 . AJOUTER UN ARTICLE ******************************/
 
         elseif ($_GET['action'] == 'addpost') {
           
                 if (!empty($_POST['title']) && !empty($_POST['content'])) {
-                    addPost($_POST['title'], $_SESSION['id'], $_POST['content']);
+                    // Testons si le fichier a bien été envoyé et s'il n'y a pas d'erreur
+                    if (isset($_FILES['file_extension']) AND $_FILES['file_extension']['error'] == 0) {
+                        // Testons si le fichier n'est pas trop gros
+                        if ($_FILES['file_extension']['size'] <= 1000000) {
+                            // Testons si l'extension est autorisée
+                            $infosfichier = pathinfo($_FILES['file_extension']['name']);
+                            $extension_upload = $infosfichier['extension'];
+                            $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
+                            if (in_array($extension_upload, $extensions_autorisees)) {
+                                // On peut valider le fichier et le stocker définitivement
+                                move_uploaded_file($_FILES['file_extension']['tmp_name'], 'public/images/posts/' . basename($_FILES['file_extension']['name']));
+                                echo "L'envoi a bien été effectué !";
+                            }
+                        }
+                    }
+                    addPost($_POST['title'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name']);
                 }
                 else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
         }
 
-        /* *********** 18 . AFFICHER LA PAGE POUR MODIFIER UN ARTICLE *******************/
+    /* ********** 20 . AFFICHER LA PAGE POUR MODIFIER UN ARTICLE ***********/
         elseif ($_GET['action'] == 'modifyPostPage') {
             /* alors j'exécute la fonction manageUsers qui se trouve dans le contrôleur backend */
               if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -252,7 +276,7 @@ try {
             /* Si il n'y a pas de paramètre 'id', j'indique qu'aucun commentaire ne peut être affiché */
         }
 
-        /* ************ 19 . MODIFIER UN ARTICLE *****************************************/
+    /* ************ 21 . MODIFIER UN ARTICLE *******************************/
 
         
         elseif ($_GET['action'] == 'modifyPost') {
@@ -270,7 +294,7 @@ try {
             /* Si il n'y a pas de paramètre 'id', j'indique qu'aucun commentaire ne peut être affiché */
         }
 
-        /* ************ 20. EFFACER UN ARTICLE ******************************************/
+    /* ************ 22. EFFACER UN ARTICLE *********************************/
 
         elseif ($_GET['action'] == 'deletePost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -279,7 +303,7 @@ try {
             }
         }
 
-        /* ************ 21 . EFFACER UN MEMBRE ******************************************/
+    /* ************ 23 . EFFACER UN MEMBRE *********************************/
 
         elseif ($_GET['action'] == 'deleteUser') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -288,7 +312,7 @@ try {
             }
         }
 
-        /* ************ 22 . AFFICHER LA PAGE POUR MODIFIER UN MEMBRE *******************/
+    /* ********* 24 . AFFICHER LA PAGE POUR MODIFIER UN MEMBRE *************/
 
         elseif ($_GET['action'] == 'modifyUserPage') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -297,7 +321,7 @@ try {
             }
         }
 
-        /* ************ 23 . MODIFIER UN MEMBRE *****************************************/
+    /* ************ 25 . MODIFIER UN MEMBRE ********************************/
 
         elseif ($_GET['action'] == 'modifyUser') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -306,20 +330,37 @@ try {
             }
         }
 
-        /* ************ 24 . AFFICHER L'ENSEMBLE DES BLOG POSTS *************************/
+    /* ************ 26 . AFFICHER L'ENSEMBLE DES BLOG POSTS ****************/
 
         elseif ($_GET['action'] == 'adminViewPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 AdminViewPost();
             }
-        }   
+        }
+
+    /* ************ 27 . VALIDER UN COMMENTAIRE ****************************/
+
+        elseif ($_GET['action'] == 'validateComment') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                validateComment($_GET['id']);
+            }
+        } 
+
+    /* ************ 28 . SUPPRIMER UN COMMENTAIRE **************************/
+
+        elseif ($_GET['action'] == 'adminDeleteComment') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                adminDeleteComment($_GET['id']);
+            }
+        }    
         
-        /* ********* 29 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE **********************/
+    /* ******* 29 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE **************/
         
         elseif ($_GET['action'] == 'forgetPasswordPage') {
             forgetPasswordPage();
         }
-        /* ***************** 30 . MODIFIER LE MOT DE PASSE *******************************/
+
+    /* ***************** 30 . MODIFIER LE MOT DE PASSE *********************/
         
         elseif ($_GET['action'] == 'forgetPassword') {
             if (isset($_POST['email'])) {
@@ -330,13 +371,30 @@ try {
             }
         }
         
-        /* ***************** 31 . Afficher la page du profil *******************************/
+    /* ***************** 31 . Afficher la page du profil *******************/
+        
         elseif ($_GET['action'] == 'profilePage') {
             profilePage();
         }
+
+    /* ***************** 32 . Donner droits admin **************************/
+        
+        elseif ($_GET['action'] == 'giveAdminRights') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                giveAdminRights($_GET['id']);
+            }
+        }
+
+    /* *************** 33 . Supprimer droits admin **********************/
+        
+        elseif ($_GET['action'] == 'cancelAdminRights') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                stopAdminRights($_GET['id']);
+            }
+        }
     }
 
-        /* *********** 32 . PAGE D'ACCUEIL ***********************************************/
+    /* *********** 34 . PAGE D'ACCUEIL **********************************/
 
     else {
         home();

@@ -10,7 +10,10 @@
                     
                 <?php include "view/backend/includes/management.php"; ?>
 
-                <h2 class="text-center">Modifier/supprimer un membre</h2>
+                <h2 class="text-center">Gestion des membres</h2>
+
+                <div class="divide20"></div>
+                <div class="divide20"></div>
 
                 <?php
                     while ($data = $req->fetch())
@@ -18,25 +21,30 @@
                 ?>
                 <div class="post box">
                     <div class="row">
-                        <a href="#"></a>
+                        
                         <h2 class="post-title">
-                            <?php echo htmlspecialchars($data['pseudo']); ?>
+                            <img class="img-responsive img-circle" style="width: 6%;" src="public/images/avatar/<?php echo htmlspecialchars($data['avatar']); ?>" />
+                            
                         </h2>
                         <h5 class="post-title">
-                            <?php echo htmlspecialchars($data['email']); ?>
+                            Pseudo : <?php echo htmlspecialchars($data['pseudo']); ?><br />
+                            Email : <?php echo htmlspecialchars($data['email']); ?><br />
+                            Administrateur : 
+                            <?php if ($data['authorization'] == 1): ?>
+                                <?= 'Oui'; ?><br /><btn class="btn btn-default"><a href="index.php?action=cancelAdminRights&amp;id=<?= $data['id'] ?>">Retirer les droits admin</a></btn>
+                            <?php else: ?>
+                                <?= 'Non'; ?><br /><btn class="btn btn-default"><a href="index.php?action=giveAdminRights&amp;id=<?= $data['id'] ?>">Donner les droits admin</a></btn>
+                            <?php endif; ?>
                         </h5>
 
                         <btn class="btn btn-default" style="float: right;">
                             <a href="index.php?action=deleteUser&amp;id=<?= $data['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
                         </btn>
-                        <!-- <btn class="btn btn-default" style="float: right;">
-                            <a href="index.php?action=modifyUserPage&amp;id=">Modifier</a>
-                        </btn> -->
                     </div>
                 </div>
                 
                 <?php
-                } // Fin de la boucle des billets
+                } 
                     $req->closeCursor();
                 ?>
             </div>

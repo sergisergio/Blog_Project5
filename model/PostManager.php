@@ -32,6 +32,7 @@ class PostManager extends Manager
 			ORDER BY creation_date DESC LIMIT 5');
 		return $req;
 	}
+
 /* **********************************************************************
 *                    2 . RECUPERER UN SEUL ARTICLE                      *
 ************************************************************************/
@@ -55,15 +56,15 @@ class PostManager extends Manager
 /* **********************************************************************
 *                     3 . AJOUTER UN ARTICLE                      		*
 ************************************************************************/
-	public function addPostRequest($title, $author, $content){
+	public function addPostRequest($title, $author, $content, $image){
 
 		/* A revoir */
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$post = $db->prepare('INSERT INTO Posts(title, intro, author, content, creation_date) VALUES(?, ?, ?, ?, NOW()) ');
+		$post = $db->prepare('INSERT INTO Posts(title, intro, author, content, file_extension, creation_date) VALUES(?, ?, ?, ?, ?, NOW()) ');
 
-		$affectedPost = $post->execute(array($title, substr($content, 0, 400), $author, $content));
+		$affectedPost = $post->execute(array($title, substr($content, 0, 600), $author, $content, $image));
 		
 		return $affectedPost;
 	}
@@ -78,7 +79,7 @@ class PostManager extends Manager
 		/* Fonction prepare à revoir */
 		$post = $db->prepare('UPDATE Posts SET title = ?, intro = ?, author = ?, content = ?, last_updated = NOW() WHERE id = ?');
 
-		$affectedPost = $post->execute(array($title, substr($content, 0, 400), $author, $content, $postId));
+		$affectedPost = $post->execute(array($title, substr($content, 0, 600), $author, $content, $postId));
 		
 		return $affectedPost;
 	}

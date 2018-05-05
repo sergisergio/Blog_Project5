@@ -32,21 +32,25 @@
                     <div class="col-md-8 col-sm-12 content">
                         <div class="blog-posts">
                             <div class="post box">
-                                <div class="meta"> <span class="date">date de dernière publication</span>le 
-                                <?php
-                                    if (isset($post['last_updated_fr'])) {
-                                      echo ($post['last_updated_fr']);
-                                    }
-                                    else
-                                      echo ($post['creation_date_fr']);
-                                ?> 
-                                </div>
-                                <img src="<?= $post['file_extension'] ?>" class="img-responsive" />
-                                <div class="news">
+                                
+                                
+                                <div class="post-title">
                                     <h2>
                                         <?= htmlspecialchars($post['title']) ?>
                                     </h2>
-                                    <h3 class="post-title">Auteur : <?= ($post['author']); ?></h3>
+                                    <h4 class="post-title">Auteur : <?= ($post['author']); ?></h4>
+                                    <div class="meta"> <span class="date">date de dernière publication</span>le 
+                                        <?php
+                                            if (isset($post['last_updated_fr'])) {
+                                              echo ($post['last_updated_fr']);
+                                            }
+                                            else
+                                              echo ($post['creation_date_fr']);
+                                        ?> 
+                                    </div>
+                                    <div class="divide30"></div>
+                                    <img src="public/images/posts/<?= $post['file_extension'] ?>" class="img-responsive" />
+                                    <div class="divide30"></div>
                                     <p>
                                         <?= nl2br(htmlspecialchars($post['content'])) ?>
                                     </p>
@@ -65,18 +69,22 @@
                                 <?php include "forms/form_addcomment.php"; ?>
                                 <?php else: ?> 
                                 <p>Vous devez être inscrit et connecté pour ajouter un commentaire !</p>
+                                <a href="index.php?action=signupPage">M'inscrire</a>&nbsp;&nbsp;
+                                <a href="index.php?action=loginPage">Me connecter</a>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="divide20"></div>
                         <div class="blog-posts" id="comments">
                             <div class="post box">
-                                <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires</h3>
+                                <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?= $count; ?>)</h3>
                                 <?php
                                     while ($comment = $comments->fetch())
                                 {
                                 ?>
-                                <p> 
+                                <p>
+
+                                    <!-- <img class="img-responsive img-circle" style="width: 5%;" src="public/images/avatar/" /> -->
                                     <strong><?= htmlspecialchars($comment['author']) ?></strong> le 
                                     <?php
                                     if (isset($comment['last_updated_fr'])) {
@@ -102,11 +110,9 @@
                         <div class="divide20"></div>
                     </div>
                             <!-- /.content -->
-                    <aside class="col-md-4 col-sm-12 sidebar">
-                    <div class="sidebox box widget">
-                        <?php include "forms/form_search.php"; ?>
-                    </div>
-                    </aside>
+                    
+                        <?php include "includes/aside.php"; ?>
+                    
                             <!-- /column .sidebar -->
                             <!-- /.blog -->
                 </div>
