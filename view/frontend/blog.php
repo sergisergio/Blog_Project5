@@ -29,6 +29,39 @@
                             <div class="blog list-view row">
                                 <div class="col-md-8 col-sm-12 content">
                                     <?php
+                                                $db = new PDO('mysql:host=localhost;dbname=projet5;charset=utf8', 'root', 'root');
+                                                $postsPerPage = 5;
+                                                $postsTotalReq  = $db->query('SELECT id FROM Posts');
+                                                $postsTotal = $postsTotalReq->rowCount();
+                                                $totalPages = ceil($postsTotal / $postsPerPage);
+
+                                                if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)){
+                                                    $_GET['page'] = intval($_GET['page']);
+                                                    $pageCourante = $_GET['page'];
+                                                }
+                                                else {
+                                                    $pageCourante = 1;
+                                                }
+
+                                                $depart = ($pageCourante-1)*$postsPerPage;
+                                            ?>
+                                    <div class="pagination box">
+                                                <ul>
+                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($pageCourante - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                                                    <?php
+                                                        for($i=1;$i<=$totalPages;$i++){
+                                                            if($i == $pageCourante) {
+                                                                echo '<li><a class="btn active" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
+                                                            }
+                                                            else {
+                                                            echo '<li><a class="btn" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
+                                                            }
+                                                        }
+                                                    ?>
+                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($pageCourante + 1) . '">'.'Suivant'.'</a> '; ?></li>
+                                                </ul>
+                                            </div>
+                                    <?php
                                         while ($data = $posts->fetch())
                                     {
                                     ?>
@@ -38,7 +71,7 @@
                                                     <div class="col-sm-12 post-content">
                                                         
                                                         <h2 class="post-title"><?= htmlspecialchars($data['title']); ?></h2>
-                                                        <h4 class="post-title">Auteur : <?= ($data['author']); ?></h4>
+                                                        <h4 class="post-title">Auteur : <?= htmlspecialchars($data['author']); ?></h4>
                                                         <div class="meta">
                                                             <!--<span class="category">Journal</span>--><span class="date">date de dernière publication</span> :
                                                             <?php
@@ -70,13 +103,22 @@
                                             $posts->closeCursor();
                                           ?>
                                             <!-- /.blog-posts -->
+
+                                            
                                             <div class="pagination box">
                                                 <ul>
-                                                    <li><a href="#" class="btn">Prec</a></li>
-                                                    <li class="active"><a href="#" class="btn"><span>1</span></a></li>
-                                                    <li><a href="#" class="btn"><span>2</span></a></li>
-                                                    <li><a href="#" class="btn"><span>3</span></a></li>
-                                                    <li><a href="#" class="btn">Suiv</a></li>
+                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($pageCourante - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                                                    <?php
+                                                        for($i=1;$i<=$totalPages;$i++){
+                                                            if($i == $pageCourante) {
+                                                                echo '<li><a class="btn active" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
+                                                            }
+                                                            else {
+                                                            echo '<li><a class="btn" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
+                                                            }
+                                                        }
+                                                    ?>
+                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($pageCourante + 1) . '">'.'Suivant'.'</a> '; ?></li>
                                                 </ul>
                                             </div>
                                             <!-- /.pagination -->

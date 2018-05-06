@@ -19,16 +19,23 @@
                     while ($data = $req->fetch())
                 {
                 ?>
+                
+                        <div class="col-md-6 col-sm-12">
                 <div class="post box">
                     <div class="row">
                         
+                        
                         <h2 class="post-title">
-                            <img class="img-responsive img-circle" style="width: 6%;" src="public/images/avatar/<?php echo htmlspecialchars($data['avatar']); ?>" />
-                            
+                            <?php if ($data['avatar'] != ''): ?>
+                            <img class="img-responsive img-circle" style="width: 8%;" src="public/images/avatar/<?php echo htmlspecialchars($data['avatar']); ?>" />
+                            <?php else: ?>
+                            <img class="img-responsive img-circle" style="width: 8%;" src="public/images/avatar/avatardefaut.png" />
+                            <?php endif; ?>
                         </h2>
                         <h5 class="post-title">
                             Pseudo : <?php echo htmlspecialchars($data['pseudo']); ?><br />
                             Email : <?php echo htmlspecialchars($data['email']); ?><br />
+                            Inscription : <?php echo htmlspecialchars($data['registration_date']); ?><br />
                             Administrateur : 
                             <?php if ($data['authorization'] == 1): ?>
                                 <?= 'Oui'; ?><br /><btn class="btn btn-default"><a href="index.php?action=cancelAdminRights&amp;id=<?= $data['id'] ?>">Retirer les droits admin</a></btn>
@@ -40,8 +47,11 @@
                         <btn class="btn btn-default" style="float: right;">
                             <a href="index.php?action=deleteUser&amp;id=<?= $data['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
                         </btn>
-                    </div>
+                    
                 </div>
+                </div>
+            </div>
+        
                 
                 <?php
                 } 
@@ -49,6 +59,11 @@
                 ?>
             </div>
                 <!-- /.container -->
+                <div class="divide20"></div>
+                <div class="divide20"></div>
+                <div class="divide20"></div>
+                <div class="divide20"></div>
+                <div class="divide20"></div>
         </div>
 <?php $content = ob_get_clean(); ?>
 <?php require('view/backend/template.php'); ?>

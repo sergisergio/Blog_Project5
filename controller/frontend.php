@@ -106,10 +106,11 @@ function login($pseudo,$passe) {
             $_SESSION['avatar'] = $user['avatar'];
             $_SESSION['registration_date'] = $user['registration_date'];
             echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
-         // $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
+            $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
                // echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';
-            // header('Location: http://localhost:8888/Blog_Project5/index.php?action=blog');
-            // exit;
+            echo "<script>document.location.replace('index.php?action=blog');</script>";
+            exit();
+             
             }
             else {
                 echo '<div class="alert alert-danger">' . 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !' . '</div>' . '<br />';

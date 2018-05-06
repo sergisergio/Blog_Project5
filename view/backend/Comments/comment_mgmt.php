@@ -10,6 +10,12 @@
 
             <h2 class="text-center">Gestion des commentaires</h2>
 
+            <div class="divide20"></div>
+
+            <p class="text-center">(Les commentaires déjà validés peuvent être supprimés directement sur le blog.)</p>
+
+            <div class="divide20"></div>
+
             <?php
             while ($data = $submittedcomments->fetch())
             {
@@ -36,6 +42,12 @@
             ?>
 
         </div>
+
+        <div class="divide20"></div>
+        <div class="divide20"></div>
+        <div class="divide20"></div>
+        <div class="divide20"></div>
+        <div class="divide20"></div>
     </div>
 
 <?php $content = ob_get_clean(); ?>
