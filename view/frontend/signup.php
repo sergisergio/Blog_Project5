@@ -1,13 +1,8 @@
 <?php $title = 'Inscription'; ?>
 <?php ob_start(); ?>
-
-        
-                <!-- /#home -->
-            <div class="container">
-                
-                <?php include "forms/form_signup.php"; ?>
-            </div>
-                <!-- /.container -->
-        </div>
+    <div class="container">
+    	<?php include "forms/form_signup.php"; ?>
+    </div>
+</div>
 <?php $content = ob_get_clean(); ?>
 <?php require('template.php'); ?>

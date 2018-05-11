@@ -7,15 +7,12 @@
                     <img src="public/images/Philippe.jpeg" alt="" />
                 </figure>
             </div>
-                        <!-- /column -->
             <div class="col-md-9 col-md-pull-3 col-sm-12 col-xs-12">
                 <p class="lead">Depuis plusieurs années, je m'intéresse aux nouvelles technologies et me suis découvert une passion pour le développement. Travaillant en autodidacte depuis 2016 sur différents aspects du web, j'ai rejoint courant avril 2017 un cursus de 3mois en développement chez G2R Formation à Paris avant d'effectuer un stage durant juillet-août.
                 <br> Je suis, aujourd'hui, en formation "Développeur d'applications PHP/Symfony" avec Openclassrooms ( formation du 11 décembre 2017 au 11 décembre 2018).</p>
                 <p class="lead">Je suis aujourd'hui disponible pour un contrat ou une mission en région parisienne.</p>
             </div>
-                        <!-- /column -->
         </div>
-                    <!-- /.row -->
         <div class="clearfix"></div>
         <div class="divide40"></div>
         <h2 class="section-title"></h2>
@@ -140,10 +137,6 @@
                 </div>
                 <div class="divide30"></div>
             </div>
-                        <!-- /.row -->
         </div>
-                    <!-- /.services -->
     </div>
-                <!-- /.box -->
 </section>
-            <!-- /#about -->

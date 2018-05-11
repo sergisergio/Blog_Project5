@@ -5,8 +5,8 @@
                 <div class="fullscreenbanner-container revolution">
                     <div class="fullscreenbanner">
                         <ul>
-                            <li data-transition="fade"> <!--<img src="public/images/dummy.png" alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="repeat" display="none;">-->
-                                <h1 class="tp-caption caption large sfb" data-x="center" data-y="center" data-voffset="-25" data-speed="0" data-start="0" data-endspeed="0.1" data-easing="Sine.easeOut">Philippe Traon</h1>
+                            <li data-transition="fade">
+                                <h1 class="tp-caption caption large sfb" data-x="center" data-y="center" data-voffset="-25" data-speed="900" data-start="1000" data-endspeed="100" data-easing="Sine.easeOut">Philippe Traon</h1>
                                 <div class="tp-caption small tp-fade fadeout tp-resizeme" data-x="center" data-y="center" data-voffset="25" data-speed="100" data-start="1500" data-easing="Power4.easeOut" data-splitin="chars" data-splitout="chars" data-elementdelay="0.03" data-endelementdelay="0" data-endspeed="100" data-endeasing="Power1.easeOut" style="z-index: 3; max-width: auto; max-height: auto; white-space: nowrap;">Développeur web</div>
                                 <div class="tp-caption small tp-fade fadeout tp-resizeme" data-x="center" data-y="center" data-voffset="75" data-speed="100" data-start="1500" data-easing="Power4.easeOut" data-splitin="chars" data-splitout="chars" data-elementdelay="0.03" data-endelementdelay="0" data-endspeed="100" data-endeasing="Power1.easeOut" style="z-index: 3; max-width: auto; max-height: auto; white-space: nowrap;">PHP / Symfony</div>
                                 <div class="arrow smooth"><a href="#portfolio"><i class="icon-down-open-big"></i></a></div>
@@ -14,11 +14,8 @@
                         </ul>
                         <div class="tp-bannertimer"></div>
                     </div>
-                        <!-- /.fullscreenbanner -->
                 </div>
-                    <!-- /.revolution -->
             </section>
-                    <!-- /#home -->
             <div class="container">
                 <?php include "includes/section1_portfolio.php"; ?>
                 <?php include "includes/section2_about.php"; ?>
@@ -43,23 +40,15 @@
                                 <p> <a class="nocolor" href="mailto:#">contact@philippetraon.com</a> </p>
                             </div>
                         </div>
-                    <!-- /.services-2 -->
                         <div class="divide30"></div>
                         <div class="form-container">
                             <div class="response alert alert-success"></div>
-
-                            <?php include "forms/form_contact.php"; ?>
-
+                                <?php include "forms/form_contact.php"; ?>
                         </div>
-                    <!-- /.form-container -->
                     </div>
-                <!-- /.box -->
                 </section>
-            <!-- /#contact -->
                 <?php include "includes/footer.php"; ?>
             </div>
-                    <!-- /.container -->
         </div>
-        <!-- /.body-wrapper -->
 <?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+<?php require('hometemplate.php'); ?>

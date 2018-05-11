@@ -2,7 +2,6 @@
     <div class="box">
         <h2 class="section-title text-center">Inscription</h2>
         <p></p>
-                    
         <div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
@@ -13,9 +12,7 @@
                     </div>
                 <?php endforeach; ?>
                 <?php unset($_SESSION['flash']); ?>
-            <?php endif; ?>
-            
-            <form class="forms" action="index.php?action=addUser" method="post">
+            <?php endif; ?><form class="forms" action="index.php?action=addUser" method="post">
                 <fieldset>
                     <div class="row">
                         <div class="col-md-offset-3 col-md-6 col-sm-12">
@@ -36,7 +33,6 @@
                                 <input type="password" placeholder="Confirmez votre mot de passe" name="passe2" class="text-input defaultText" /> 
                             </div>
                         </div>
-                                    
                         <div class="col-sm-6 col-xs-6">
                             <div class="button-row pull-right">
                                 <input type="submit" value="Envoyer" name="submit" class="btn btn-submit bm0" /> 
@@ -53,8 +49,5 @@
                 </fieldset>
             </form>
         </div>
-                    <!-- /.form-container -->
     </div>
-                <!-- /.box -->
 </section>
-            <!-- /#contact -->

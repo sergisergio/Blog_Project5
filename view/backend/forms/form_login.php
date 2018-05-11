@@ -1,4 +1,4 @@
-<section id="contact">
+<section>
     <div class="box">
         <h2 class="section-title text-center">Administration</h2>
         <p></p>
@@ -18,12 +18,9 @@
                                 <input type="password" name="passe" class="text-input defaultText" /> 
                             </div>
                             <div class="form-row">
-                            
                                 <input class="pull-left" type="checkbox" name="remember" value="1" /><label> Se souvenir de moi </label>
-                            
                             </div>
                         </div>
-                        
                         <div class="col-sm-6 col-xs-6">
                             <div class="button-row pull-right">
                                 <input type="submit" value="Envoyer" name="submit" class="btn btn-submit bm0" /> </div>
@@ -37,8 +34,5 @@
                 </fieldset>
             </form>
         </div>
-        <!-- /.form-container -->
     </div>
-    <!-- /.box -->
 </section>
-<!-- /#contact -->

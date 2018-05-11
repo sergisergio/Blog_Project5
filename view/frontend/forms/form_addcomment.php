@@ -16,7 +16,7 @@
     </div>
     <p class="text-center">Votre commentaire sera publié dans les plus brefs délais après modération</p>
     <div>
-        <input class="btn btn-default" type="submit" style="width: 100px;display: block; margin: 0 auto;"/>
+        <input class="btn btn-default validate" type="submit" />
     </div>
 </form>
 </div>

@@ -5,7 +5,6 @@
         <div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
-
             <form action="index.php?action=login" method="post">
                 <fieldset>
                     <div class="row">
@@ -20,7 +19,6 @@
                                 <input style="width: 5%;" type="checkbox" name="remember" value="1" />
                                 <label class="">Se souvenir de moi</label>
                             </div>
-                            
                         </div>
                         <div class="col-sm-6 col-xs-6">
                             <div class="button-row pull-right">
@@ -35,8 +33,5 @@
                 </fieldset>
             </form>
         </div>
-        <!-- /.form-container -->
     </div>
-    <!-- /.box -->
 </section>
-<!-- /#contact -->

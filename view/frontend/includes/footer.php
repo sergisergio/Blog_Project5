@@ -3,9 +3,7 @@
         <btn class="btn btn-default">
             <a href="index.php?action=index_management">Administration</a>
         </btn>
-        <!--<p class="response alert"></p>-->
     </p>
-    
     <ul class="social pull-right">
         <li>
             <a href="https://fr.pinterest.com/ptraon/" target="_blank"><i class="icon-s-pinterest"></i></a>
@@ -19,8 +17,8 @@
         <li>
             <a href="https://www.youtube.com/channel/UCNSAyQeQ132taTopmXCKSvQ/playlists" target="_blank"><i class="icon-s-youtube"></i></a>
         </li>
-        <li style="color: green;">
-            <a href="https://www.freecodecamp.com/sergisergio" target="_blank"> <i class="fa fa-free-code-camp" style="color: green;"></i></a>
+        <li>
+            <a href="https://www.freecodecamp.com/sergisergio" target="_blank"> <i class="fa fa-free-code-camp"></i></a>
         </li>
         <li>
             <a href="https://codepen.io/sergisergio/#" target="_blank"> <i class="fa fa-codepen"></i></a>
@@ -28,4 +26,3 @@
     </ul>
     <div class="clearfix"></div>
 </footer>
-            <!-- /footer -->

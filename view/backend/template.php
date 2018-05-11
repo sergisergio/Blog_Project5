@@ -12,7 +12,6 @@
     <meta prefix="og: http://ogp.me/ns#" property="og:image" content="http://philippetraon.com/public/images/ogimage.png" />
     <meta property="og:image:width" content="180" />
     <link rel="icon" type="image/ico" href="public/images/Philippe.ico" />
-    
     <title>Philippe Traon - Développeur web</title>
     <!-- Bootstrap core CSS -->
     <link href="public/css/bootstrap.min.css" rel="stylesheet">
@@ -30,55 +29,6 @@
       <script src="style/js/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
       <![endif]-->
-    <style>
-        .tooltip {
-            position: relative;
-            float: right;
-        }
-        
-        .tooltip > .tooltip-inner {
-            background-color: #eebf3f;
-            padding: 3px 15px;
-            color: rgb(23, 44, 66);
-            font-weight: bold;
-            font-size: 13px;
-        }
-        
-        .popOver + .tooltip > .tooltip-arrow {
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 5px solid #eebf3f;
-        }
-        
-        .progress {
-            border-radius: 0;
-            overflow: visible;
-            border: 1px solid #9cbc68;
-            background: #000;
-        }
-        
-        .progress-bar {
-            background-color: #9cbc68 !important;
-            -webkit-transition: width 1.5s ease-in-out !important;
-            transition: width 1.5s ease-in-out !important;
-        }
-        .popover-title {
-            background: #9cbc68;
-            text-align: center;
-        }
-        .popover-content {
-            padding: 9px 14px;
-            color: #111;
-            text-align: center;
-        }
-        .popover-content .btn {
-            color: #111 !important;
-            border: 1px solid #111;
-        }
-        input {
-            background-color : rgba(30,30,31,0.85);
-        }
-    </style>
 </head>
 
         <?= $content ?>

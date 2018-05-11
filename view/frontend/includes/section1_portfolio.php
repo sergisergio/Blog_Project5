@@ -7,9 +7,7 @@
             <div data-filter=".javascript" class="cbp-filter-item-custom btn">JS/jQuery</div>
             <div data-filter=".php" class="cbp-filter-item-custom btn">PHP/MySQL</div>
             <div data-filter=".wordpress" class="cbp-filter-item-custom btn">Wordpress</div>
-                        <!--<div data-filter=".integration" class="cbp-filter-item-custom btn">Maquettes</div>-->
         </div>
-                    <!-- /#filters-container -->
         <div class="clearfix"></div>
         <div id="grid-container" class="cbp-l-grid-masonry">
             <ul>
@@ -45,7 +43,7 @@
                 <li class="cbp-item frame html javascript">
                     <a class="cbp-caption cbp-singlePage" href="detail/postfestival.php">
                         <div class="cbp-caption-defaultWrap"> 
-                            <img src="public/images/festival.png" style="background: #FFF;" alt=""> 
+                            <img src="public/images/festival.png" class="white" alt=""> 
                         </div>
                         <div class="cbp-caption-activeWrap">
                             <div class="cbp-l-caption-alignCenter">
@@ -73,7 +71,7 @@
                 <li class="cbp-item frame wordpress">
                     <a class="cbp-caption cbp-singlePage" href="detail/post4.php">
                         <div class="cbp-caption-defaultWrap"> 
-                            <img src="public/images/logo-image-atelier-des-chefs.jpg" alt="" style="background-color: #fff;padding: 20px;"> 
+                            <img src="public/images/logo-image-atelier-des-chefs.jpg" alt="" class="white p20"> 
                         </div>
                         <div class="cbp-caption-activeWrap">
                             <div class="cbp-l-caption-alignCenter">
@@ -156,11 +154,8 @@
                 </li>
             </ul>
         </div>
-                    <!-- /.cbp-l-grid-masonry -->
         <div class="cbp-l-loadMore-button"> 
             <a href="../detail/port1-more.php" class="cbp-l-loadMore-button-link btn">VOIR PLUS</a> 
         </div>
     </div>
-                <!-- /.box -->
 </section>
-            <!-- /#portfolio -->

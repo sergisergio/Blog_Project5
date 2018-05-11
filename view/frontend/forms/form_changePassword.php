@@ -1,9 +1,7 @@
 <section id="contact">
     <div class="box">
         <h2 class="section-title text-center">réinitialiser le mot de passe</h2>
-        <p></p>
-                    
-        <div class="divide30"></div>
+        <p></p><div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
             <form class="forms" action="index.php?action=changePassword" method="post">
@@ -36,8 +34,5 @@
                 </fieldset>
             </form>
         </div>
-                    <!-- /.form-container -->
     </div>
-                <!-- /.box -->
 </section>
-            <!-- /#contact -->

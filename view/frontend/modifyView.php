@@ -1,27 +1,36 @@
-<?php $title = 'Article'; ?>
+<?php $title = 'Modification commentaire'; ?>
 <?php ob_start(); ?>
 
 
   <div class="container inner">
-    <div class="blog box mgbottom row" style="margin-bottom: 50px;">
+    <div class="blog box mgbottom2 row">
       <div class="col-md-12">
         <?php if (isset($_SESSION['pseudo'])): ?>
-                                        <p class="pull-left">
-                                            <btn class="btn btn-default"> <a href="index.php?action=profilePage">Voir mon profil</a> </btn>
-                                        </p>
-                                        <p class="pull-right">
-                                            <btn style="float: right;" class="btn btn-default"> <a href="index.php?action=logout">Déconnexion</a> </btn>
-                                            <?php if ($_SESSION['avatar'] != ''): ?> <img style="width: 10%;float: right;margin: 0 20px;" class="img-responsive img-circle" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
-                                                <?php else: ?> <img style="width: 5%;float: right;margin: 0 20px;" class="img-responsive img-circle" src="public/images/avatar/avatardefaut.png" />
-                                                    <?php endif; ?>
-                                        </p>
-                                        <?php else: ?>
-                                            <p class="pull-right">
-                                                <btn class="btn btn-default"> <a href="index.php?action=loginPage">Connexion</a> </btn>
-                                            </p>
-                                            <p class="pull-right">
-                                                <btn class="btn btn-default"> <a href="index.php?action=signupPage">Inscription</a> </btn>&nbsp;&nbsp; </p>
-                                            <?php endif; ?>
+          <p class="pull-left">
+            <btn class="btn btn-default"> 
+              <a href="index.php?action=profilePage">Voir mon profil</a> 
+            </btn>
+          </p>
+          <p class="pull-right">
+            <btn class="btn btn-default logoutbtn"> 
+              <a href="index.php?action=logout">Déconnexion</a> 
+            </btn>
+            <?php if ($_SESSION['avatar'] != ''): ?> 
+              <img class="img-responsive img-circle avatarblogpage2" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
+            <?php else: ?> <img class="img-responsive img-circle avatarblogpagedefault" src="public/images/avatar/avatardefaut.png" />
+            <?php endif; ?>
+          </p>
+        <?php else: ?>
+          <p class="pull-right">
+            <btn class="btn btn-default"> 
+              <a href="index.php?action=loginPage">Connexion</a> 
+            </btn>
+          </p>
+          <p class="pull-right">
+            <btn class="btn btn-default"> 
+              <a href="index.php?action=signupPage">Inscription</a> 
+            </btn>&nbsp;&nbsp; </p>
+        <?php endif; ?>
       </div>
     </div>
     <div class="single blog row">
@@ -44,28 +53,21 @@
             <?php include "forms/form_modifycomment.php"; ?>
             <div class="divide20"></div>
           </div>
-          <!-- /.post --> 
         </div>
-        <!-- /.blog-posts -->
         <div class="divide20"></div>
         <div class="divide20"></div>
         <div class="divide20"></div>
         <div class="divide20"></div>
         <div class="divide20"></div>
       </div>
-      <!-- /.content -->
       <aside class="col-md-4 col-sm-12 sidebar">
         <div class="sidebox box widget">
           <?php include "forms/form_search.php"; ?>
         </div>
         <div class="clearfix"></div>       
       </aside>
-      <!-- /column .sidebar -->    
-    <!-- /.blog --> 
-    
     </div>
-  <!-- /.container --> 
-      <div class="container" style="margin-top: 130px;">
+      <div class="container bottomcontainer">
         <div class="row">
           <?php include "includes/footer.php"; ?>
         </div>

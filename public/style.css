@@ -36,6 +36,98 @@
 /*-----------------------------------------------------------------------------------*/
 /*	00. DEBUT
 /*-----------------------------------------------------------------------------------*/
+.tooltip {
+    position: relative;
+    float: right;
+}
+.tooltip > .tooltip-inner {
+    background-color: #eebf3f;
+    padding: 3px 15px;
+    color: rgb(23, 44, 66);
+    font-weight: bold;
+    font-size: 13px;
+}        
+.popOver + .tooltip > .tooltip-arrow {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #eebf3f;
+}        
+.progress {
+    border-radius: 0;
+    overflow: visible;
+    border: 1px solid #9cbc68;
+    background: #000;
+}
+.progress-bar {
+    background-color: #9cbc68 !important;
+    -webkit-transition: width 1.5s ease-in-out !important;
+    transition: width 1.5s ease-in-out !important;
+}
+.popover-title {
+    background: #9cbc68;
+    text-align: center;
+}
+.popover-content {
+    padding: 9px 14px;
+    color: #111;
+    text-align: center;
+}
+.popover-content .btn {
+    color: #111 !important;
+    border: 1px solid #111;
+}
+input {
+    background-color: rgba(30,30,31,0.85);
+}
+.logoutbtn {
+    float: right;
+}
+.avatarblogpage {
+    width: 10%;
+    float: right;
+    margin: 0 20px;
+}
+.imageblog1 {
+    float:left;
+    width:30%;
+    margin-right:20px;
+}
+.avatarblogpage2 {
+    width: 10%;
+    float: right;
+    margin: 0 20px;
+}
+.avatarblogpagedefault {
+    width: 5%;
+    float: right;
+    margin: 0 20px;
+}
+.avatarprofile {
+    width: 20%;
+}
+.bottomcontainer {
+    margin-top: 130px;
+}
+.mgbottom2 {
+    margin-bottom : 50px;
+}
+.mgbottom25 {
+    margin-bottom : 25px !important;
+}
+ul li {
+    list-style-type: none;
+}
+.white {
+    background-color : #FFF;
+}
+.p20 {
+    padding: 20px;
+}
+.validate {
+    width: 100px;
+    display: block; 
+    margin: 0 auto;
+}
 *,
 *:before,
 *:after {
@@ -445,7 +537,7 @@ video {
     height: 325px;
 }
 
-.mgbottom {
+.margin-bottom {
     margin-bottom: 50px !important;
 }
 /*-----------------------------------------------------------------------------------*/

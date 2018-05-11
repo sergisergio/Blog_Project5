@@ -4,8 +4,6 @@
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="divide40"></div>
-                            <!--<ul class="progress-list">
-                                <li>-->
                     <div class="barWrapper"> 
                         <span class="progressText"><B>HTML5/CSS3</B></span>
                             <div class="progress">
@@ -50,37 +48,6 @@
                                 </div>
                             </div>
                     </div>
-                            <!--  <p>HTML/CSS <em>95%</em></p>
-                                    <div class="progress plain">
-                                        <div class="bar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%;"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>JAVASCRIPT/jQuery <em>80%</em></p>
-                                    <div class="progress plain">
-                                        <div class="bar" style="width: 80%;"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>PHP/MySQL<em>60%</em></p>
-                                    <div class="progress plain">
-                                        <div class="bar" style="width: 60%;"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>Wordpress <em>80%</em></p>
-                                    <div class="progress plain">
-                                        <div class="bar" style="width: 80%;"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>SEO <em>75%</em></p>
-                                    <div class="progress plain">
-                                        <div class="bar" style="width: 75%;"></div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <!-- /.progress-list -->
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="divide40"></div>
@@ -127,9 +94,7 @@
                     </div>
                 </div>
             </div>
-                        <!--/column -->
         </div>
         <div class="divide10"></div>
     </div>
-                <!-- /.box -->
 </section>

@@ -1,15 +1,10 @@
-<?php $title = 'Gestion des articles'; ?>
+<?php $title = 'Gestion des commentaires'; ?>
 <?php ob_start(); ?>
-
     <body class="full-layout">
-        
         <div class="body-wrapper">
             <?php include "view/frontend/includes/nav.php"; ?>
-                
             <div class="container">
-                    
                 <?php include "includes/management.php"; ?>
-
                 <h2 class="text-center">Gestion des commentaires</h2>
                 <div class="blog-posts">
                     <div class="post box">
@@ -23,18 +18,11 @@
                                 <?= nl2br(htmlspecialchars($post['intro'])) ?>
                             </p>
                         </div>
-
                         <h2>Modifier le commentaire</h2>
-
                         <?php include "view/backend/forms/form_modifycomment.php" ?>
-            
                         <div class="divide20"></div>
-              
                     </div>
-          <!-- /.post --> 
                 </div>
-        <!-- /.blog-posts -->
-                <!-- /.container -->
             </div>
         </div>
 <?php $content = ob_get_clean(); ?>

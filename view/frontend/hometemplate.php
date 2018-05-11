@@ -30,11 +30,15 @@
           <![endif]-->
     </head>
     <body class="full-layout">
+        <div id="preloader">
+            <div id="status">
+                <div class="loadcircle"></div>
+            </div>
+        </div>
         <div class="body-wrapper">
-            <?php include "includes/nav.php"; ?>
+                        <?php include "includes/nav.php"; ?>
                         
             <?= $content ?>
-
         <script src="public/js/jquery.min.js"></script>
         <script src="public/js/bootstrap.min.js"></script>
         <script src="public/js/jquery.popconfirm.js"></script>

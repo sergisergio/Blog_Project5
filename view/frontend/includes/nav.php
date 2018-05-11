@@ -2,7 +2,6 @@
     <div class="navbar-header"> 
         <a class="btn responsive-menu" data-toggle="collapse" data-target=".navbar-collapse"><i></i></a>
     </div>
-            <!-- /.navbar-header -->
     <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
             <li class="current">
@@ -26,25 +25,6 @@
             <li>
                 <a href="public/images/CV_Philippe_Traon.pdf" class="hint--right" data-hint="CV" target="_blank"><i class="budicon-note-9"></i><span>CV</span></a>
             </li>
-        <!--<li>
-            <a href="#elsewhere" class="hint--right fancybox-inline" data-hint="Elsewhere" data-fancybox-width="325" data-fancybox-height="220"><i class="icon-heart-empty-1"></i><span>Elsewhere</span></a>
-            </li>-->
         </ul>
-                <!-- /.navbar-nav -->
     </div>
-            <!-- /.navbar-collapse 
-    <div id="elsewhere" style="display:none;">
-      <h1>Me, Elsewhere</h1>
-      <div class="divide20"></div>
-      <ul class="social">
-        <li><a href="#"><i class="icon-s-twitter"></i></a></li>
-        <li><a href="#"><i class="icon-s-facebook"></i></a></li>
-        <li><a href="#"><i class="icon-s-instagram"></i></a></li>
-        <li><a href="#"><i class="icon-s-flickr"></i></a></li>
-        <li><a href="#"><i class="icon-s-pinterest"></i></a></li>
-        <li><a href="#"><i class="icon-s-linkedin"></i></a></li>
-      </ul>
-    </div>
-    <!-- /#elsewhere -->
 </nav>
-        <!-- /.navbar -->
