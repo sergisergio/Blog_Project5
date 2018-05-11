@@ -11,7 +11,7 @@ session_start();
     5 . Supprimer un commentaire (deleteComment). =============================> OK
     6 . Modifier un commentaire (modifyComment).  =============================> OK
     7 . Afficher la page de connexion (loginPage).  ===========================> OK
-    8 . Se connecter (login).  ================================================> ?
+    8 . Se connection_aborted()er (login).  ================================================> ?
         PROBLEME DE REDIRECTION
     9 . Se déconnecter (logout). ==============================================> OK 
     10 . Afficher la page d'inscription utilisateur (signupPage).  ============> OK
@@ -77,7 +77,9 @@ try {
                     addComment($_GET['id'], $_SESSION['id'], $_POST['content']);
                 }
                 else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
+                    $_SESSION['flash']['danger'] = 'Le champ est vide !';
+                    header('Location: index.php?action=blogpost&id=' . $_GET['id'] . '#comments');
+                    exit();
                 }
             }
             else {
@@ -154,7 +156,7 @@ try {
                 $passe2 = $_POST['passe2'];
                 $errors = array();
                 } 
-                if(empty($_POST['pseudo']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST['pseudo'])) {
+                if(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)) {
                     $errors['pseudo'] = "Votre pseudo n'est pas valide (caractères alphanumériques et underscore permis...";
                     echo '<div class="alert alert-danger">' . $errors['pseudo'] . '</div>';
                 }
@@ -162,7 +164,7 @@ try {
                     $errors['pseudo'] = 'Ce pseudo est déjà pris';
                     echo '<div class="alert alert-danger">' . $errors['pseudo'] . '</div>';
                 }
-                if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $errors['email'] = "Votre email n'est pas valide";
                     echo '<div class="alert alert-danger">' . $errors['email'] . '</div>';
                 }
@@ -170,7 +172,7 @@ try {
                     $errors['email'] = 'Cet email est déjà pris';
                     echo '<div class="alert alert-danger">' . $errors['email'] . '</div>';
                 }
-                if (empty($_POST['passe']) || $_POST['passe'] != $_POST['passe2']) {
+                if (empty($passe) || $passe != $_POST['passe2']) {
                     $errors['passe'] = "Vous devez entrer un mot de passe valide.";
                     echo '<div class="alert alert-danger">' . $errors['passe'] . '</div>' . '<br />';
                 }
@@ -186,7 +188,9 @@ try {
                   confirmRegistration($_GET['id'], $_GET['token']); 
             }
             else {
-                echo 'Aucun id ou token...';
+                echo '<section>'.'<div class="box">'.'<div class="alert alert-danger">' . 'Aucun id ou token...' . '</div>' . '</div>'.'</section>'.'<br />';
+                
+                
             }
         }
 
@@ -200,6 +204,40 @@ try {
                 echo 'Aucun id';
             }
         }
+
+    /* ******* 29 . AFFICHER LA PAGE POUR LE MOT DE PASSE **************/
+        
+        elseif ($_GET['action'] == 'forgetPasswordPage') {
+            forgetPasswordPage();
+        }
+
+    /* ***************** 30 . ENVOI MAIL MODIF MOT DE PASSE *********************/
+        
+        elseif ($_GET['action'] == 'forgetPassword') {
+            if (empty($_POST['email'])) {
+                echo '<div class="alert alert-danger">' . 'Veuillez renseigner votre email' . '</div>' . '<br />';
+            }
+            else {
+                forgetPassword($_POST['email']);
+            }
+        }
+
+    /* ******* 29 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE **************/
+        
+        elseif ($_GET['action'] == 'changePasswordPage') {
+            if ((isset($_GET['id']) && $_GET['id'] > 0) && isset($_GET['token'])) {
+                changePasswordPage($_GET['id'], $_GET['token']);
+            }
+            else {
+                echo 'Aucun id ou token...';
+            }
+        }
+
+    /* ******* 29 . MODIFIER LE MOT DE PASSE **************/
+        
+        elseif ($_GET['action'] == 'changePassword') {
+            changePassword($_POST['userId'] , $_POST['passe']);
+           }
 
     /* **********************************************************************
     *                              BACK-END                                 *
@@ -354,22 +392,7 @@ try {
             }
         }    
         
-    /* ******* 29 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE **************/
-        
-        elseif ($_GET['action'] == 'forgetPasswordPage') {
-            forgetPasswordPage();
-        }
-
-    /* ***************** 30 . MODIFIER LE MOT DE PASSE *********************/
-        
-        elseif ($_GET['action'] == 'forgetPassword') {
-            if (isset($_POST['email'])) {
-            forgetPassword($_POST['email']);
-            }
-            else {
-                echo 'Veuillez renseigner votre email';
-            }
-        }
+    
         
     /* ***************** 31 . Afficher la page du profil *******************/
         

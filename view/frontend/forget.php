@@ -2,9 +2,7 @@
 
 <?php ob_start(); ?>
 
-<body class="full-layout">
-    <div class="body-wrapper">
-        <?php include "includes/nav.php"; ?>
+    
             <!-- /#home -->
         <div class="container">
 

@@ -20,6 +20,7 @@
 16 . Afficher la page pour modifier un commentaire
 17 . Supprimer un commentaire
 18 . Modifier un commentaire
+19 . Changer le mot de passe
 ************************************************************************/
 
 require_once('model/PostManager.php');
@@ -78,8 +79,10 @@ function addUser($pseudo, $email, $passe)
     } 
     
     else {
+        $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
         echo '<div class="alert alert-success">' . 'Un email de confirmation vous a été envoyé pour valider votre compte !' . '</div>' . '<br />';
         // header('Location: index.php?action=confirmRegistration');
+
     } 
 }
 
@@ -106,9 +109,10 @@ function login($pseudo,$passe) {
             $_SESSION['avatar'] = $user['avatar'];
             $_SESSION['registration_date'] = $user['registration_date'];
             echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
-            $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
+            
                // echo '<div class="alert alert-success">' . 'Vous êtes connecté' . '</div>' . '<br />';
-            echo "<script>document.location.replace('index.php?action=blog');</script>";
+            //echo "<script>document.location.replace('index.php?action=blog');</script>";
+            header('Location: index.php?action=blog');
             exit();
              
             }
@@ -198,6 +202,7 @@ function confirmRegistration($userId, $userToken)
     }
     
 }
+
 
 /* **********************************************************************
 *                    12 . PASSER USER EN ACTIF.                         *
@@ -328,9 +333,57 @@ function forgetPasswordPage()
 function forgetPassword($email)
 {
     $userManager = new \Philippe\Blog\Model\UserManager();
-    $forgetPassword = $userManager->forgetPasswordRequest($email);
+    $user = $userManager->forgetPasswordRequest($email);
+
+    if ($user === false) {
+        echo '<div class="alert alert-danger">' . 'Une erreur est survenue !' . '</div>' . '<br />';
+    } 
+    
+    else {
+        echo '<div class="alert alert-success">' . 'Un email  vous a été envoyé pour changer votre mot de passe !' . '</div>' . '<br />';
+        // header('Location: index.php?action=confirmRegistration');
+    } 
 
 }
+/* **********************************************************************
+*                       19. PAGE  DE MODIF MOT DE PASSE                 *
+************************************************************************/
+
+function changePasswordPage($userId, $resetToken)
+{
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $user = $userManager->checkResetTokenRequest($userId);
+    if ($user &&  $user['reset_token'] == $resetToken) {
+    require('view/frontend/changePassword.php');
+    }
+    else {
+        echo 'Ce token n est plus valide ! Veuillez réessayer !';
+    }
+}
+
+/* **********************************************************************
+*                       19. MODIFIER MOT DE PASSE                 *
+************************************************************************/
+
+function changePassword($userId, $passe)
+{
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+        if(!empty($_POST['passe']) && $_POST['passe'] == $_POST['passe2']){
+                
+            
+            $userManager->changePasswordRequest($userId, $passe);
+            echo '<div class="alert alert-success">' . 'Le mot de passe a bien été réinitialisé !' . '</div>' . '<br />';
+                
+        }
+        else {
+                echo 'Veuillez entrer un mot de passe';
+        }
+    
+
+}
+
+
 
 /* **********************************************************************
 *                  21. SUPPRIMER MON COMPTE                             *

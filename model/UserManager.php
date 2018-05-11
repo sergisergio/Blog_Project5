@@ -49,7 +49,7 @@ class UserManager extends Manager
 		$db = $this->dbConnect();
 
 		/* Fonction prepare à revoir */
-		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, is_active
+		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, reset_token, reset_at, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, is_active
 			FROM Users 
 			WHERE id = ?
 			');
@@ -142,7 +142,16 @@ class UserManager extends Manager
 		//mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
         
         /* test mail serveur */
-        mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
+        $mail = 'ptraon@gmail.com';
+        $to = $_POST['email'];
+        $subject = 'Confirmation de votre compte';
+        $body = "Afin de valider votre compte, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token";
+        $headers = "From: $mail \n";
+        $headers .= 'X-Mailer: PHP/' . phpversion();
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=iso-8859-1\n";
+        mail($to, $subject , $body, $headers);
+        // $_SESSION['flash']['success'] = 'Un email de confirmation vous a été envoyé pour valider votre compte';
         
 		
 		return $users;
@@ -242,6 +251,37 @@ class UserManager extends Manager
 		header('Location: index.php?action=blog');
 
     }
+
+/* **********************************************************************
+*                         9 . CHECK RESET TOKEN                         *
+************************************************************************/
+
+    public function checkResetTokenRequest($userId){
+
+    	$db = $this->dbConnect();
+
+    	$req = $db->prepare('SELECT * FROM Users WHERE id = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+    	$req->execute([$_GET['id'], $_GET['token']]);
+    	$user = $req->fetch();
+    	return $user;
+
+    }
+
+/* **********************************************************************
+*                         9 . CHANGE PASSWORD                       	*
+************************************************************************/
+
+    public function changePasswordRequest($userId, $passe) {
+		$db = $this->dbConnect();
+		
+		$passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
+		$req = $db->prepare('UPDATE Users SET password = ?, reset_token = NULL, reset_at = NULL WHERE id = ?');
+		
+
+		$changePassword = $req->execute(array($passe, $userId));
+
+		return $changePassword;
+	}
     
 /* **********************************************************************
 *                         9 . MAIL RESET PASSWORD                       *
@@ -251,14 +291,43 @@ class UserManager extends Manager
         
         $db = $this->dbConnect();
         
-        $req = $db->prepare('SELECT * FROM Users where email = ? ');
+        $req = $db->prepare('SELECT * FROM Users where email = ? AND registration_date IS NOT NULL');
         $req->execute([$_POST['email']]);
         $user = $req->fetch();
+        if($user) {
+
+        	function str_random($length){
+		   	$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+		    return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
+			}
+
+		    $reset_token = str_random(100);
+		    $user_id = $user['id'];
+		    $db->prepare('UPDATE Users SET reset_token = ?, reset_at = NOW() WHERE id = ?')->execute([$reset_token, $user_id]);
+
+		    /* test mail serveur */
+        $mail = 'ptraon@gmail.com';
+        $to = $_POST['email'];
+        $subject = 'Changement de votre mot de passe';
+        $body = "Afin de changer votre mot de passe, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=changePasswordPage&id=$user_id&token=$reset_token";
+        $headers = "From: $mail \n";
+        $headers .= 'X-Mailer: PHP/' . phpversion();
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=iso-8859-1\n";
+        mail($to, $subject , $body, $headers);
+        }
+        else {
+        	echo 'Aucun compte ne correspond à cette adresse';
+        }
+        
+        
         return $user;
     }
+
+
     
 /* **********************************************************************
-*                         9 . MAIL RESET PASSWORD                       *
+*                         9 . COOKIE                       *
 ************************************************************************/
 
     public function rememberRequest($rememberToken) {

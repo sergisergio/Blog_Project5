@@ -1,10 +1,9 @@
 <?php $title = 'Article'; ?>
 <?php ob_start(); ?>
 
-    <body class="full-layout">
-        <div class="body-wrapper">
-            <?php include "includes/nav.php"; ?>
+        
             <div class="container inner">
+                
                 <div class="blog box mgbottom row" style="margin-bottom: 50px;">
                     <div class="col-md-12">
                         <?php if (isset($_SESSION['pseudo'])): ?>
@@ -98,7 +97,8 @@
                                     <?= nl2br(htmlspecialchars($comment['content'])) ?> 
                                     <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $comment['author']) || ($_SESSION['autorisation']) == 1)): ?>
                                     <a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a> 
-                                    <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a> 
+                                    <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
+
                                     <?php endif; ?>
                                 </p>
                                         

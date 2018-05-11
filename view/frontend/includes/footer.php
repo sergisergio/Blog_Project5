@@ -3,7 +3,7 @@
         <btn class="btn btn-default">
             <a href="index.php?action=index_management">Administration</a>
         </btn>
-        <p class="response alert"></p>
+        <!--<p class="response alert"></p>-->
     </p>
     
     <ul class="social pull-right">

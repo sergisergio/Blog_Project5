@@ -26,19 +26,19 @@ class PostManager extends Manager
 		$db = $this->dbConnect();
 
 		$postsPerPage = 5;
-	$postsTotalReq  = $db->query('SELECT id FROM Posts');
-	$postsTotal = $postsTotalReq->rowCount();
-	$totalPages = ceil($postsTotal / $postsPerPage);
+		$postsTotalReq  = $db->query('SELECT id FROM Posts');
+		$postsTotal = $postsTotalReq->rowCount();
+		$totalPages = ceil($postsTotal / $postsPerPage);
 
 	if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)){
 		$_GET['page'] = intval($_GET['page']);
-		$pageCourante = $_GET['page'];
+		$currentPage = $_GET['page'];
 	}
 	else {
-		$pageCourante = 1;
+		$currentPage = 1;
 	}
 
-	$depart = ($pageCourante-1)*$postsPerPage;
+	$depart = ($currentPage-1)*$postsPerPage;
 
 		/* Fonction query à revoir */
 		$req = $db->query('SELECT p.id, p.title, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
@@ -46,6 +46,10 @@ class PostManager extends Manager
             INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT '.$depart.', '.$postsPerPage);
 		return $req;
+	}
+
+	public function countPosts(){
+		
 	}
 
 /* **********************************************************************

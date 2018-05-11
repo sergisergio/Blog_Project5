@@ -1,9 +1,6 @@
 <?php $title = 'Mon portfolio'; ?>
 <?php ob_start(); ?>
-    <body class="full-layout">
-        
-        <div class="body-wrapper">
-            <?php include "includes/nav.php"; ?>
+
             <section id="home" class="naked">
                 <div class="fullscreenbanner-container revolution">
                     <div class="fullscreenbanner">

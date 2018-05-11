@@ -1,38 +1,21 @@
 <section id="contact">
     <div class="box">
-        <h2 class="section-title text-center">Inscription</h2>
+        <h2 class="section-title text-center">réinitialiser le mot de passe</h2>
         <p></p>
                     
         <div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
-            <?php if(isset($_SESSION['flash'])): ?>
-                <?php foreach($_SESSION['flash'] as $type => $message): ?>
-                    <div class="alert alert-<?= $type; ?>">
-                        <?= $message; ?>
-                    </div>
-                <?php endforeach; ?>
-                <?php unset($_SESSION['flash']); ?>
-            <?php endif; ?>
-            
-            <form class="forms" action="index.php?action=addUser" method="post">
+            <form class="forms" action="index.php?action=changePassword" method="post">
                 <fieldset>
                     <div class="row">
                         <div class="col-md-offset-3 col-md-6 col-sm-12">
-                            <div class="form-row text-input-row name-field">
-                                <label>Pseudo</label>
-                                <input type="text" placeholder="Votre pseudo" name="pseudo" class="text-input defaultText " /> 
-                            </div>
-                            <div class="form-row text-input-row email-field">
-                                <label>Email</label>
-                                <input type="text" placeholder="Votre e-mail" name="email" class="text-input defaultText  email" /> 
-                            </div>
                             <div class="form-row text-input-row subject-field">
-                                <label>Mot de passe</label>
+                                <label>Nouveau mot de passe</label>
                                 <input type="password" placeholder="Votre mot de passe" name="passe" class="text-input defaultText" />
                             </div>
                             <div class="form-row text-input-row subject-field">
-                                <label>Confirmer votre mot de passe</label>
+                                <label>Confirmer votre nouveau mot de passe</label>
                                 <input type="password" placeholder="Confirmez votre mot de passe" name="passe2" class="text-input defaultText" /> 
                             </div>
                         </div>
@@ -48,7 +31,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="v_error" id="v-error" value="Required" />
-                        <input type="hidden" name="v_email" id="v-email" value="Enter a valid email" /> 
+                        <input type="hidden" name="userId" value="<?= $_GET['id'] ?>"/> 
                     </div>
                 </fieldset>
             </form>

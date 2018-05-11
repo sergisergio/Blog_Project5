@@ -1,10 +1,10 @@
     <?php $title = 'Mon blog'; ?>
         <?php ob_start(); ?>
 
-            <body class="full-layout">
-                <div class="body-wrapper">
-                    <?php include "includes/nav.php"; ?>
+            
+                
                         <div class="container inner">
+                            
                             <div class="blog box mgbottom row" style="margin-bottom: 50px;">
                                 <div class="col-md-12">
                                     <?php if (isset($_SESSION['pseudo'])): ?>
@@ -37,20 +37,20 @@
 
                                                 if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)){
                                                     $_GET['page'] = intval($_GET['page']);
-                                                    $pageCourante = $_GET['page'];
+                                                    $currentPage = $_GET['page'];
                                                 }
                                                 else {
-                                                    $pageCourante = 1;
+                                                    $currentPage = 1;
                                                 }
 
-                                                $depart = ($pageCourante-1)*$postsPerPage;
+                                                $depart = ($currentPage-1)*$postsPerPage;
                                             ?>
                                     <div class="pagination box">
                                                 <ul>
-                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($pageCourante - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
                                                     <?php
                                                         for($i=1;$i<=$totalPages;$i++){
-                                                            if($i == $pageCourante) {
+                                                            if($i == $currentPage) {
                                                                 echo '<li><a class="btn active" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
                                                             }
                                                             else {
@@ -58,7 +58,7 @@
                                                             }
                                                         }
                                                     ?>
-                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($pageCourante + 1) . '">'.'Suivant'.'</a> '; ?></li>
+                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
                                                 </ul>
                                             </div>
                                     <?php
@@ -107,10 +107,10 @@
                                             
                                             <div class="pagination box">
                                                 <ul>
-                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($pageCourante - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
                                                     <?php
                                                         for($i=1;$i<=$totalPages;$i++){
-                                                            if($i == $pageCourante) {
+                                                            if($i == $currentPage) {
                                                                 echo '<li><a class="btn active" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
                                                             }
                                                             else {
@@ -118,7 +118,7 @@
                                                             }
                                                         }
                                                     ?>
-                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($pageCourante + 1) . '">'.'Suivant'.'</a> '; ?></li>
+                                                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
                                                 </ul>
                                             </div>
                                             <!-- /.pagination -->

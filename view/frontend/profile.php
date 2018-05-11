@@ -1,9 +1,7 @@
 <?php $title = 'Mon blog'; ?>
         <?php ob_start(); ?>
 
-            <body class="full-layout">
-                <div class="body-wrapper">
-                    <?php include "includes/nav.php"; ?>
+               
                         <div class="container inner">
                             <div class="blog box mgbottom row" style="margin-bottom: 50px;">
                                 <div class="col-md-12">
