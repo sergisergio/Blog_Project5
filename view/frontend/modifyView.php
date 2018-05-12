@@ -46,9 +46,10 @@
                 <em>le <?= $post['creation_date_fr'] ?></em>
               </h3>
               <p>
-                <?= nl2br(htmlspecialchars($post['intro'])) ?>
+                <?= nl2br(htmlspecialchars($post['intro'])) ?>...
               </p>
             </div>
+            <hr>
             <h2>Modifier le commentaire</h2>
             <?php include "forms/form_modifycomment.php"; ?>
             <div class="divide20"></div>

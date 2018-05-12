@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default">
     <div class="navbar-header"> 
         <a class="btn responsive-menu" data-toggle="collapse" data-target=".navbar-collapse"><i></i></a>
     </div>

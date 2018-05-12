@@ -1,8 +1,7 @@
 <?php
-/* Je crée un emplacement pour éviter les conflits avec d'autres développeurs */
+
 namespace Philippe\Blog\Model;
 
-/* Puis je crée ma classe principale de connexion à ma base de données */ 
 class Manager
 {
 	/* J'utilise la visibilité protected de façon à ce que les enfants puissent hériter de cette classe */

@@ -14,7 +14,7 @@
                             <?php if ($_SESSION['avatar'] != ''): ?> 
                                 <img class="img-responsive img-circle avatarblogpage2" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
                             <?php else: ?>  
-                                <img class="img-responsive img-circle" src="public/images/avatar/avatardefaut.png" />
+                                <img class="img-responsive img-circle avatarblogpagedefault" src="public/images/avatar/avatardefaut.png" />
                             <?php endif; ?>
                     </p>
                 <?php else: ?> 

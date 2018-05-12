@@ -2,111 +2,94 @@
 
 /* ************************* RESUME *************************************
 
-1 . Récupérer tous les membres
-2 . Récupérer un seul membre
-3 . Modifier un membre
-4 . Supprimer un membre (backend)
-5 . Inscription
-6 . Le pseudo est-il déjà pris ?
-7 . L'email est-il déjà pris ?
-8 . Connexion
-9 . Déconnexion
-10 . Supprimer mon compte (frontend)
-11 . Donner les droits admin à un membre
-12 . Retirer les droits admin à un membre
-************************************************************************/
+1 . RECUPERER TOUS LES MEMBRES.
+2 . RECUPERER UN SEUL MEMBRE.
+3 . RECUPERER AUTORISATION DU MEMBRE.
+4 . MODIFIER UN MEMBRE.
+5 . SUPPRIMER UN MEMBRE.
+6 . INSCRIPTION.
+7 . CONFIRMATION INSCRIPTION.
+8 . LE PSEUDO EST-IL DEJA PRIS ?
+9 . L'EMAIL EST-IL DEJA PRIS ?
+10. CONNEXION.
+11. DECONNEXION.
+12. CHECK RESET TOKEN.
+13. CHANGE PASSWORD.
+14. MAIL RESET PASSWORD.
+15. COOKIE.
+16. SUPPRIMER MON COMPTE.
+17. DONNER DROITS ADMIN.
+18. RETIRER DROITS ADMIN.
 
-/* Je crée un emplacement pour éviter les conflits avec d'autres développeurs */
+*********************** FIN RESUME *************************************/
+
 namespace Philippe\Blog\Model;
 
-/* Je fais appel à la classe parent */
 require_once("model/Manager.php");
 
-/* Je crée une classe Postmanager qui hérite de la classe Manager */
 class UserManager extends Manager
 {
-/* **********************************************************************
-*                  1 . RECUPERER TOUS LES MEMBRES                       *
-************************************************************************/
+/* ************** 1 . RECUPERER TOUS LES MEMBRES ***********************/
 	public function getUsers()
 	{
-		/* A revoir */
+		
 		$db = $this->dbConnect();
 
-		/* Fonction query à revoir */
 		$req = $db->query('SELECT * 
 			FROM Users 
 			ORDER BY pseudo ASC LIMIT 15');
 		return $req;
 	}
 
-/* **********************************************************************
-*                  2 . RECUPERER UN SEUL MEMBRE                         *
-************************************************************************/
+/* ************** 2 . RECUPERER UN SEUL MEMBRE *************************/
 	public function getUser($userId){
 
-		/* A revoir */
 		$db = $this->dbConnect();
 
-		/* Fonction prepare à revoir */
 		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, reset_token, reset_at, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, is_active
 			FROM Users 
 			WHERE id = ?
 			');
 
-		/* Fonction execute à revoir */
 		$req->execute(array($userId));
-		/* Fonction fetch à revoir */
+		
 		$post = $req->fetch();
 		return $post;
 	}
-/* **********************************************************************
-*                  2 . RECUPERER AUTORISATION                         *
-************************************************************************/
+
+/* ************** 3 . RECUPERER AUTORISATION DU MEMBRE *****************/
 
 	public function getAuthorization($pseudo){
 
-		/* A revoir */
 		$db = $this->dbConnect();
 
-		/* Fonction prepare à revoir */
 		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, is_active
 			FROM Users 
 			WHERE pseudo = ?
 			');
 
-		/* Fonction execute à revoir */
 		$req->execute(array($pseudo));
-		/* Fonction fetch à revoir */
+		
 		$access = $req->fetch();
 		return $access;
 	}
 
-
-/* **********************************************************************
-*                       3 . MODIFIER UN MEMBRE                         	*
-************************************************************************/
+/* ************** 4 . MODIFIER UN MEMBRE *******************************/
 	public function modifyUserRequest($userId){
 
-		/* A revoir */
 		$db = $this->dbConnect();
 
-		/* Fonction prepare à revoir */
 		$post = $db->prepare('UPDATE Users SET title = ?, intro = ?, author = ?, content = ?, creation_date = NOW() WHERE id = ?');
 
 		$affectedPost = $post->execute(array($title, $intro, $author, $content, $postId));
 		
 		return $affectedPost;
-
 	}
 	
-/* **********************************************************************
-*                       4 . SUPPRIMER UN MEMBRE                         *
-************************************************************************/
+/* ************** 5 . SUPPRIMER UN MEMBRE ******************************/
 	public function deleteUserRequest($userId){
         $db = $this->dbConnect();
 
-		/* Fonction prepare à revoir */
 		$post = $db->prepare('DELETE FROM Users WHERE id = ?');
 
 		$affectedUser = $post->execute(array($userId));
@@ -114,15 +97,11 @@ class UserManager extends Manager
 		return $affectedUser;
     }
 
-/* **********************************************************************
-*                         5 . INSCRIPTION                         		*
-************************************************************************/
+/* ************** 6 . INSCRIPTION **************************************/
 	public function addUserRequest($pseudo, $email, $passe){
 
-		/* A revoir */
 		$db = $this->dbConnect();
 		
-		/* Fonction prepare à revoir */
 		$post = $db->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(?, ?, ?, ?)');
 
 		$passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
@@ -152,30 +131,10 @@ class UserManager extends Manager
 		$headers .= "Content-Type: text/html; charset=iso-8859-1\n";
         mail($to, $subject , $body, $headers);
         // $_SESSION['flash']['success'] = 'Un email de confirmation vous a été envoyé pour valider votre compte';
-        
-		
-		return $users;
-
+        return $users;
 	}
     
-/* **********************************************************************
-*                5 . CONFIRMATION INSCRIPTION                           *
-************************************************************************/
-    
-    /*public function confirmRegistrationRequest($userId) {
-        
-        $db = $this->dbConnect();
-        
-        $req = $db->prepare('SELECT * FROM Users WHERE id = ?'); 
-        $req->execute([$userId]);
-        $user = $req->fetch();
-        
-        return $user;
-    }*/
-
-/* **********************************************************************
-*                5 . CONFIRMATION INSCRIPTION                           *
-************************************************************************/
+/* ************** 7 . CONFIRMATION INSCRIPTION *************************/
 
 	public function setActiveRequest($userId) {
 		$db = $this->dbConnect();
@@ -187,9 +146,7 @@ class UserManager extends Manager
 		return $activeUser;
 	}
 
-/* **********************************************************************
-*                   6 . LE PSEUDO EST-IL DEJA PRIS ?                    *
-************************************************************************/
+/* ************** 8 . LE PSEUDO EST-IL DEJA PRIS ? *********************/
 
     public function existPseudo($pseudo) {
 
@@ -202,14 +159,10 @@ class UserManager extends Manager
     	$user = $req->fetch();
 
     	return $user;
-
     }
 
-/* **********************************************************************
-*                    7 . L'EMAIL EST-IL DEJA PRIS ?                    	*
-************************************************************************/
-
-    public function existMail($email) {
+/* ************** 9 . L'EMAIL EST-IL DEJA PRIS ? ***********************/
+	public function existMail($email) {
 
     	$db = $this->dbConnect();
 
@@ -220,11 +173,9 @@ class UserManager extends Manager
     	$usermail = $req->fetch();
 
     	return $usermail;
-
     }
-/* **********************************************************************
-*                        8 . CONNEXION                         			*
-************************************************************************/
+
+/* ************** 10. CONNEXION ****************************************/
 	public function loginRequest($pseudo, $passe){
 
 		$db = $this->dbConnect();
@@ -236,25 +187,19 @@ class UserManager extends Manager
 		$user = $req->fetch();
         
         return $user;
+    }
 
-	}
-
-/* **********************************************************************
-*                         9 . DECONNEXION                         		*
-************************************************************************/
+/* ************** 11. DECONNEXION **************************************/
 
     public function logoutRequest(){
 
-    	// Suppression des variables de session et de la session
 		session_start();
 		unset($_SESSION['pseudo']);
 		header('Location: index.php?action=blog');
 
     }
 
-/* **********************************************************************
-*                         9 . CHECK RESET TOKEN                         *
-************************************************************************/
+/* ************** 12. CHECK RESET TOKEN ********************************/
 
     public function checkResetTokenRequest($userId){
 
@@ -264,12 +209,9 @@ class UserManager extends Manager
     	$req->execute([$_GET['id'], $_GET['token']]);
     	$user = $req->fetch();
     	return $user;
+	}
 
-    }
-
-/* **********************************************************************
-*                         9 . CHANGE PASSWORD                       	*
-************************************************************************/
+/* ************** 13. CHANGE PASSWORD **********************************/
 
     public function changePasswordRequest($userId, $passe) {
 		$db = $this->dbConnect();
@@ -277,15 +219,12 @@ class UserManager extends Manager
 		$passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
 		$req = $db->prepare('UPDATE Users SET password = ?, reset_token = NULL, reset_at = NULL WHERE id = ?');
 		
-
 		$changePassword = $req->execute(array($passe, $userId));
 
 		return $changePassword;
 	}
     
-/* **********************************************************************
-*                         9 . MAIL RESET PASSWORD                       *
-************************************************************************/
+/* ************** 14. MAIL RESET PASSWORD ******************************/
 
     public function forgetPasswordRequest($email) {
         
@@ -318,17 +257,11 @@ class UserManager extends Manager
         }
         else {
         	echo 'Aucun compte ne correspond à cette adresse';
-        }
-        
-        
+        } 
         return $user;
     }
 
-
-    
-/* **********************************************************************
-*                         9 . COOKIE                       *
-************************************************************************/
+/* ************** 15. COOKIE *******************************************/
 
     public function rememberRequest($rememberToken) {
         
@@ -344,13 +277,10 @@ class UserManager extends Manager
         setcookie('remember', $user['id'] . '==' . $rememberToken . sha1($user['id'] . 'cookieTraon'), time() + 60 * 60 * 24 * 7);
     }
 
-/* **********************************************************************
-*                       10 . SUPPRIMER MON COMPTE                        *
-************************************************************************/
+/* ************** 16. SUPPRIMER MON COMPTE *****************************/
 	public function deleteAccountRequest($userId){
         $db = $this->dbConnect();
 
-		/* Fonction prepare à revoir */
 		$post = $db->prepare('DELETE FROM Users WHERE id = ?');
 
 		$deleteAccount = $post->execute(array($userId));
@@ -358,9 +288,7 @@ class UserManager extends Manager
 		return $deleteAccount;
     }
 
-/* **********************************************************************
-*                11. DONNER DROITS ADMIN                                *
-************************************************************************/
+/* ************** 17. DONNER DROITS ADMIN ******************************/
 
 	public function giveAdminRightsRequest($userId) {
 		$db = $this->dbConnect();
@@ -372,9 +300,7 @@ class UserManager extends Manager
 		return $adminRights;
 	}
 
-/* **********************************************************************
-*                12. RETIRER DROITS ADMIN                               *
-************************************************************************/
+/* ************** 18. RETIRER DROITS ADMIN *****************************/
 
 	public function stopAdminRightsRequest($userId) {
 		$db = $this->dbConnect();
@@ -385,5 +311,4 @@ class UserManager extends Manager
 
 		return $adminRights;
 	}
-    
 }

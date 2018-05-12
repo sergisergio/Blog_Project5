@@ -1,4 +1,4 @@
-<section id="contact">
+<section>
     <div class="box">
         <h2 class="section-title text-center">Inscription</h2>
         <p></p>
@@ -7,12 +7,13 @@
             <div class="response alert"></div>
             <?php if(isset($_SESSION['flash'])): ?>
                 <?php foreach($_SESSION['flash'] as $type => $message): ?>
-                    <div class="alert alert-<?= $type; ?>">
+                    <div class="text-center alert alert-<?= $type; ?>">
                         <?= $message; ?>
                     </div>
                 <?php endforeach; ?>
                 <?php unset($_SESSION['flash']); ?>
-            <?php endif; ?><form class="forms" action="index.php?action=addUser" method="post">
+            <?php endif; ?>
+            <form action="index.php?action=addUser" method="post">
                 <fieldset>
                     <div class="row">
                         <div class="col-md-offset-3 col-md-6 col-sm-12">

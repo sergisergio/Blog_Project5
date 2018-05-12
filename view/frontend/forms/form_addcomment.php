@@ -15,7 +15,7 @@
         <textarea id="content" name="content"></textarea>
     </div>
     <p class="text-center">Votre commentaire sera publié dans les plus brefs délais après modération</p>
-    <div>
+    <div class="text-center">
         <input class="btn btn-default validate" type="submit" />
     </div>
 </form>

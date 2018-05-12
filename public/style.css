@@ -128,6 +128,14 @@ ul li {
     display: block; 
     margin: 0 auto;
 }
+.btn-default:hover{
+    background: rgba(30,30,31,0.85);  
+    color: #9cbc68; 
+    border : #9cbc68;
+}
+.btn-default a:hover {
+    color: #9cbc68;
+}
 *,
 *:before,
 *:after {

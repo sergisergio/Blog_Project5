@@ -39,6 +39,14 @@
                         <div class="row">
                             <div class="col-sm-12 post-content">
                                 <div class="meta">
+                                    <?php if(isset($_SESSION['flash'])): ?>
+                                        <?php foreach($_SESSION['flash'] as $type => $message): ?>
+                                            <div class="text-center alert alert-<?= $type; ?>">
+                                                <?= $message; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                        <?php unset($_SESSION['flash']); ?>
+                                    <?php endif; ?>
                                     <p>
                                         <?php if ($_SESSION['avatar'] != ''): ?> 
                                             <img class="img-responsive img-circle avatarprofile" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
@@ -73,8 +81,9 @@
                                         <?= $_SESSION['registration_date']; ?>
                                     </p>
                                 </div>
+
                                 <btn class="btn btn-default">
-                                    <a href="index.php?action=deleteUser&amp;id=<?= $_SESSION['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer mon compte</a>
+                                    <a href="index.php?action=deleteAccount&amp;id=<?= $_SESSION['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer mon compte</a>
                                 </btn>
                             </div>
                         </div>

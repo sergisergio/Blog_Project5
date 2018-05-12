@@ -14,5 +14,6 @@
                 </div>
             </div>
         </div>
+        <div class="divide50"></div>
 <?php $content = ob_get_clean(); ?>
 <?php require('view/backend/template.php'); ?>
