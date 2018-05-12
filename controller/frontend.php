@@ -214,7 +214,7 @@ function listPost(){
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
     $user = $userManager->getUser($_GET['id']);
-    $count = $commentManager->countCommentRequest();
+    $count = $commentManager->countCommentRequest($_GET['id']);
     
     require('view/frontend/blog_post.php');
 }

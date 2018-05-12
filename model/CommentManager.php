@@ -116,15 +116,14 @@ class CommentManager extends Manager
     }
 
 /* *********** 8 . COMPTER NOMBRE DE COMMENTAIRES **********************/
-	public function countCommentRequest()
+	public function countCommentRequest($postId)
     {
 
         $db = $this->dbConnect();
         
-        $countcomment = $db->prepare('SELECT COUNT(*) FROM Comments c INNER JOIN Posts p ON c.post_id = p.id GROUP BY p.id');
-        
-        $count = $countcomment->execute(array());
+        $countComment = $db->prepare("SELECT COUNT(post_id) AS COUNT FROM Comments WHERE post_id = '$postId' ");
 
+        $count = $countComment->rowCount();
         return $count;
     }
 }
