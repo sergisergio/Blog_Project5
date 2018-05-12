@@ -36,9 +36,8 @@
                 <div class="blog-posts">
                     <div class="post box">
                         <div class="post-title">
-                            <h2>
-                                <?= htmlspecialchars($post['title']) ?>
-                            </h2>
+                            <h2><?= htmlspecialchars($post['title']) ?></h2>
+                            <h3 class="post-title"><?= htmlspecialchars($post['chapo']); ?></h3>
                             <h4 class="post-title">Auteur : <?= ($post['author']); ?></h4>
                             <div class="meta"> <span class="date">date de dernière publication</span>le 
                                 <?php

@@ -14,6 +14,10 @@
         <input type="text" id="title" name="title" value="" />
     </div>
     <div>
+        <label for="chapo">Chapô</label><br />
+        <input type="text" id="chapo" name="chapo" value="" />
+    </div>
+    <div>
         <label for="content">Article</label><br />
         <textarea type="text" id="content" name="content" value=""></textarea>
     </div>

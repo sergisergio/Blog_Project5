@@ -5,7 +5,7 @@ session_start();
 /* ***************************** RESUME ************************************/
 
     /* **********************************************************************
-    *                              FRONT-END                                *
+    *                              UTILISATEUR                                *
     *************************************************************************
 
     1 . PAGE D'ACCUEIL DU BLOG.
@@ -29,7 +29,7 @@ session_start();
     19. PAS LES DROITS ADMINISTRATEUR.
 
     /* **********************************************************************
-    *                              FRONT-END                                *
+    *                            ADMINISTRATEUR                             *
     *************************************************************************
 
     1 . AFFICHER PAGE D'ACCUEIL ADMINISTRATEUR.
@@ -67,13 +67,13 @@ try {
     *                              FRONT-END                                *
     ************************************************************************/
 
-    /* ********** 1 . PAGE LISTANT L'ENSEMBLE DES BLOG POSTS ****************/
+    /* ********** 1 . PAGE LISTANT L'ENSEMBLE DES BLOG POSTS ***************/
         
         if ($_GET['action'] == 'blog') {
              listPosts();
     	}
 
-    /* ********** 2 . PAGE AFFICHANT UN BLOG POST ***************************/
+    /* ********** 2 . PAGE AFFICHANT UN BLOG POST **************************/
         
         elseif ($_GET['action'] == 'blogpost') {
              if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -162,6 +162,9 @@ try {
         elseif ($_GET['action'] == 'login') {
             if(!empty($_POST) && !empty($_POST['pseudo']) && !empty($_POST['passe'])) {
                 login($_POST['pseudo'], $_POST['passe']);
+                if($_POST['remember']){
+                    remember($_POST['remember']);
+                }
             }
             else {
                 $_SESSION['flash']['danger'] = 'Veuillez remplir tous les champs !';
@@ -297,38 +300,38 @@ try {
         }
 
     /* **********************************************************************
-    *                              BACK-END                                 *
+    *                            ADMINISTRATEUR                             *
     ************************************************************************/
       
-    /* ********** 1 . AFFICHER LA PAGE D'ACCUEIL ADMINISTRATEUR *************/
+    /* ********** 1 . AFFICHER LA PAGE D'ACCUEIL ADMINISTRATEUR ************/
 
         elseif ($_GET['action'] == 'index_management') {
             indexManagement();
         }
 
-    /* ********** 2 . AFFICHER LA RUBRIQUE ARTICLES *************************/
+    /* ********** 2 . AFFICHER LA RUBRIQUE ARTICLES ************************/
 
         elseif ($_GET['action'] == 'manage_posts') {
             managePosts();
         }
 
-    /* ********** 3 . AFFICHER LA RUBRIQUE COMMENTAIRES *********************/
+    /* ********** 3 . AFFICHER LA RUBRIQUE COMMENTAIRES ********************/
 
         elseif ($_GET['action'] == 'manage_comments') {
             manageComments();
             }
         
-    /* ********** 4 . AFFICHER LA RUBRIQUE MEMBRES **************************/
+    /* ********** 4 . AFFICHER LA RUBRIQUE MEMBRES *************************/
 
         elseif ($_GET['action'] == 'manage_users') {
             manageUsers();
         }
 
-    /* ********** 5 . AJOUTER UN ARTICLE ************************************/
+    /* ********** 5 . AJOUTER UN ARTICLE ***********************************/
 
         elseif ($_GET['action'] == 'addpost') {
           
-                if (!empty($_POST['title']) && !empty($_POST['content'])) {
+                if (!empty($_POST['title']) && !empty($_POST['content']) && !empty($_POST['chapo'])) {
                     // Testons si le fichier a bien été envoyé et s'il n'y a pas d'erreur
                     if (isset($_FILES['file_extension']) AND $_FILES['file_extension']['error'] == 0) {
                         // Testons si le fichier n'est pas trop gros
@@ -344,7 +347,7 @@ try {
                             }
                         }
                     }
-                    addPost($_POST['title'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name']);
+                    addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name']);
                 }
                 else {
                     $_SESSION['flash']['danger'] = 'Tous les champs ne sont pas remplis !';
@@ -353,7 +356,7 @@ try {
                 }
         }
 
-    /* ********** 6 . AFFICHER LA PAGE POUR MODIFIER UN ARTICLE *************/
+    /* ********** 6 . AFFICHER LA PAGE POUR MODIFIER UN ARTICLE ************/
         elseif ($_GET['action'] == 'modifyPostPage') {
               if (isset($_GET['id']) && $_GET['id'] > 0) {
                 modifyPostPage($_GET['id']);
@@ -365,12 +368,12 @@ try {
                 }
         }
 
-    /* ********** 7 . MODIFIER UN ARTICLE ***********************************/
+    /* ********** 7 . MODIFIER UN ARTICLE **********************************/
 
         elseif ($_GET['action'] == 'modifyPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['title']) && !empty($_POST['content'])) { 
-                    modifyPost($_GET['id'], $_POST['title'], $_SESSION['id'], $_POST['content']);
+                if (!empty($_POST['title']) && !empty($_POST['content']) && !empty($_POST['chapo'])) { 
+                    modifyPost($_GET['id'], $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content']);
                 }
                 else {
                 $_SESSION['flash']['danger'] = 'Veuillez remplir les champs !';
@@ -385,7 +388,7 @@ try {
                 }
             }       
 
-    /* ********** 8 . EFFACER UN ARTICLE ************************************/
+    /* ********** 8 . EFFACER UN ARTICLE ***********************************/
 
         elseif ($_GET['action'] == 'deletePost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -393,7 +396,7 @@ try {
             }
         }
 
-    /* ********** 9 . EFFACER UN MEMBRE *************************************/
+    /* ********** 9 . EFFACER UN MEMBRE ************************************/
 
         elseif ($_GET['action'] == 'deleteUser') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -401,7 +404,7 @@ try {
             }
         }
 
-    /* ********* 10 . AFFICHER LA PAGE POUR MODIFIER UN MEMBRE **************/
+    /* ********* 10 . AFFICHER LA PAGE POUR MODIFIER UN MEMBRE *************/
 
         elseif ($_GET['action'] == 'modifyUserPage') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -409,7 +412,7 @@ try {
             }
         }
 
-    /* ********* 11 . MODIFIER UN MEMBRE ************************************/
+    /* ********* 11 . MODIFIER UN MEMBRE ***********************************/
 
         elseif ($_GET['action'] == 'modifyUser') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -418,7 +421,7 @@ try {
             }
         }
 
-    /* ********* 12 . AFFICHER L'ENSEMBLE DES BLOG POSTS ********************/
+    /* ********* 12 . AFFICHER L'ENSEMBLE DES BLOG POSTS *******************/
 
         elseif ($_GET['action'] == 'adminViewPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -426,7 +429,7 @@ try {
             }
         }
 
-    /* ********* 13 . VALIDER UN COMMENTAIRE ********************************/
+    /* ********* 13 . VALIDER UN COMMENTAIRE *******************************/
 
         elseif ($_GET['action'] == 'validateComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -434,7 +437,7 @@ try {
             }
         } 
 
-    /* ********* 14 . SUPPRIMER UN COMMENTAIRE ******************************/
+    /* ********* 14 . SUPPRIMER UN COMMENTAIRE *****************************/
 
         elseif ($_GET['action'] == 'adminDeleteComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -442,7 +445,7 @@ try {
             }
         }   
 
-    /* ********* 15 . DONNER LES DROITS ADMIN *******************************/
+    /* ********* 15 . DONNER LES DROITS ADMIN ******************************/
         
         elseif ($_GET['action'] == 'giveAdminRights') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -450,7 +453,7 @@ try {
             }
         }
 
-    /* ********* 16 . SUPPRIMER LES DROITS ADMIN ****************************/
+    /* ********* 16 . SUPPRIMER LES DROITS ADMIN ***************************/
         
         elseif ($_GET['action'] == 'cancelAdminRights') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -463,7 +466,7 @@ try {
     *                              PAR DEFAUT                               *
     ************************************************************************/
 
-    /* ********** 1 . PAGE D'ACCUEIL ****************************************/
+    /* ********** 1 . PAGE D'ACCUEIL ***************************************/
 
     else {
         home();
