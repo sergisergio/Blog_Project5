@@ -263,18 +263,18 @@ class UserManager extends Manager
 
 /* ************** 15. COOKIE *******************************************/
 
-    public function rememberRequest($rememberToken) {
+    public function rememberRequest($userId, $rememberToken) {
         
         $db = $this->dbConnect();
-        
         function str_random($length){
 		   	$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
 		    return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
 		}
         $rememberToken = str_random(100);
-        $req = $db->prepare('UPDATE users SET remember_token = ? WHERE id = ?');
-        $req->execute([$rememberToken, $user['id']]);
-        setcookie('remember', $user['id'] . '==' . $rememberToken . sha1($user['id'] . 'cookieTraon'), time() + 60 * 60 * 24 * 7);
+        $req = $db->prepare('UPDATE Users SET remember_token = ? WHERE id = ?');
+        $req->execute([$rememberToken, $userId]);
+        return $req;
+        setcookie('remember', $userId . '==' . $rememberToken . sha1($userId . 'cookieTraon'), time() + 60 * 60 * 24 * 7);
     }
 
 /* ************** 16. SUPPRIMER MON COMPTE *****************************/

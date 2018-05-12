@@ -117,7 +117,8 @@ function login($pseudo,$passe){
 
 function remember($rememberToken){
     $userManager = new \Philippe\Blog\Model\UserManager();
-    $users = $userManager->rememberRequest($rememberToken);
+    $userId = $_SESSION['id'];
+    $req = $userManager->rememberRequest($userId, $rememberToken);
 }
 
 /* ***************** 8 . DECONNEXION *************************/

@@ -14,6 +14,10 @@
         <input type="text" id="title" name="title" value="<?= htmlspecialchars($post['title']) ?>" />
     </div>
     <div>
+        <label for="chapo">Chapô</label><br />
+        <input type="text" id="chapo" name="chapo" value="<?= htmlspecialchars($post['chapo']) ?>" />
+    </div>
+    <div>
         <label for="content">Article</label><br />
 
         <textarea id="content" name="content"><?= htmlspecialchars($post['content']) ?></textarea>

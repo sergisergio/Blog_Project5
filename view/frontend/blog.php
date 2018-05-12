@@ -56,7 +56,9 @@
                 <div class="post box">
                     <div class="row">
                         <div class="col-sm-12 post-content">
+                            <div class="post-title">
                             <h2 class="post-title"><?= htmlspecialchars($data['title']); ?></h2>
+                            <h3 class="post-title"><?= htmlspecialchars($data['chapo']); ?></h3>
                             <h4 class="post-title">Auteur : <?= htmlspecialchars($data['author']); ?></h4>
                             <div class="meta">
                                 <span class="date">date de dernière publication</span> :
@@ -78,6 +80,7 @@
                                 <btn class="btn btn-default"><a href="index.php?action=blogpost&amp;id=<?= $data['id'] ?>">Voir plus</a></btn>
                             </p>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

@@ -21,7 +21,7 @@ class PostManager extends Manager
 	public function getPosts($start, $postsPerPage){
 		$db = $this->dbConnect();
 
-		$req = $db->query('SELECT p.id, p.title, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		$req = $db->query('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage);
@@ -33,7 +33,7 @@ class PostManager extends Manager
 
 		$db = $this->dbConnect();
 
-		$req = $db->prepare('SELECT p.id, p.title, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		$req = $db->prepare('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			WHERE p.id = ?');
@@ -44,25 +44,25 @@ class PostManager extends Manager
 	}
 
 /* ************ 3 . AJOUTER UN ARTICLE ****************************/
-	public function addPostRequest($title, $author, $content, $image){
+	public function addPostRequest($title, $chapo, $author, $content, $image){
 
 		$db = $this->dbConnect();
 
-		$post = $db->prepare('INSERT INTO Posts(title, intro, author, content, file_extension, creation_date) VALUES(?, ?, ?, ?, ?, NOW()) ');
+		$post = $db->prepare('INSERT INTO Posts(title, chapo, intro, author, content, file_extension, creation_date) VALUES(?, ?, ?, ?, ?, ?, NOW()) ');
 
-		$affectedPost = $post->execute(array($title, substr($content, 0, 600), $author, $content, $image));
+		$affectedPost = $post->execute(array($title, $chapo, substr($content, 0, 600), $author, $content, $image));
 		
 		return $affectedPost;
 	}
 
 /* ************ 4 . MODIFIER UN ARTICLE ***************************/
-	public function modifyPostRequest($postId, $title, $author, $content){
+	public function modifyPostRequest($postId, $title, $chapo, $author, $content){
 
 		$db = $this->dbConnect();
 
-		$post = $db->prepare('UPDATE Posts SET title = ?, intro = ?, author = ?, content = ?, last_updated = NOW() WHERE id = ?');
+		$post = $db->prepare('UPDATE Posts SET title = ?, intro = ?, chapo = ?, author = ?, content = ?, last_updated = NOW() WHERE id = ?');
 
-		$affectedPost = $post->execute(array($title, substr($content, 0, 600), $author, $content, $postId));
+		$affectedPost = $post->execute(array($title, substr($content, 0, 600), $chapo, $author, $content, $postId));
 		
 		return $affectedPost;
 	}
