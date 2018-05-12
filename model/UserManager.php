@@ -37,7 +37,7 @@ class UserManager extends Manager
 
 		$req = $db->query('SELECT * 
 			FROM Users 
-			ORDER BY pseudo ASC LIMIT 15');
+			ORDER BY pseudo');
 		return $req;
 	}
 

@@ -185,8 +185,21 @@ function setActiveUser($userId){
 
 function listPosts(){
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$posts = $postManager->getPosts();
-    $posts1 = $postManager->getPosts();
+    $postsTotal = $postManager->countPosts();
+    $postsPerPage = 5;
+    $totalPages = ceil($postsTotal / $postsPerPage);
+
+    if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)){
+        $_GET['page'] = intval($_GET['page']);
+        $currentPage = $_GET['page'];
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = ($currentPage-1)*$postsPerPage;
+    $posts = $postManager->getPosts($start, $postsPerPage);
+    $posts1 = $postManager->getPosts(0, 5);
+
     require('view/frontend/blog.php');
 }
 
@@ -197,7 +210,7 @@ function listPost(){
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
     $userManager = new \Philippe\Blog\Model\UserManager();
 
-    $posts1 = $postManager->getPosts();
+    $posts1 = $postManager->getPosts(0, 5);
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
     $user = $userManager->getUser($_GET['id']);

@@ -31,26 +31,10 @@
     </div>
     <div class="blog list-view row">
         <div class="col-md-8 col-sm-12 content">
-            <?php
-                $db = new PDO('mysql:host=localhost;dbname=projet5;charset=utf8', 'root', 'root');
-                $postsPerPage = 5;
-                $postsTotalReq  = $db->query('SELECT id FROM Posts');
-                $postsTotal = $postsTotalReq->rowCount();
-                $totalPages = ceil($postsTotal / $postsPerPage);
-
-                if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)){
-                    $_GET['page'] = intval($_GET['page']);
-                    $currentPage = $_GET['page'];
-                }
-                else {
-                    $currentPage = 1;
-                }
-
-                $depart = ($currentPage-1)*$postsPerPage;
-                                            ?>
+            
             <div class="pagination box mgbottom25">
                 <ul>
-                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
                         <?php
                             for($i=1;$i<=$totalPages;$i++){
                                 if($i == $currentPage) {
@@ -61,7 +45,7 @@
                                 }
                             }
                         ?>
-                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
+                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
                 </ul>
             </div>
             <?php
@@ -103,7 +87,7 @@
             ?>
             <div class="pagination box">
                 <ul>
-                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
                         <?php
                             for($i=1;$i<=$totalPages;$i++){
                                 if($i == $currentPage) {
@@ -114,7 +98,7 @@
                                 }
                             }
                         ?>
-                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
+                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
                 </ul>
             </div>
         </div>

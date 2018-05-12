@@ -45,7 +45,19 @@ function noAdmin(){
 function managePosts(){
 
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$posts = $postManager->getPosts();
+	$postsTotal = $postManager->countPosts();
+	$postsPerPage = 5;
+    $totalPages = ceil($postsTotal / $postsPerPage);
+    if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)){
+        $_GET['page'] = intval($_GET['page']);
+        $currentPage = $_GET['page'];
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = ($currentPage-1)*$postsPerPage;
+	$posts = $postManager->getPosts($start, $postsPerPage);
+	
 	require('view/backend/Posts/post_mgmt.php');
 }
 

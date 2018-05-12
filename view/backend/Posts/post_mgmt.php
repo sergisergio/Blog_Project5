@@ -38,6 +38,22 @@
                 } 
                     $posts->closeCursor();
                 ?>
+                <div class="pagination box">
+                <ul>
+                    <li><?= '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage - 1) . '#viewposts' . '">'.'Précédent'.'</a> '; ?></li>
+                        <?php
+                            for($i=1;$i<=$totalPages;$i++){
+                                if($i == $currentPage) {
+                                    echo '<li><a class="btn active" href="index.php?action=manage_posts&page='.$i. '#viewposts' . '">'.$i.'</a></li> ';
+                                }
+                                else {
+                                    echo '<li><a class="btn" href="index.php?action=manage_posts&page='.$i. '#viewposts' . '">'.$i.'</a></li> ';
+                                }
+                            }
+                        ?>
+                    <li><?= '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage + 1) . '#viewposts' . '">'.'Suivant'.'</a> '; ?></li>
+                </ul>
+            </div>
             </div>
                 <div class="divide100"></div>
         </div>
