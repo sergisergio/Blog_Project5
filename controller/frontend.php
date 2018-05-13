@@ -396,13 +396,13 @@ function changeColorYellow($userId){
     }
 }
 
-/* **************** 27 . CHANGE COLOR AQUA ******************************/
+/* **************** 28 . CHANGE COLOR AQUA ******************************/
 
 function changeColorAqua($userId){
 
     $userManager = new \Philippe\Blog\Model\UserManager();
 
-    $colorYAqua = $userManager->changeColorAquaRequest($userId);
+    $colorAqua = $userManager->changeColorAquaRequest($userId);
 
     if ($colorAqua === false) {
         throw new Exception('Impossible de modifier le thème');
@@ -410,6 +410,120 @@ function changeColorAqua($userId){
     else {
     unset($_SESSION['color']);
         $_SESSION['color'] = 'aqua';
+        $_SESSION['flash']['success'] = 'Bien joué !';
+        header('Location: index.php?action=blog#colortheme');
+    }
+}
+
+/* **************** 29 . CHANGE COLOR BLUE ******************************/
+
+function changeColorBlue($userId){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $colorBlue = $userManager->changeColorBlueRequest($userId);
+
+    if ($colorBlue === false) {
+        throw new Exception('Impossible de modifier le thème');
+    }
+    else {
+    unset($_SESSION['color']);
+        $_SESSION['color'] = 'blue';
+        $_SESSION['flash']['success'] = 'Bien joué !';
+        header('Location: index.php?action=blog#colortheme');
+    }
+}
+
+/* **************** 30 . CHANGE COLOR GRAY ******************************/
+
+function changeColorGray($userId){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $colorGray = $userManager->changeColorGrayRequest($userId);
+
+    if ($colorGray === false) {
+        throw new Exception('Impossible de modifier le thème');
+    }
+    else {
+    unset($_SESSION['color']);
+        $_SESSION['color'] = 'gray';
+        $_SESSION['flash']['success'] = 'Bien joué !';
+        header('Location: index.php?action=blog#colortheme');
+    }
+}
+
+/* **************** 31 . CHANGE COLOR GREEN ******************************/
+
+function changeColorGreen($userId){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $colorGreen = $userManager->changeColorGreenRequest($userId);
+
+    if ($colorGreen === false) {
+        throw new Exception('Impossible de modifier le thème');
+    }
+    else {
+    unset($_SESSION['color']);
+        $_SESSION['color'] = '';
+        $_SESSION['flash']['success'] = 'Bien joué !';
+        header('Location: index.php?action=blog#colortheme');
+    }
+}
+
+/* **************** 32 . CHANGE COLOR ORANGE ******************************/
+
+function changeColorOrange($userId){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $colorOrange = $userManager->changeColorOrangeRequest($userId);
+
+    if ($colorOrange === false) {
+        throw new Exception('Impossible de modifier le thème');
+    }
+    else {
+    unset($_SESSION['color']);
+        $_SESSION['color'] = 'orange';
+        $_SESSION['flash']['success'] = 'Bien joué !';
+        header('Location: index.php?action=blog#colortheme');
+    }
+}
+
+/* **************** 33 . CHANGE COLOR PINK ******************************/
+
+function changeColorPink($userId){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $colorPink = $userManager->changeColorPinkRequest($userId);
+
+    if ($colorPink === false) {
+        throw new Exception('Impossible de modifier le thème');
+    }
+    else {
+    unset($_SESSION['color']);
+        $_SESSION['color'] = 'pink';
+        $_SESSION['flash']['success'] = 'Bien joué !';
+        header('Location: index.php?action=blog#colortheme');
+    }
+}
+
+/* **************** 34 . CHANGE COLOR RED ******************************/
+
+function changeColorRed($userId){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $colorRed = $userManager->changeColorRedRequest($userId);
+
+    if ($colorRed === false) {
+        throw new Exception('Impossible de modifier le thème');
+    }
+    else {
+    unset($_SESSION['color']);
+        $_SESSION['color'] = 'red';
         $_SESSION['flash']['success'] = 'Bien joué !';
         header('Location: index.php?action=blog#colortheme');
     }

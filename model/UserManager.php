@@ -356,5 +356,77 @@ class UserManager extends Manager
 
 		return $colorAqua;
 	}
+
+/* ************** 21 . CHANGE COLOR BLUE ****************************/
+
+	public function changeColorBlueRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET color = "blue" WHERE id = ?');
+
+		$colorBlue = $req->execute(array($userId));
+
+		return $colorBlue;
+	}
+
+/* ************** 22 . CHANGE COLOR GRAY ****************************/
+
+	public function changeColorGrayRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET color = "gray" WHERE id = ?');
+
+		$colorGray = $req->execute(array($userId));
+
+		return $colorGray;
+	}
+
+/* ************** 23 . CHANGE COLOR GREEN ****************************/
+
+	public function changeColorGreenRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET color = "" WHERE id = ?');
+
+		$colorGreen = $req->execute(array($userId));
+
+		return $colorGreen;
+	}
+
+/* ************** 24 . CHANGE COLOR ORANGE ****************************/
+
+	public function changeColorOrangeRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET color = "orange" WHERE id = ?');
+
+		$colorOrange = $req->execute(array($userId));
+
+		return $colorOrange;
+	}
+
+/* ************** 25 . CHANGE COLOR PINK ****************************/
+
+	public function changeColorPinkRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET color = "pink" WHERE id = ?');
+
+		$colorPink = $req->execute(array($userId));
+
+		return $colorPink;
+	}
+
+/* ************** 20 . CHANGE COLOR RED ****************************/
+
+	public function changeColorRedRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET color = "red" WHERE id = ?');
+
+		$colorRed = $req->execute(array($userId));
+
+		return $colorRed;
+	}
 	
 }

@@ -128,12 +128,12 @@
     <h4 class="text-center">Change ton look <?= $_SESSION['pseudo'] ?> !</h4>
     
         <a href="index.php?action=changeColorAqua"><i class="budicon-brush" style="color: #4db0c6;"></i></a>
-        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #7498bc;"></i></a>
-        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #c2c2c2;"></i></a>
-        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #9cbc68;"></i></a>
-        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #e18e4a;"></i></a>
-        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #b0688c;"></i></a>
-        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #d85b5b;"></i></a>
+        <a href="index.php?action=changeColorBlue"><i class="budicon-brush" style="color: #7498bc;"></i></a>
+        <a href="index.php?action=changeColorGray"><i class="budicon-brush" style="color: #c2c2c2;"></i></a>
+        <a href="index.php?action=changeColorGreen"><i class="budicon-brush" style="color: #9cbc68;"></i></a>
+        <a href="index.php?action=changeColorOrange"><i class="budicon-brush" style="color: #e18e4a;"></i></a>
+        <a href="index.php?action=changeColorPink"><i class="budicon-brush" style="color: #b0688c;"></i></a>
+        <a href="index.php?action=changeColorRed"><i class="budicon-brush" style="color: #d85b5b;"></i></a>
         <a href="index.php?action=changeColorYellow"><i class="budicon-brush" style="color: #d1cd56;"></i></a>
     </div>
     <?php endif; ?>

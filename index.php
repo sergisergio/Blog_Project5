@@ -333,13 +333,54 @@ try {
                 changeColorYellow($_SESSION['id']);
         }
 
-    /* ********* 22 . COLOR AQUA ************************/
+    /* ********* 23 . COLOR AQUA ************************/
 
         elseif ($_GET['action'] == 'changeColorAqua') {
             
                 changeColorAqua($_SESSION['id']);
         }
 
+    /* ********* 24 . COLOR BLUE ************************/
+
+        elseif ($_GET['action'] == 'changeColorBlue') {
+            
+                changeColorBlue($_SESSION['id']);
+        }
+
+    /* ********* 25 . COLOR GRAY ************************/
+
+        elseif ($_GET['action'] == 'changeColorGray') {
+            
+                changeColorGray($_SESSION['id']);
+        }
+
+    /* ********* 26 . COLOR GREEN ************************/
+
+        elseif ($_GET['action'] == 'changeColorGreen') {
+            
+                changeColorGreen($_SESSION['id']);
+        }
+
+    /* ********* 27 . COLOR ORANGE ************************/
+
+        elseif ($_GET['action'] == 'changeColorOrange') {
+            
+                changeColorOrange($_SESSION['id']);
+        }
+
+    /* ********* 28 . COLOR PINK ************************/
+
+        elseif ($_GET['action'] == 'changeColorPink') {
+            
+                changeColorPink($_SESSION['id']);
+        }
+
+    /* ********* 29 . COLOR RED ************************/
+
+        elseif ($_GET['action'] == 'changeColorRed') {
+            
+                changeColorRed($_SESSION['id']);
+        }
     /* **********************************************************************
     *                            ADMINISTRATEUR                             *
     ************************************************************************/
