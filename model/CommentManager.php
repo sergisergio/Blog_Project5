@@ -138,12 +138,12 @@ class CommentManager extends Manager
     }
 
 /* *********** 10 . GET USER PAR COMMENTAIRE *********************/
-	public function getUserByCommentRequest($commentId)
+	public function getUserByCommentRequest($commentAuthor)
     {
 		$db = $this->dbConnect();
         
-        $userRequest = $db->prepare("SELECT u.pseudo, u.description, u.first_name, u.last_name, u.email, u.avatar, u.registration_date, u.authorization FROM Users u INNER JOIN Comments c ON c.author = u.id ");
-    	$userRequest->execute(array($commentId));
+        $userRequest = $db->prepare("SELECT * FROM Users WHERE pseudo = ? ");
+    	$userRequest->execute(array($commentAuthor));
     	$user = $userRequest->fetch();
         return $user;
     }

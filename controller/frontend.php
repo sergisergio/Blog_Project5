@@ -531,8 +531,9 @@ function changeColorRed($userId){
 
 /* **************** 34 . CHANGE COLOR RED ******************************/
 
-function publicProfile($commentId){
+function publicProfile($commentAuthor){
+    
     $commentManager = new \Philippe\Blog\Model\CommentManager();
-    $user = $commentManager->getUserByCommentRequest($commentId);
+    $user = $commentManager->getUserByCommentRequest($commentAuthor);
     require('view/frontend/publicProfile.php');
 }

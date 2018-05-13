@@ -80,7 +80,7 @@
                                 {
                             ?>
                             <p>
-                                <a href="index.php?action=publicProfile&id=<?= $comment['id'] ?>"><strong><?= htmlspecialchars($comment['author']) ?></strong></a> le 
+                                <a href="index.php?action=publicProfile&id=<?= $comment['author'] ?>"><strong><?= htmlspecialchars($comment['author']) ?></strong></a> le 
                                     <?php
                                         if (isset($comment['last_updated_fr'])) {
                                         echo ($comment['last_updated_fr']);

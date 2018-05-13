@@ -385,7 +385,7 @@ try {
     /* ********* 29 . COLOR RED ************************/
 
         elseif ($_GET['action'] == 'publicProfile') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
+            if (isset($_GET['id'])) {
                 publicProfile($_GET['id']);
             }
         }
