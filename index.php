@@ -239,7 +239,7 @@ try {
     /* ********* 13 . AFFICHER LA PAGE DU PROFIL ***************************/
         
         elseif ($_GET['action'] == 'profilePage') {
-            profilePage();
+            profilePage($_SESSION['id']);
         }
 
     /* ********* 14 . SUPPRIMER MON COMPTE *********************************/
@@ -305,6 +305,25 @@ try {
             if(isset($_POST['search']) && $_POST['search'] != NULL) {
                 search($_POST['search']);
             }
+            else {
+                listPosts();
+            }
+        }
+
+    /* ********* 21 . MODIFIER LE PROFIL ************************/
+
+        elseif ($_GET['action'] == 'modifyProfile') {
+            /*if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                    $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
+                    profilePage();
+                    exit();
+            }
+            else {
+                // checkExistMail($_POST['email']);*/
+                //if ($_POST['email'] == $_SESSION['email']) {
+                modifyProfile($_POST['userId'], $_POST['first_name'], $_POST['name'], $_POST['email'], $_POST['description']);
+                //}
+            //}
         }
 
     /* **********************************************************************

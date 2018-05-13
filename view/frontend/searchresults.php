@@ -43,14 +43,17 @@
                             <?php else: ?>
                             <p>Aucun résultat n'a été trouvé.</p>
                             <?php endif; ?>
+
                             <?php
-                                while($results = $searchResults->fetch());
+                                while($res = $countSearchResults->fetch());
                                 {
                             ?>
-                            <?= $results['title']; ?>
+                            <ul>
+                            <li><?= $res['title']; ?></li>
+                            </ul>
                             <?php
                                 }
-                                $searchResults->closeCursor();
+                                $countSearchResults->closeCursor();
                             ?>
 
                         </div>

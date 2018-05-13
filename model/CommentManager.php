@@ -121,8 +121,18 @@ class CommentManager extends Manager
 
         $db = $this->dbConnect();
         
-        // $count = $db->query("SELECT COUNT(*) AS COUNT FROM Comments WHERE post_id = '$postId' ");
-           $count = $db->query("SELECT id FROM Comments WHERE post_id = '$postId' AND validation = 1 ");
+        $count = $db->query("SELECT id FROM Comments WHERE post_id = '$postId' AND validation = 1 ");
+    	$nbCount = $count->rowCount();
+        return $nbCount;
+    }
+
+/* *********** 9 . COMPTER NOMBRE DE COMMENTAIRES NON VALIDES *********/
+	public function countCommentBackRequest()
+    {
+
+        $db = $this->dbConnect();
+        
+        $count = $db->query("SELECT id FROM Comments WHERE validation = 0 ");
     	$nbCount = $count->rowCount();
         return $nbCount;
     }

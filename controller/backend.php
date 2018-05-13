@@ -121,6 +121,7 @@ function deletePost($postId){
 function manageComments(){
 
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
+	$nbCount = $commentManager->countCommentBackRequest();
 	$submittedcomments = $commentManager->submittedCommentRequest();
 	require('view/backend/Comments/comment_mgmt.php');
 }

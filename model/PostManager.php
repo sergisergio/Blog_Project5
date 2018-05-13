@@ -89,16 +89,27 @@ class PostManager extends Manager
 		$postsTotal = $postsTotalReq->rowCount();
 
 		return $postsTotal;
+	}	
+
+/* ************ 7 . COUNT SEARCH RESULTS **************************/
+
+	public function countSearchRequest($search){
+
+		$db = $this->dbConnect();
+
+		$countSearchResults  = $db->query("SELECT * FROM Posts WHERE content LIKE '%$search%' ");
+
+		return $countSearchResults;
 	}
 
-/* ************ 7 . SEARCH RESULTS *******************************/
+/* ************ 8 . SEARCH RESULTS *******************************/
 
 	public function searchRequest($search){
 
 		$db = $this->dbConnect();
 
-		$searchResults  = $db->query("SELECT * FROM Posts WHERE content LIKE '%$search%' ");
-
-		return $searchResults;
+		$results  = $db->prepare(" SELECT * FROM Posts WHERE content LIKE '%search%' ORDER BY id DESC ");
+		$results->execute();
+		return $results;
 	}
 }

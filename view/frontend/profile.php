@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="blog list-view row">
-            <div class="col-md-6 col-sm-12 content">
+            <div class="col-md-offset-2 col-md-8 col-sm-12 content">
                 <div class="blog-posts">
                     <div class="post box">
                         <div class="row">
@@ -47,40 +47,59 @@
                                         <?php endforeach; ?>
                                         <?php unset($_SESSION['flash']); ?>
                                     <?php endif; ?>
+                                    <div class="row">
+                                        <div class="col-md-4">
                                     <p>
+
                                         <?php if ($_SESSION['avatar'] != ''): ?> 
-                                            <img class="img-responsive img-circle avatarprofile" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
+                                            <img class="img-responsive img-circle avatarprofile" style="width: 50%;" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
                                         <?php else: ?> <img class="img-responsive img-circle avatarprofile" src="public/images/avatar/avatardefaut.png" />
                                         <?php endif; ?>
                                     </p>
+                                        </div>
+                                        <div class="col-md-8">
                                     <p>Pseudo :
                                         <?= $_SESSION['pseudo']; ?>&nbsp;&nbsp;
-                                        <a href="">(Modifier)</a>
-                                    </p>
-                                    <p>Prénom :
-                                        <?= $_SESSION['prenom']; ?>&nbsp;&nbsp;
-                                        <?php if ($_SESSION['prenom'] == ''): ?>
-                                            <a href="">(Ajouter)</a>
-                                        <?php else: ?>
-                                            <a href="">(Modifier)</a>
-                                        <?php endif; ?> 
-                                    </p>
-                                    <p>Nom :
-                                        <?= $_SESSION['nom']; ?>&nbsp;&nbsp;
-                                        <?php if ($_SESSION['nom'] == ''): ?>
-                                            <a href="">(Ajouter)</a>
-                                        <?php else: ?>
-                                            <a href="">(Modifier)</a>
-                                        <?php endif; ?> 
-                                    </p>
-                                    <p>Email :
-                                        <?= $_SESSION['email']; ?>&nbsp;&nbsp;
-                                            <a href="">(Modifier)</a>
                                     </p>
                                     <p>Date d'inscription :
                                         <?= $_SESSION['registration_date']; ?>
                                     </p>
+                                    <p>Mode :
+                                        <?php if($_SESSION['autorisation'] == 1): ?>
+                                        <?= 'Administrateur' ?>
+                                        <?php else: ?>
+                                        <?= 'Utilisateur' ?>
+                                        <?php endif; ?>
+                                    </p>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <form action="index.php?action=modifyProfile&amp;id=<?= $_SESSION['id'] ?>" method="post">
+                                    <div>
+                                        <label for="first_name">Prénom</label><br />
+                                        <input type="text" id="first_name" name="first_name" value="<?= $post['first_name'] ?>" />
+                                    </div>
+                                    <div>
+                                        <label for="name">Nom</label><br />
+                                        <input type="text" id="name" name="name" value="<?= $post['last_name'] ?>" />
+                                    </div>
+
+                                    <div>
+                                        <label for="email">Email</label><br />
+                                        <input type="text" id="email" name="email" value="<?= $post['email'] ?>" />
+                                    </div>
+                                    <div>
+                                        <label for="description">Description (max : 600 caractères)</label><br />
+                                        <textarea type="text" id="description" name="description" /><?= $post['description'] ?></textarea>
+                                    </div>
+                                    <div class="text-center">
+                                        <input  class="btn btn-default validate" type="submit" />
+                                    </div>
+                                    <input type="hidden" name="userId" value="<?= $_SESSION['id'] ?>"/> 
+                                </form>
+
+                                <hr>
 
                                 <btn class="btn btn-default">
                                     <a href="index.php?action=deleteAccount&amp;id=<?= $_SESSION['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer mon compte</a>

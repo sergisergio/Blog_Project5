@@ -46,13 +46,11 @@ class UserManager extends Manager
 
 		$db = $this->dbConnect();
 
-		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, reset_token, reset_at, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, is_active
+		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, description, is_active
 			FROM Users 
-			WHERE id = ?
-			');
+			WHERE id = ?');
 
 		$req->execute(array($userId));
-		
 		$post = $req->fetch();
 		return $post;
 	}
@@ -63,7 +61,7 @@ class UserManager extends Manager
 
 		$db = $this->dbConnect();
 
-		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, is_active
+		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, description, is_active
 			FROM Users 
 			WHERE pseudo = ?
 			');
@@ -310,5 +308,18 @@ class UserManager extends Manager
 		$adminRights = $req->execute(array($userId));
 
 		return $adminRights;
+	}
+
+/* ************** 19 . MODIFIER LE PROFIL *****************************/
+
+	public function modifyProfileRequest($userId, $first_name, $name, $email, $description) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET first_name = ?, last_name = ?, email = ?, description = ? WHERE id = ?');
+
+		$modifiedProfile = $req->execute(array($first_name, $name, $email, $description, $userId));
+
+
+		return $modifiedProfile;
 	}
 }

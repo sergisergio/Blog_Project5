@@ -56,8 +56,9 @@ function signupPage(){
 
 /* ***************** 4 . PAGE PROFIL *************************/
 
-function profilePage(){
-    
+function profilePage($userId){
+    $userManager = new \Philippe\Blog\Model\UserManager();
+    $post = $userManager->getUser($userId);
     require('view/frontend/profile.php');
 }
 
@@ -96,6 +97,7 @@ function login($pseudo,$passe){
         $_SESSION['autorisation'] = $user['authorization'];
         $_SESSION['avatar'] = $user['avatar'];
         $_SESSION['registration_date'] = $user['registration_date'];
+        $_SESSION['description'] = $user['description'];
         echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
         header('Location: index.php?action=blog');
         exit();
@@ -329,6 +331,14 @@ function changePassword($userId, $passe){
 function deleteAccount($userId){
     $userManager = new \Philippe\Blog\Model\UserManager();
     $deleteAccount = $userManager->deleteAccountRequest($userId);
+    $userManager->logoutRequest();
+
+    if ($deleteAccount === false) {
+        throw new Exception('Impossible de supprimer le profil');
+    }
+    else {
+        header('Location: index.php?action=blog');
+    }
 }
 
 /* **************** 24. ERRORS ******************************/
@@ -344,7 +354,25 @@ function search($search){
 
     $postManager = new \Philippe\Blog\Model\PostManager();
     $posts1 = $postManager->getPosts(0, 5);
-    $searchResults = $postManager->searchRequest($search);
-    $nbResults = $searchResults->rowCount();
+    $countSearchResults = $postManager->countSearchRequest($search);
+    $nbResults = $countSearchResults->rowCount();
+    $results = $postManager->searchRequest($search);
     require('view/frontend/searchresults.php');
 }
+
+/* **************** 26 . MODIFIER LE PROFIL ******************************/
+
+function modifyProfile($userId, $first_name, $name, $email, $description){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $modifiedProfile = $userManager->modifyProfileRequest($userId, $first_name, $name, $email, $description);
+
+    if ($modifiedProfile === false) {
+        throw new Exception('Impossible de modifier le profil');
+    }
+    else {
+        header('Location: index.php?action=profilePage');
+    }
+}
+
