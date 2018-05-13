@@ -215,7 +215,7 @@ function listPost(){
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
     $user = $userManager->getUser($_GET['id']);
-    $count = $commentManager->countCommentRequest($_GET['id']);
+    $nbCount = $commentManager->countCommentRequest($_GET['id']);
     
     require('view/frontend/blog_post.php');
 }
@@ -336,4 +336,15 @@ function deleteAccount($userId){
 function errors(){
 
     require('view/frontend/errors.php');
+}
+
+/* **************** 25 . SEARCH ******************************/
+
+function search($search){
+
+    $postManager = new \Philippe\Blog\Model\PostManager();
+    $posts1 = $postManager->getPosts(0, 5);
+    $searchResults = $postManager->searchRequest($search);
+    $nbResults = $searchResults->rowCount();
+    require('view/frontend/searchresults.php');
 }

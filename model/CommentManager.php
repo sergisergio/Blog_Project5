@@ -121,9 +121,9 @@ class CommentManager extends Manager
 
         $db = $this->dbConnect();
         
-        $countComment = $db->prepare("SELECT COUNT(post_id) AS COUNT FROM Comments WHERE post_id = '$postId' ");
-
-        $count = $countComment->rowCount();
-        return $count;
+        // $count = $db->query("SELECT COUNT(*) AS COUNT FROM Comments WHERE post_id = '$postId' ");
+           $count = $db->query("SELECT id FROM Comments WHERE post_id = '$postId' AND validation = 1 ");
+    	$nbCount = $count->rowCount();
+        return $nbCount;
     }
 }

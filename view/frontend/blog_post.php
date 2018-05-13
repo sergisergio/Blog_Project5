@@ -74,7 +74,7 @@
                 <div class="divide20"></div>
                 <div class="blog-posts" id="comments">
                     <div class="post box">
-                            <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?= $count; ?>)</h3>
+                            <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?= $nbCount; ?>)</h3>
                             <?php
                                 while ($comment = $comments->fetch())
                                 {
