@@ -136,6 +136,9 @@ ul li {
 .btn-default a:hover {
     color: #9cbc68;
 }
+.budicon-brush {
+    font-size : 30px !important;
+}
 *,
 *:before,
 *:after {

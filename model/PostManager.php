@@ -21,7 +21,7 @@ class PostManager extends Manager
 	public function getPosts($start, $postsPerPage){
 		$db = $this->dbConnect();
 
-		$req = $db->query('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		$req = $db->query('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage);
@@ -33,7 +33,7 @@ class PostManager extends Manager
 
 		$db = $this->dbConnect();
 
-		$req = $db->prepare('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		$req = $db->prepare('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			WHERE p.id = ?');

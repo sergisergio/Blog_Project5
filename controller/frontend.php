@@ -96,8 +96,9 @@ function login($pseudo,$passe){
         $_SESSION['password'] = $user['password'];
         $_SESSION['autorisation'] = $user['authorization'];
         $_SESSION['avatar'] = $user['avatar'];
-        $_SESSION['registration_date'] = $user['registration_date'];
+        $_SESSION['registration'] = $user['registration_date_fr'];
         $_SESSION['description'] = $user['description'];
+        $_SESSION['color'] = $user['color'];
         echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
         header('Location: index.php?action=blog');
         exit();
@@ -373,6 +374,44 @@ function modifyProfile($userId, $first_name, $name, $email, $description){
     }
     else {
         header('Location: index.php?action=profilePage');
+    }
+}
+
+/* **************** 27 . CHANGE COLOR YELLOW ******************************/
+
+function changeColorYellow($userId){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $colorYellow = $userManager->changeColorYellowRequest($userId);
+
+    if ($colorYellow === false) {
+        throw new Exception('Impossible de modifier le thème');
+    }
+    else {
+    unset($_SESSION['color']);
+        $_SESSION['color'] = 'yellow';
+        $_SESSION['flash']['success'] = 'Bien joué !';
+        header('Location: index.php?action=blog#colortheme');
+    }
+}
+
+/* **************** 27 . CHANGE COLOR AQUA ******************************/
+
+function changeColorAqua($userId){
+
+    $userManager = new \Philippe\Blog\Model\UserManager();
+
+    $colorYAqua = $userManager->changeColorAquaRequest($userId);
+
+    if ($colorAqua === false) {
+        throw new Exception('Impossible de modifier le thème');
+    }
+    else {
+    unset($_SESSION['color']);
+        $_SESSION['color'] = 'aqua';
+        $_SESSION['flash']['success'] = 'Bien joué !';
+        header('Location: index.php?action=blog#colortheme');
     }
 }
 

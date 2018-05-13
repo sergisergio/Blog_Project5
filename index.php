@@ -326,6 +326,20 @@ try {
             //}
         }
 
+    /* ********* 22 . COLOR YELLOW ************************/
+
+        elseif ($_GET['action'] == 'changeColorYellow') {
+            
+                changeColorYellow($_SESSION['id']);
+        }
+
+    /* ********* 22 . COLOR AQUA ************************/
+
+        elseif ($_GET['action'] == 'changeColorAqua') {
+            
+                changeColorAqua($_SESSION['id']);
+        }
+
     /* **********************************************************************
     *                            ADMINISTRATEUR                             *
     ************************************************************************/

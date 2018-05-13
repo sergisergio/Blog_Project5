@@ -46,7 +46,7 @@ class UserManager extends Manager
 
 		$db = $this->dbConnect();
 
-		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, description, is_active
+		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin\') AS registration_date_fr, authorization, avatar, description, is_active
 			FROM Users 
 			WHERE id = ?');
 
@@ -61,7 +61,7 @@ class UserManager extends Manager
 
 		$db = $this->dbConnect();
 
-		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin%ss\') AS registration_date_fr, authorization, avatar, description, is_active
+		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin\') AS registration_date_fr, authorization, avatar, description, is_active
 			FROM Users 
 			WHERE pseudo = ?
 			');
@@ -191,8 +191,18 @@ class UserManager extends Manager
 
     public function logoutRequest(){
 
-		session_start();
+		session_destroy();
 		unset($_SESSION['pseudo']);
+		unset($_SESSION['id']);
+        unset($_SESSION['prenom']);
+        unset($_SESSION['nom']);
+        unset($_SESSION['email']);
+        unset($_SESSION['password']);
+        unset($_SESSION['autorisation']);
+        unset($_SESSION['avatar']);
+        unset($_SESSION['registration']);
+        unset($_SESSION['description']);
+        unset($_SESSION['color']);
 		header('Location: index.php?action=blog');
 
     }
@@ -322,4 +332,29 @@ class UserManager extends Manager
 
 		return $modifiedProfile;
 	}
+
+/* ************** 20 . CHANGE COLOR YELLOW ****************************/
+
+	public function changeColorYellowRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET color = "yellow" WHERE id = ?');
+
+		$colorYellow = $req->execute(array($userId));
+
+		return $colorYellow;
+	}
+
+/* ************** 20 . CHANGE COLOR AQUA ****************************/
+
+	public function changeColorAquaRequest($userId) {
+		$db = $this->dbConnect();
+
+		$req = $db->prepare('UPDATE Users SET color = "aqua" WHERE id = ?');
+
+		$colorAqua = $req->execute(array($userId));
+
+		return $colorAqua;
+	}
+	
 }

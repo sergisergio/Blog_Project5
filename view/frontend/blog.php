@@ -61,14 +61,14 @@
                             <h3 class="post-title"><?= htmlspecialchars($data['chapo']); ?></h3>
                             <h4 class="post-title">Auteur : <?= htmlspecialchars($data['author']); ?></h4>
                             <div class="meta">
-                                <span class="date">date de dernière publication</span> :
+                                <span class="date"></span>
                                 <?php
                                     if (isset($data['last_updated_fr'])) {
                                         echo ($data['last_updated_fr']);
                                     }
                                     else
                                         echo ($data['creation_date_fr']);
-                                    ?>
+                                ?>
                             </div> 
                             <div class="divide30"></div>
                             <img src="public/images/posts/<?= $data['file_extension']; ?>" class="img-responsive imageblog1" />
@@ -115,4 +115,22 @@
 </div>
 </div> <!-- end body-wrapper -->
 <?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+<?php if(isset($_SESSION['pseudo']) && $_SESSION['color'] == 'aqua'): ?>
+    <?php require('view/frontend/colortemplates/aquatemplate.php'); ?>
+<?php elseif(isset($_SESSION['pseudo']) && $_SESSION['color'] == 'blue'): ?>
+    <?php require('view/frontend/colortemplates/bluetemplate.php'); ?>
+<?php elseif(isset($_SESSION['pseudo']) && $_SESSION['color'] == 'gray'): ?>
+    <?php require('view/frontend/colortemplates/graytemplate.php'); ?>
+<?php elseif(isset($_SESSION['pseudo']) && $_SESSION['color'] == 'orange'): ?>
+    <?php require('view/frontend/colortemplates/orangetemplate.php'); ?>
+<?php elseif(isset($_SESSION['pseudo']) && $_SESSION['color'] == 'pink'): ?>
+    <?php require('view/frontend/colortemplates/pinktemplate.php'); ?>
+<?php elseif(isset($_SESSION['pseudo']) && $_SESSION['color'] == 'aqua'): ?>
+    <?php require('view/frontend/colortemplates/aquatemplate.php'); ?>
+<?php elseif(isset($_SESSION['pseudo']) && $_SESSION['color'] == 'red'): ?>
+    <?php require('view/frontend/colortemplates/redtemplate.php'); ?>
+<?php elseif(isset($_SESSION['pseudo']) && $_SESSION['color'] == 'yellow'): ?>
+    <?php require('view/frontend/colortemplates/yellowtemplate.php'); ?>
+<?php else: ?>
+    <?php require('template.php'); ?>
+<?php endif; ?>

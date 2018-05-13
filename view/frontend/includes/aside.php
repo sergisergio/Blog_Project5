@@ -113,4 +113,29 @@
                     </div>
                 </div>
   </div>
+  <?php if(isset($_SESSION['pseudo'])): ?>
+  <div class="sidebox box widget" id="colortheme">
+
+    <?php if(isset($_SESSION['flash'])): ?>
+        <?php foreach($_SESSION['flash'] as $type => $message): ?>
+            <div class="text-center alert alert-<?= $type; ?>">
+                <?= $message; ?>
+            </div>
+        <?php endforeach; ?>
+        <?php unset($_SESSION['flash']); ?>
+    <?php endif; ?>
+    
+    <h4 class="text-center">Change ton look <?= $_SESSION['pseudo'] ?> !</h4>
+    
+        <a href="index.php?action=changeColorAqua"><i class="budicon-brush" style="color: #4db0c6;"></i></a>
+        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #7498bc;"></i></a>
+        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #c2c2c2;"></i></a>
+        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #9cbc68;"></i></a>
+        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #e18e4a;"></i></a>
+        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #b0688c;"></i></a>
+        <a href="index.php?action=changeColor"><i class="budicon-brush" style="color: #d85b5b;"></i></a>
+        <a href="index.php?action=changeColorYellow"><i class="budicon-brush" style="color: #d1cd56;"></i></a>
+    </div>
+    <?php endif; ?>
+  
 </aside>
