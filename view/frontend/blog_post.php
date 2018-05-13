@@ -80,7 +80,7 @@
                                 {
                             ?>
                             <p>
-                                <a href="index.php?action=publicProfile"><strong><?= htmlspecialchars($comment['author']) ?></strong></a> le 
+                                <a href="index.php?action=publicProfile&id=<?= $comment['id'] ?>"><strong><?= htmlspecialchars($comment['author']) ?></strong></a> le 
                                     <?php
                                         if (isset($comment['last_updated_fr'])) {
                                         echo ($comment['last_updated_fr']);
@@ -91,7 +91,7 @@
                             </p>
                             <p>
                                 <?= nl2br(htmlspecialchars($comment['content'])) ?> 
-                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $comment['author']) || ($_SESSION['autorisation']) == 1)): ?>
+                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $comment['author'])) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)): ?>
                                     <a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a> 
                                     <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
                                 <?php endif; ?>

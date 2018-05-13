@@ -136,4 +136,15 @@ class CommentManager extends Manager
     	$nbCount = $count->rowCount();
         return $nbCount;
     }
+
+/* *********** 10 . GET USER PAR COMMENTAIRE *********************/
+	public function getUserByCommentRequest($commentId)
+    {
+		$db = $this->dbConnect();
+        
+        $userRequest = $db->prepare("SELECT u.pseudo, u.description, u.first_name, u.last_name, u.email, u.avatar, u.registration_date, u.authorization FROM Users u INNER JOIN Comments c ON c.author = u.id ");
+    	$userRequest->execute(array($commentId));
+    	$user = $userRequest->fetch();
+        return $user;
+    }
 }
