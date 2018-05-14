@@ -65,37 +65,13 @@
             });
         </script>
         <script>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-            ga('create', 'UA-101090553-1', 'auto');
-            ga('send', 'pageview');
-        </script>
-        <script>
-            ////////// Simple usage //////////
             $(".popconfirm").popConfirm();
-
-            ///////// Complete usage //////////
-
-            // (example jquery click event)
-            //$('#important_action').click(function() {
-                //alert('You clicked, and valided this button !');
-            //});
-
-            // Full featured example
             $("[data-toggle='confirmation']").popConfirm({
                 title: "Certain ?",
                 content: "Dernière chance !",
                 placement: "left",
                 yesBtn: 'Oui',
-              noBtn: 'Non'// (top, right, bottom, left)
+              noBtn: 'Non'
             });
         </script>
     </body>

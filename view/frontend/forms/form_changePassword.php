@@ -4,7 +4,7 @@
         <p></p><div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
-            <form class="forms" action="index.php?action=changePassword" method="post">
+            <form action="index.php?action=changePassword" method="post">
                 <fieldset>
                     <div class="row">
                         <div class="col-md-offset-3 col-md-6 col-sm-12">

@@ -19,7 +19,6 @@ session_start();
     10. PAGE INSCRIPTION UTILISATEUR.
     11. INSCRIPTION UTILISATEUR.
     12. CONFIRMATION INSCRIPTION UTILISATEUR.
-    13. AFFICHER LA PAGE DU PROFIL.
     14. SUPPRIMER MON COMPTE.
     15. AFFICHER LA PAGE RESET PASSWORD 1.
     16. ENVOI MAIL RESET PASSWORD.
@@ -40,13 +39,10 @@ session_start();
     7 . MODIFIER UN ARTICLE.
     8 . SUPPRIMER UN ARTICLE.
     9 . EFFACER UN MEMBRE.
-    10. AFFICHER LA PAGE POUR MODIFIER UN MEMBRE.
-    11. MODIFIER UN MEMBRE.
-    12. AFFICHER L'ENSEMBLE DES BLOG POSTS.
-    13. VALIDER UN COMMENTAIRE.
-    14. SUPPRIMER UN COMMENTAIRE.
-    15. DONNER LES DROITS ADMIN.
-    16. SUPPRIMER LES DROITS ADMIN
+    10. VALIDER UN COMMENTAIRE.
+    11. SUPPRIMER UN COMMENTAIRE.
+    12. DONNER LES DROITS ADMIN.
+    13. SUPPRIMER LES DROITS ADMIN
 
     /* **********************************************************************
     *                              PAR DEFAUT                               *
@@ -235,25 +231,6 @@ try {
             }
         }
 
-    /* ********* 13 . AFFICHER LA PAGE DU PROFIL ***************************/
-        
-        elseif ($_GET['action'] == 'profilePage') {
-            profilePage($_SESSION['id']);
-        }
-
-    /* ********* 14 . SUPPRIMER MON COMPTE *********************************/
-
-        elseif ($_GET['action'] == 'deleteAccount') {
-            if (isset($_SESSION['id'])) {
-                  deleteAccount($_SESSION['id']); 
-            }
-            else {
-                $_SESSION['flash']['danger'] = 'Aucun id ou token ne correspond à cet utilisateur !';
-                profilePage();
-                exit();
-            }
-        }
-
     /* ********* 15 . AFFICHER LA PAGE POUR LE MOT DE PASSE ****************/
         
         elseif ($_GET['action'] == 'forgetPasswordPage') {
@@ -298,96 +275,6 @@ try {
             noAdmin();
         }
 
-    /* ********* 20 . RECHERCHER ************************/
-
-        elseif ($_GET['action'] == 'search') {
-            if(isset($_POST['search']) && $_POST['search'] != NULL) {
-                search($_POST['search']);
-            }
-            else {
-                listPosts();
-            }
-        }
-
-    /* ********* 21 . MODIFIER LE PROFIL ************************/
-
-        elseif ($_GET['action'] == 'modifyProfile') {
-            /*if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                    $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
-                    profilePage();
-                    exit();
-            }
-            else {
-                // checkExistMail($_POST['email']);*/
-                //if ($_POST['email'] == $_SESSION['email']) {
-                modifyProfile($_POST['userId'], $_POST['first_name'], $_POST['name'], $_POST['email'], $_POST['description']);
-                //}
-            //}
-        }
-
-    /* ********* 22 . COLOR YELLOW ************************/
-
-        elseif ($_GET['action'] == 'changeColorYellow') {
-            
-                changeColorYellow($_SESSION['id']);
-        }
-
-    /* ********* 23 . COLOR AQUA ************************/
-
-        elseif ($_GET['action'] == 'changeColorAqua') {
-            
-                changeColorAqua($_SESSION['id']);
-        }
-
-    /* ********* 24 . COLOR BLUE ************************/
-
-        elseif ($_GET['action'] == 'changeColorBlue') {
-            
-                changeColorBlue($_SESSION['id']);
-        }
-
-    /* ********* 25 . COLOR GRAY ************************/
-
-        elseif ($_GET['action'] == 'changeColorGray') {
-            
-                changeColorGray($_SESSION['id']);
-        }
-
-    /* ********* 26 . COLOR GREEN ************************/
-
-        elseif ($_GET['action'] == 'changeColorGreen') {
-            
-                changeColorGreen($_SESSION['id']);
-        }
-
-    /* ********* 27 . COLOR ORANGE ************************/
-
-        elseif ($_GET['action'] == 'changeColorOrange') {
-            
-                changeColorOrange($_SESSION['id']);
-        }
-
-    /* ********* 28 . COLOR PINK ************************/
-
-        elseif ($_GET['action'] == 'changeColorPink') {
-            
-                changeColorPink($_SESSION['id']);
-        }
-
-    /* ********* 29 . COLOR RED ************************/
-
-        elseif ($_GET['action'] == 'changeColorRed') {
-            
-                changeColorRed($_SESSION['id']);
-        }
-
-    /* ********* 29 . COLOR RED ************************/
-
-        elseif ($_GET['action'] == 'publicProfile') {
-            if (isset($_GET['id'])) {
-                publicProfile($_GET['id']);
-            }
-        }
     /* **********************************************************************
     *                            ADMINISTRATEUR                             *
     ************************************************************************/
@@ -493,32 +380,7 @@ try {
             }
         }
 
-    /* ********* 10 . AFFICHER LA PAGE POUR MODIFIER UN MEMBRE *************/
-
-        elseif ($_GET['action'] == 'modifyUserPage') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                modifyUserPage($_GET['id']);
-            }
-        }
-
-    /* ********* 11 . MODIFIER UN MEMBRE ***********************************/
-
-        elseif ($_GET['action'] == 'modifyUser') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                modifyUser($_GET['id']);
-
-            }
-        }
-
-    /* ********* 12 . AFFICHER L'ENSEMBLE DES BLOG POSTS *******************/
-
-        elseif ($_GET['action'] == 'adminViewPost') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                AdminViewPost();
-            }
-        }
-
-    /* ********* 13 . VALIDER UN COMMENTAIRE *******************************/
+    /* ********* 10 . VALIDER UN COMMENTAIRE *******************************/
 
         elseif ($_GET['action'] == 'validateComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -526,7 +388,7 @@ try {
             }
         } 
 
-    /* ********* 14 . SUPPRIMER UN COMMENTAIRE *****************************/
+    /* ********* 11 . SUPPRIMER UN COMMENTAIRE *****************************/
 
         elseif ($_GET['action'] == 'adminDeleteComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -534,7 +396,7 @@ try {
             }
         }   
 
-    /* ********* 15 . DONNER LES DROITS ADMIN ******************************/
+    /* ********* 12 . DONNER LES DROITS ADMIN ******************************/
         
         elseif ($_GET['action'] == 'giveAdminRights') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -542,7 +404,7 @@ try {
             }
         }
 
-    /* ********* 16 . SUPPRIMER LES DROITS ADMIN ***************************/
+    /* ********* 13 . SUPPRIMER LES DROITS ADMIN ***************************/
         
         elseif ($_GET['action'] == 'cancelAdminRights') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {

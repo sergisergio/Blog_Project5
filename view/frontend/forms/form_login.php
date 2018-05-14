@@ -23,10 +23,6 @@
                             <div class="form-row text-input-row subject-field">
                                 <label>Mot de passe</label> <a class="pull-right" href="index.php?action=forgetPasswordPage"> (Mot de passe oublié ?)</a>
                                 <input type="password" name="passe" class="text-input defaultText" /> </div>
-                            <div class="form-row">
-                                <input style="width: 5%;" type="checkbox" name="remember" value="1" />
-                                <label class="">Se souvenir de moi</label>
-                            </div>
                         </div>
                         <div class="col-sm-6 col-xs-6">
                             <div class="button-row pull-right">

@@ -10,15 +10,12 @@
 6 . MODIFIER UN ARTICLE.
 7 . SUPPRIMER UN ARTICLE.
 8 . PAGE DE GESTION DES COMMENTAIRES.
-9 . AFFICHER LES COMMENTAIRES D'UN ARTICLE.
 10. PAGE DE GESTION DES MEMBRES.
 11. SUPPRIMER UN MEMBRE.
-12. PAGE DE MODIFICATION D'UN MEMBRE.
-13. MODIFIER UN MEMBRE.
-14. VALIDER UN COMMENTAIRE.
-15. SUPPRIMER UN COMMENTAIRE.
-16. DONNER LES DROITS ADMIN A UN MEMBRE.
-17. RETIRER LES DROITS ADMIN A UN MEMBRE.
+11. VALIDER UN COMMENTAIRE.
+12. SUPPRIMER UN COMMENTAIRE.
+13. DONNER LES DROITS ADMIN A UN MEMBRE.
+14. RETIRER LES DROITS ADMIN A UN MEMBRE.
 
 ************************************************************************/
 
@@ -126,20 +123,7 @@ function manageComments(){
 	require('view/backend/Comments/comment_mgmt.php');
 }
 
-/* *********** 9 . AFFICHER LES COMMENTAIRES D'UN ARTICLE **************/
-
-function AdminViewPost(){
-
-	$postManager = new \Philippe\Blog\Model\PostManager();
-	$commentManager = new \Philippe\Blog\Model\CommentManager();
-
-    $post = $postManager->getPost($postId);
-    $comments = $commentManager->getComments($postId);
-    
-    require('view/backend/Comments/modifyCommentPage.php');
-}
-
-/* ********** 10 . PAGE DE GESTION DES MEMBRES *************************/
+/* ********** 9 . PAGE DE GESTION DES MEMBRES *************************/
 
 function manageUsers(){
 	$userManager = new \Philippe\Blog\Model\UserManager();
@@ -147,7 +131,7 @@ function manageUsers(){
 	require('view/backend/Users/user_mgmt.php');
 }
 
-/* ********** 11 . SUPPRIMER UN MEMBRE *********************************/
+/* ********** 10 . SUPPRIMER UN MEMBRE *********************************/
 
 function deleteUser($userId){
 
@@ -161,30 +145,7 @@ function deleteUser($userId){
 	}
 }
 
-/* ********** 12 . PAGE DE MODIFICATION D'UN MEMBRE ********************/
-
-function modifyUserPage($userId){
-
-	$userManager = new \Philippe\Blog\Model\UserManager();
-	$req = $userManager->getUser($userId);
-	require('view/backend/Users/modifyUserView.php');
-}
-
-/* ********** 13 . MODIFIER UN MEMBRE **********************************/
-
-function modifyUser($userId){
-
-	$userManager = new \Philippe\Blog\Model\UserManager();
-	$success = $userManager->modifyUserRequest($userId);
-	if ($success === false) {
-		throw new Exception('Impossible de modifier le membre');
-	}
-	else {
-		header('Location: index.php?action=manage_posts');
-	}
-}
-
-/* ********** 14 . VALIDER UN COMMENTAIRE ******************************/
+/* ********** 11 . VALIDER UN COMMENTAIRE ******************************/
 
 function validateComment($commentId){
 
@@ -198,7 +159,7 @@ function validateComment($commentId){
 	}
 }
 
-/* ********** 15 . SUPPRIMER UN COMMENTAIRE ****************************/
+/* ********** 12 . SUPPRIMER UN COMMENTAIRE ****************************/
 
 function adminDeleteComment($commentId){
 
@@ -213,7 +174,7 @@ function adminDeleteComment($commentId){
         header('Location: index.php?action=manage_comments');
     }
 }
-/* ********** 16 . DONNER LES DROITS ADMIN A UN MEMBRE *****************/
+/* ********** 13 . DONNER LES DROITS ADMIN A UN MEMBRE *****************/
 
 function giveAdminRights($userId){
 
@@ -227,7 +188,7 @@ function giveAdminRights($userId){
         header('Location: index.php?action=manage_users');
     }
 }
-/* ********** 17 . RETIRER LES DROITS ADMIN A UN MEMBRE ****************/
+/* ********** 14 . RETIRER LES DROITS ADMIN A UN MEMBRE ****************/
 
 function stopAdminRights($userId){
 
