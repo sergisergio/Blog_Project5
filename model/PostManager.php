@@ -108,7 +108,7 @@ class PostManager extends Manager
 
 		$dbProjet5 = $this->dbConnect();
 
-		$results  = $dbProjet5->prepare(" SELECT * FROM Posts WHERE content LIKE '%search%' ORDER BY id DESC ");
+		$results  = $dbProjet5->prepare(" SELECT * FROM Posts WHERE content LIKE '%$search%' ORDER BY id DESC ");
 		$results->execute();
 		return $results;
 	}
