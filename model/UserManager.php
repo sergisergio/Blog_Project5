@@ -73,7 +73,7 @@ class UserManager extends Manager
 	}
 
 /* ************** 4 . MODIFIER UN MEMBRE *******************************/
-	public function modifyUserRequest($userId){
+	/*public function modifyUserRequest($userId){
 
 		$dbProjet5 = $this->dbConnect();
 
@@ -82,7 +82,7 @@ class UserManager extends Manager
 		$affectedPost = $post->execute(array($title, $intro, $author, $content, $postId));
 		
 		return $affectedPost;
-	}
+	}*/
 	
 /* ************** 5 . SUPPRIMER UN MEMBRE ******************************/
 	public function deleteUserRequest($userId){
@@ -102,7 +102,7 @@ class UserManager extends Manager
 		
 		$post = $dbProjet5->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(?, ?, ?, ?)');
 
-		$passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
+		$passe = password_hash($passe, PASSWORD_BCRYPT);
 
 		function str_random($length){
 		   	$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
@@ -152,7 +152,7 @@ class UserManager extends Manager
 
     	$req = $dbProjet5->prepare('SELECT id FROM Users WHERE pseudo = ?');
 
-    	$req->execute([$_POST['pseudo']]);
+    	$req->execute([$pseudo]);
 
     	$user = $req->fetch();
 
@@ -166,7 +166,7 @@ class UserManager extends Manager
 
     	$req = $dbProjet5->prepare('SELECT id FROM Users WHERE email = ?');
 
-    	$req->execute([$_POST['email']]);
+    	$req->execute([$email]);
 
     	$usermail = $req->fetch();
 
@@ -214,7 +214,7 @@ class UserManager extends Manager
     	$dbProjet5 = $this->dbConnect();
 
     	$req = $dbProjet5->prepare('SELECT * FROM Users WHERE id = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
-    	$req->execute([$_GET['id'], $_GET['token']]);
+    	$req->execute([$userId, $_GET['token']]);
     	$user = $req->fetch();
     	return $user;
 	}
@@ -224,7 +224,7 @@ class UserManager extends Manager
     public function changePasswordRequest($userId, $passe) {
 		$dbProjet5 = $this->dbConnect();
 		
-		$passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
+		$passe = password_hash($passe, PASSWORD_BCRYPT);
 		$req = $dbProjet5->prepare('UPDATE Users SET password = ?, reset_token = NULL, reset_at = NULL WHERE id = ?');
 		
 		$changePassword = $req->execute(array($passe, $userId));
@@ -239,7 +239,7 @@ class UserManager extends Manager
         $dbProjet5 = $this->dbConnect();
         
         $req = $dbProjet5->prepare('SELECT * FROM Users where email = ? AND registration_date IS NOT NULL');
-        $req->execute([$_POST['email']]);
+        $req->execute([$email]);
         $user = $req->fetch();
         if($user) {
 
@@ -250,7 +250,7 @@ class UserManager extends Manager
 
 		    $reset_token = str_random(100);
 		    $user_id = $user['id'];
-		    $db->prepare('UPDATE Users SET reset_token = ?, reset_at = NOW() WHERE id = ?')->execute([$reset_token, $user_id]);
+		    $dbProjet5->prepare('UPDATE Users SET reset_token = ?, reset_at = NOW() WHERE id = ?')->execute([$reset_token, $user_id]);
 
 		    /* test mail serveur */
         $mail = 'ptraon@gmail.com';
