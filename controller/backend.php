@@ -81,7 +81,7 @@ function addPost($title, $chapo, $author, $content, $image){
 function modifyPostPage($postId){
 
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$post = $postManager->getPost($_GET['id']);
+	$post = $postManager->getPost($postId);
 	require('view/backend/Posts/modifyPostView.php');
 }
 
@@ -91,7 +91,7 @@ function modifyPost($postId, $title, $chapo, $author, $content){
 
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$success = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
-	$post = $postManager->getPost($_GET['id']);
+	$post = $postManager->getPost($postId);
 
 	if ($success === false) {
 		throw new Exception('Impossible de modifier l\'article');
@@ -106,7 +106,7 @@ function modifyPost($postId, $title, $chapo, $author, $content){
 function deletePost($postId){
 
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$success = $postManager->deletePostRequest($_GET['id']);
+	$success = $postManager->deletePostRequest($postId);
 
 	if ($success === false) {
 		throw new Exception('Impossible de supprimer l\'article');
@@ -133,8 +133,8 @@ function AdminViewPost(){
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
 
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
+    $post = $postManager->getPost($postId);
+    $comments = $commentManager->getComments($postId);
     
     require('view/backend/Comments/modifyCommentPage.php');
 }
@@ -152,7 +152,7 @@ function manageUsers(){
 function deleteUser($userId){
 
 	$userManager = new \Philippe\Blog\Model\UserManager();
-	$affectedUser = $userManager->deleteUserRequest($_GET['id']);
+	$affectedUser = $userManager->deleteUserRequest($userId);
     if ($affectedUser === false){
         throw new Exception('Impossible de supprimer ce membre');
 	}
@@ -166,7 +166,7 @@ function deleteUser($userId){
 function modifyUserPage($userId){
 
 	$userManager = new \Philippe\Blog\Model\UserManager();
-	$req = $userManager->getUser($_GET['id']);
+	$req = $userManager->getUser($userId);
 	require('view/backend/Users/modifyUserView.php');
 }
 
@@ -175,7 +175,7 @@ function modifyUserPage($userId){
 function modifyUser($userId){
 
 	$userManager = new \Philippe\Blog\Model\UserManager();
-	$success = $userManager->modifyUserRequest($_GET['id']);
+	$success = $userManager->modifyUserRequest($userId);
 	if ($success === false) {
 		throw new Exception('Impossible de modifier le membre');
 	}
@@ -189,7 +189,7 @@ function modifyUser($userId){
 function validateComment($commentId){
 
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
-	$validated = $commentManager->validateCommentRequest($_GET['id']);
+	$validated = $commentManager->validateCommentRequest($commentId);
 	if ($validated === false) {
 		throw new Exception('Impossible de valider le commentaire');
 	}

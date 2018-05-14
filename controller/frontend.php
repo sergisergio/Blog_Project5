@@ -85,7 +85,7 @@ function login($pseudo,$passe){
     $userManager = new \Philippe\Blog\Model\UserManager();
     $user = $userManager->loginRequest($pseudo,$passe);
     
-    if(password_verify($_POST['passe'], $user['password'])) {
+    if(password_verify($passe, $user['password'])) {
         if ($user['is_active'] == 1) {
             
         $_SESSION['pseudo'] = $user['pseudo'];
