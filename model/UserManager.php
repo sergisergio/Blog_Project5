@@ -33,9 +33,9 @@ class UserManager extends Manager
 	public function getUsers()
 	{
 		
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->query('SELECT * 
+		$req = $dbProjet5->query('SELECT * 
 			FROM Users 
 			ORDER BY pseudo');
 		return $req;
@@ -44,9 +44,9 @@ class UserManager extends Manager
 /* ************** 2 . RECUPERER UN SEUL MEMBRE *************************/
 	public function getUser($userId){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin\') AS registration_date_fr, authorization, avatar, description, is_active
+		$req = $dbProjet5->prepare('SELECT id, first_name, last_name, pseudo, password, email, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin\') AS registration_date_fr, authorization, avatar, description, is_active
 			FROM Users 
 			WHERE id = ?');
 
@@ -59,9 +59,9 @@ class UserManager extends Manager
 
 	public function getAuthorization($pseudo){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin\') AS registration_date_fr, authorization, avatar, description, is_active
+		$req = $dbProjet5->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin\') AS registration_date_fr, authorization, avatar, description, is_active
 			FROM Users 
 			WHERE pseudo = ?
 			');
@@ -75,9 +75,9 @@ class UserManager extends Manager
 /* ************** 4 . MODIFIER UN MEMBRE *******************************/
 	public function modifyUserRequest($userId){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$post = $db->prepare('UPDATE Users SET title = ?, intro = ?, author = ?, content = ?, creation_date = NOW() WHERE id = ?');
+		$post = $dbProjet5->prepare('UPDATE Users SET title = ?, intro = ?, author = ?, content = ?, creation_date = NOW() WHERE id = ?');
 
 		$affectedPost = $post->execute(array($title, $intro, $author, $content, $postId));
 		
@@ -86,9 +86,9 @@ class UserManager extends Manager
 	
 /* ************** 5 . SUPPRIMER UN MEMBRE ******************************/
 	public function deleteUserRequest($userId){
-        $db = $this->dbConnect();
+        $dbProjet5 = $this->dbConnect();
 
-		$post = $db->prepare('DELETE FROM Users WHERE id = ?');
+		$post = $dbProjet5->prepare('DELETE FROM Users WHERE id = ?');
 
 		$affectedUser = $post->execute(array($userId));
 		
@@ -98,9 +98,9 @@ class UserManager extends Manager
 /* ************** 6 . INSCRIPTION **************************************/
 	public function addUserRequest($pseudo, $email, $passe){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 		
-		$post = $db->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(?, ?, ?, ?)');
+		$post = $dbProjet5->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(?, ?, ?, ?)');
 
 		$passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
 
@@ -113,7 +113,7 @@ class UserManager extends Manager
 
 		$users = $post->execute(array($pseudo, $email, $passe, $token));
         
-        $user_id = $db->lastInsertId();
+        $user_id = $dbProjet5->lastInsertId();
         
         /* test mail local */
 		//mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
@@ -135,9 +135,9 @@ class UserManager extends Manager
 /* ************** 7 . CONFIRMATION INSCRIPTION *************************/
 
 	public function setActiveRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET is_active = 1, confirmation_token = NULL, registration_date = NOW() WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET is_active = 1, confirmation_token = NULL, registration_date = NOW() WHERE id = ?');
 
 		$activeUser = $req->execute(array($userId));
 
@@ -148,9 +148,9 @@ class UserManager extends Manager
 
     public function existPseudo($pseudo) {
 
-    	$db = $this->dbConnect();
+    	$dbProjet5 = $this->dbConnect();
 
-    	$req = $db->prepare('SELECT id FROM Users WHERE pseudo = ?');
+    	$req = $dbProjet5->prepare('SELECT id FROM Users WHERE pseudo = ?');
 
     	$req->execute([$_POST['pseudo']]);
 
@@ -162,9 +162,9 @@ class UserManager extends Manager
 /* ************** 9 . L'EMAIL EST-IL DEJA PRIS ? ***********************/
 	public function existMail($email) {
 
-    	$db = $this->dbConnect();
+    	$dbProjet5 = $this->dbConnect();
 
-    	$req = $db->prepare('SELECT id FROM Users WHERE email = ?');
+    	$req = $dbProjet5->prepare('SELECT id FROM Users WHERE email = ?');
 
     	$req->execute([$_POST['email']]);
 
@@ -176,9 +176,9 @@ class UserManager extends Manager
 /* ************** 10. CONNEXION ****************************************/
 	public function loginRequest($pseudo, $passe){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('SELECT * FROM Users WHERE pseudo = :pseudo');
+		$req = $dbProjet5->prepare('SELECT * FROM Users WHERE pseudo = :pseudo');
 
         $req->execute(array('pseudo' => $pseudo));
 
@@ -211,9 +211,9 @@ class UserManager extends Manager
 
     public function checkResetTokenRequest($userId){
 
-    	$db = $this->dbConnect();
+    	$dbProjet5 = $this->dbConnect();
 
-    	$req = $db->prepare('SELECT * FROM Users WHERE id = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+    	$req = $dbProjet5->prepare('SELECT * FROM Users WHERE id = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
     	$req->execute([$_GET['id'], $_GET['token']]);
     	$user = $req->fetch();
     	return $user;
@@ -222,10 +222,10 @@ class UserManager extends Manager
 /* ************** 13. CHANGE PASSWORD **********************************/
 
     public function changePasswordRequest($userId, $passe) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 		
 		$passe = password_hash($_POST['passe'], PASSWORD_BCRYPT);
-		$req = $db->prepare('UPDATE Users SET password = ?, reset_token = NULL, reset_at = NULL WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET password = ?, reset_token = NULL, reset_at = NULL WHERE id = ?');
 		
 		$changePassword = $req->execute(array($passe, $userId));
 
@@ -236,9 +236,9 @@ class UserManager extends Manager
 
     public function forgetPasswordRequest($email) {
         
-        $db = $this->dbConnect();
+        $dbProjet5 = $this->dbConnect();
         
-        $req = $db->prepare('SELECT * FROM Users where email = ? AND registration_date IS NOT NULL');
+        $req = $dbProjet5->prepare('SELECT * FROM Users where email = ? AND registration_date IS NOT NULL');
         $req->execute([$_POST['email']]);
         $user = $req->fetch();
         if($user) {
@@ -273,13 +273,13 @@ class UserManager extends Manager
 
     public function rememberRequest($userId, $rememberToken) {
         
-        $db = $this->dbConnect();
+        $dbProjet5 = $this->dbConnect();
         function str_random($length){
 		   	$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
 		    return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
 		}
         $rememberToken = str_random(100);
-        $req = $db->prepare('UPDATE Users SET remember_token = ? WHERE id = ?');
+        $req = $dbProjet5->prepare('UPDATE Users SET remember_token = ? WHERE id = ?');
         $req->execute([$rememberToken, $userId]);
         return $req;
         setcookie('remember', $userId . '==' . $rememberToken . sha1($userId . 'cookieTraon'), time() + 60 * 60 * 24 * 7);
@@ -287,9 +287,9 @@ class UserManager extends Manager
 
 /* ************** 16. SUPPRIMER MON COMPTE *****************************/
 	public function deleteAccountRequest($userId){
-        $db = $this->dbConnect();
+        $dbProjet5 = $this->dbConnect();
 
-		$post = $db->prepare('DELETE FROM Users WHERE id = ?');
+		$post = $dbProjet5->prepare('DELETE FROM Users WHERE id = ?');
 
 		$deleteAccount = $post->execute(array($userId));
 		
@@ -299,9 +299,9 @@ class UserManager extends Manager
 /* ************** 17. DONNER DROITS ADMIN ******************************/
 
 	public function giveAdminRightsRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET authorization = 1 WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET authorization = 1 WHERE id = ?');
 
 		$adminRights = $req->execute(array($userId));
 
@@ -311,9 +311,9 @@ class UserManager extends Manager
 /* ************** 18. RETIRER DROITS ADMIN *****************************/
 
 	public function stopAdminRightsRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET authorization = 0 WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET authorization = 0 WHERE id = ?');
 
 		$adminRights = $req->execute(array($userId));
 
@@ -323,9 +323,9 @@ class UserManager extends Manager
 /* ************** 19 . MODIFIER LE PROFIL *****************************/
 
 	public function modifyProfileRequest($userId, $first_name, $name, $email, $description) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET first_name = ?, last_name = ?, email = ?, description = ? WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET first_name = ?, last_name = ?, email = ?, description = ? WHERE id = ?');
 
 		$modifiedProfile = $req->execute(array($first_name, $name, $email, $description, $userId));
 
@@ -336,9 +336,9 @@ class UserManager extends Manager
 /* ************** 20 . CHANGE COLOR YELLOW ****************************/
 
 	public function changeColorYellowRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET color = "yellow" WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET color = "yellow" WHERE id = ?');
 
 		$colorYellow = $req->execute(array($userId));
 
@@ -348,9 +348,9 @@ class UserManager extends Manager
 /* ************** 20 . CHANGE COLOR AQUA ****************************/
 
 	public function changeColorAquaRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET color = "aqua" WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET color = "aqua" WHERE id = ?');
 
 		$colorAqua = $req->execute(array($userId));
 
@@ -360,9 +360,9 @@ class UserManager extends Manager
 /* ************** 21 . CHANGE COLOR BLUE ****************************/
 
 	public function changeColorBlueRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET color = "blue" WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET color = "blue" WHERE id = ?');
 
 		$colorBlue = $req->execute(array($userId));
 
@@ -372,9 +372,9 @@ class UserManager extends Manager
 /* ************** 22 . CHANGE COLOR GRAY ****************************/
 
 	public function changeColorGrayRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET color = "gray" WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET color = "gray" WHERE id = ?');
 
 		$colorGray = $req->execute(array($userId));
 
@@ -384,9 +384,9 @@ class UserManager extends Manager
 /* ************** 23 . CHANGE COLOR GREEN ****************************/
 
 	public function changeColorGreenRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET color = "" WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET color = "" WHERE id = ?');
 
 		$colorGreen = $req->execute(array($userId));
 
@@ -396,9 +396,9 @@ class UserManager extends Manager
 /* ************** 24 . CHANGE COLOR ORANGE ****************************/
 
 	public function changeColorOrangeRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET color = "orange" WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET color = "orange" WHERE id = ?');
 
 		$colorOrange = $req->execute(array($userId));
 
@@ -408,9 +408,9 @@ class UserManager extends Manager
 /* ************** 25 . CHANGE COLOR PINK ****************************/
 
 	public function changeColorPinkRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET color = "pink" WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET color = "pink" WHERE id = ?');
 
 		$colorPink = $req->execute(array($userId));
 
@@ -420,9 +420,9 @@ class UserManager extends Manager
 /* ************** 20 . CHANGE COLOR RED ****************************/
 
 	public function changeColorRedRequest($userId) {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('UPDATE Users SET color = "red" WHERE id = ?');
+		$req = $dbProjet5->prepare('UPDATE Users SET color = "red" WHERE id = ?');
 
 		$colorRed = $req->execute(array($userId));
 

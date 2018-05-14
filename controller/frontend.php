@@ -99,7 +99,7 @@ function login($pseudo,$passe){
         $_SESSION['registration'] = $user['registration_date_fr'];
         $_SESSION['description'] = $user['description'];
         $_SESSION['color'] = $user['color'];
-        echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
+        // echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
         header('Location: index.php?action=blog');
         exit();
         }

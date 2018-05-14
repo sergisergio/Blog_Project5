@@ -19,9 +19,9 @@ class PostManager extends Manager
 {
 /* ************ 1 . RECUPERER TOUS LES ARTICLES *******************/
 	public function getPosts($start, $postsPerPage){
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->query('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin\') AS last_updated_fr 
+		$req = $dbProjet5->query('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage);
@@ -31,9 +31,9 @@ class PostManager extends Manager
 /* ************ 2 . RECUPERER UN SEUL ARTICLE *********************/
 	public function getPost($postId){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$req = $db->prepare('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin\') AS last_updated_fr 
+		$req = $dbProjet5->prepare('SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%imin\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%imin\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			WHERE p.id = ?');
@@ -46,9 +46,9 @@ class PostManager extends Manager
 /* ************ 3 . AJOUTER UN ARTICLE ****************************/
 	public function addPostRequest($title, $chapo, $author, $content, $image){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$post = $db->prepare('INSERT INTO Posts(title, chapo, intro, author, content, file_extension, creation_date) VALUES(?, ?, ?, ?, ?, ?, NOW()) ');
+		$post = $dbProjet5->prepare('INSERT INTO Posts(title, chapo, intro, author, content, file_extension, creation_date) VALUES(?, ?, ?, ?, ?, ?, NOW()) ');
 
 		$affectedPost = $post->execute(array($title, $chapo, substr($content, 0, 600), $author, $content, $image));
 		
@@ -58,9 +58,9 @@ class PostManager extends Manager
 /* ************ 4 . MODIFIER UN ARTICLE ***************************/
 	public function modifyPostRequest($postId, $title, $chapo, $author, $content){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$post = $db->prepare('UPDATE Posts SET title = ?, intro = ?, chapo = ?, author = ?, content = ?, last_updated = NOW() WHERE id = ?');
+		$post = $dbProjet5->prepare('UPDATE Posts SET title = ?, intro = ?, chapo = ?, author = ?, content = ?, last_updated = NOW() WHERE id = ?');
 
 		$affectedPost = $post->execute(array($title, substr($content, 0, 600), $chapo, $author, $content, $postId));
 		
@@ -70,9 +70,9 @@ class PostManager extends Manager
 /* ************ 5 . EFFACER UN ARTICLE ****************************/
 	public function deletePostRequest($postId){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$post = $db->prepare('DELETE FROM Posts WHERE id = ?');
+		$post = $dbProjet5->prepare('DELETE FROM Posts WHERE id = ?');
 
 		$affectedPost = $post->execute(array($postId));
 		
@@ -83,9 +83,9 @@ class PostManager extends Manager
 
 	public function countPosts(){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$postsTotalReq  = $db->query('SELECT id FROM Posts');
+		$postsTotalReq  = $dbProjet5->query('SELECT id FROM Posts');
 		$postsTotal = $postsTotalReq->rowCount();
 
 		return $postsTotal;
@@ -95,9 +95,9 @@ class PostManager extends Manager
 
 	public function countSearchRequest($search){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$countSearchResults  = $db->query("SELECT * FROM Posts WHERE content LIKE '%$search%' ");
+		$countSearchResults  = $dbProjet5->query("SELECT * FROM Posts WHERE content LIKE '%$search%' ");
 
 		return $countSearchResults;
 	}
@@ -106,9 +106,9 @@ class PostManager extends Manager
 
 	public function searchRequest($search){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$results  = $db->prepare(" SELECT * FROM Posts WHERE content LIKE '%search%' ORDER BY id DESC ");
+		$results  = $dbProjet5->prepare(" SELECT * FROM Posts WHERE content LIKE '%search%' ORDER BY id DESC ");
 		$results->execute();
 		return $results;
 	}

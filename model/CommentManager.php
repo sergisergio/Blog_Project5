@@ -22,8 +22,8 @@ class CommentManager extends Manager
 	public function getComments($postId)
 	{
 		/* A revoir */
-		$db = $this->dbConnect();
-		$comments = $db->prepare('SELECT c.id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		$dbProjet5 = $this->dbConnect();
+		$comments = $dbProjet5->prepare('SELECT c.id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
 			FROM Comments c
             INNER JOIN Users u ON u.id = c.author
 			WHERE c.post_id = ?
@@ -38,9 +38,9 @@ class CommentManager extends Manager
 /* *********** 2 . RECUPERER UN SEUL COMMENTAIRE ***********************/
 	public function getComment($commentId){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 		
-		 $req = $db->prepare('SELECT c.id, c.post_id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
+		 $req = $dbProjet5->prepare('SELECT c.id, c.post_id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr 
 		 	FROM Comments c
             INNER JOIN Users u ON u.id = c.author
 		 	WHERE c.id = ?');
@@ -54,9 +54,9 @@ class CommentManager extends Manager
 /* *********** 3 . AJOUTER UN COMMENTAIRE ******************************/
 	public function postComment($postId, $author, $content){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 		
-		$comments = $db->prepare('INSERT INTO Comments (post_id, author, content, validation, creation_date) VALUES(?, ?, ?, 0, NOW())');
+		$comments = $dbProjet5->prepare('INSERT INTO Comments (post_id, author, content, validation, creation_date) VALUES(?, ?, ?, 0, NOW())');
 		
 		$affectedLines = $comments->execute(array($postId, $author, $content));
 
@@ -66,9 +66,9 @@ class CommentManager extends Manager
 /* *********** 4 . SUPPRIMER UN COMMENTAIRE ****************************/
 	public function deleteCommentRequest($commentId){
 
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
 
-		$comments = $db->prepare('DELETE FROM Comments WHERE id = ?');
+		$comments = $dbProjet5->prepare('DELETE FROM Comments WHERE id = ?');
 
 		$affectedComment = $comments->execute(array($commentId));
 
@@ -79,9 +79,9 @@ class CommentManager extends Manager
 	public function modifyCommentRequest($commentId, $author, $content)
     {
 
-        $db = $this->dbConnect();
+        $dbProjet5 = $this->dbConnect();
         
-        $comments = $db->prepare('UPDATE Comments SET author = ?, content = ?, validation = 0, last_updated = NOW() WHERE  id = ?');
+        $comments = $dbProjet5->prepare('UPDATE Comments SET author = ?, content = ?, validation = 0, last_updated = NOW() WHERE  id = ?');
         
         $affectedLines = $comments->execute(array($author, $content, $commentId));
 
@@ -91,8 +91,8 @@ class CommentManager extends Manager
 /* *********** 6 . AFFICHER LES COMMENTAIRES NON VALIDES ***************/
 	public function submittedCommentRequest()
     {
-		$db = $this->dbConnect();
-		$submittedcomments = $db->prepare('SELECT c.id, u.pseudo AS author, p.title AS post_id, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr, c.validation
+		$dbProjet5 = $this->dbConnect();
+		$submittedcomments = $dbProjet5->prepare('SELECT c.id, u.pseudo AS author, p.title AS post_id, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr, c.validation
 			FROM Comments c
             INNER JOIN Users u ON u.id = c.author
             INNER JOIN Posts p ON p.id = c.post_id
@@ -106,9 +106,9 @@ class CommentManager extends Manager
 /* *********** 7 . VALIDER UN  COMMENTAIRE *****************************/
 	public function validateCommentRequest($commentId)
     {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
         
-        $validatecomment = $db->prepare('UPDATE Comments SET validation = 1 WHERE  id = ?');
+        $validatecomment = $dbProjet5->prepare('UPDATE Comments SET validation = 1 WHERE  id = ?');
         
         $validated = $validatecomment->execute(array($commentId));
 
@@ -119,9 +119,9 @@ class CommentManager extends Manager
 	public function countCommentRequest($postId)
     {
 
-        $db = $this->dbConnect();
+        $dbProjet5 = $this->dbConnect();
         
-        $count = $db->query("SELECT id FROM Comments WHERE post_id = '$postId' AND validation = 1 ");
+        $count = $dbProjet5->query("SELECT id FROM Comments WHERE post_id = '$postId' AND validation = 1 ");
     	$nbCount = $count->rowCount();
         return $nbCount;
     }
@@ -130,9 +130,9 @@ class CommentManager extends Manager
 	public function countCommentBackRequest()
     {
 
-        $db = $this->dbConnect();
+        $dbProjet5 = $this->dbConnect();
         
-        $count = $db->query("SELECT id FROM Comments WHERE validation = 0 ");
+        $count = $dbProjet5->query("SELECT id FROM Comments WHERE validation = 0 ");
     	$nbCount = $count->rowCount();
         return $nbCount;
     }
@@ -140,9 +140,9 @@ class CommentManager extends Manager
 /* *********** 10 . GET USER PAR COMMENTAIRE *********************/
 	public function getUserByCommentRequest($commentAuthor)
     {
-		$db = $this->dbConnect();
+		$dbProjet5 = $this->dbConnect();
         
-        $userRequest = $db->prepare("SELECT * FROM Users WHERE pseudo = ? ");
+        $userRequest = $dbProjet5->prepare("SELECT * FROM Users WHERE pseudo = ? ");
     	$userRequest->execute(array($commentAuthor));
     	$user = $userRequest->fetch();
         return $user;
