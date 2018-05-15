@@ -86,9 +86,6 @@ function login($pseudo,$passe){
         $_SESSION['autorisation'] = $user['authorization'];
         $_SESSION['avatar'] = $user['avatar'];
         $_SESSION['registration'] = $user['registration_date_fr'];
-        $_SESSION['description'] = $user['description'];
-        $_SESSION['color'] = $user['color'];
-        // echo '<div class="alert alert-success">' . 'Bienvenue ' . $_SESSION['pseudo'] . ' : Vous êtes à présent connecté' . '</div>' . '<br />';
         header('Location: index.php?action=blog');
         exit();
         }
@@ -109,8 +106,7 @@ function login($pseudo,$passe){
 
 function logout(){
     $userManager = new \Philippe\Blog\Model\UserManager();
-    $users = $userManager->logoutRequest();
-    echo '<div class="alert alert-success">' . ' A bientôt !' . '</div>' . '<br />';
+    $userManager->logoutRequest();
 }
 
 /* ***************** 7 . DOUBLON PSEUDO **********************/
@@ -164,7 +160,7 @@ function confirmRegistration($userId, $userToken){
 function setActiveUser($userId){
 
     $userManager = new \Philippe\Blog\Model\UserManager();
-    $activeUser = $userManager->setActiveRequest($userId);
+    $userManager->setActiveRequest($userId);
 }
 
 /* **************** 11 . TOUS LES BLOG POSTS *****************/
@@ -183,8 +179,8 @@ function listPosts(){
         $currentPage = 1;
     }
     $start = ($currentPage-1)*$postsPerPage;
-    $posts = $postManager->getPosts($start, $postsPerPage);
-    $posts1 = $postManager->getPosts(0, 5);
+    $postManager->getPosts($start, $postsPerPage);
+    $postManager->getPosts(0, 5);
 
     require('view/frontend/blog.php');
 }
@@ -197,11 +193,11 @@ function listPost(){
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
     $userManager = new \Philippe\Blog\Model\UserManager();
 
-    $posts1 = $postManager->getPosts(0, 5);
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
-    $user = $userManager->getUser($_GET['id']);
-    $nbCount = $commentManager->countCommentRequest($_GET['id']);
+    $postManager->getPosts(0, 5);
+    $postManager->getPost($_GET['id']);
+    $commentManager->getComments($_GET['id']);
+    $userManager->getUser($_GET['id']);
+    $commentManager->countCommentRequest($_GET['id']);
     
     require('view/frontend/blog_post.php');
 }
