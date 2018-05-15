@@ -12,7 +12,7 @@
         <div id="grid-container" class="cbp-l-grid-masonry">
             <ul>
                 <li class="cbp-item frame wordpress">
-                    <a class="cbp-caption cbp-singlePage" href="detail/postchalets.php">
+                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/postchalets.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="public/images/ChaletcaviarBLANC_400x246-150x92.png" alt=""> 
                         </div>
@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame html javascript">
-                    <a class="cbp-caption cbp-singlePage" href="detail/postfestival.php">
+                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/postfestival.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="public/images/festival.png" class="white" alt=""> 
                         </div>
@@ -55,7 +55,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame php">
-                    <a class="cbp-caption cbp-singlePage" href="detail/post2.php">
+                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/post2.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="public/images/minichat.png" alt=""> 
                         </div>
@@ -69,7 +69,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame wordpress">
-                    <a class="cbp-caption cbp-singlePage" href="detail/post4.php">
+                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/post4.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="public/images/logo-image-atelier-des-chefs.jpg" alt="" class="white p20"> 
                         </div>
@@ -125,7 +125,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame javascript">
-                    <a class="cbp-caption cbp-singlePage" href="detail/postsnake.php">
+                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/postsnake.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="projets/javascript/snake.png" alt=""> 
                         </div>
@@ -139,7 +139,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame html php">
-                    <a class="cbp-caption cbp-singlePage" href="detail/post5.php">
+                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/post5.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="public/images/NONO.PNG" alt=""> 
                         </div>
@@ -153,9 +153,6 @@
                     </a>
                 </li>
             </ul>
-        </div>
-        <div class="cbp-l-loadMore-button"> 
-            <a href="../detail/port1-more.php" class="cbp-l-loadMore-button-link btn">VOIR PLUS</a> 
         </div>
     </div>
 </section>

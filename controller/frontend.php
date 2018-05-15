@@ -9,8 +9,8 @@
 5 . CONNEXION.
 6 . DECONNEXION.
 7 . DOUBLON PSEUDO.
-8. DOUBLON EMAIL.
-9. CONFIRMATION INSCRIPTION.
+8 . DOUBLON EMAIL.
+9 . CONFIRMATION INSCRIPTION.
 10. PASSER USER EN ACTIF.
 11. AFFICHER TOUS LES BLOG POSTS.
 12. AFFICHER UN SEUL BLOG POST.
@@ -18,11 +18,7 @@
 14. AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE.
 15. SUPPRIMER UN COMMENTAIRE.
 16. MODIFIER UN COMMENTAIRE.
-17. AFFICHER LA PAGE MOT DE PASSE OUBLIE.
-18. AFFICHER LA PAGE DE MODIFICATION DU MOT DE PASSE 1.
-19. AFFICHER LA PAGE DE MODIFICATION DU MOT DE PASSE 2.
-20. MODIFIER LE MOT DE PASSE.
-21. ERRORS.
+17. ERRORS.
 
 ******************** FIN RESUME ****************************/
 
@@ -261,62 +257,7 @@ function modifyComment($commentId, $author, $content){
     }
 }
 
-/* **************** 17 . PAGE MOT DE PASSE OUBLIE ************/
-
-function forgetPasswordPage(){
-
-    require('view/frontend/forget.php');
-}
-
-/* **************** 18 . PAGE MODIFICATION MOT DE PASSE 1 ****/
-
-function forgetPassword($email){
-    $userManager = new \Philippe\Blog\Model\UserManager();
-    $user = $userManager->forgetPasswordRequest($email);
-
-    if ($user === false) {
-        $_SESSION['flash']['success'] = 'Une erreur est survenue !';
-        loginPage();
-        exit();
-    }
-    else {
-        $_SESSION['flash']['success'] = 'Vous allez recevoir un email pour réinitialiser votre mot de passe !';
-        loginPage();
-        exit();
-    } 
-}
-/* **************** 19. PAGE  DE MODIF MOT DE PASSE 2 ********/
-
-function changePasswordPage($userId, $resetToken){
-
-    $userManager = new \Philippe\Blog\Model\UserManager();
-    $user = $userManager->checkResetTokenRequest($userId);
-    if ($user &&  $user['reset_token'] == $resetToken) {
-    require('view/frontend/changePassword.php');
-    }
-    else {
-        echo 'Ce token n est plus valide ! Veuillez réessayer !';
-    }
-}
-
-/* **************** 20. MODIFIER MOT DE PASSE ****************/
-
-function changePassword($userId, $passe){
-
-    $userManager = new \Philippe\Blog\Model\UserManager();
-
-    if(!empty($_POST['passe']) && $_POST['passe'] == $_POST['passe2']){
-        $userManager->changePasswordRequest($userId, $passe);
-            $_SESSION['flash']['success'] = 'Le mot de passe a bien été réinitialisé !';
-            loginPage();
-            exit();
-    }
-    else {
-        echo 'Veuillez entrer un mot de passe';
-    }
-}
-
-/* **************** 21. ERRORS ******************************/
+/* **************** 17. ERRORS ******************************/
 
 function errors(){
 

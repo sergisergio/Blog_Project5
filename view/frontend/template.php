@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
+        <meta name="robots" content="noindex, nofollow">
         <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Philippe Traon | Développeur web" />
         <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article" />
         <meta prefix="og: http://ogp.me/ns#" property="og:url" content="http://philippetraon.com/?42" />

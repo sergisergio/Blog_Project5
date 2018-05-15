@@ -31,8 +31,7 @@ class CommentManager extends Manager
             INNER JOIN Users u ON u.id = c.author
 			WHERE c.post_id = ?
 			AND c.validation = 1
-			ORDER BY creation_date 
-            DESC LIMIT 0, 5');
+			ORDER BY creation_date');
 		$comments->execute(array($postId));
 		return $comments;
 	}
