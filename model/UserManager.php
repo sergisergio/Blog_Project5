@@ -86,8 +86,9 @@ class UserManager extends Manager
 		$users = $post->execute(array($pseudo, $email, $passe, $token));
         $user_id = $dbProjet5->lastInsertId();
         /* test mail local */
-		//mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
-		mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
+		mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
+		/* test mail online */
+		//mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
 	}
     
 /* ************** 6 . CONFIRMATION INSCRIPTION *************************/
@@ -122,7 +123,7 @@ class UserManager extends Manager
 		return $usermail;
     }
 
-/* ************** 9. CONNEXION ****************************************/
+/* ************** 9 . CONNEXION ****************************************/
 
 	public function loginRequest($pseudo, $passe){
 

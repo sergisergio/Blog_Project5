@@ -1,4 +1,4 @@
-<form class="forms" action="view/frontend/contact/form-handler.php" method="post">
+<form class="forms" action="index.php?action=contact" method="post">
     <fieldset>
         <div class="row">
             <div class="col-md-6 col-sm-12">

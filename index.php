@@ -25,6 +25,7 @@ session_start();
     17. AFFICHER LA PAGE RESET PASSWORD 2.
     18. MODIFIER LE MOT DE PASSE.
     19. PAS LES DROITS ADMINISTRATEUR.
+    20. CONTACT
 
     /* **********************************************************************
     *                            ADMINISTRATEUR                             *
@@ -273,6 +274,12 @@ try {
 
         elseif ($_GET['action'] == 'noAdmin') {
             noAdmin();
+        }
+
+    /* ********* 20 . PAS LES DROITS ADMINISTRATEUR ************************/
+
+        elseif ($_GET['action'] == 'contact') {
+            contact();
         }
 
     /* **********************************************************************
