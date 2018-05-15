@@ -2,6 +2,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6e317a9d495341eda39b6195ff2322b3)](https://app.codacy.com/app/sergisergio/Blog_Project5?utm_source=github.com&utm_medium=referral&utm_content=sergisergio/Blog_Project5&utm_campaign=badger)
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sergisergio/Blog_Project5/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sergisergio/Blog_Project5/?branch=master)
 
 
 ## Purpose
