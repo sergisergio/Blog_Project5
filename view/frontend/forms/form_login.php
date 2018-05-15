@@ -21,6 +21,8 @@
                                 <label>Pseudo</label>
                                 <input type="text" name="pseudo" class="text-input defaultText required" /> </div>
                             <div class="form-row text-input-row subject-field">
+                                <label>Mot de passe</label> 
+                                <input type="password" name="passe" class="text-input defaultText" /> </div>
                         </div>
                         <div class="col-sm-6 col-xs-6">
                             <div class="button-row pull-right">
