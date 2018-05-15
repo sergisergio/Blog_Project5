@@ -37,10 +37,10 @@
                             <div class="meta"> <span class="date">date de dernière publication</span>le 
                                 <?php
                                     if (isset($post['last_updated_fr'])) {
-                                        echo ($post['last_updated_fr']);
+                                        echo htmlspecialchars($post['last_updated_fr']);
                                     }
                                     else
-                                        echo ($post['creation_date_fr']);
+                                        echo htmlspecialchars($post['creation_date_fr']);
                                 ?> 
                             </div>
                             <div class="divide30"></div>
@@ -78,10 +78,10 @@
                                 <strong><?= htmlspecialchars($comment['author']) ?></strong> le 
                                     <?php
                                         if (isset($comment['last_updated_fr'])) {
-                                        echo ($comment['last_updated_fr']);
+                                        echo htmlspecialchars($comment['last_updated_fr']);
                                     }
                                     else
-                                      echo ($comment['creation_date_fr']);
+                                      echo htmlspecialchars($comment['creation_date_fr']);
                                     ?> 
                             </p>
                             <p>

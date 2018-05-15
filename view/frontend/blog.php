@@ -59,10 +59,10 @@
                                 <span class="date"></span>
                                 <?php
                                     if (isset($data['last_updated_fr'])) {
-                                        echo ($data['last_updated_fr']);
+                                        echo htmlspecialchars($data['last_updated_fr']);
                                     }
                                     else
-                                        echo ($data['creation_date_fr']);
+                                        echo htmlspecialchars($data['creation_date_fr']);
                                 ?>
                             </div> 
                             <div class="divide30"></div>
