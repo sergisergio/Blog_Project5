@@ -106,7 +106,7 @@ function login($pseudo,$passe){
 
 function logout(){
     $userManager = new \Philippe\Blog\Model\UserManager();
-    $userManager->logoutRequest();
+    $users = $userManager->logoutRequest();
 }
 
 /* ***************** 7 . DOUBLON PSEUDO **********************/
@@ -160,7 +160,7 @@ function confirmRegistration($userId, $userToken){
 function setActiveUser($userId){
 
     $userManager = new \Philippe\Blog\Model\UserManager();
-    $userManager->setActiveRequest($userId);
+    $activeUser = $userManager->setActiveRequest($userId);
 }
 
 /* **************** 11 . TOUS LES BLOG POSTS *****************/
@@ -179,8 +179,8 @@ function listPosts(){
         $currentPage = 1;
     }
     $start = ($currentPage-1)*$postsPerPage;
-    $postManager->getPosts($start, $postsPerPage);
-    $postManager->getPosts(0, 5);
+    $posts = $postManager->getPosts($start, $postsPerPage);
+    $posts1 = $postManager->getPosts(0, 5);
 
     require('view/frontend/blog.php');
 }
@@ -193,11 +193,11 @@ function listPost(){
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
     $userManager = new \Philippe\Blog\Model\UserManager();
 
-    $postManager->getPosts(0, 5);
-    $postManager->getPost($_GET['id']);
-    $commentManager->getComments($_GET['id']);
-    $userManager->getUser($_GET['id']);
-    $commentManager->countCommentRequest($_GET['id']);
+    $posts1 = $postManager->getPosts(0, 5);
+    $post = $postManager->getPost($_GET['id']);
+    $comments = $commentManager->getComments($_GET['id']);
+    $user = $userManager->getUser($_GET['id']);
+    $nbCount = $commentManager->countCommentRequest($_GET['id']);
     
     require('view/frontend/blog_post.php');
 }

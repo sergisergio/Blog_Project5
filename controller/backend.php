@@ -53,7 +53,7 @@ function managePosts(){
         $currentPage = 1;
     }
     $start = ($currentPage-1)*$postsPerPage;
-	$postManager->getPosts($start, $postsPerPage);
+	$posts = $postManager->getPosts($start, $postsPerPage);
 	
 	require('view/backend/Posts/post_mgmt.php');
 }
@@ -78,7 +78,7 @@ function addPost($title, $chapo, $author, $content, $image){
 function modifyPostPage($postId){
 
 	$postManager = new \Philippe\Blog\Model\PostManager();
-	$postManager->getPost($postId);
+	$post = $postManager->getPost($postId);
 	require('view/backend/Posts/modifyPostView.php');
 }
 
@@ -118,8 +118,8 @@ function deletePost($postId){
 function manageComments(){
 
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
-	$commentManager->countCommentBackRequest();
-	$commentManager->submittedCommentRequest();
+	$nbCount = $commentManager->countCommentBackRequest();
+	$submittedcomments = $commentManager->submittedCommentRequest();
 	require('view/backend/Comments/comment_mgmt.php');
 }
 
@@ -127,7 +127,7 @@ function manageComments(){
 
 function manageUsers(){
 	$userManager = new \Philippe\Blog\Model\UserManager();
-	$userManager->getUsers();
+	$req = $userManager->getUsers();
 	require('view/backend/Users/user_mgmt.php');
 }
 
@@ -164,7 +164,7 @@ function validateComment($commentId){
 function adminDeleteComment($commentId){
 
     $commentManager = new \Philippe\Blog\Model\CommentManager();
-	$commentManager->getComment($commentId);
+	$comment = $commentManager->getComment($commentId);
     $success = $commentManager->deleteCommentRequest($commentId);
     
     if ($success === false) {
