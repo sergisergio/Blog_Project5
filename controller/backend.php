@@ -10,12 +10,8 @@
 6 . MODIFIER UN ARTICLE.
 7 . SUPPRIMER UN ARTICLE.
 8 . PAGE DE GESTION DES COMMENTAIRES.
-10. PAGE DE GESTION DES MEMBRES.
-11. SUPPRIMER UN MEMBRE.
-11. VALIDER UN COMMENTAIRE.
-12. SUPPRIMER UN COMMENTAIRE.
-13. DONNER LES DROITS ADMIN A UN MEMBRE.
-14. RETIRER LES DROITS ADMIN A UN MEMBRE.
+9 . VALIDER UN COMMENTAIRE.
+10. SUPPRIMER UN COMMENTAIRE.
 
 ************************************************************************/
 
@@ -123,29 +119,7 @@ function manageComments(){
 	require('view/backend/Comments/comment_mgmt.php');
 }
 
-/* ********** 9 . PAGE DE GESTION DES MEMBRES *************************/
-
-function manageUsers(){
-	$userManager = new \Philippe\Blog\Model\UserManager();
-	$req = $userManager->getUsers();
-	require('view/backend/Users/user_mgmt.php');
-}
-
-/* ********** 10 . SUPPRIMER UN MEMBRE *********************************/
-
-function deleteUser($userId){
-
-	$userManager = new \Philippe\Blog\Model\UserManager();
-	$affectedUser = $userManager->deleteUserRequest($userId);
-    if ($affectedUser === false){
-        throw new Exception('Impossible de supprimer ce membre');
-	}
-	else {
-		header('Location: index.php?action=manage_users');
-	}
-}
-
-/* ********** 11 . VALIDER UN COMMENTAIRE ******************************/
+/* *********** 9 . VALIDER UN COMMENTAIRE ******************************/
 
 function validateComment($commentId){
 
@@ -159,7 +133,7 @@ function validateComment($commentId){
 	}
 }
 
-/* ********** 12 . SUPPRIMER UN COMMENTAIRE ****************************/
+/* ********** 10 . SUPPRIMER UN COMMENTAIRE ****************************/
 
 function adminDeleteComment($commentId){
 
@@ -172,33 +146,5 @@ function adminDeleteComment($commentId){
     }
     else {
         header('Location: index.php?action=manage_comments');
-    }
-}
-/* ********** 13 . DONNER LES DROITS ADMIN A UN MEMBRE *****************/
-
-function giveAdminRights($userId){
-
-	$userManager = new \Philippe\Blog\Model\UserManager();
-	$adminRights = $userManager->giveAdminRightsRequest($userId);
-	
-	if ($adminRights === false) {
-        throw new Exception('Impossible de donner les droits admin');
-    }
-    else {
-        header('Location: index.php?action=manage_users');
-    }
-}
-/* ********** 14 . RETIRER LES DROITS ADMIN A UN MEMBRE ****************/
-
-function stopAdminRights($userId){
-
-	$userManager = new \Philippe\Blog\Model\UserManager();
-	$adminRights = $userManager->stopAdminRightsRequest($userId);
-	
-	if ($adminRights === false) {
-        throw new Exception('Impossible de retirer les droits admin');
-    }
-    else {
-        header('Location: index.php?action=manage_users');
     }
 }

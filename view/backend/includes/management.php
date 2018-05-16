@@ -23,9 +23,6 @@
       <li class="nav-item">
         <a class="nav-link" href="index.php?action=manage_comments">Gestion commentaires</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?action=manage_users">Gestion membres</a>
-      </li>
     </ul>
   </div>
 </section>

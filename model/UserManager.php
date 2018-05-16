@@ -5,15 +5,12 @@
 1 . RECUPERER TOUS LES MEMBRES.
 2 . RECUPERER UN SEUL MEMBRE.
 3 . RECUPERER AUTORISATION DU MEMBRE.
-4 . SUPPRIMER UN MEMBRE.
-5 . INSCRIPTION.
-6 . CONFIRMATION INSCRIPTION.
-7 . LE PSEUDO EST-IL DEJA PRIS ?
-8 . L'EMAIL EST-IL DEJA PRIS ?
-9 . CONNEXION.
-10. DECONNEXION.
-11. DONNER DROITS ADMIN.
-12. RETIRER DROITS ADMIN.
+4 . INSCRIPTION.
+5 . CONFIRMATION INSCRIPTION.
+6 . LE PSEUDO EST-IL DEJA PRIS ?
+7 . L'EMAIL EST-IL DEJA PRIS ?
+8 . CONNEXION.
+9. DECONNEXION.
 
 *********************** FIN RESUME *************************************/
 
@@ -60,18 +57,8 @@ class UserManager extends Manager
 		$access = $req->fetch();
 		return $access;
 	}
-	
-/* ************** 4 . SUPPRIMER UN MEMBRE ******************************/
 
-	public function deleteUserRequest($userId){
-
-        $dbProjet5 = $this->dbConnect();
-		$post = $dbProjet5->prepare('DELETE FROM Users WHERE id = ?');
-		$affectedUser = $post->execute(array($userId));
-		return $affectedUser;
-    }
-
-/* ************** 5 . INSCRIPTION **************************************/
+/* ************** 4 . INSCRIPTION **************************************/
 
 	public function addUserRequest($pseudo, $email, $passe){
 
@@ -91,7 +78,7 @@ class UserManager extends Manager
 		//mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
 	}
     
-/* ************** 6 . CONFIRMATION INSCRIPTION *************************/
+/* ************** 5 . CONFIRMATION INSCRIPTION *************************/
 
 	public function setActiveRequest($userId) {
 
@@ -101,7 +88,7 @@ class UserManager extends Manager
 		return $activeUser;
 	}
 
-/* ************** 7 . LE PSEUDO EST-IL DEJA PRIS ? *********************/
+/* ************** 6 . LE PSEUDO EST-IL DEJA PRIS ? *********************/
 
     public function existPseudo($pseudo){
 
@@ -112,7 +99,7 @@ class UserManager extends Manager
 		return $user;
     }
 
-/* ************** 8 . L'EMAIL EST-IL DEJA PRIS ? ***********************/
+/* ************** 7 . L'EMAIL EST-IL DEJA PRIS ? ***********************/
 
 	public function existMail($email){
 
@@ -123,7 +110,7 @@ class UserManager extends Manager
 		return $usermail;
     }
 
-/* ************** 9 . CONNEXION ****************************************/
+/* ************** 8 . CONNEXION ****************************************/
 
 	public function loginRequest($pseudo, $passe){
 
@@ -134,7 +121,7 @@ class UserManager extends Manager
         return $user;
     }
 
-/* ************** 10. DECONNEXION **************************************/
+/* ************** 9 . DECONNEXION **************************************/
 
     public function logoutRequest(){
 
@@ -149,25 +136,5 @@ class UserManager extends Manager
         unset($_SESSION['avatar']);
         unset($_SESSION['registration']);
 		header('Location: index.php?action=blog');
-	}
-
-/* ************** 11. DONNER DROITS ADMIN ******************************/
-
-	public function giveAdminRightsRequest($userId){
-
-		$dbProjet5 = $this->dbConnect();
-		$req = $dbProjet5->prepare('UPDATE Users SET authorization = 1 WHERE id = ?');
-		$adminRights = $req->execute(array($userId));
-		return $adminRights;
-	}
-
-/* ************** 12. RETIRER DROITS ADMIN *****************************/
-
-	public function stopAdminRightsRequest($userId){
-
-		$dbProjet5 = $this->dbConnect();
-		$req = $dbProjet5->prepare('UPDATE Users SET authorization = 0 WHERE id = ?');
-		$adminRights = $req->execute(array($userId));
-		return $adminRights;
 	}
 }

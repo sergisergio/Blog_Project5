@@ -19,13 +19,8 @@ session_start();
     10. PAGE INSCRIPTION UTILISATEUR.
     11. INSCRIPTION UTILISATEUR.
     12. CONFIRMATION INSCRIPTION UTILISATEUR.
-    14. SUPPRIMER MON COMPTE.
-    15. AFFICHER LA PAGE RESET PASSWORD 1.
-    16. ENVOI MAIL RESET PASSWORD.
-    17. AFFICHER LA PAGE RESET PASSWORD 2.
-    18. MODIFIER LE MOT DE PASSE.
-    19. PAS LES DROITS ADMINISTRATEUR.
-    20. CONTACT
+    13. PAS LES DROITS ADMINISTRATEUR
+    14. CONTACT
 
     /* **********************************************************************
     *                            ADMINISTRATEUR                             *
@@ -34,16 +29,12 @@ session_start();
     1 . AFFICHER PAGE D'ACCUEIL ADMINISTRATEUR.
     2 . AFFICHER LA RUBRIQUE ARTICLES.
     3 . AFFICHER LA RUBRIQUE COMMENTAIRES.
-    4 . AFFICHER LA RUBRIQUE MEMBRES.
-    5 . AJOUTER UN ARTICLE.
-    6 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE.
-    7 . MODIFIER UN ARTICLE.
-    8 . SUPPRIMER UN ARTICLE.
-    9 . EFFACER UN MEMBRE.
-    10. VALIDER UN COMMENTAIRE.
-    11. SUPPRIMER UN COMMENTAIRE.
-    12. DONNER LES DROITS ADMIN.
-    13. SUPPRIMER LES DROITS ADMIN
+    4 . AJOUTER UN ARTICLE.
+    5 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE.
+    6 . MODIFIER UN ARTICLE.
+    7 . SUPPRIMER UN ARTICLE.
+    8 . VALIDER UN COMMENTAIRE.
+    9 . SUPPRIMER UN COMMENTAIRE.
 
     /* **********************************************************************
     *                              PAR DEFAUT                               *
@@ -232,51 +223,13 @@ try {
             }
         }
 
-    /* ********* 15 . AFFICHER LA PAGE POUR LE MOT DE PASSE ****************/
-        
-        elseif ($_GET['action'] == 'forgetPasswordPage') {
-            forgetPasswordPage();
-        }
-
-    /* ********* 16 . ENVOI MAIL MODIF MOT DE PASSE ************************/
-        
-        elseif ($_GET['action'] == 'forgetPassword') {
-            if (empty($_POST['email'])) {
-                $_SESSION['flash']['danger'] = 'Veuillez renseigner un email !';
-                forgetPasswordPage();
-                exit();
-           }
-            else {
-                forgetPassword($_POST['email']);
-            }
-        }
-
-    /* ********* 17 . AFFICHER LA PAGE MODIFIER LE MOT DE PASSE ************/
-        
-        elseif ($_GET['action'] == 'changePasswordPage') {
-            if ((isset($_GET['id']) && $_GET['id'] > 0) && isset($_GET['token'])) {
-                changePasswordPage($_GET['id'], $_GET['token']);
-            }
-            else {
-                $_SESSION['flash']['danger'] = 'Aucun id ou token ne coresspond à cet email, veuillez réessayer !';
-                forgetPasswordPage();
-                exit();
-            }
-        }
-
-    /* ********* 18 . MODIFIER LE MOT DE PASSE *****************************/
-        
-        elseif ($_GET['action'] == 'changePassword') {
-            changePassword($_POST['userId'] , $_POST['passe']);
-           }
-
-    /* ********* 19 . PAS LES DROITS ADMINISTRATEUR ************************/
+    /* ********* 13 . PAS LES DROITS ADMINISTRATEUR ************************/
 
         elseif ($_GET['action'] == 'noAdmin') {
             noAdmin();
         }
 
-    /* ********* 20 . PAS LES DROITS ADMINISTRATEUR ************************/
+    /* ********* 14 . CONTACT ************************/
 
         elseif ($_GET['action'] == 'contact') {
             contact();
@@ -303,14 +256,8 @@ try {
         elseif ($_GET['action'] == 'manage_comments') {
             manageComments();
             }
-        
-    /* ********** 4 . AFFICHER LA RUBRIQUE MEMBRES *************************/
 
-        elseif ($_GET['action'] == 'manage_users') {
-            manageUsers();
-        }
-
-    /* ********** 5 . AJOUTER UN ARTICLE ***********************************/
+    /* ********** 4 . AJOUTER UN ARTICLE ***********************************/
 
         elseif ($_GET['action'] == 'addpost') {
           
@@ -339,7 +286,7 @@ try {
                 }
         }
 
-    /* ********** 6 . AFFICHER LA PAGE POUR MODIFIER UN ARTICLE ************/
+    /* ********** 5 . AFFICHER LA PAGE POUR MODIFIER UN ARTICLE ************/
         elseif ($_GET['action'] == 'modifyPostPage') {
               if (isset($_GET['id']) && $_GET['id'] > 0) {
                 modifyPostPage($_GET['id']);
@@ -351,7 +298,7 @@ try {
                 }
         }
 
-    /* ********** 7 . MODIFIER UN ARTICLE **********************************/
+    /* ********** 6 . MODIFIER UN ARTICLE **********************************/
 
         elseif ($_GET['action'] == 'modifyPost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -371,7 +318,7 @@ try {
                 }
             }       
 
-    /* ********** 8 . EFFACER UN ARTICLE ***********************************/
+    /* ********** 7 . EFFACER UN ARTICLE ***********************************/
 
         elseif ($_GET['action'] == 'deletePost') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -379,15 +326,7 @@ try {
             }
         }
 
-    /* ********** 9 . EFFACER UN MEMBRE ************************************/
-
-        elseif ($_GET['action'] == 'deleteUser') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                deleteUser($_GET['id']);
-            }
-        }
-
-    /* ********* 10 . VALIDER UN COMMENTAIRE *******************************/
+    /* ********** 8 . VALIDER UN COMMENTAIRE *******************************/
 
         elseif ($_GET['action'] == 'validateComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -395,29 +334,13 @@ try {
             }
         } 
 
-    /* ********* 11 . SUPPRIMER UN COMMENTAIRE *****************************/
+    /* ********** 9 . SUPPRIMER UN COMMENTAIRE *****************************/
 
         elseif ($_GET['action'] == 'adminDeleteComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 adminDeleteComment($_GET['id']);
             }
-        }   
-
-    /* ********* 12 . DONNER LES DROITS ADMIN ******************************/
-        
-        elseif ($_GET['action'] == 'giveAdminRights') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                giveAdminRights($_GET['id']);
-            }
-        }
-
-    /* ********* 13 . SUPPRIMER LES DROITS ADMIN ***************************/
-        
-        elseif ($_GET['action'] == 'cancelAdminRights') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                stopAdminRights($_GET['id']);
-            }
-        }
+        }  
     }
 
     /* **********************************************************************
