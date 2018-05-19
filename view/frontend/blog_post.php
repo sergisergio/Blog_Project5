@@ -54,18 +54,7 @@
                     </div>
                 </div>
                 <div class="divide20"></div>
-                <div class="blog-posts">
-                    <div class="post box">
-                        <h3>Ajouter un commentaire</h3>
-                            <?php if (isset($_SESSION['pseudo'])): ?>       
-                                <?php include "forms/form_addcomment.php"; ?>
-                            <?php else: ?> 
-                                <p>Vous devez être inscrit et connecté pour ajouter un commentaire !</p>
-                                <a href="index.php?action=signupPage">M'inscrire</a>&nbsp;&nbsp;
-                                <a href="index.php?action=loginPage">Me connecter</a>
-                            <?php endif; ?>
-                    </div>
-                </div>
+                
                 <div class="divide20"></div>
                 <div class="blog-posts" id="comments">
                     <div class="post box">
@@ -97,6 +86,19 @@
                     </div>
                 </div>
                 <div class="divide20"></div>
+                <div class="blog-posts">
+                    <div class="post box">
+                        <h3>Ajouter un commentaire</h3>
+                            <?php if (isset($_SESSION['pseudo'])): ?>       
+                                <?php include "forms/form_addcomment.php"; ?>
+                            <?php else: ?> 
+                                <p>Vous devez être inscrit et connecté pour ajouter un commentaire !</p>
+                                <a href="index.php?action=signupPage">M'inscrire</a>&nbsp;&nbsp;
+                                <a href="index.php?action=loginPage">Me connecter</a>
+                            <?php endif; ?>
+                    </div>
+                </div>
+                <div class="divide60"></div>
             </div>
                 <?php include "includes/aside.php"; ?>
             </div>

@@ -26,7 +26,7 @@ class CommentManager extends Manager
 	{
 		
 		$dbProjet5 = $this->dbConnect();
-		$comments = $dbProjet5->prepare('SELECT c.id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin\') AS last_updated_fr 
+		$comments = $dbProjet5->prepare('SELECT c.id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 			FROM Comments c
             INNER JOIN Users u ON u.id = c.author
 			WHERE c.post_id = ?
@@ -41,7 +41,7 @@ class CommentManager extends Manager
 	public function getComment($commentId){
 
 		$dbProjet5 = $this->dbConnect();
-		$req = $dbProjet5->prepare('SELECT c.id, c.post_id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin\') AS last_updated_fr 
+		$req = $dbProjet5->prepare('SELECT c.id, c.post_id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 		 	FROM Comments c
             INNER JOIN Users u ON u.id = c.author
 		 	WHERE c.id = ?');
@@ -85,7 +85,7 @@ class CommentManager extends Manager
 	public function submittedCommentRequest(){
 
 		$dbProjet5 = $this->dbConnect();
-		$submittedcomments = $dbProjet5->prepare('SELECT c.id, u.pseudo AS author, p.title AS post_id, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%imin%ss\') AS last_updated_fr, c.validation
+		$submittedcomments = $dbProjet5->prepare('SELECT c.id, u.pseudo AS author, p.title AS post_id, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr, c.validation
 			FROM Comments c
             INNER JOIN Users u ON u.id = c.author
             INNER JOIN Posts p ON p.id = c.post_id
