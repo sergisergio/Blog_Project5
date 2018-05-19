@@ -29,18 +29,18 @@
             
             <div class="pagination box mgbottom25">
                 <ul>
-                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                    <li><?= '<a class="btn minibtn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
                         <?php
                             for($i=1;$i<=$totalPages;$i++){
                                 if($i == $currentPage) {
-                                    echo '<li><a class="btn active" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
+                                    echo '<li><a class="btn active minibtn" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
                                 }
                                 else {
-                                    echo '<li><a class="btn" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
+                                    echo '<li><a class="btn minibtn" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
                                 }
                             }
                         ?>
-                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
+                    <li><?= '<a class="btn minibtn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
                 </ul>
             </div>
             <?php
@@ -89,18 +89,18 @@
             ?>
             <div class="pagination box">
                 <ul>
-                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                    <li><?= '<a class="btn minibtn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
                         <?php
                             for($i=1;$i<=$totalPages;$i++){
                                 if($i == $currentPage) {
-                                    echo '<li><a class="btn active" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
+                                    echo '<li><a class="btn active minibtn" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
                                 }
                                 else {
-                                    echo '<li><a class="btn" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
+                                    echo '<li><a class="btn minibtn" href="index.php?action=blog&page='.$i. '">'.$i.'</a></li> ';
                                 }
                             }
                         ?>
-                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
+                    <li><?= '<a class="btn minibtn" href="index.php?action=blog&page='. ($currentPage + 1) . '">'.'Suivant'.'</a> '; ?></li>
                 </ul>
             </div>
         </div>

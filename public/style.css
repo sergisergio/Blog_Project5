@@ -139,6 +139,27 @@ ul li {
 .budicon-brush {
     font-size : 30px !important;
 }
+@media(max-width: 991px) {
+    .minibtn {
+        font-size: 10px !important;
+        padding: 5px 12px !important;
+    }
+    .mgbottom2 {
+        margin-bottom: 0px !important;
+        margin-top: 40px !important;
+    }
+}
+
+@media(max-width: 400px) {
+    .minibtn {
+        font-size: 10px !important;
+        padding: 5px 12px !important;
+    }
+    .mgbottom2 {
+        margin-bottom: 0px !important;
+        margin-top: 20px !important;
+    }
+}
 *,
 *:before,
 *:after {
