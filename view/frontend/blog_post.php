@@ -44,8 +44,12 @@
                                 ?> 
                             </div>
                             <div class="divide30"></div>
+                            <?php if ($post['file_extension'] != ''): ?>
                             <img src="public/images/posts/<?= $post['file_extension'] ?>" class="img-responsive" />
                             <div class="divide30"></div>
+                            <?php else: ?>
+                            <img src="public/images/posts/default.jpg" class="img-responsive" />
+                            <?php endif; ?>
                             <p>
                                 <?= nl2br(htmlspecialchars($post['content'])) ?>
                             </p>
@@ -58,7 +62,11 @@
                 <div class="divide20"></div>
                 <div class="blog-posts" id="comments">
                     <div class="post box">
+                            <?php if($nbCount == 0): ?>
+                            <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Il n'a aucun commentaire pour l'instant.</h3>
+                            <?php else: ?>
                             <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?= $nbCount; ?>)</h3>
+                            <?php endif; ?>
                             <?php
                                 while ($comment = $comments->fetch())
                                 {

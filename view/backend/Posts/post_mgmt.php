@@ -24,7 +24,11 @@
                         <h2 class="post-title">
                             <a href="index.php?action=blogpost&amp;id=<?= $data['id'] ?>" target="_blank"><?= htmlspecialchars($data['title']); ?></a>
                         </h2>
+                        <?php if ($data['file_extension'] != ''): ?>
                         <img src="public/images/posts/<?= $data['file_extension']; ?>" class="img-responsive" style="width: 10%;" />
+                        <?php else: ?>
+                        <img src="public/images/posts/default.jpg" class="img-responsive" style="width: 10%;" />
+                        <?php endif; ?>
 
                         <btn class="btn btn-default" style="float: right;">
                             <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer</a>

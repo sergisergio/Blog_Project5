@@ -66,7 +66,11 @@
                                 ?>
                             </div> 
                             <div class="divide30"></div>
+                            <?php if ($data['file_extension'] != ''): ?>
                             <img src="public/images/posts/<?= $data['file_extension']; ?>" class="img-responsive imageblog1" />
+                            <?php else: ?>
+                            <img src="public/images/posts/default.jpg" class="img-responsive imageblog1" />
+                            <?php endif; ?>
                             <p>
                                 <?= htmlspecialchars($data['intro']); ?> ...
                             </p>
