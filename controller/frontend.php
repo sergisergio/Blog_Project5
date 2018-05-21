@@ -224,18 +224,21 @@ function modifyCommentPage($commentId){
 
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$commentManager = new \Philippe\Blog\Model\CommentManager();
+    $userManager = new \Philippe\Blog\Model\UserManager();
 
 	$comment = $commentManager->getComment($commentId);
 	$post = $postManager->getPost($comment['post_id']);
     $posts1 = $postManager->getPosts(0, 5);
+       if (($_SESSION['pseudo'] != $comment['author']) && ($_SESSION['autorisation'] == 0)) {
+            
+                $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
+                errors();
+                exit();
+        }
+        else {
 
-    if ($_SESSION['pseudo'] != $comment['author']) {
-        $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
-        errors();
-        exit();
-    }
-
-	require('view/frontend/modifyView.php');
+	       require('view/frontend/modifyView.php');
+        }
 }
 
 /* **************** 15 . SUPPRIMER UN COMMENTAIRE ************/
