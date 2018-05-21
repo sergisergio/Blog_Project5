@@ -235,6 +235,11 @@ function modifyCommentPage($commentId){
                 errors();
                 exit();
         }
+        elseif (empty($comment)){
+                $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
+                errors();
+                exit();
+        }
         else {
 
 	       require('view/frontend/modifyView.php');
