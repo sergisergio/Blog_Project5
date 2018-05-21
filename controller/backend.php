@@ -75,6 +75,11 @@ function modifyPostPage($postId){
 
 	$postManager = new \Philippe\Blog\Model\PostManager();
 	$post = $postManager->getPost($postId);
+	if (empty($post)) {
+		$_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
+        managePosts();
+        exit();
+	}
 	require('view/backend/Posts/modifyPostView.php');
 }
 

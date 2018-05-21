@@ -56,12 +56,7 @@
         <div class="divide20"></div>
         <div class="divide20"></div>
       </div>
-      <aside class="col-md-4 col-sm-12 sidebar">
-        <div class="sidebox box widget">
-          <?php include "forms/form_search.php"; ?>
-        </div>
-        <div class="clearfix"></div>       
-      </aside>
+          <?php include "includes/aside.php"; ?>
     </div>
       <div class="container bottomcontainer">
         <div class="row">

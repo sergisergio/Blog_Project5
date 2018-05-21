@@ -28,21 +28,26 @@
                             </div>
                         </div>
                         <div class="box">
-                            <h2 class="section-title text-center">Erreur</h2>
                             <p></p>
                             <div class="divide30"></div>
                             <div class="form-container">
                             <?php if(isset($_SESSION['flash'])): ?>
                                 <?php foreach($_SESSION['flash'] as $type => $message): ?>
-                                <div class="text-center alert alert-<?= $type; ?>">
+                                <div class="text-center alert alert-<?= $type; ?>" style="font-weight: bold; text-align:center;">
                                     <?= $message; ?>
                                 </div>
                                 <?php endforeach; ?>
                                 <?php unset($_SESSION['flash']); ?>
                             <?php endif; ?>
                             </div>
-                            <btn class="btn btn-default"><a href="index.php">Accueil</a></btn>
-                            <btn class="btn btn-default"><a href="index.php?action=blog">blog</a></btn>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <btn class="btn btn-default pull-right"><a href="index.php">Accueil</a></btn>
+                                </div>
+                                <div class="col-md-6">
+                                    <btn class="btn btn-default pull-left"><a href="index.php?action=blog">blog</a></btn>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>

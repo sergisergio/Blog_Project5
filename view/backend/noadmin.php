@@ -31,14 +31,19 @@
                             </div>
                         </div>
                         <div class="box">
-                            <h2 class="section-title text-center">Erreur</h2>
                             <p></p>
                             <div class="divide30"></div>
                             <div class="form-container">
-                            <div class="alert alert-danger">Vous n'avez pas les droits pour accéder à cette page...</div>
+                            <div class="alert alert-danger" style="font-weight: bold; text-align:center;">Vous n'avez pas les droits pour accéder à cette page...</div>
                             </div>
-                            <btn class="btn btn-default"><a href="index.php">Accueil</a></btn>
-                            <btn class="btn btn-default"><a href="index.php?action=blog">blog</a></btn>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <btn class="btn btn-default pull-right"><a href="index.php">Accueil</a></btn>
+                                </div>
+                                <div class="col-md-6">
+                                    <btn class="btn btn-default pull-left"><a href="index.php?action=blog">blog</a></btn>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>
