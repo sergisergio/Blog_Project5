@@ -229,6 +229,12 @@ function modifyCommentPage($commentId){
 	$post = $postManager->getPost($comment['post_id']);
     $posts1 = $postManager->getPosts(0, 5);
 
+    if ($_SESSION['pseudo'] != $comment['author']) {
+        $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
+        errors();
+        exit();
+    }
+
 	require('view/frontend/modifyView.php');
 }
 
@@ -255,7 +261,7 @@ function modifyComment($commentId, $author, $content){
     $commentManager = new \Philippe\Blog\Model\CommentManager();
     $success = $commentManager->modifyCommentRequest($commentId, $author, $content);
     $comment = $commentManager->getComment($commentId);
-
+    
     if ($success === false) {
         throw new Exception('Impossible de modifier le commentaire !');
     }
