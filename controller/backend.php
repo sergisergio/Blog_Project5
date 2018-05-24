@@ -14,10 +14,12 @@
 10. SUPPRIMER UN COMMENTAIRE.
 
 ************************************************************************/
-
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 require_once('model/UserManager.php');
+use \Philippe\Blog\Model\UserManager;
+use \Philippe\Blog\Model\PostManager;
+use \Philippe\Blog\Model\CommentManager;
 
 /* *********** 1 . PAGE D'ACCUEIL ADMINISTRATEUR ***********************/
 
@@ -37,7 +39,7 @@ function noAdmin(){
 
 function managePosts(){
 
-	$postManager = new \Philippe\Blog\Model\PostManager();
+	$postManager = new PostManager();
 	$postsTotal = $postManager->countPosts();
 	$postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
@@ -58,7 +60,7 @@ function managePosts(){
 
 function addPost($title, $chapo, $author, $content, $image){
 
-	$postManager = new \Philippe\Blog\Model\PostManager();
+	$postManager = new PostManager();
 	$affectedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $image);
 
 	if ($affectedPost === false) {
@@ -73,7 +75,7 @@ function addPost($title, $chapo, $author, $content, $image){
 
 function modifyPostPage($postId){
 
-	$postManager = new \Philippe\Blog\Model\PostManager();
+	$postManager = new PostManager();
 	$post = $postManager->getPost($postId);
 	if (empty($post)) {
 		$_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
@@ -87,7 +89,7 @@ function modifyPostPage($postId){
 
 function modifyPost($postId, $title, $chapo, $author, $content){
 
-	$postManager = new \Philippe\Blog\Model\PostManager();
+	$postManager = new PostManager();
 	$success = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
 	$post = $postManager->getPost($postId);
 
@@ -103,7 +105,7 @@ function modifyPost($postId, $title, $chapo, $author, $content){
 
 function deletePost($postId){
 
-	$postManager = new \Philippe\Blog\Model\PostManager();
+	$postManager = new PostManager();
 	$success = $postManager->deletePostRequest($postId);
 
 	if ($success === false) {
@@ -118,7 +120,7 @@ function deletePost($postId){
 
 function manageComments(){
 
-	$commentManager = new \Philippe\Blog\Model\CommentManager();
+	$commentManager = new CommentManager();
 	$nbCount = $commentManager->countCommentBackRequest();
 	$submittedcomments = $commentManager->submittedCommentRequest();
 	require('view/backend/Comments/comment_mgmt.php');
@@ -128,7 +130,7 @@ function manageComments(){
 
 function validateComment($commentId){
 
-	$commentManager = new \Philippe\Blog\Model\CommentManager();
+	$commentManager = new CommentManager();
 	$validated = $commentManager->validateCommentRequest($commentId);
 	if ($validated === false) {
 		throw new Exception('Impossible de valider le commentaire');
@@ -142,7 +144,7 @@ function validateComment($commentId){
 
 function adminDeleteComment($commentId){
 
-    $commentManager = new \Philippe\Blog\Model\CommentManager();
+    $commentManager = new CommentManager();
 	$comment = $commentManager->getComment($commentId);
     $success = $commentManager->deleteCommentRequest($commentId);
     

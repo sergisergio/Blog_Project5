@@ -149,9 +149,6 @@ try {
         elseif ($_GET['action'] == 'login') {
             if(!empty($_POST) && !empty($_POST['pseudo']) && !empty($_POST['passe'])) {
                 login($_POST['pseudo'], $_POST['passe']);
-                if($_POST['remember']){
-                    remember($_POST['remember']);
-                }
             }
             else {
                 $_SESSION['flash']['danger'] = 'Veuillez remplir tous les champs !';

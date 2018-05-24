@@ -26,6 +26,10 @@
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 require_once('model/UserManager.php');
+use \Philippe\Blog\Model\UserManager;
+use \Philippe\Blog\Model\PostManager;
+use \Philippe\Blog\Model\CommentManager;
+
 
 /* ***************** 1 . PAGE D'ACCUEIL **********************/
 
@@ -51,7 +55,7 @@ function signupPage(){
 /* ****************  4 . INSCRIPTION *************************/
 
 function addUser($pseudo, $email, $passe){
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $users = $userManager->addUserRequest($pseudo, $email, $passe);
      if ($users === false) {
         $_SESSION['flash']['danger'] = 'Inscription impossible !';
@@ -68,7 +72,7 @@ function addUser($pseudo, $email, $passe){
 /* ***************** 5 . CONNEXION ***************************/
 
 function login($pseudo,$passe){
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $user = $userManager->loginRequest($pseudo,$passe);
     
     if(password_verify($passe, $user['password'])) {
@@ -102,7 +106,7 @@ function login($pseudo,$passe){
 /* ***************** 6 . DECONNEXION *************************/
 
 function logout(){
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $users = $userManager->logoutRequest();
 }
 
@@ -110,7 +114,7 @@ function logout(){
 
 function checkExistPseudo($pseudo){
 
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $user = $userManager->existPseudo($pseudo);
     if ($user) {
         $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';
@@ -123,7 +127,7 @@ function checkExistPseudo($pseudo){
 
 function checkExistMail($email){
 
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $usermail = $userManager->existMail($email);
     if ($usermail) {
         $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
@@ -136,7 +140,7 @@ function checkExistMail($email){
 
 function confirmRegistration($userId, $userToken){
 
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $user = $userManager->getUser($userId);
     if ($user &&  $user['confirmation_token'] == $userToken) {
         
@@ -156,14 +160,14 @@ function confirmRegistration($userId, $userToken){
 
 function setActiveUser($userId){
 
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $activeUser = $userManager->setActiveRequest($userId);
 }
 
 /* **************** 11 . TOUS LES BLOG POSTS *****************/
 
 function listPosts(){
-	$postManager = new \Philippe\Blog\Model\PostManager();
+	$postManager = new PostManager();
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
@@ -186,9 +190,9 @@ function listPosts(){
 
 function listPost(){
 
-	$postManager = new \Philippe\Blog\Model\PostManager();
-	$commentManager = new \Philippe\Blog\Model\CommentManager();
-    $userManager = new \Philippe\Blog\Model\UserManager();
+	$postManager = new PostManager();
+	$commentManager = new CommentManager();
+    $userManager = new UserManager();
 
     $posts1 = $postManager->getPosts(0, 5);
     $post = $postManager->getPost($_GET['id']);
@@ -207,7 +211,7 @@ function listPost(){
 /* **************** 13 . AJOUTER UN COMMENTAIRE **************/
 
 function addComment($postId, $author, $content){
-	$commentManager = new \Philippe\Blog\Model\CommentManager();
+	$commentManager = new CommentManager();
 	$affectedLines = $commentManager->postComment($postId, $author, $content);
 
 	if ($affectedLines === false) {
@@ -222,9 +226,9 @@ function addComment($postId, $author, $content){
 
 function modifyCommentPage($commentId){
 
-	$postManager = new \Philippe\Blog\Model\PostManager();
-	$commentManager = new \Philippe\Blog\Model\CommentManager();
-    $userManager = new \Philippe\Blog\Model\UserManager();
+	$postManager = new PostManager();
+	$commentManager = new CommentManager();
+    $userManager = new UserManager();
 
 	$comment = $commentManager->getComment($commentId);
 	$post = $postManager->getPost($comment['post_id']);
@@ -250,7 +254,7 @@ function modifyCommentPage($commentId){
 
 function deleteComment($commentId){
 
-    $commentManager = new \Philippe\Blog\Model\CommentManager();
+    $commentManager = new CommentManager();
     $comment = $commentManager->getComment($commentId);
     $success = $commentManager->deleteCommentRequest($commentId);
     
@@ -266,7 +270,7 @@ function deleteComment($commentId){
 
 function modifyComment($commentId, $author, $content){
 
-    $commentManager = new \Philippe\Blog\Model\CommentManager();
+    $commentManager = new CommentManager();
     $success = $commentManager->modifyCommentRequest($commentId, $author, $content);
     $comment = $commentManager->getComment($commentId);
     
