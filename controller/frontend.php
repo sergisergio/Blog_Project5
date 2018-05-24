@@ -23,9 +23,10 @@
 
 ******************** FIN RESUME ****************************/
 
-require_once('model/PostManager.php');
-require_once('model/CommentManager.php');
-require_once('model/UserManager.php');
+//require_once('model/PostManager.php');
+//require_once('model/CommentManager.php');
+//require_once('model/UserManager.php');
+require "vendor/autoload.php";
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
@@ -54,14 +55,29 @@ function signupPage(){
 
 /* ****************  4 . INSCRIPTION *************************/
 
-function addUser($pseudo, $email, $passe){
+function addUser($pseudo, $email, $passe, $passe2){
     $userManager = new UserManager();
     $users = $userManager->addUserRequest($pseudo, $email, $passe);
-     if ($users === false) {
+    if ($users === false) {
         $_SESSION['flash']['danger'] = 'Inscription impossible !';
         signupPage();
         exit();
     } 
+    elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)) {
+        $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide (caractères alphanumériques et underscore permis... !';
+        signupPage();
+        exit();
+    }
+    elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
+        signupPage();
+        exit();
+    }
+    elseif (empty($passe) || $passe != $_POST['passe2']) {
+        $_SESSION['flash']['danger'] = 'Vous devez entrer un mot de passe valide !';
+        signupPage();
+        exit();
+    }
     else {
         $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
         loginPage();
@@ -110,26 +126,26 @@ function logout(){
     $users = $userManager->logoutRequest();
 }
 
-/* ***************** 7 . DOUBLON PSEUDO **********************/
+/* ***************** 9 . DOUBLON PSEUDO **********************/
 
 function checkExistPseudo($pseudo){
-
-    $userManager = new UserManager();
+    $userManager = new \Philippe\Blog\Model\UserManager();
     $user = $userManager->existPseudo($pseudo);
-    if ($user) {
+
+     if ($user) {
         $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';
         signupPage();
         exit();
     }
 }
 
-/* **************** 8 . DOUBLON MAIL ************************/
+/* **************** 10 . DOUBLON MAIL ************************/
 
 function checkExistMail($email){
-
-    $userManager = new UserManager();
+    $userManager = new \Philippe\Blog\Model\UserManager();
     $usermail = $userManager->existMail($email);
-    if ($usermail) {
+
+     if ($usermail) {
         $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
         signupPage();
         exit();

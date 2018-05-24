@@ -14,9 +14,10 @@
 10. SUPPRIMER UN COMMENTAIRE.
 
 ************************************************************************/
-require_once('model/PostManager.php');
-require_once('model/CommentManager.php');
-require_once('model/UserManager.php');
+//require_once('model/PostManager.php');
+//require_once('model/CommentManager.php');
+//require_once('model/UserManager.php');
+require "vendor/autoload.php";
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
@@ -71,6 +72,21 @@ function addPost($title, $chapo, $author, $content, $image){
     }
 }
 
+/* *********** 4 . AJOUTER UN ARTICLE **********************************/
+
+function addFile($fileExtension){
+	// Testons si le fichier n'est pas trop gros
+    if ($_FILES['file_extension']['size'] <= 1000000) {
+    	$infosfichier = pathinfo($_FILES['file_extension']['name']);
+    	$extension_upload = $infosfichier['extension'];
+    	$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
+    	if (in_array($extension_upload, $extensions_autorisees)) {
+    	// On peut valider le fichier et le stocker définitivement
+       		move_uploaded_file($_FILES['file_extension']['tmp_name'], 'public/images/posts/' . basename($_FILES['file_extension']['name']));
+        	echo "L'envoi a bien été effectué !";
+    	}
+	}
+}
 /* *********** 5 . PAGE DE MODIFICATION DES ARTICLES *******************/
 
 function modifyPostPage($postId){

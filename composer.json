@@ -1,0 +1,11 @@
+{
+    "require": {
+        "michelf/php-markdown": "^1.8"
+    },
+    "autoload": {
+    	"psr-4" : {"Philippe\\Blog\\Model\\" : "Model"}
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    }
+}
