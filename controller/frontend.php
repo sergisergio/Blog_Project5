@@ -1,28 +1,23 @@
 <?php
-
 /* ********************* RESUME *****************************
-
 1 . PAGE D'ACCUEIL.
 2 . PAGE DE CONNEXION.
 3 . PAGE D'INSCRIPTION.
 4 . INSCRIPTION.
 5 . CONNEXION.
 6 . DECONNEXION.
-7 . DOUBLON PSEUDO.
-8 . DOUBLON EMAIL.
-9 . CONFIRMATION INSCRIPTION.
-10. PASSER USER EN ACTIF.
-11. AFFICHER TOUS LES BLOG POSTS.
-12. AFFICHER UN SEUL BLOG POST.
-13. AJOUTER UN COMMENTAIRE.
-14. AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE.
-15. SUPPRIMER UN COMMENTAIRE.
-16. MODIFIER UN COMMENTAIRE.
-17. ERRORS.
-18. CONTACT
-
+7 . CONFIRMATION INSCRIPTION.
+8. PASSER USER EN ACTIF.
+9. AFFICHER TOUS LES BLOG POSTS.
+10. AFFICHER UN SEUL BLOG POST.
+11. AJOUTER UN COMMENTAIRE.
+12. AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE.
+13. SUPPRIMER UN COMMENTAIRE.
+14. MODIFIER UN COMMENTAIRE.
+15. ERRORS.
+16. PAGE NO ADMIN
+17. CONTACT
 ******************** FIN RESUME ****************************/
-
 //require_once('model/PostManager.php');
 //require_once('model/CommentManager.php');
 //require_once('model/UserManager.php');
@@ -31,157 +26,143 @@ use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
 
-
 /* ***************** 1 . PAGE D'ACCUEIL **********************/
-
 function home(){
-
     require('view/frontend/home.php');
 }
-
 /* ***************** 2 . PAGE CONNEXION **********************/
-
 function loginPage(){
-
-	require('view/frontend/login.php');
+    require('view/frontend/login.php');
 }
-
 /* ***************** 3 . PAGE INSCRIPTION ********************/
-
 function signupPage(){
-    
-	require('view/frontend/signup.php');
+    require('view/frontend/signup.php');
 }
-
 /* ****************  4 . INSCRIPTION *************************/
-
 function addUser($pseudo, $email, $passe, $passe2){
     $userManager = new UserManager();
-    $users = $userManager->addUserRequest($pseudo, $email, $passe);
-    if ($users === false) {
-        $_SESSION['flash']['danger'] = 'Inscription impossible !';
-        signupPage();
-        exit();
-    } 
-    elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)) {
-        $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide (caractères alphanumériques et underscore permis... !';
-        signupPage();
-        exit();
-    }
-    elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
-        signupPage();
-        exit();
-    }
-    elseif (empty($passe) || $passe != $_POST['passe2']) {
-        $_SESSION['flash']['danger'] = 'Vous devez entrer un mot de passe valide !';
-        signupPage();
-        exit();
-    }
-    else {
-        $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
-        loginPage();
-        exit();
-    } 
-}
-
-/* ***************** 5 . CONNEXION ***************************/
-
-function login($pseudo,$passe){
-    $userManager = new UserManager();
-    $user = $userManager->loginRequest($pseudo,$passe);
-    
-    if(password_verify($passe, $user['password'])) {
-        if ($user['is_active'] == 1) {
-            
-        $_SESSION['pseudo'] = $user['pseudo'];
-        $_SESSION['id'] = $user['id'];
-        $_SESSION['prenom'] = $user['first_name'];
-        $_SESSION['nom'] = $user['last_name'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['password'] = $user['password'];
-        $_SESSION['autorisation'] = $user['authorization'];
-        $_SESSION['avatar'] = $user['avatar'];
-        $_SESSION['registration'] = $user['registration_date_fr'];
-        header('Location: index.php?action=blog');
-        exit();
+    if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
+        $user = $userManager->existPseudo($pseudo);
+        $usermail = $userManager->existMail($email);
+        if ($user) {
+            $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';
+            signupPage();
+            exit();
+        }
+        elseif ($usermail) {
+            $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
+            signupPage();
+            exit();
+        }
+        elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)) {
+            $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide (caractères alphanumériques et underscore permis... !';
+            signupPage();
+            exit();
+        }
+        elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
+            signupPage();
+            exit();
+        }
+        elseif (empty($passe) || $passe != $_POST['passe2']) {
+            $_SESSION['flash']['danger'] = 'Vous devez entrer un mot de passe valide !';
+            signupPage();
+            exit();
         }
         else {
-            $_SESSION['flash']['danger'] = 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !';
+            $users = $userManager->addUserRequest($pseudo, $email, $passe);
+                $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
+                loginPage();
+                exit();
+            if ($users === false) {
+                $_SESSION['flash']['danger'] = 'Inscription impossible !';
+                signupPage();
+                exit();
+            }
+        } 
+    }
+    else {
+        $_SESSION['flash']['danger'] = 'Vous devez remplir tous les champs !';
+        signupPage();
+        exit();
+    }
+}
+/* ***************** 5 . CONNEXION ***************************/
+function login($pseudo,$passe){
+    $userManager = new UserManager();
+    if(!empty($pseudo) && !empty($passe)) {
+        $user = $userManager->loginRequest($pseudo,$passe);
+    
+        if(password_verify($passe, $user['password'])) {
+            if ($user['is_active'] == 1) {
+            
+            $_SESSION['pseudo'] = $user['pseudo'];
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['prenom'] = $user['first_name'];
+            $_SESSION['nom'] = $user['last_name'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['password'] = $user['password'];
+            $_SESSION['autorisation'] = $user['authorization'];
+            $_SESSION['avatar'] = $user['avatar'];
+            $_SESSION['registration'] = $user['registration_date_fr'];
+            header('Location: index.php?action=blog');
+            exit();
+            }
+            else {
+                $_SESSION['flash']['danger'] = 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !';
+                loginPage();
+                exit();
+            }
+        }
+        else {
+            $_SESSION['flash']['danger'] = 'Mauvais identifiant ou mot de passe !';
             loginPage();
             exit();
         }
     }
     else {
-        $_SESSION['flash']['danger'] = 'Mauvais identifiant ou mot de passe !';
+        $_SESSION['flash']['danger'] = 'Veuillez remplir tous les champs !';
         loginPage();
         exit();
     }
 }
-
 /* ***************** 6 . DECONNEXION *************************/
-
 function logout(){
-    $userManager = new UserManager();
-    $users = $userManager->logoutRequest();
+    unset($_SESSION);
+    session_destroy();
+    header('Location: index.php?action=blog');
 }
-
-/* ***************** 9 . DOUBLON PSEUDO **********************/
-
-function checkExistPseudo($pseudo){
-    $userManager = new \Philippe\Blog\Model\UserManager();
-    $user = $userManager->existPseudo($pseudo);
-
-     if ($user) {
-        $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';
-        signupPage();
-        exit();
-    }
-}
-
-/* **************** 10 . DOUBLON MAIL ************************/
-
-function checkExistMail($email){
-    $userManager = new \Philippe\Blog\Model\UserManager();
-    $usermail = $userManager->existMail($email);
-
-     if ($usermail) {
-        $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
-        signupPage();
-        exit();
-    }
-}
-
-/* **************** 9 . CONFIRMATION INSCRIPTION ************/
-
+/* ***************** 7 . CONFIRMATION INSCRIPTION ************/
 function confirmRegistration($userId, $userToken){
 
     $userManager = new UserManager();
     $user = $userManager->getUser($userId);
-    if ($user &&  $user['confirmation_token'] == $userToken) {
-        
-        $userManager->setActiveRequest($userId);
-        $_SESSION['flash']['success'] = 'Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !';
-        loginPage();
-        exit();
+    if (isset($_GET['id']) && isset($_GET['token'])) {
+        if ($user &&  $user['confirmation_token'] == $userToken) {
+            $userManager->setActiveRequest($userId);
+            $_SESSION['flash']['success'] = 'Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !';
+            loginPage();
+            exit();
+        }
+        else {
+            $_SESSION['flash']['success'] = 'Ce token n est plus valide ! Veuillez réessayer ! !';
+            signupPage();
+            exit();
+        } 
     }
     else {
-        $_SESSION['flash']['success'] = 'Ce token n est plus valide ! Veuillez réessayer ! !';
+        $_SESSION['flash']['danger'] = 'Echec de l\'inscription ! Veuillez réessayer sinon contactez l\'administrateur';
         signupPage();
         exit();
-    }   
+    }  
 }
-
-/* **************** 10 . PASSER USER EN ACTIF. ***************/
-
+/* ***************** 8 . PASSER USER EN ACTIF. ***************/
 function setActiveUser($userId){
 
     $userManager = new UserManager();
     $activeUser = $userManager->setActiveRequest($userId);
 }
-
-/* **************** 11 . TOUS LES BLOG POSTS *****************/
-
+/* ***************** 9 . TOUS LES BLOG POSTS *****************/
 function listPosts(){
 	$postManager = new PostManager();
     $postsTotal = $postManager->countPosts();
@@ -201,112 +182,129 @@ function listPosts(){
 
     require('view/frontend/blog.php');
 }
-
-/* **************** 12 . AFFICHER UN SEUL BLOG POST **********/
-
-function listPost(){
+/* **************** 10 . AFFICHER UN SEUL BLOG POST **********/
+function listPost($postId){
 
 	$postManager = new PostManager();
 	$commentManager = new CommentManager();
     $userManager = new UserManager();
-
     $posts1 = $postManager->getPosts(0, 5);
-    $post = $postManager->getPost($_GET['id']);
-    if (empty($post)) {
+    $post = $postManager->getPost($postId);
+    if (isset($postId) && $postId > 0 && (!empty($post))) {
+        
+        $comments = $commentManager->getComments($postId);
+        $user = $userManager->getUser($postId);
+        $nbCount = $commentManager->countCommentRequest($postId);
+        require('view/frontend/blog_post.php');
+    }   
+    else {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
         errors();
         exit();
     }
-    $comments = $commentManager->getComments($_GET['id']);
-    $user = $userManager->getUser($_GET['id']);
-    $nbCount = $commentManager->countCommentRequest($_GET['id']);
-    
-    require('view/frontend/blog_post.php');
 }
-
-/* **************** 13 . AJOUTER UN COMMENTAIRE **************/
-
+/* **************** 11 . AJOUTER UN COMMENTAIRE **************/
 function addComment($postId, $author, $content){
 	$commentManager = new CommentManager();
-	$affectedLines = $commentManager->postComment($postId, $author, $content);
 
-	if ($affectedLines === false) {
-        echo '<div class="alert alert-danger">' . 'Vous devez être inscrit pour ajouter un commentaires' . '</div>';
-    }
-    else {
-        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
-    }
-}
-
-/* **************** 14 . PAGE POUR MODIFIER UN COMMENTAIRE ***/
-
-function modifyCommentPage($commentId){
-
-	$postManager = new PostManager();
-	$commentManager = new CommentManager();
-    $userManager = new UserManager();
-
-	$comment = $commentManager->getComment($commentId);
-	$post = $postManager->getPost($comment['post_id']);
-    $posts1 = $postManager->getPosts(0, 5);
-       if (($_SESSION['pseudo'] != $comment['author']) && ($_SESSION['autorisation'] == 0)) {
-            
-                $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
-                errors();
-                exit();
-        }
-        elseif (empty($comment)){
-                $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
-                errors();
-                exit();
+	if (isset($postId) && $postId > 0) {
+        if (!empty($content)) {
+            $affectedLines = $commentManager->postComment($postId, $author, $content);
+            $_SESSION['flash']['success'] = 'Votre commentaire sera validé dans les plus brefs délais !';
+            header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+            exit();
+            if ($affectedLines === false) {
+                echo '<div class="alert alert-danger">' . 'Vous devez être inscrit pour ajouter un commentaires' . '</div>';
+            }
         }
         else {
-
-	       require('view/frontend/modifyView.php');
+            $_SESSION['flash']['danger'] = 'Le champ est vide !';
+            header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+            exit();
         }
+    }
+    else {
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
+        errors();
+        exit();
+    }
 }
-
-/* **************** 15 . SUPPRIMER UN COMMENTAIRE ************/
-
+/* **************** 12 . PAGE POUR MODIFIER UN COMMENTAIRE ***/
+function modifyCommentPage($commentId){
+    $postManager = new PostManager();
+	$commentManager = new CommentManager();
+    $userManager = new UserManager();
+    $comment = $commentManager->getComment($commentId);
+	$post = $postManager->getPost($comment['post_id']);
+    $posts1 = $postManager->getPosts(0, 5);
+    if (empty($comment) || $commentId <= 0 ){
+        $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
+        errors();
+        exit();
+    }
+    elseif (isset($commentId) && $commentId > 0) {
+       if (($_SESSION['pseudo'] != $comment['author']) && ($_SESSION['autorisation'] == 0)) {
+            $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
+            errors();
+            exit();
+        }
+        else {
+            require('view/frontend/modifyView.php');
+        }
+    }
+}
+/* **************** 13 . SUPPRIMER UN COMMENTAIRE ************/
 function deleteComment($commentId){
 
     $commentManager = new CommentManager();
-    $comment = $commentManager->getComment($commentId);
-    $success = $commentManager->deleteCommentRequest($commentId);
-    
     if ($success === false) {
         throw new Exception('Impossible de supprimer le commentaire');
     }
-    else {
+    elseif (isset($commentId) && $commentId > 0) {
+        $comment = $commentManager->getComment($commentId);
+        $success = $commentManager->deleteCommentRequest($commentId);
         header('Location: index.php?action=blogpost&id=' . $comment['post_id'] . '#comments');
     }
+    elseif (empty($comment) || $commentId <= 0 ) {
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
+        errors();
+        exit();
+    }
 }
-
-/* **************** 16 . MODIFIER UN COMMENTAIRE *************/
-
+/* **************** 14 . MODIFIER UN COMMENTAIRE *************/
 function modifyComment($commentId, $author, $content){
-
     $commentManager = new CommentManager();
-    $success = $commentManager->modifyCommentRequest($commentId, $author, $content);
     $comment = $commentManager->getComment($commentId);
-    
-    if ($success === false) {
-        throw new Exception('Impossible de modifier le commentaire !');
+    if (isset($commentId) && $commentId > 0) {
+        if (!empty($content)) {
+            $success = $commentManager->modifyCommentRequest($commentId, $author, $content);
+            $_SESSION['flash']['success'] = 'Votre commentaire sera validé dans les plus brefs délais !';
+            header('Location: index.php?action=blog');
+            if ($success === false) {
+                throw new Exception('Impossible de modifier le commentaire !');
+            }
+        }
+        else {
+            $_SESSION['flash']['danger'] = 'Le champ est vide !';
+            header('Location: index.php?action=modifyCommentPage&id=' . $_GET['id']);
+            exit();
+        }
     }
-    else {
-        header('Location: index.php?action=blogpost&id=' . $comment['post_id'] . '#comments');
+    elseif (empty($comment) || $commentId <= 0 ) {
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
+        errors();
+        exit();
     }
 }
-
-/* **************** 17. ERRORS ******************************/
-
+/* **************** 15. ERRORS *******************************/
 function errors(){
-
     require('view/frontend/errors.php');
 }
-
-/* **************** 18 . CONTACT ******************************/
-
+/* *********** 16 . PAGE NO ADMIN ****************************/
+function noAdmin(){
+    require('view/backend/noadmin.php');
+}
+/* **************** 17 . CONTACT *****************************/
 function contact(){
 
     include('model/SMTPClass.php');

@@ -1,7 +1,5 @@
 <?php
-
 namespace Philippe\Blog\Model;
-
 class Manager
 {
 	protected function dbConnect()
