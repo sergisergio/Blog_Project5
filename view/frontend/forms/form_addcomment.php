@@ -1,14 +1,14 @@
 <div class="form-container">
             <div class="response alert"></div>
-            <?php if(isset($_SESSION['flash'])): ?>
+            <?php if(isset($_SESSION['flash'])) : ?>
                 <?php foreach($_SESSION['flash'] as $type => $message): ?>
-                    <div class="alert alert-<?= $type; ?>">
-                        <?= $message; ?>
+                    <div class="alert alert-<?php echo $type; ?>">
+                        <?php echo $message; ?>
                     </div>
                 <?php endforeach; ?>
                 <?php unset($_SESSION['flash']); ?>
             <?php endif; ?>
-<form action="index.php?action=addcomment&amp;id=<?= $post['id'] ?>" method="post">
+<form action="index.php?action=addcomment&amp;id=<?php echo $post['id'] ?>" method="post">
     <div>
         <label for="content">Commentaire</label>
         <br />

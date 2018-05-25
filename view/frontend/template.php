@@ -32,9 +32,9 @@
     </head>
     <body class="full-layout">
         <div class="body-wrapper">
-            <?php include "includes/nav.php"; ?>
+            <?php require "includes/nav.php"; ?>
                         
-            <?= $content ?>
+            <?php echo $content ?>
 
         <script src="public/js/jquery.min.js"></script>
         <script src="public/js/bootstrap.min.js"></script>

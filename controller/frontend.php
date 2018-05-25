@@ -27,19 +27,23 @@ use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
 
 /* ***************** 1 . PAGE D'ACCUEIL **********************/
-function home(){
-    require('view/frontend/home.php');
+function home()
+{
+    include 'view/frontend/home.php';
 }
 /* ***************** 2 . PAGE CONNEXION **********************/
-function loginPage(){
-    require('view/frontend/login.php');
+function loginPage()
+{
+    include 'view/frontend/login.php';
 }
 /* ***************** 3 . PAGE INSCRIPTION ********************/
-function signupPage(){
-    require('view/frontend/signup.php');
+function signupPage()
+{
+    include 'view/frontend/signup.php';
 }
 /* ****************  4 . INSCRIPTION *************************/
-function addUser($pseudo, $email, $passe, $passe2){
+function addUser($pseudo, $email, $passe, $passe2)
+{
     $userManager = new UserManager();
     if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
         $user = $userManager->existPseudo($pseudo);
@@ -71,6 +75,11 @@ function addUser($pseudo, $email, $passe, $passe2){
         }
         else {
             $users = $userManager->addUserRequest($pseudo, $email, $passe);
+
+            /* test mail local */
+            mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
+            /* test mail online */
+            //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
                 $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
                 loginPage();
                 exit();
@@ -88,25 +97,26 @@ function addUser($pseudo, $email, $passe, $passe2){
     }
 }
 /* ***************** 5 . CONNEXION ***************************/
-function login($pseudo,$passe){
+function login($pseudo,$passe)
+{
     $userManager = new UserManager();
     if(!empty($pseudo) && !empty($passe)) {
-        $user = $userManager->loginRequest($pseudo,$passe);
+        $user = $userManager->loginRequest($pseudo, $passe);
     
         if(password_verify($passe, $user['password'])) {
             if ($user['is_active'] == 1) {
             
-            $_SESSION['pseudo'] = $user['pseudo'];
-            $_SESSION['id'] = $user['id'];
-            $_SESSION['prenom'] = $user['first_name'];
-            $_SESSION['nom'] = $user['last_name'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['password'] = $user['password'];
-            $_SESSION['autorisation'] = $user['authorization'];
-            $_SESSION['avatar'] = $user['avatar'];
-            $_SESSION['registration'] = $user['registration_date_fr'];
-            header('Location: index.php?action=blog');
-            exit();
+                $_SESSION['pseudo'] = $user['pseudo'];
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['prenom'] = $user['first_name'];
+                $_SESSION['nom'] = $user['last_name'];
+                $_SESSION['email'] = $user['email'];
+                $_SESSION['password'] = $user['password'];
+                $_SESSION['autorisation'] = $user['authorization'];
+                $_SESSION['avatar'] = $user['avatar'];
+                $_SESSION['registration'] = $user['registration_date_fr'];
+                header('Location: index.php?action=blog');
+                exit();
             }
             else {
                 $_SESSION['flash']['danger'] = 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !';
@@ -127,13 +137,15 @@ function login($pseudo,$passe){
     }
 }
 /* ***************** 6 . DECONNEXION *************************/
-function logout(){
+function logout()
+{
     unset($_SESSION);
     session_destroy();
     header('Location: index.php?action=blog');
 }
 /* ***************** 7 . CONFIRMATION INSCRIPTION ************/
-function confirmRegistration($userId, $userToken){
+function confirmRegistration($userId, $userToken)
+{
 
     $userManager = new UserManager();
     $user = $userManager->getUser($userId);
@@ -157,19 +169,21 @@ function confirmRegistration($userId, $userToken){
     }  
 }
 /* ***************** 8 . PASSER USER EN ACTIF. ***************/
-function setActiveUser($userId){
+function setActiveUser($userId)
+{
 
     $userManager = new UserManager();
     $activeUser = $userManager->setActiveRequest($userId);
 }
 /* ***************** 9 . TOUS LES BLOG POSTS *****************/
-function listPosts(){
-	$postManager = new PostManager();
+function listPosts()
+{
+    $postManager = new PostManager();
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
 
-    if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)){
+    if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
         $_GET['page'] = intval($_GET['page']);
         $currentPage = $_GET['page'];
     }
@@ -180,13 +194,14 @@ function listPosts(){
     $posts = $postManager->getPosts($start, $postsPerPage);
     $posts1 = $postManager->getPosts(0, 5);
 
-    require('view/frontend/blog.php');
+    include 'view/frontend/blog.php';
 }
 /* **************** 10 . AFFICHER UN SEUL BLOG POST **********/
-function listPost($postId){
+function listPost($postId)
+{
 
-	$postManager = new PostManager();
-	$commentManager = new CommentManager();
+    $postManager = new PostManager();
+    $commentManager = new CommentManager();
     $userManager = new UserManager();
     $posts1 = $postManager->getPosts(0, 5);
     $post = $postManager->getPost($postId);
@@ -195,7 +210,7 @@ function listPost($postId){
         $comments = $commentManager->getComments($postId);
         $user = $userManager->getUser($postId);
         $nbCount = $commentManager->countCommentRequest($postId);
-        require('view/frontend/blog_post.php');
+        include 'view/frontend/blog_post.php';
     }   
     else {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
@@ -204,10 +219,11 @@ function listPost($postId){
     }
 }
 /* **************** 11 . AJOUTER UN COMMENTAIRE **************/
-function addComment($postId, $author, $content){
-	$commentManager = new CommentManager();
+function addComment($postId, $author, $content)
+{
+    $commentManager = new CommentManager();
 
-	if (isset($postId) && $postId > 0) {
+    if (isset($postId) && $postId > 0) {
         if (!empty($content)) {
             $affectedLines = $commentManager->postComment($postId, $author, $content);
             $_SESSION['flash']['success'] = 'Votre commentaire sera validé dans les plus brefs délais !';
@@ -230,31 +246,33 @@ function addComment($postId, $author, $content){
     }
 }
 /* **************** 12 . PAGE POUR MODIFIER UN COMMENTAIRE ***/
-function modifyCommentPage($commentId){
+function modifyCommentPage($commentId)
+{
     $postManager = new PostManager();
-	$commentManager = new CommentManager();
+    $commentManager = new CommentManager();
     $userManager = new UserManager();
     $comment = $commentManager->getComment($commentId);
-	$post = $postManager->getPost($comment['post_id']);
+    $post = $postManager->getPost($comment['post_id']);
     $posts1 = $postManager->getPosts(0, 5);
-    if (empty($comment) || $commentId <= 0 ){
+    if (empty($comment) || $commentId <= 0 ) {
         $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
         errors();
         exit();
     }
     elseif (isset($commentId) && $commentId > 0) {
-       if (($_SESSION['pseudo'] != $comment['author']) && ($_SESSION['autorisation'] == 0)) {
+        if (($_SESSION['pseudo'] != $comment['author']) && ($_SESSION['autorisation'] == 0)) {
             $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
             errors();
             exit();
         }
         else {
-            require('view/frontend/modifyView.php');
+            include 'view/frontend/modifyView.php';
         }
     }
 }
 /* **************** 13 . SUPPRIMER UN COMMENTAIRE ************/
-function deleteComment($commentId){
+function deleteComment($commentId)
+{
 
     $commentManager = new CommentManager();
     if ($success === false) {
@@ -272,7 +290,8 @@ function deleteComment($commentId){
     }
 }
 /* **************** 14 . MODIFIER UN COMMENTAIRE *************/
-function modifyComment($commentId, $author, $content){
+function modifyComment($commentId, $author, $content)
+{
     $commentManager = new CommentManager();
     $comment = $commentManager->getComment($commentId);
     if (isset($commentId) && $commentId > 0) {
@@ -297,27 +316,30 @@ function modifyComment($commentId, $author, $content){
     }
 }
 /* **************** 15. ERRORS *******************************/
-function errors(){
-    require('view/frontend/errors.php');
+function errors()
+{
+    include 'view/frontend/errors.php';
 }
 /* *********** 16 . PAGE NO ADMIN ****************************/
-function noAdmin(){
-    require('view/backend/noadmin.php');
+function noAdmin()
+{
+    include 'view/backend/noadmin.php';
 }
 /* **************** 17 . CONTACT *****************************/
-function contact(){
-
-    include('model/SMTPClass.php');
+function contact()
+{
 
     // Remove any un-safe values to prevent email injection
-    function filter($value) {
+    function filter($value) 
+    {
         $pattern = array("/\n/", "/\r/", "/content-type:/i", "/to:/i", "/from:/i", "/cc:/i");
         $value = preg_replace($pattern, "", $value);
         return $value;
     }
 
     // Run server-side validation
-    function sendEmail($subject, $content, $emailto, $emailfrom) {
+    function sendEmail($subject, $content, $emailto, $emailfrom) 
+    {
         
         $from = $emailfrom;
         $response_sent = 'Merci. Votre message a bien été envoyé';
@@ -333,7 +355,7 @@ function contact(){
         // Setup final message
         $body = wordwrap($message);
         
-        if($use_smtp == '1'){
+        if($use_smtp == '1') {
         
             $SmtpServer = 'SMTP SERVER';
             $SmtpPort = 'SMTP PORT';
@@ -341,7 +363,7 @@ function contact(){
             $SmtpPass = 'SMTP PASSWORD';
             
             $to = $emailto;
-            $SMTPMail = new SMTPClient ($SmtpServer, $SmtpPort, $SmtpUser, $SmtpPass, $from, $to, $subject, $body);
+            $SMTPMail = new SMTPClient($SmtpServer, $SmtpPort, $SmtpUser, $SmtpPass, $from, $to, $subject, $body);
             $SMTPChat = $SMTPMail->SendMail();
             $response = $SMTPChat ? $response_sent : $response_error;
             
@@ -373,32 +395,33 @@ function contact(){
     $response_fail = 'Un problème est survenu.';
     
         // Honeypot captcha
-        if($nocomment == '') {
+    if($nocomment == '') {
         
-            $params = $_POST;
-            foreach ( $params as $key=>$value ){
+        $params = $_POST;
+        foreach ( $params as $key=>$value ){
             
-                if(!($key == 'ip' || $key == 'emailsubject' || $key == 'url' || $key == 'emailto' || $key == 'nocomment' || $key == 'v_error' || $key == 'v_email')){
+            if(!($key == 'ip' || $key == 'emailsubject' || $key == 'url' || $key == 'emailto' || $key == 'nocomment' || $key == 'v_error' || $key == 'v_email')) {
                 
-                    $key = ucwords(str_replace("-", " ", $key));
+                $key = ucwords(str_replace("-", " ", $key));
                     
-                    if ( gettype( $value ) == "array" ){
-                        $message .= "$key: \n";
-                        foreach ( $value as $two_dim_value )
+                if (gettype($value) == "array" ) {
+                    $message .= "$key: \n";
+                    foreach ( $value as $two_dim_value ) {
                         $message .= "...$two_dim_value<br>";
-                    }else {
-                        $message .= $value != '' ? "$key: $value\n" : '';
                     }
+                }else {
+                    $message .= $value != '' ? "$key: $value\n" : '';
                 }
             }
+        }
             
         $response = sendEmail($subject, $message, $emailto, $emailfrom);
             
-        } else {
+    } else {
         
-            $response = $response_fail;
+        $response = $response_fail;
         
-        }
+    }
 
     echo $response;
     exit;

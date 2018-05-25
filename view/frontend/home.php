@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="body-wrapper">
-                        <?php include "includes/nav.php"; ?>
+                        <?php require "includes/nav.php"; ?>
             <section id="home" class="naked">
                 <div class="fullscreenbanner-container revolution">
                     <div class="fullscreenbanner">
@@ -53,9 +53,9 @@
                 </div>
             </section>
             <div class="container">
-                <?php include "includes/section1_portfolio.php"; ?>
-                <?php include "includes/section2_about.php"; ?>
-                <?php include "includes/section3_skills.php"; ?>
+                <?php require "includes/section1_portfolio.php"; ?>
+                <?php require "includes/section2_about.php"; ?>
+                <?php require "includes/section3_skills.php"; ?>
                 <section id="contact">
                     <div class="box">
                         <h2 class="section-title">Me contacter</h2>
@@ -79,11 +79,11 @@
                         <div class="divide30"></div>
                         <div class="form-container">
                             <div class="response alert alert-success"></div>
-                                <?php include "forms/form_contact.php"; ?>
+                                <?php require "forms/form_contact.php"; ?>
                         </div>
                     </div>
                 </section>
-                <?php include "includes/footer.php"; ?>
+                <?php require "includes/footer.php"; ?>
             </div>
         </div>
         <script src="public/js/jquery.min.js"></script>

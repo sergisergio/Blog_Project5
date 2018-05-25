@@ -37,113 +37,113 @@ session_start();
 1 . PAGE D'ACCUEIL DU SITE.
 ************ FIN RESUME **********************/
 
-require('controller/frontend.php');
-require('controller/backend.php');
+require 'controller/frontend.php';
+require 'controller/backend.php';
 try {
-    if (isset($_GET['action']))  {
-/**********************************************
+    if (isset($_GET['action'])) {
+        /**********************************************
 *                  FRONT-END                  *
 **********************************************/
-/* 1 . BLOG POSTS ****************************/
+        /* 1 . BLOG POSTS ****************************/
         if ($_GET['action'] == 'blog') {
             listPosts();
-    	}
-/* 2 . UN BLOG POST **************************/
+        }
+        /* 2 . UN BLOG POST **************************/
         elseif ($_GET['action'] == 'blogpost') {
             listPost($_GET['id']);
         }
-/* 3 . AJOUTER UN COMMENTAIRE ****************/
+        /* 3 . AJOUTER UN COMMENTAIRE ****************/
         elseif ($_GET['action'] == 'addcomment') {
             addComment($_GET['id'], $_SESSION['id'], $_POST['content']);
         }
-/* 4 . PAGE POUR MODIFIER UN COMMENTAIRE *****/
+        /* 4 . PAGE POUR MODIFIER UN COMMENTAIRE *****/
         elseif ($_GET['action'] == 'modifyCommentPage') {
             modifyCommentPage($_GET['id']);
         }
-/* 5 . SUPPRIMER UN COMMENTAIRE **************/
+        /* 5 . SUPPRIMER UN COMMENTAIRE **************/
         elseif ($_GET['action'] == 'deleteComment') {
             deleteComment($_GET['id']);
         }
-/* 6 . MODIFIER UN COMMENTAIRE ***************/
+        /* 6 . MODIFIER UN COMMENTAIRE ***************/
         elseif ($_GET['action'] == 'modifyComment') {
             modifyComment($_GET['id'], $_SESSION['id'], $_POST['content']);
         }
-/* 7 . PAGE CONNEXION UTILISATEUR ************/
+        /* 7 . PAGE CONNEXION UTILISATEUR ************/
         elseif ($_GET['action'] == 'loginPage') {
-    		loginPage();
+            loginPage();
         }
-/* 8 . CONNEXION UTILISATEUR *****************/
+        /* 8 . CONNEXION UTILISATEUR *****************/
         elseif ($_GET['action'] == 'login') {
             login($_POST['pseudo'], $_POST['passe']);
         }
-/* 9 . DECONNEXION UTILISATEUR ***************/
+        /* 9 . DECONNEXION UTILISATEUR ***************/
         elseif ($_GET['action'] == 'logout') {
             logout();
         }
-/* 10. PAGE INSCRIPTION UTILISATEUR **********/
+        /* 10. PAGE INSCRIPTION UTILISATEUR **********/
         elseif ($_GET['action'] == 'signupPage') {
              signupPage();
         }
-/* 11. INSCRIPTION UTILISATEUR ***************/
+        /* 11. INSCRIPTION UTILISATEUR ***************/
         elseif ($_GET['action'] == 'addUser') {
              addUser($_POST['pseudo'], $_POST['email'], $_POST['passe'], $_POST['passe2']); 
-            }
-/* 12. CONFIRMATION INSCRIPTION UTILISATEUR **/
+        }
+        /* 12. CONFIRMATION INSCRIPTION UTILISATEUR **/
         elseif ($_GET['action'] == 'confirmRegistration') {
             confirmRegistration($_GET['id'], $_GET['token']); 
         }
-/* 13 . PAS LES DROITS ADMINISTRATEUR ********/
+        /* 13 . PAS LES DROITS ADMINISTRATEUR ********/
         elseif ($_GET['action'] == 'noAdmin') {
             noAdmin();
         }
-/* 14 . CONTACT ******************************/
+        /* 14 . CONTACT ******************************/
         elseif ($_GET['action'] == 'contact') {
             contact();
         }
-/* ********************************************
-*           ADMINISTRATEUR                    *
-**********************************************/
-/* 1 . PAGE D'ACCUEIL ADMINISTRATEUR *********/
+        /* ********************************************
+        *           ADMINISTRATEUR                    *
+        **********************************************/
+        /* 1 . PAGE D'ACCUEIL ADMINISTRATEUR *********/
         elseif ($_GET['action'] == 'index_management') {
             indexManagement();
         }
-/* 2 . AFFICHER LA RUBRIQUE ARTICLES *********/
+        /* 2 . AFFICHER LA RUBRIQUE ARTICLES *********/
         elseif ($_GET['action'] == 'manage_posts') {
             managePosts();
         }
-/* 3 . AFFICHER LA RUBRIQUE COMMENTAIRES *****/
+        /* 3 . AFFICHER LA RUBRIQUE COMMENTAIRES *****/
         elseif ($_GET['action'] == 'manage_comments') {
             manageComments();
         }
-/* 4 . AJOUTER UN ARTICLE ********************/
+        /* 4 . AJOUTER UN ARTICLE ********************/
         elseif ($_GET['action'] == 'addpost') {
             addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name']);
         }
-/* 5 . PAGE POUR MODIFIER UN ARTICLE *********/
+        /* 5 . PAGE POUR MODIFIER UN ARTICLE *********/
         elseif ($_GET['action'] == 'modifyPostPage') {
                 modifyPostPage($_GET['id']);
         }
-/* 6 . MODIFIER UN ARTICLE *******************/
+        /* 6 . MODIFIER UN ARTICLE *******************/
         elseif ($_GET['action'] == 'modifyPost') {
             modifyPost($_GET['id'], $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content']);
         }       
-/* 7 . EFFACER UN ARTICLE ********************/
+        /* 7 . EFFACER UN ARTICLE ********************/
         elseif ($_GET['action'] == 'deletePost') {
                 deletePost($_GET['id']);
         }
-/* 8 . VALIDER UN COMMENTAIRE ****************/
+        /* 8 . VALIDER UN COMMENTAIRE ****************/
         elseif ($_GET['action'] == 'validateComment') {
                 validateComment($_GET['id']);
         } 
-/* 9 . SUPPRIMER UN COMMENTAIRE **************/
+        /* 9 . SUPPRIMER UN COMMENTAIRE **************/
         elseif ($_GET['action'] == 'adminDeleteComment') {
                 adminDeleteComment($_GET['id']);
         }
     }
-/* ********************************************
-*                    PAR DEFAUT               *
-**********************************************/
-/* 1 . PAGE D'ACCUEIL ************************/
+    /* ********************************************
+    *                    PAR DEFAUT               *
+    **********************************************/
+    /* 1 . PAGE D'ACCUEIL ************************/
     else {
         home();
     }

@@ -2,18 +2,18 @@
   <div class="sidebox box widget">
     <h4 class="text-center">Derniers articles</h4>
     <?php
-      while ($data = $posts1->fetch())
-      {
-      ?>
+    while ($data = $posts1->fetch())
+    {
+        ?>
       <ul>
         <li>
-          <a href="index.php?action=blogpost&amp;id=<?= $data['id'] ?>"><?= htmlspecialchars($data['title']); ?></a>
+        <a href="index.php?action=blogpost&amp;id=<?php echo $data['id'] ?>"><?php echo htmlspecialchars($data['title']); ?></a>
         </li>
       </ul>
-      <?php  
-        } 
+        <?php  
+    } 
         $posts1->closeCursor();
-      ?>
+        ?>
   </div>
   <div class="sidebox box widget">
     <h4 class="text-center">Ressources</h4>
