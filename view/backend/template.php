@@ -39,6 +39,7 @@
     <script src="public/js/classie.js"></script>
     <script src="public/js/plugins.js"></script>
     <script src="public/js/scripts.js"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=duwupb31ji27dizkt7ys8otbzxe9i7o5tszs4iafqoxxp09h"></script>
 
     <script>
         $.backstretch(["public/images/art/react2.png"]);
@@ -90,6 +91,17 @@
             placement: "left",
             yesBtn: 'Oui',
           noBtn: 'Non'// (top, right, bottom, left)
+        });
+    </script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
         });
     </script>
 </body>

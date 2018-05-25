@@ -8,6 +8,7 @@
                 <?php endforeach; ?>
                 <?php unset($_SESSION['flash']); ?>
             <?php endif; ?>
+                </script>
 <form action="index.php?action=addcomment&amp;id=<?php echo $post['id'] ?>" method="post">
     <div>
         <label for="content">Commentaire</label>
