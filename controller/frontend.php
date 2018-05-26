@@ -165,14 +165,15 @@ function setActiveUser($userId)
 /* ***************** 9 . TOUS LES BLOG POSTS *****************/
 function listPosts()
 {
+
     $postManager = new PostManager();
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
 
-    if(isset($page) AND !empty($page) AND ($page > 0 ) AND ($page <= $totalPages)) {
-        $page = intval($page);
-        $currentPage = $page;
+    if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
+        $_GET['page'] = intval($_GET['page']);
+        $currentPage = $_GET['page'];
     }
     else {
         $currentPage = 1;
@@ -407,4 +408,16 @@ function contact()
 
     echo $response;
     exit;
+}
+/* *********** 18 . SEARCH ****************************/
+function search($search)
+{
+    if (isset($search) && $search != NULL) {
+        $postManager = new \Philippe\Blog\Model\PostManager();
+        $posts1 = $postManager->getPosts(0, 5);
+        $countSearchResults = $postManager->countSearchRequest($search);
+        $nbResults = $countSearchResults->rowCount();
+        $results = $postManager->searchRequest($search);
+        require('view/frontend/pages/searchresults.php');
+    }
 }

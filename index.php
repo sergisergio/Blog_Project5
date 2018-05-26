@@ -41,7 +41,7 @@ require 'controller/frontend.php';
 require 'controller/backend.php';
 try {
     if (isset($_GET['action'])) {
-        /**********************************************
+/**********************************************
 *                  FRONT-END                  *
 **********************************************/
         /* 1 . BLOG POSTS ****************************/
@@ -99,6 +99,10 @@ try {
         /* 14 . CONTACT ******************************/
         elseif ($_GET['action'] == 'contact') {
             contact();
+        }
+        /* 15 . SEARCH ******************************/
+        elseif ($_GET['action'] == 'search') {
+            search($_POST['search']);
         }
         /* ********************************************
         *           ADMINISTRATEUR                    *

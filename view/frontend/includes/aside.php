@@ -1,4 +1,7 @@
 <aside class="col-md-4 col-sm-12 sidebar">
+    <div class="sidebox box widget">
+    <?php include "view/frontend/forms/form_search.php"; ?>
+  </div>
   <div class="sidebox box widget">
     <h4 class="text-center">Derniers articles</h4>
     <?php
@@ -40,6 +43,31 @@
                                 <li><a href="https://openclassrooms.com/courses/construisez-une-api-rest-avec-symfony" target="_blank">API REST avec Symfony</a></li>
                                 <li><a href="https://openclassrooms.com/courses/testez-et-suivez-l-etat-de-votre-application-php" target="_blank">Tester une application PHP</a></li>
                                 <li><a href="https://openclassrooms.com/courses/testez-fonctionnellement-votre-application-symfony" target="_blank">Tester une application Symfony</a></li>
+                                <hr style="padding-bottom: 0px; margin-bottom: 20px;">
+
+                                <li><a href="https://openclassrooms.com/courses/les-espaces-de-noms-en-php" target="_blank">Namespaces</a></li>
+                                <li><a href="https://openclassrooms.com/courses/php-utiliser-un-debogueur-pour-php-xdebug" target="_blank">Xdebug</a></li>
+                                <li><a href="https://openclassrooms.com/courses/realiser-un-moteur-de-recherche-pour-son-site" target="_blank">Moteur de recherche</a></li>
+                                <li><a href="https://openclassrooms.com/courses/creer-son-forum-de-toutes-pieces/avant-tout-2" target="_blank">MCréer son forum</a></li>
+                                <li><a href="https://openclassrooms.com/courses/pdo-comprendre-et-corriger-les-erreurs-les-plus-frequentes" target="_blank">PDO</a></li>
+                                <li><a href="https://openclassrooms.com/courses/register-globals-et-ecrasement-de-donnees" target="_blank">Register globals</a></li>
+                                <li><a href="https://openclassrooms.com/courses/le-htaccess-et-ses-fonctionnalites" target="_blank">htaccess</a></li>
+                                <li><a href="https://openclassrooms.com/courses/la-tamporisation-de-sortie-en-php" target="_blank">tamporisation de sortie</a></li>
+                                <li><a href="https://openclassrooms.com/courses/upload-de-fichiers-par-formulaire" target="_blank">Upload de fichiers</a></li>
+                                <li><a href="https://openclassrooms.com/courses/gerer-les-dates-en-php" target="_blank">gérer les dates</a></li>
+                                <li><a href="https://openclassrooms.com/courses/e-mail-envoyer-un-e-mail-en-php" target="_blank">Envoyer un e-mail en PHP</a></li>
+                                <li><a href="https://openclassrooms.com/courses/les-filtres-en-php-pour-valider-les-donnees-utilisateur" target="_blank">Les filtres en PHP</a></li>
+                                <li><a href="https://openclassrooms.com/courses/protegez-vous-efficacement-contre-les-failles-web/la-csrf" target="_blank">Failles de sécurité</a></li>
+                                <li><a href="https://openclassrooms.com/courses/adopter-un-style-de-programmation-clair-avec-le-modele-mvc" target="_blank">Modèle MVC</a></li>
+                                <li><a href="https://openclassrooms.com/courses/votre-site-php-presque-complet-architecture-mvc-et-bonnes-pratiques/avant-propos-comment-fonctionne-ce-tutoriel" target="_blank">Architecture MVC</a></li>
+                                <hr style="padding-bottom: 0px; margin-bottom: 20px;">
+                                <li><a href="https://openclassrooms.com/courses/premiers-pas-avec-le-framework-php-silex" target="_blank">Silex: premiers pas</a></li>
+                                <li><a href="https://openclassrooms.com/courses/evoluez-vers-une-architecture-php-professionnelle" target="_blank">Architecture pro avec Silex</a></li>
+                                <li><a href="https://openclassrooms.com/courses/atomik-framework-un-framework-php-simple-et-leger" target="_blank">Atomik framework</a></li>
+                                <hr style="padding-bottom: 0px; margin-bottom: 20px;">
+                                <li><a href="https://openclassrooms.com/courses/decouvrez-le-framework-php-laravel-1/presentation-generale-14" target="_blank">Laravel</a></li>
+
+                                <li><a href="https://openclassrooms.com/courses/upload-de-fichiers-par-formulaire" target="_blank">PHP : Upload de fichiers</a></li>
                               </ul>
                             </div>
                         </div>
@@ -56,7 +84,7 @@
                                 <li><a href="https://www.codacy.com" target="_blank">Codacy</a></li>
                                 <li><a href="https://www.php-fig.org/psr/" target="_blank">PSR</a></li>
                                 <li><a href="https://www.grafikart.fr/formations/programmation-objet-php" target="_blank">Grafikart POO</a></li>
-                                
+                                <li><a href="http://fr2.php.net/ini.core" target="_blank">PHP.ini</a></li>
                               </ul>
                             </div>
                         </div>
@@ -70,6 +98,8 @@
                                 <ul>
                                 <li><a href="https://dev.mysql.com/doc/" target="_blank">Doc MySQL</a></li>
                                 <li><a href="https://www.mysql.com/fr/products/workbench/" target="_blank">MySQL Workbench</a></li>
+                                <li><a href="https://openclassrooms.com/courses/mysql-et-les-donnees-temporelles" target="_blank">Les dates</a></li>
+                                <li><a href="https://openclassrooms.com/courses/les-moteurs-de-stockage-de-mysql-2" target="_blank">Les moteurs de stockage de MySQL</a></li>
                               </ul>
                             </div>
                         </div>
@@ -103,7 +133,14 @@
                                 <hr style="padding-bottom: 0px; margin-bottom: 20px;">
                                 <li><a href="https://getcomposer.org" target="_blank">Composer</a></li>
                                 <li><a href="https://twig.symfony.com" target="_blank">Twig</a></li>
-                                
+                                <hr style="padding-bottom: 0px; margin-bottom: 20px;">
+                                <li><a href="https://silex.symfony.com/" target="_blank">Silex</a></li>
+                                <li><a href="https://silex.symfony.com/doc/2.0/" target="_blank">Silex Documentation</a></li>
+                                <hr style="padding-bottom: 0px; margin-bottom: 20px;">
+                                <li><a href="https://cakephp.org/" target="_blank">CakePHP</a></li>
+                                <li><a href="https://framework.zend.com/" target="_blank">Zend</a></li>
+                                <li><a href="https://symfony.com/legacy" target="_blank">Symfony</a></li>
+                                <li><a href="https://codeigniter.com/" target="_blank">CodeIgniter</a></li>
                               </ul>
                             </div>
                         </div>

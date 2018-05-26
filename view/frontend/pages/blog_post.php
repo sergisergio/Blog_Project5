@@ -52,7 +52,7 @@
                             <img src="public/images/posts/default.jpg" class="img-responsive" />
                             <?php endif; ?>
                             <p>
-                                <?php echo nl2br(htmlspecialchars($post['content'])) ?>
+                                <?php echo nl2br(htmlspecialchars(strip_tags($post['content']))) ?>
                             </p>
                         </div>
                         <div class="divide20"></div>

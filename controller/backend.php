@@ -53,7 +53,7 @@ function addPost($title, $chapo, $author, $content, $image)
     $file_extension = $_FILES['file_extension'];
     $file_extension_error = $_FILES['file_extension']['error'];
     $file_extension_size = $_FILES['file_extension']['size'];
-    $file_extension_tmp = _FILES['file_extension']['tmp_name'];
+    $file_extension_tmp = $_FILES['file_extension']['tmp_name'];
     if (!empty($title) && !empty($content) && !empty($chapo)) {
         // Testons si le fichier a bien été envoyé et s'il n'y a pas d'erreur
         if (isset($file_extension) AND $file_extension_error == 0) {
