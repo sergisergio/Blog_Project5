@@ -74,7 +74,7 @@ try {
         }
         /* 8 . CONNEXION UTILISATEUR *****************/
         elseif ($_GET['action'] == 'login') {
-            login($_POST['pseudo'], $_POST['passe']);
+            login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR']);
         }
         /* 9 . DECONNEXION UTILISATEUR ***************/
         elseif ($_GET['action'] == 'logout') {
