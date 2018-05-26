@@ -46,7 +46,7 @@
             </div>
             <hr>
             <h2>Modifier le commentaire</h2>
-            <?php require "forms/form_modifycomment.php"; ?>
+            <?php require "view/frontend/forms/form_modifycomment.php"; ?>
             <div class="divide20"></div>
           </div>
         </div>
@@ -56,13 +56,13 @@
         <div class="divide20"></div>
         <div class="divide20"></div>
       </div>
-            <?php require "includes/aside.php"; ?>
+            <?php require "view/frontend/includes/aside.php"; ?>
     </div>
       <div class="container bottomcontainer">
         <div class="row">
-            <?php require "includes/footer.php"; ?>
+            <?php require "view/frontend/includes/footer.php"; ?>
         </div>
       </div>
   </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'template.php'; ?>
+<?php require 'view/frontend/templates/template.php'; ?>

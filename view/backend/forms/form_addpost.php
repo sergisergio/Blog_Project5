@@ -21,10 +21,13 @@
         <label for="content">Article</label><br />
         <textarea type="text" id="content" name="content" value=""></textarea>
     </div>
+    <div class="divide20"></div>
+    <div class="divide20"></div>
     <div>
-        <label for="content">Ajouter une image (facultatif) </label><br />
+        <label style="display: block;text-align: center;margin: 0 auto;" for="content">Ajouter une image (facultatif) </label><br />
          <input style="text-align: center;margin: 0 auto;" type="file" name="file_extension" />
     </div>
+    <div class="divide20"></div>
     <div>
         <input class="btn btn-default" type="submit" style="width: 100px;display: block; margin: 0 auto;"/>
     </div>

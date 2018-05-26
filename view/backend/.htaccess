@@ -1,0 +1,4 @@
+AuthName "protection administration"
+AuthType Basic
+AuthUserFile "/homepages/32/d683710301/htdocs/projets/projet5/view/backend/.htpasswd"
+Require valid-user

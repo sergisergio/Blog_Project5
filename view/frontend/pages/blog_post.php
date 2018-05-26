@@ -100,7 +100,7 @@
                     <div class="post box">
                         <h3>Ajouter un commentaire</h3>
                             <?php if (isset($_SESSION['pseudo'])) : ?>       
-                                <?php include "forms/form_addcomment.php"; ?>
+                                <?php include "view/frontend/forms/form_addcomment.php"; ?>
                             <?php else: ?> 
                                 <p>Vous devez être inscrit et connecté pour ajouter un commentaire !</p>
                                 <a href="index.php?action=signupPage">M'inscrire</a>&nbsp;&nbsp;
@@ -110,14 +110,14 @@
                 </div>
                 <div class="divide60"></div>
             </div>
-                <?php require "includes/aside.php"; ?>
+                <?php require "view/frontend/includes/aside.php"; ?>
             </div>
             <div class="container bottomcontainer">
                 <div class="row">
-                    <?php require "includes/footer.php"; ?>
+                    <?php require "view/frontend/includes/footer.php"; ?>
                 </div>
             </div>
         </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'template.php'; ?>
+<?php require 'view/frontend/templates/template.php'; ?>

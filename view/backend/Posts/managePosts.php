@@ -1,3 +1,9 @@
+<?php
+    if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+    header('Location: index.php?action=noAdmin');
+    exit();
+}
+?>
 <?php $title = 'Gestion des articles'; ?>
 <?php ob_start(); ?>
 <body class="full-layout">
@@ -62,4 +68,4 @@
                 <div class="divide100"></div>
         </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'view/backend/template.php'; ?>
+<?php require 'view/backend/templates/template.php'; ?>

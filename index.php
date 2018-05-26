@@ -104,8 +104,8 @@ try {
         *           ADMINISTRATEUR                    *
         **********************************************/
         /* 1 . PAGE D'ACCUEIL ADMINISTRATEUR *********/
-        elseif ($_GET['action'] == 'index_management') {
-            indexManagement();
+        elseif ($_GET['action'] == 'admin') {
+            admin();
         }
         /* 2 . AFFICHER LA RUBRIQUE ARTICLES *********/
         elseif ($_GET['action'] == 'manage_posts') {

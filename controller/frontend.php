@@ -32,17 +32,17 @@ use \Philippe\Blog\Model\SecurityManager;
 /* ***************** 1 . PAGE D'ACCUEIL **********************/
 function home()
 {
-    include 'view/frontend/home.php';
+    include 'view/frontend/index.php';
 }
 /* ***************** 2 . PAGE CONNEXION **********************/
 function loginPage()
 {
-    include 'view/frontend/login.php';
+    include 'view/frontend/pages/login.php';
 }
 /* ***************** 3 . PAGE INSCRIPTION ********************/
 function signupPage()
 {
-    include 'view/frontend/signup.php';
+    include 'view/frontend/pages/signup.php';
 }
 /* ****************  4 . INSCRIPTION *************************/
 function addUser($pseudo, $email, $passe, $passe2)
@@ -181,7 +181,7 @@ function listPosts()
     $posts = $postManager->getPosts($start, $postsPerPage);
     $posts1 = $postManager->getPosts(0, 5);
 
-    include 'view/frontend/blog.php';
+    include 'view/frontend/pages/blog.php';
 }
 /* **************** 10 . AFFICHER UN SEUL BLOG POST **********/
 function listPost($postId)
@@ -198,7 +198,7 @@ function listPost($postId)
         $comments = $commentManager->getComments($postId);
         $user = $userManager->getUser($postId);
         $nbCount = $commentManager->countCommentRequest($postId);
-        include 'view/frontend/blog_post.php';
+        include 'view/frontend/pages/blog_post.php';
     }   
     else {
         $sessionManager->noIdPost();
@@ -250,7 +250,7 @@ function modifyCommentPage($commentId)
             $sessionManager->noRightsComments();
         }
         else {
-            include 'view/frontend/modifyView.php';
+            include 'view/frontend/pages/modifyCommentPage.php';
         }
     }
 }
@@ -300,12 +300,12 @@ function modifyComment($commentId, $author, $content)
 /* **************** 15. ERRORS *******************************/
 function errors()
 {
-    include 'view/frontend/errors.php';
+    include 'view/frontend/pages/errors.php';
 }
 /* *********** 16 . PAGE NO ADMIN ****************************/
 function noAdmin()
 {
-    include 'view/backend/noadmin.php';
+    include 'view/frontend/pages/noadmin.php';
 }
 /* **************** 17 . CONTACT *****************************/
 function contact()

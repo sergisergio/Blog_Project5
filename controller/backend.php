@@ -18,10 +18,13 @@
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
+use \Philippe\Blog\Model\SessionManager;
+use \Philippe\Blog\Model\MailManager;
+use \Philippe\Blog\Model\SecurityManager;
 /* *********** 1 . PAGE D'ACCUEIL ADMINISTRATEUR ***********************/
-function indexManagement()
+function admin()
 {
-    include 'view/backend/index_management.php';
+    include 'view/backend/admin.php';
 }
 /* *********** 3 . PAGE DE GESTION DES ARTICLES ************************/
 function managePosts()
@@ -40,7 +43,7 @@ function managePosts()
     }
     $start = ($currentPage-1)*$postsPerPage;
     $posts = $postManager->getPosts($start, $postsPerPage);
-    include 'view/backend/Posts/post_mgmt.php';
+    include 'view/backend/Posts/managePosts.php';
 }
 /* *********** 4 . AJOUTER UN ARTICLE **********************************/
 function addPost($title, $chapo, $author, $content, $image)
@@ -90,7 +93,7 @@ function modifyPostPage($postId)
         managePosts();
         exit();
     }
-    include 'view/backend/Posts/modifyPostView.php';
+    include 'view/backend/Posts/modifyPostPage.php';
 }
 /* *********** 6 . MODIFIER UN ARTICLE *********************************/
 function modifyPost($postId, $title, $chapo, $author, $content)
@@ -146,7 +149,7 @@ function manageComments()
     $commentManager = new CommentManager();
     $nbCount = $commentManager->countCommentBackRequest();
     $submittedcomments = $commentManager->submittedCommentRequest();
-    include 'view/backend/Comments/comment_mgmt.php';
+    include 'view/backend/Comments/manageComments.php';
 }
 /* *********** 9 . VALIDER UN COMMENTAIRE ******************************/
 function validateComment($commentId)

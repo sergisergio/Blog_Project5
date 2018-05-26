@@ -1,4 +1,4 @@
-<?php $title = 'Zone interdite'; ?>
+<?php $title = 'Erreur'; ?>
     <?php ob_start(); ?><body class="full-layout">
         <div class="body-wrapper">
             <?php require "view/frontend/includes/nav.php"; ?>
@@ -7,9 +7,6 @@
                         <div class="blog box mgbottom2 row">
                             <div class="col-md-12">
                                 <?php if (isset($_SESSION['pseudo'])) : ?>
-                                    <p class="pull-left">
-                                        <btn class="btn btn-default"> <a href="index.php?action=profilePage">Voir mon profil</a> </btn>
-                                    </p>
                                     <p class="pull-right">
                                         <btn class="btn btn-default logoutbtn"> <a href="index.php?action=logout">Déconnexion</a> </btn>
                                             <?php if ($_SESSION['avatar'] != '') : ?> <img class="img-responsive img-circle avatarblogpage" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
@@ -34,7 +31,14 @@
                             <p></p>
                             <div class="divide30"></div>
                             <div class="form-container">
-                            <div class="alert alert-danger" style="font-weight: bold; text-align:center;">Vous n'avez pas les droits pour accéder à cette page...</div>
+                            <?php if(isset($_SESSION['flash'])) : ?>
+                                <?php foreach($_SESSION['flash'] as $type => $message): ?>
+                                <div class="text-center alert alert-<?php echo $type; ?>" style="font-weight: bold; text-align:center;">
+                                    <?php echo $message; ?>
+                                </div>
+                                <?php endforeach; ?>
+                                <?php unset($_SESSION['flash']); ?>
+                            <?php endif; ?>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -49,4 +53,4 @@
                 </div>
         </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'template.php'; ?>
+<?php require 'view/frontend/templates/template.php'; ?>

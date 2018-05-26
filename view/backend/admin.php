@@ -12,8 +12,8 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
     <div class="body-wrapper">
     <?php require "view/frontend/includes/nav.php"; ?>
         <div class="container">
-            <?php require "includes/management.php"; ?>
+            <?php require "view/backend/includes/management.php"; ?>
         </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'template.php'; ?>
+<?php require 'view/backend/templates/template.php'; ?>
