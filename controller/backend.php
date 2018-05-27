@@ -30,7 +30,7 @@ function admin()
 function managePosts()
 {
 
-    $postManager = new PostManager();
+    $postManager = new PostManager(['$data']);
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
@@ -86,7 +86,7 @@ function addPost($title, $chapo, $author, $content, $image)
 /* *********** 5 . PAGE DE MODIFICATION DES ARTICLES *******************/
 function modifyPostPage($postId)
 {
-    $postManager = new PostManager();
+    $postManager = new PostManager(['$data']);
     $post = $postManager->getPost($postId);
     if (empty($post) || $postId <= 0) {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
@@ -98,7 +98,7 @@ function modifyPostPage($postId)
 /* *********** 6 . MODIFIER UN ARTICLE *********************************/
 function modifyPost($postId, $title, $chapo, $author, $content)
 {
-    $postManager = new PostManager();;
+    $postManager = new PostManager(['$data']);;
     if (isset($postId) && $postId > 0) {
         if (!empty($title) && !empty($content) && !empty($chapo)) {
             $post = $postManager->getPost($postId);
@@ -127,7 +127,7 @@ function modifyPost($postId, $title, $chapo, $author, $content)
 function deletePost($postId)
 {
 
-    $postManager = new PostManager();
+    $postManager = new PostManager(['$data']);
     $success = $postManager->deletePostRequest($postId);
     if (isset($postId) && $postId > 0) {
         if ($success === false) {
@@ -146,7 +146,7 @@ function deletePost($postId)
 /* *********** 8 . PAGE DE GESTION DES COMMENTAIRES ********************/
 function manageComments()
 {
-    $commentManager = new CommentManager();
+    $commentManager = new CommentManager(['$data']);
     $nbCount = $commentManager->countCommentBackRequest();
     $submittedcomments = $commentManager->submittedCommentRequest();
     include 'view/backend/Comments/manageComments.php';
@@ -154,7 +154,7 @@ function manageComments()
 /* *********** 9 . VALIDER UN COMMENTAIRE ******************************/
 function validateComment($commentId)
 {
-    $commentManager = new CommentManager();
+    $commentManager = new CommentManager(['$data']);
     $validated = $commentManager->validateCommentRequest($commentId);
     if (isset($commentId) && $commentId > 0) {
         if ($validated === false) {

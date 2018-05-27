@@ -13,37 +13,37 @@ namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class UserManager extends Manager
 {
-    private $id;
-    private $first_name;
-    private $last_name;
-    private $pseudo;
-    private $password;
-    private $email;
-    private $registration_date;
-    private $authorization;
-    private $confirmation_token;
-    private $avatar;
-    private $is_active;
+    protected $id;
+    protected $first_name;
+    protected $last_name;
+    protected $pseudo;
+    protected $password;
+    protected $email;
+    protected $registration_date;
+    protected $authorization;
+    protected $confirmation_token;
+    protected $avatar;
+    protected $is_active;
 
-     // CONSTRUCT
-    /*public function __construct($datas)
-    {
-        $this->hydrate($datas);
-    }*/
-    // HYDRATE
-    public function hydrate($datas)
-    {
-        $this->setId($datas["id"]);
-        $this->setFirstName($datas["first_name"]);
-        $this->setLastName($datas["last_name"]);
-        $this->setPseudo($datas["pseudo"]);
-        $this->setPassword($datas["password"]);
-        $this->setEmail($datas["email"]);
-        $this->setRegistrationDate($datas["registration_date"]);
-        $this->setAuthorization($datas["authorization"]);
-        $this->setConfirmationToken($datas["confirmation_token"]);
-        $this->setAvatar($datas["avatar"]);
-        $this->setIsActive($datas["is_active"]);
+    /*
+     * Méthode de construction
+     */
+    public function __construct(array $data) 
+      {
+        $this->hydrate($data);
+      }
+
+    /*
+     * Methode d'hydratation
+     */
+    public function hydrate(array $data) {
+        foreach ($data as $key => $value) {
+            $method = 'set'.ucfirst($key);
+            
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
     }
 
     public function setId($id)

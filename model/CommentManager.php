@@ -14,29 +14,33 @@ namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class CommentManager extends Manager
 {
-    private $id;
-    private $post_id;
-    private $author;
-    private $content;
-    private $creation_date;
-    private $last_updated;
-    private $validation;
+    protected $id;
+    protected $post_id;
+    protected $author;
+    protected $content;
+    protected $creation_date;
+    protected $last_updated;
+    protected $validation;
 
-    // CONSTRUCT
-    /*public function __construct($datas)
-    {
-        $this->hydrate($datas);
-    }*/
-    // HYDRATE
-    public function hydrate($datas)
-    {
-        $this->setId($datas["id"]);
-        $this->setPostId($datas["post_id"]);
-        $this->setAuthor($datas["author"]);
-        $this->setContent($datas["content"]);
-        $this->setCreationDate($datas["creation_date_fr"]);
-        $this->setLastUpdated($datas["last_updated_fr"]);
-        $this->setValidation($datas["validation"]);
+    /*
+     * Méthode de construction
+     */
+    public function __construct(array $data) 
+      {
+        $this->hydrate($data);
+      }
+
+    /*
+     * Methode d'hydratation
+     */
+    public function hydrate(array $data) {
+        foreach ($data as $key => $value) {
+            $method = 'set'.ucfirst($key);
+            
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
     }
 
     public function setId($id)

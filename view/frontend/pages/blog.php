@@ -46,6 +46,7 @@
             <?php
             while ($data = $posts->fetch())
             {
+                // $postManagerEntity = new \Philippe\Blog\Model\PostManager($data);
             ?>
             <div class="blog-posts">
             <div class="post box">

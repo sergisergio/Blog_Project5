@@ -11,59 +11,34 @@ namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class PostManager extends Manager
 {
-    private $id;
-    private $title;
-    private $chapo;
-    private $intro;
-    private $content;
-    private $author;
-    private $creation_date;
-    private $last_updated;
-    private $file_extension;
+    protected $id;
+    protected $title;
+    protected $chapo;
+    protected $intro;
+    protected $content;
+    protected $author;
+    protected $creation_date;
+    protected $last_updated;
+    protected $file_extension;
 
-     // CONSTRUCT
-    /*public function __construct($data)
-    {
+    /*
+     * Méthode de construction
+     */
+    public function __construct(array $data) 
+      {
         $this->hydrate($data);
-    }*/
-    // HYDRATE
-    public function hydrate($data)
-    {
-        if(isset($data['id']))
-        {
-            $this->setId($data["id"]);
-        }
-        if(isset($data['title']))
-        {
-            $this->setTitle($data["title"]);
-        }
-        if(isset($data['chapo']))
-        {
-            $this->setChapo($data["chapo"]);
-        }
-        if(isset($data['intro']))
-        {
-            $this->setIntro($data["intro"]);
-        }
-        if(isset($data['intro']))
-        {
-            $this->setContent($data["content"]);
-        }
-        if(isset($data['author']))
-        {
-            $this->setAuthor($data["author"]);
-        }
-        if(isset($data['creation_date_fr']))
-        {
-            $this->setCreationDate($data["creation_date_fr"]);
-        }
-        if(isset($data['id']))
-        {
-            $this->setLastUpdated($data["last_updated_fr"]);
-        }
-        if(isset($data['id']))
-        {
-            $this->setFileExtension($data["file_extension"]);
+      }
+
+    /*
+     * Methode d'hydratation
+     */
+    public function hydrate(array $data) {
+        foreach ($data as $key => $value) {
+            $method = 'set'.ucfirst($key);
+            
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
         }
     }
 

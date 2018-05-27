@@ -12,8 +12,13 @@ require_once "model/Manager.php";
 class MailManager extends Manager
 {
     /* ************ 1 . RECUPERER TOUS LES ARTICLES *******************/
-    public function registerMail()
+    function Mailer($from, $to, $subject, $body)
     {
-        
+
+        $this->from = $from;
+        $this->to = $to;
+		$this->subject = $subject;
+        $this->body = $body;
+
     }
 }

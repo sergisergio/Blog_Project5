@@ -88,7 +88,7 @@ function addUser($pseudo, $email, $passe, $passe2)
 /* ***************** 5 . CONNEXION ***************************/
 function login($pseudo,$passe, $ip)
 {
-    $userManager = new UserManager();
+    $userManager = new UserManager(['$data']);
     $sessionManager = new SessionManager();
     $securityManager = new SecurityManager();
     if(!empty($pseudo) && !empty($passe)) {
@@ -165,8 +165,8 @@ function setActiveUser($userId)
 /* ***************** 9 . TOUS LES BLOG POSTS *****************/
 function listPosts()
 {
-
-    $postManager = new PostManager();
+    
+    $postManager = new PostManager(['$data']);
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
@@ -181,6 +181,7 @@ function listPosts()
     $start = ($currentPage-1)*$postsPerPage;
     $posts = $postManager->getPosts($start, $postsPerPage);
     $data = $posts->fetch();
+    // $postManagerEntity = new PostManager($data);
     $posts1 = $postManager->getPosts(0, 5);
 
     include 'view/frontend/pages/blog.php';
@@ -189,10 +190,10 @@ function listPosts()
 function listPost($postId)
 {
 
-    $postManager = new PostManager();
-    $commentManager = new CommentManager();
+    $postManager = new PostManager(['$data']);
+    $commentManager = new CommentManager(['$data']);
     
-    $userManager = new UserManager();
+    $userManager = new UserManager(['$data']);
     $sessionManager = new SessionManager();
     $posts1 = $postManager->getPosts(0, 5);
     $post = $postManager->getPost($postId);
@@ -311,10 +312,8 @@ function noAdmin()
     include 'view/frontend/pages/noadmin.php';
 }
 /* **************** 17 . CONTACT *****************************/
-function contact()
+function contact($name, $email, $subject, $message)
 {
-
-    // Remove any un-safe values to prevent email injection
     function filter($value) 
     {
         $pattern = array("/\n/", "/\r/", "/content-type:/i", "/to:/i", "/from:/i", "/cc:/i");
@@ -322,8 +321,40 @@ function contact()
         return $value;
     }
 
+    if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
+
+        $response_sent = 'Merci. Votre message a bien été envoyé';
+        $response_error = 'Erreur. Veuillez réessayer';
+        //$url = "Origin Page: ".$_SERVER['HTTP_REFERER'];
+        $ip = "Adresse IP: ".$_SERVER["REMOTE_ADDR"];
+        $emailto = 'contact@philippetraon.com';
+        $subject =  filter($subject);
+        // Create header
+        $message = "IP : ".$ip."\n"."Auteur : ".$name."\n"."Message : ".$message;
+        $headers = "From: $email\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/plain; charset=utf-8\r\n";
+        $headers .= "Content-Transfer-Encoding: quoted-printable\r\n";
+
+        mail($emailto, $subject, $message, $headers);
+        $response = $response_sent;
+        echo $response;
+    }
+    else {
+        $response = $response_error;
+        echo $response;
+    }
+}
+    // Remove any un-safe values to prevent email injection
+    /*function filter($value) 
+    {
+        $pattern = array("/\n/", "/\r/", "/content-type:/i", "/to:/i", "/from:/i", "/cc:/i");
+        $value = preg_replace($pattern, "", $value);
+        return $value;
+    }*/
+
     // Run server-side validation
-    function sendEmail($subject, $content, $emailto, $emailfrom) 
+    /*function sendEmail($subject, $content, $emailto, $emailfrom) 
     {
         
         $from = $emailfrom;
@@ -335,12 +366,12 @@ function contact()
         $message = $content."\n$ip\r\n$url";
         
         // Validate return email & inform admin
-        $emailto = filter($emailto);
+        /* $emailto = filter($emailto); */
 
         // Setup final message
-        $body = wordwrap($message);
+        /*$body = wordwrap($message);
         
-        if($use_smtp == '1') {
+        /*if($use_smtp == '1') {
         
             $SmtpServer = 'SMTP SERVER';
             $SmtpPort = 'SMTP PORT';
@@ -352,10 +383,10 @@ function contact()
             $SMTPChat = $SMTPMail->SendMail();
             $response = $SMTPChat ? $response_sent : $response_error;
             
-        } else {
+        } else {*/
             
             // Create header
-            $headers = "From: $from\r\n";
+            /*$headers = "From: $from\r\n";
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-type: text/plain; charset=utf-8\r\n";
             $headers .= "Content-Transfer-Encoding: quoted-printable\r\n";
@@ -364,11 +395,11 @@ function contact()
             $mail_sent = @mail($emailto, $subject, $body, $headers);
             $response = $mail_sent ? $response_sent : $response_error;
             
-        }
+        //}
         return $response;
     }
 
-    $use_smtp = '0';
+    //$use_smtp = '0';
     $emailto = 'contact@philippetraon.com';
 
     // retrieve from parameters
@@ -381,7 +412,7 @@ function contact()
     
         // Honeypot captcha
     if($nocomment == '') {
-        
+        /*
         $params = $_POST;
         foreach ( $params as $key=>$value ){
             
@@ -398,9 +429,9 @@ function contact()
                     $message .= $value != '' ? "$key: $value\n" : '';
                 }
             }
-        }
+        }*/
             
-        $response = sendEmail($subject, $message, $emailto, $emailfrom);
+        /*$response = sendEmail($subject, $message, $emailto, $emailfrom);
             
     } else {
         

@@ -98,7 +98,7 @@ try {
         }
         /* 14 . CONTACT ******************************/
         elseif ($_GET['action'] == 'contact') {
-            contact();
+            contact($_POST['name'], $_POST['email'], $_POST['subject'], $_POST['message']);
         }
         /* 15 . SEARCH ******************************/
         elseif ($_GET['action'] == 'search') {
