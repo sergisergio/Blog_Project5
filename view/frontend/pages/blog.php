@@ -9,7 +9,7 @@
                         <a href="index.php?action=logout">Déconnexion</a> 
                     </btn>
                     <?php if ($_SESSION['avatar'] != '') : ?>
-                        <img class="img-responsive img-circle avatarblogpage" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+                        <img class="img-responsive img-circle avatarblogpage" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
                     <?php else: ?> 
                         <img class="img-responsive img-circle avatarblogpagedefault" src="public/images/avatar/avatardefaut.png" />
                     <?php endif; ?>
@@ -52,9 +52,9 @@
                 <div class="row">
                     <div class="col-sm-12 post-content">
                         <div class="post-title">
-                        <h2 class="post-title"><?php echo htmlspecialchars($data['title']); ?></h2>
-                        <h3 class="post-title"><?php echo htmlspecialchars($data['chapo']); ?></h3>
-                        <h4 class="post-title">Auteur : <?php echo htmlspecialchars($data['author']); ?></h4>
+                        <h2 class="post-title"><?= htmlspecialchars($data['title']); ?></h2>
+                        <h3 class="post-title"><?= htmlspecialchars($data['chapo']); ?></h3>
+                        <h4 class="post-title">Auteur : <?= htmlspecialchars($data['author']); ?></h4>
                         <div class="meta">
                             <span class="date"></span>
                             <?php
@@ -68,16 +68,16 @@
                             </div> 
                             <div class="divide30"></div>
                             <?php if ($data['file_extension'] != '') : ?>
-                            <img src="public/images/posts/<?php echo $data['file_extension']; ?>" class="img-responsive imageblog1" />
+                            <img src="public/images/posts/<?= $data['file_extension']; ?>" class="img-responsive imageblog1" />
                             <?php else: ?>
                             <img src="public/images/posts/default.jpg" class="img-responsive imageblog1" />
                             <?php endif; ?>
                             <p>
-                                <?php echo htmlspecialchars($data['intro']); ?> ...
+                                <?= htmlspecialchars($data['intro']); ?> ...
                             </p>
                             <hr>
                             <p class="pull-right"> 
-                                <btn class="btn btn-default"><a href="index.php?action=blogpost&amp;id=<?php echo $data['id'] ?>">Voir plus</a></btn>
+                                <btn class="btn btn-default"><a href="index.php?action=blogpost&amp;id=<?= $data['id'] ?>">Voir plus</a></btn>
                             </p>
                         </div>
                     </div>

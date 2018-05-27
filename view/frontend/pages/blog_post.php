@@ -71,6 +71,7 @@
                             <?php
                             while ($comment = $comments->fetch())
                             {
+                               
                             ?>
                             <p>
                             <strong><?php echo htmlspecialchars($comment['author']) ?></strong> le 

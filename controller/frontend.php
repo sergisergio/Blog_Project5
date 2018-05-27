@@ -180,6 +180,7 @@ function listPosts()
     }
     $start = ($currentPage-1)*$postsPerPage;
     $posts = $postManager->getPosts($start, $postsPerPage);
+    $data = $posts->fetch();
     $posts1 = $postManager->getPosts(0, 5);
 
     include 'view/frontend/pages/blog.php';
@@ -190,6 +191,7 @@ function listPost($postId)
 
     $postManager = new PostManager();
     $commentManager = new CommentManager();
+    
     $userManager = new UserManager();
     $sessionManager = new SessionManager();
     $posts1 = $postManager->getPosts(0, 5);

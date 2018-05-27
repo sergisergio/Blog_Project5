@@ -14,6 +14,87 @@ namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class CommentManager extends Manager
 {
+    private $id;
+    private $post_id;
+    private $author;
+    private $content;
+    private $creation_date;
+    private $last_updated;
+    private $validation;
+
+    // CONSTRUCT
+    /*public function __construct($datas)
+    {
+        $this->hydrate($datas);
+    }*/
+    // HYDRATE
+    public function hydrate($datas)
+    {
+        $this->setId($datas["id"]);
+        $this->setPostId($datas["post_id"]);
+        $this->setAuthor($datas["author"]);
+        $this->setContent($datas["content"]);
+        $this->setCreationDate($datas["creation_date_fr"]);
+        $this->setLastUpdated($datas["last_updated_fr"]);
+        $this->setValidation($datas["validation"]);
+    }
+
+    public function setId($id)
+      {
+        $this->id = $id;
+      }
+    public function getId()
+      {
+        return $this->id;
+      }
+    public function setPostId($post_id)
+      {
+        $this->post_id = $post_id;
+      }
+    public function getPostId()
+      {
+        return $this->post_id;
+      }
+    public function setAuthor($author)
+      {
+        $this->author = $author;
+      }
+    public function getAuthor()
+      {
+        return $this->author;
+      }
+    public function setContent($content)
+      {
+        $this->content = $content;
+      }
+    public function getContent()
+      {
+        return $this->content;
+      }
+    public function setCreationDate($creation_date)
+      {
+        $this->creation_date = $creation_date;
+      }
+    public function getCreationDate()
+      {
+        return $this->creation_date;
+      }
+    public function setLastUpdated($last_updated)
+      {
+        $this->last_updated = $last_updated;
+      }
+    public function getLastUpdated()
+      {
+        return $this->last_updated;
+      }
+    public function setValidation($validation)
+      {
+        $this->validation = $validation;
+      }
+    public function getValidation()
+      {
+        return $this->validation;
+      }
     /* *********** 1 . RECUPERER TOUS LES COMMENTAIRES *********************/
     public function getComments($postId)
     {

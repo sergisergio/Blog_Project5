@@ -11,6 +11,134 @@ namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class PostManager extends Manager
 {
+    private $id;
+    private $title;
+    private $chapo;
+    private $intro;
+    private $content;
+    private $author;
+    private $creation_date;
+    private $last_updated;
+    private $file_extension;
+
+     // CONSTRUCT
+    /*public function __construct($data)
+    {
+        $this->hydrate($data);
+    }*/
+    // HYDRATE
+    public function hydrate($data)
+    {
+        if(isset($data['id']))
+        {
+            $this->setId($data["id"]);
+        }
+        if(isset($data['title']))
+        {
+            $this->setTitle($data["title"]);
+        }
+        if(isset($data['chapo']))
+        {
+            $this->setChapo($data["chapo"]);
+        }
+        if(isset($data['intro']))
+        {
+            $this->setIntro($data["intro"]);
+        }
+        if(isset($data['intro']))
+        {
+            $this->setContent($data["content"]);
+        }
+        if(isset($data['author']))
+        {
+            $this->setAuthor($data["author"]);
+        }
+        if(isset($data['creation_date_fr']))
+        {
+            $this->setCreationDate($data["creation_date_fr"]);
+        }
+        if(isset($data['id']))
+        {
+            $this->setLastUpdated($data["last_updated_fr"]);
+        }
+        if(isset($data['id']))
+        {
+            $this->setFileExtension($data["file_extension"]);
+        }
+    }
+
+    public function setId($id)
+      {
+        $this->id = $id;
+      }
+    public function getId()
+      {
+        return $this->id;
+      }
+    public function setTitle($title)
+      {
+        $this->title = $title;
+      }
+    public function getTitle()
+      {
+        return $this->title;
+      }
+    public function setChapo($chapo)
+      {
+        $this->chapo = $chapo;
+      }
+    public function getChapo()
+      {
+        return $this->chapo;
+      }
+    public function setIntro($intro)
+      {
+        $this->intro = $intro;
+      }
+    public function getIntro()
+      {
+        return $this->intro;
+      }
+    public function setContent($content)
+      {
+        $this->content = $content;
+      }
+    public function getContent()
+      {
+        return $this->content;
+      }
+    public function setAuthor($author)
+      {
+        $this->author = $author;
+      }
+    public function getAuthor()
+      {
+        return $this->author;
+      }
+    public function setCreationDate($creation_date)
+      {
+        $this->creationDate = $creation_date;
+      }
+    public function getCreationDate()
+      {
+        return $this->creationDate;
+      }
+    public function setLastUpdated($last_updated)
+      {
+        $this->lastUpdated = $last_updated;
+      }
+    public function getLastUpdated()
+      {
+        return $this->lastUpdated;
+      }
+    public function setFileExtension($file_extension)
+      {
+        $this->fileExtension = $file_extension;
+      }
+    public function getFileExtension()
+      {
+        return $this->fileExtension;
+      }
     /* ************ 1 . RECUPERER TOUS LES ARTICLES *******************/
     public function getPosts($start, $postsPerPage)
     {
