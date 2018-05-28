@@ -13,7 +13,7 @@ namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class UserManager extends Manager
 {
-    protected $id;
+    /*protected $id;
     protected $first_name;
     protected $last_name;
     protected $pseudo;
@@ -28,7 +28,7 @@ class UserManager extends Manager
     /*
      * Méthode de construction
      */
-    public function __construct(array $data) 
+    /*public function __construct(array $data) 
       {
         $this->hydrate($data);
       }
@@ -36,7 +36,7 @@ class UserManager extends Manager
     /*
      * Methode d'hydratation
      */
-    public function hydrate(array $data) {
+    /*public function hydrate(array $data) {
         foreach ($data as $key => $value) {
             $method = 'set'.ucfirst($key);
             
@@ -186,6 +186,7 @@ class UserManager extends Manager
         $token = str_random(100);
         $users = $post->execute(array($pseudo, $email, $passe, $token));
         $user_id = $dbProjet5->lastInsertId();
+        mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
     }
     /* ************** 5 . CONFIRMATION INSCRIPTION *************************/
     public function setActiveRequest($userId) 

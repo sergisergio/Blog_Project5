@@ -19,4 +19,10 @@ class SecurityManager extends Manager
 		$req = $dbProjet5->prepare('INSERT INTO connexion(ip) VALUES(?)');
 		$req->execute(array($ip));
 	}
+
+	public function checkCSRF() {
+		if (!isset($_SESSION['csrf_token'])) {
+			$_SESSION['csrf_token'] = md5(time()*rand(1, 1000));
+		}
+	}
 }

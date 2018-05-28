@@ -26,8 +26,9 @@ use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Model\SessionManager;
-use \Philippe\Blog\Model\MailManager;
 use \Philippe\Blog\Model\SecurityManager;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 /* ***************** 1 . PAGE D'ACCUEIL **********************/
 function home()
@@ -49,7 +50,6 @@ function addUser($pseudo, $email, $passe, $passe2)
 {
     $userManager = new UserManager();
     $sessionManager = new SessionManager();
-    $mailManager = new MailManager();
     if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
         $user = $userManager->existPseudo($pseudo);
         $usermail = $userManager->existMail($email);
@@ -71,9 +71,28 @@ function addUser($pseudo, $email, $passe, $passe2)
         else {
             $users = $userManager->addUserRequest($pseudo, $email, $passe);
             /* test mail local */
-            mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
+            //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
             /* test mail online */
-            //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
+            
+
+                /*$mail = new PHPMailer(true);                             
+                try {
+                    $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
+                    $mail->addAddress($email, $pseudo);
+                    $mail->addReplyTo('contact@philippetraon.com', 'Information');
+                    $mail->isHTML(true);                                  
+                    $mail->Subject = 'Message';
+                    $mail->Body = '<b>Blog de Philippe Traon : </b>' . '<br />' . 'Afin de valider votre compte, merci de cliquer sur ce lien : ' . '<br />' . 
+                    //'<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$user_id.'&token='.$token.'>'.'Lien de confirmation</a>';
+                    '<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$user_id.'&token='.$token.'">'.'Lien de confirmation</a>';
+                    //$mail->AltBody = 'Message non-HTML : '.$message;
+                    $mail->send();
+                    // echo 'Le message a bien été envoyé';
+                } 
+                catch (Exception $e) {
+                echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
+                }*/
+            
 
             $sessionManager->registerSuccess();
             if ($users === false) {
@@ -88,7 +107,7 @@ function addUser($pseudo, $email, $passe, $passe2)
 /* ***************** 5 . CONNEXION ***************************/
 function login($pseudo,$passe, $ip)
 {
-    $userManager = new UserManager(['$data']);
+    $userManager = new UserManager();
     $sessionManager = new SessionManager();
     $securityManager = new SecurityManager();
     if(!empty($pseudo) && !empty($passe)) {
@@ -145,7 +164,24 @@ function confirmRegistration($userId, $userToken)
     if (isset($_GET['id']) && isset($_GET['token'])) {
         if ($user &&  $user['confirmation_token'] == $userToken) {
             $userManager->setActiveRequest($userId);
-            $sessionManager->registerSuccess2();
+            $_SESSION['flash']['success'] = 'Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !';
+            loginPage();
+            exit();
+            /*$mail = new PHPMailer(true);                             
+                try {
+                    $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
+                    $mail->addAddress($user['email'], $user['pseudo']);
+                    $mail->addReplyTo('contact@philippetraon.com', 'Information');
+                    $mail->isHTML(true);                                  
+                    $mail->Subject = 'Bienvenue !';
+                    $mail->Body = '<b>Votre inscription a bien été prise en compte ! Bienvenue sur le blog !  </b>' . '<a href="http://projet5.philippetraon.com">http://projet5.philippetraon.com</a>';
+                    //$mail->AltBody = 'Message non-HTML : '.$message;
+                    $mail->send();
+                    // echo 'Le message a bien été envoyé';
+                } 
+                catch (Exception $e) {
+                echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
+                }*/
         }
         else {
             $sessionManager->errorToken();
@@ -166,7 +202,7 @@ function setActiveUser($userId)
 function listPosts()
 {
     
-    $postManager = new PostManager(['$data']);
+    $postManager = new PostManager();
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
@@ -180,8 +216,6 @@ function listPosts()
     }
     $start = ($currentPage-1)*$postsPerPage;
     $posts = $postManager->getPosts($start, $postsPerPage);
-    $data = $posts->fetch();
-    // $postManagerEntity = new PostManager($data);
     $posts1 = $postManager->getPosts(0, 5);
 
     include 'view/frontend/pages/blog.php';
@@ -190,10 +224,10 @@ function listPosts()
 function listPost($postId)
 {
 
-    $postManager = new PostManager(['$data']);
-    $commentManager = new CommentManager(['$data']);
+    $postManager = new PostManager();
+    $commentManager = new CommentManager();
     
-    $userManager = new UserManager(['$data']);
+    $userManager = new UserManager();
     $sessionManager = new SessionManager();
     $posts1 = $postManager->getPosts(0, 5);
     $post = $postManager->getPost($postId);
@@ -314,139 +348,30 @@ function noAdmin()
 /* **************** 17 . CONTACT *****************************/
 function contact($name, $email, $subject, $message)
 {
-    function filter($value) 
-    {
-        $pattern = array("/\n/", "/\r/", "/content-type:/i", "/to:/i", "/from:/i", "/cc:/i");
-        $value = preg_replace($pattern, "", $value);
-        return $value;
-    }
-
     if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
-
-        $response_sent = 'Merci. Votre message a bien été envoyé';
-        $response_error = 'Erreur. Veuillez réessayer';
-        //$url = "Origin Page: ".$_SERVER['HTTP_REFERER'];
-        $ip = "Adresse IP: ".$_SERVER["REMOTE_ADDR"];
-        $emailto = 'contact@philippetraon.com';
-        $subject =  filter($subject);
-        // Create header
-        $message = "IP : ".$ip."\n"."Auteur : ".$name."\n"."Message : ".$message;
-        $headers = "From: $email\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-type: text/plain; charset=utf-8\r\n";
-        $headers .= "Content-Transfer-Encoding: quoted-printable\r\n";
-
-        mail($emailto, $subject, $message, $headers);
-        $response = $response_sent;
-        echo $response;
+         $mail = new PHPMailer(true);                             
+        try {
+            $mail->setFrom($email, 'Mailer');
+            $mail->addAddress('contact@philippetraon.com', 'Philippe Traon');
+            $mail->addReplyTo($email, 'Information');
+            $ip = $_SERVER["REMOTE_ADDR"];
+            $mail->isHTML(true);                                  
+            $mail->Subject = 'Message';
+            $mail->Body    = '<b>Auteur : </b>' . $name . '<br />' . '<b>IP : </b>' . $ip . '<br />' . '<b>Message : </b>' . $message;
+            $mail->AltBody = 'Message non-HTML : '.$message;
+            $mail->send();
+            echo 'Le message a bien été envoyé';
+        } 
+        catch (Exception $e) {
+        echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
+        }
     }
-    else {
-        $response = $response_error;
-        echo $response;
-    }
-}
-    // Remove any un-safe values to prevent email injection
-    /*function filter($value) 
-    {
-        $pattern = array("/\n/", "/\r/", "/content-type:/i", "/to:/i", "/from:/i", "/cc:/i");
-        $value = preg_replace($pattern, "", $value);
-        return $value;
-    }*/
-
-    // Run server-side validation
-    /*function sendEmail($subject, $content, $emailto, $emailfrom) 
-    {
-        
-        $from = $emailfrom;
-        $response_sent = 'Merci. Votre message a bien été envoyé';
-        $response_error = 'Erreur. Veuillez réessayer';
-        $subject =  filter($subject);
-        $url = "Origin Page: ".$_SERVER['HTTP_REFERER'];
-        $ip = "IP Address: ".$_SERVER["REMOTE_ADDR"];
-        $message = $content."\n$ip\r\n$url";
-        
-        // Validate return email & inform admin
-        /* $emailto = filter($emailto); */
-
-        // Setup final message
-        /*$body = wordwrap($message);
-        
-        /*if($use_smtp == '1') {
-        
-            $SmtpServer = 'SMTP SERVER';
-            $SmtpPort = 'SMTP PORT';
-            $SmtpUser = 'SMTP USER';
-            $SmtpPass = 'SMTP PASSWORD';
-            
-            $to = $emailto;
-            $SMTPMail = new SMTPClient($SmtpServer, $SmtpPort, $SmtpUser, $SmtpPass, $from, $to, $subject, $body);
-            $SMTPChat = $SMTPMail->SendMail();
-            $response = $SMTPChat ? $response_sent : $response_error;
-            
-        } else {*/
-            
-            // Create header
-            /*$headers = "From: $from\r\n";
-            $headers .= "MIME-Version: 1.0\r\n";
-            $headers .= "Content-type: text/plain; charset=utf-8\r\n";
-            $headers .= "Content-Transfer-Encoding: quoted-printable\r\n";
-            
-            // Send email
-            $mail_sent = @mail($emailto, $subject, $body, $headers);
-            $response = $mail_sent ? $response_sent : $response_error;
-            
-        //}
-        return $response;
-    }
-
-    //$use_smtp = '0';
-    $emailto = 'contact@philippetraon.com';
-
-    // retrieve from parameters
-    $emailfrom = isset($_POST["email"]) ? $_POST["email"] : "";
-    $nocomment = isset($_POST["nocomment"]) ? $_POST["nocomment"] : "";
-    $subject = 'Email from Philippe';
-    $message = '';
-    $response = '';
-    $response_fail = 'Un problème est survenu.';
-    
-        // Honeypot captcha
-    if($nocomment == '') {
-        /*
-        $params = $_POST;
-        foreach ( $params as $key=>$value ){
-            
-            if(!($key == 'ip' || $key == 'emailsubject' || $key == 'url' || $key == 'emailto' || $key == 'nocomment' || $key == 'v_error' || $key == 'v_email')) {
-                
-                $key = ucwords(str_replace("-", " ", $key));
-                    
-                if (gettype($value) == "array" ) {
-                    $message .= "$key: \n";
-                    foreach ( $value as $two_dim_value ) {
-                        $message .= "...$two_dim_value<br>";
-                    }
-                }else {
-                    $message .= $value != '' ? "$key: $value\n" : '';
-                }
-            }
-        }*/
-            
-        /*$response = sendEmail($subject, $message, $emailto, $emailfrom);
-            
-    } else {
-        
-        $response = $response_fail;
-        
-    }
-
-    echo $response;
-    exit;
 }
 /* *********** 18 . SEARCH ****************************/
 function search($search)
 {
     if (isset($search) && $search != NULL) {
-        $postManager = new \Philippe\Blog\Model\PostManager();
+        $postManager = new PostManager();
         $posts1 = $postManager->getPosts(0, 5);
         $countSearchResults = $postManager->countSearchRequest($search);
         $nbResults = $countSearchResults->rowCount();

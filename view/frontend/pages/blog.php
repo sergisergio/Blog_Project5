@@ -29,7 +29,7 @@
             
             <div class="pagination box mgbottom25">
                 <ul>
-                    <li><?php echo '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
+                    <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>
                         <?php
                         for($i=1;$i<=$totalPages;$i++){
                             if($i == $currentPage) {
@@ -46,7 +46,6 @@
             <?php
             while ($data = $posts->fetch())
             {
-                // $postManagerEntity = new \Philippe\Blog\Model\PostManager($data);
             ?>
             <div class="blog-posts">
             <div class="post box">
@@ -60,10 +59,10 @@
                             <span class="date"></span>
                             <?php
                             if (isset($data['last_updated_fr'])) {
-                                echo $data['last_updated_fr'];
+                                echo ($data['last_updated_fr']);
                             }
                             else {
-                                echo $data['creation_date_fr'];
+                                echo ($data['creation_date_fr']);
                             }
                                 ?>
                             </div> 

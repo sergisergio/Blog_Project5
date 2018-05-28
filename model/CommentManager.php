@@ -14,7 +14,7 @@ namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class CommentManager extends Manager
 {
-    protected $id;
+    /*protected $id;
     protected $post_id;
     protected $author;
     protected $content;
@@ -25,15 +25,15 @@ class CommentManager extends Manager
     /*
      * Méthode de construction
      */
-    public function __construct(array $data) 
+    /*public function __construct(/*array $data) 
       {
-        $this->hydrate($data);
+        $this->hydrate(/*$data);
       }
 
     /*
      * Methode d'hydratation
      */
-    public function hydrate(array $data) {
+    /*public function hydrate(array $data) {
         foreach ($data as $key => $value) {
             $method = 'set'.ucfirst($key);
             

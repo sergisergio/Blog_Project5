@@ -10,6 +10,7 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         'P' => 
         array (
             'Philippe\\Blog\\Model\\' => 20,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
         array (
@@ -21,6 +22,10 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         'Philippe\\Blog\\Model\\' => 
         array (
             0 => __DIR__ . '/../..' . '/model',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Michelf\\' => 
         array (

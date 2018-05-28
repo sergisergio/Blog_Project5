@@ -12,7 +12,7 @@
                 </div>
                 <div class="form-row text-input-row subject-field">
                     <label>Objet</label>
-                    <input type="text" name="subject" class="text-input defaultText" /> 
+                    <input type="text" name="subject" class="text-input required defaultText" /> 
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 lp5">

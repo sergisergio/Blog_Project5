@@ -48,7 +48,6 @@ function managePosts()
 /* *********** 4 . AJOUTER UN ARTICLE **********************************/
 function addPost($title, $chapo, $author, $content, $image)
 {
-
     $postManager = new PostManager();
     $file_extension = $_FILES['file_extension'];
     $file_extension_error = $_FILES['file_extension']['error'];
