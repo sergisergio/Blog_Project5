@@ -22,6 +22,9 @@
 //require_once('model/CommentManager.php');
 //require_once('model/UserManager.php');
 require "vendor/autoload.php";
+use \Philippe\Blog\Model\Entities\PostEntity;
+use \Philippe\Blog\Model\Entities\CommentEntity;
+use \Philippe\Blog\Model\Entities\UserEntity;
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
@@ -201,7 +204,6 @@ function setActiveUser($userId)
 /* ***************** 9 . TOUS LES BLOG POSTS *****************/
 function listPosts()
 {
-    
     $postManager = new PostManager();
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
