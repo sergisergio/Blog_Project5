@@ -37,8 +37,13 @@ session_start();
 1 . PAGE D'ACCUEIL DU SITE.
 ************ FIN RESUME **********************/
 
-require 'controller/frontend.php';
-require 'controller/backend.php';
+require 'controller/defaultController.php';
+require 'controller/adminController.php';
+require 'controller/postController.php';
+require 'controller/commentController.php';
+require 'controller/logController.php';
+require 'controller/contactController.php';
+require 'controller/errorsController.php';
 try {
     if (isset($_GET['action'])) {
 /**********************************************

@@ -1,36 +1,33 @@
 <?php 
 /* ************************* RESUME *************************************
-1 . PAGE D'ACCUEIL ADMINISTRATEUR.
-2 . PAGE NO ADMIN. 
-3 . PAGE DE GESTION DES ARTICLES.
-4 . AJOUTER UN ARTICLE.
-5 . PAGE DE MODIFICATION DES ARTICLES.
-6 . MODIFIER UN ARTICLE.
-7 . SUPPRIMER UN ARTICLE.
-8 . PAGE DE GESTION DES COMMENTAIRES.
-9 . VALIDER UN COMMENTAIRE.
-10. SUPPRIMER UN COMMENTAIRE.
+1 . HOME. 
+2 . MANAGE POSTS PAGE.
+3 . ADD A POST.
+4 . MODIFY POST PAGE.
+5 . MODIFY A POST.
+6 . DELETE A POST.
+7 . MANAGE COMMENTS PAGE.
+8 . VALIDATE A COMMENT.
+9 . DELETE A COMMENT.
 ************************************************************************/
-//require_once('model/PostManager.php');
-//require_once('model/CommentManager.php');
-//require_once('model/UserManager.php');
-//require "vendor/autoload.php";
+
+require "vendor/autoload.php";
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Model\SessionManager;
-use \Philippe\Blog\Model\MailManager;
-use \Philippe\Blog\Model\SecurityManager;
-/* *********** 1 . PAGE D'ACCUEIL ADMINISTRATEUR ***********************/
+// use \Philippe\Blog\Model\MailManager;
+// use \Philippe\Blog\Model\SecurityManager;
+/* *********** 1 . HOME ***********************/
 function admin()
 {
     include 'view/backend/admin.php';
 }
-/* *********** 3 . PAGE DE GESTION DES ARTICLES ************************/
+/* *********** 2 . MANAGE POSTS PAGE ************************/
 function managePosts()
 {
 
-    $postManager = new PostManager(['$data']);
+    $postManager = new PostManager();
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
@@ -45,7 +42,7 @@ function managePosts()
     $posts = $postManager->getPosts($start, $postsPerPage);
     include 'view/backend/Posts/managePosts.php';
 }
-/* *********** 4 . AJOUTER UN ARTICLE **********************************/
+/* *********** 3 . ADD A POST **********************************/
 function addPost($title, $chapo, $author, $content, $image)
 {
     $postManager = new PostManager();
@@ -82,10 +79,10 @@ function addPost($title, $chapo, $author, $content, $image)
         exit();
     }
 }
-/* *********** 5 . PAGE DE MODIFICATION DES ARTICLES *******************/
+/* *********** 4 . MODIFY POST PAGE *******************/
 function modifyPostPage($postId)
 {
-    $postManager = new PostManager(['$data']);
+    $postManager = new PostManager();
     $post = $postManager->getPost($postId);
     if (empty($post) || $postId <= 0) {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
@@ -94,10 +91,10 @@ function modifyPostPage($postId)
     }
     include 'view/backend/Posts/modifyPostPage.php';
 }
-/* *********** 6 . MODIFIER UN ARTICLE *********************************/
+/* *********** 5 . MODIFY A POST. *********************************/
 function modifyPost($postId, $title, $chapo, $author, $content)
 {
-    $postManager = new PostManager(['$data']);;
+    $postManager = new PostManager();;
     if (isset($postId) && $postId > 0) {
         if (!empty($title) && !empty($content) && !empty($chapo)) {
             $post = $postManager->getPost($postId);
@@ -122,11 +119,11 @@ function modifyPost($postId, $title, $chapo, $author, $content)
     }
 }
 
-/* *********** 7 . SUPPRIMER UN ARTICLE ********************************/
+/* *********** 6 . DELETE A POST ********************************/
 function deletePost($postId)
 {
 
-    $postManager = new PostManager(['$data']);
+    $postManager = new PostManager();
     $success = $postManager->deletePostRequest($postId);
     if (isset($postId) && $postId > 0) {
         if ($success === false) {
@@ -142,18 +139,18 @@ function deletePost($postId)
         exit();
     }
 }
-/* *********** 8 . PAGE DE GESTION DES COMMENTAIRES ********************/
+/* *********** 7 . MANAGE COMMENTS PAGE ********************/
 function manageComments()
 {
-    $commentManager = new CommentManager(['$data']);
+    $commentManager = new CommentManager();
     $nbCount = $commentManager->countCommentBackRequest();
     $submittedcomments = $commentManager->submittedCommentRequest();
     include 'view/backend/Comments/manageComments.php';
 }
-/* *********** 9 . VALIDER UN COMMENTAIRE ******************************/
+/* *********** 8 . VALIDATE A COMMENT ******************************/
 function validateComment($commentId)
 {
-    $commentManager = new CommentManager(['$data']);
+    $commentManager = new CommentManager();
     $validated = $commentManager->validateCommentRequest($commentId);
     if (isset($commentId) && $commentId > 0) {
         if ($validated === false) {
@@ -169,7 +166,7 @@ function validateComment($commentId)
         exit();
     }
 }
-/* ********** 10 . SUPPRIMER UN COMMENTAIRE ****************************/
+/* ********** 9 . DELETE A COMMENT ****************************/
 function adminDeleteComment($commentId)
 {
 
