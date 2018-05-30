@@ -56,6 +56,7 @@ class PostManager extends Manager
         $post = new PostEntity($data);
         return $post;
 
+        
     }
     /* ************ 3 . AJOUTER UN ARTICLE ****************************/
     public function addPostRequest($title, $chapo, $author, $content, $image)

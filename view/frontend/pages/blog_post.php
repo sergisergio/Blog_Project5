@@ -46,7 +46,7 @@
                             </div>
                             <div class="divide30"></div>
                             <?php if ($post->getFileExtension() != '') : ?>
-                            <img src="public/images/posts/<?= $post->fileExtension() ?>" class="img-responsive" />
+                            <img src="public/images/posts/<?= $post->getFileExtension() ?>" class="img-responsive" />
                             <div class="divide30"></div>
                             <?php else: ?>
                             <img src="public/images/posts/default.jpg" class="img-responsive" />
@@ -68,25 +68,25 @@
                             <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?= $nbCount; ?>)</h3>
                             <?php endif; ?>
                             <?php
-                            foreach ($comment as $c)
+                            while ($comment = $comments->fetch())
                             {
                             ?>
                             <p>
-                            <strong><?= htmlspecialchars($c->getAuthor()) ?></strong> le 
+                            <strong><?= htmlspecialchars($comment['author']) ?></strong> le 
                                 <?php
-                                if ($c->getLastUpdated()) {
-                                    echo ($c->getLastUpdated());
+                                if (isset($comment['last_updated_fr'])) {
+                                    echo ($comment['last_updated_fr']);
                                 }
                                 else {
-                                    echo ($c->getCreationDate());
+                                    echo ($comment['creation_date_fr']);
                                 }
                                     ?> 
                             </p>
                             <p>
-                                <?= nl2br(htmlspecialchars($c->getContent())) ?> 
-                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $c->getAuthor())) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
-                                    <a href="index.php?action=modifyCommentPage&amp;id=<?= $c->getId() ?>"> (Modifier)</a> 
-                                    <a href="index.php?action=deleteComment&amp;id=<?= $c->getId() ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
+                                <?= nl2br(htmlspecialchars($comment['content'])) ?> 
+                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $comment['author'])) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
+                                    <a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a> 
+                                    <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
                                 <?php endif; ?>
                             </p>
                             <?php

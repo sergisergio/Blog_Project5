@@ -43,7 +43,7 @@ function listPost($postId)
 
     if (isset($postId) && $postId > 0 && (!empty($post))) {
         
-        $comment = $commentManager->getComments($postId);
+        $comments = $commentManager->getComments($postId);
         $user = $userManager->getUser($postId);
         $nbCount = $commentManager->countCommentRequest($postId);
         include 'view/frontend/pages/blog_post.php';

@@ -22,35 +22,35 @@
                 <h2 class="text-center">Modifier/Supprimer un article</h2>
                 <div class="divide20"></div>
                 <?php
-                while ($data = $posts->fetch())
+                    foreach ($posts as $p)
                 {
                 ?>
                 <div class="post box" id="viewposts">
                 <div class="row">
                     <h2 class="post-title">
-                        <a href="index.php?action=blogpost&amp;id=<?php echo $data['id'] ?>" target="_blank"><?php echo htmlspecialchars($data['title']); ?></a>
+                        <a href="index.php?action=blogpost&amp;id=<?= $p->getId() ?>" target="_blank"><?= htmlspecialchars($p->getTitle()); ?></a>
                     </h2>
-                    <?php if ($data['file_extension'] != '') : ?>
-                        <img src="public/images/posts/<?php echo $data['file_extension']; ?>" class="img-responsive" style="width: 10%;" />
+                    <?php if ($p->getFileExtension() != '') : ?>
+                        <img src="public/images/posts/<?= $p->getFileExtension(); ?>" class="img-responsive" style="width: 10%;" />
                         <?php else: ?>
                         <img src="public/images/posts/default.jpg" class="img-responsive" style="width: 10%;" />
                         <?php endif; ?>
 
                     <btn class="btn btn-default" style="float: right;">
-                        <a href="index.php?action=deletePost&amp;id=<?php echo $data['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
+                        <a href="index.php?action=deletePost&amp;id=<?= $p->getId() ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
                     </btn>
                     <btn class="btn btn-default" style="float: right;">
-                        <a href="index.php?action=modifyPostPage&amp;id=<?php echo $data['id'] ?>">Modifier</a>
+                        <a href="index.php?action=modifyPostPage&amp;id=<?= $p->getId() ?>">Modifier</a>
                     </btn>
                 </div>
                 </div>
                 <?php
                 } 
-                    $posts->closeCursor();
+                    
                 ?>
                 <div class="pagination box">
                 <ul>
-                    <li><?php echo '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage - 1) . '#viewposts' . '">'.'Précédent'.'</a> '; ?></li>
+                    <li><?= '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage - 1) . '#viewposts' . '">'.'Précédent'.'</a> '; ?></li>
                         <?php
                         for($i=1;$i<=$totalPages;$i++){
                             if($i == $currentPage) {
