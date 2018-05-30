@@ -1,6 +1,5 @@
 <?php
 
-require "vendor/autoload.php";
 use \Philippe\Blog\Model\Entities\UserEntity;
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\SessionManager;

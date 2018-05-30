@@ -1,6 +1,5 @@
 <?php
 
-require "vendor/autoload.php";
 use \Philippe\Blog\Model\Entities\PostEntity;
 use \Philippe\Blog\Model\Entities\CommentEntity;
 use \Philippe\Blog\Model\Entities\UserEntity;
@@ -36,14 +35,15 @@ function listPost($postId)
 
     $postManager = new PostManager();
     $commentManager = new CommentManager();
-    
     $userManager = new UserManager();
     $sessionManager = new SessionManager();
-    $posts1 = $postManager->getPosts(0, 5);
+
     $post = $postManager->getPost($postId);
+    $posts1 = $postManager->getPosts(0, 5);
+
     if (isset($postId) && $postId > 0 && (!empty($post))) {
         
-        $comments = $commentManager->getComments($postId);
+        $comment = $commentManager->getComments($postId);
         $user = $userManager->getUser($postId);
         $nbCount = $commentManager->countCommentRequest($postId);
         include 'view/frontend/pages/blog_post.php';

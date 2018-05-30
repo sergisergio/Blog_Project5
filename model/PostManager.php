@@ -9,6 +9,7 @@
 ************************** FIN RESUME **********************************/
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
+use \Philippe\Blog\Model\Entities\PostEntity;
 class PostManager extends Manager
 {
     
@@ -22,7 +23,19 @@ class PostManager extends Manager
             INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage
         );
-        return $req;
+        $posts = [];
+        while ($data = $req->fetch()) {
+            $posts[] = new PostEntity($data);
+        }
+        /*$posts1 = [];
+        while ($data = $req->fetch()) {
+            $posts1[] = new PostEntity($data);
+        }*/
+        $req->closeCursor();
+        return $posts;
+        
+        /*$req->closeCursor();  
+        return $posts1;*/
     }
     /* ************ 2 . RECUPERER UN SEUL ARTICLE *********************/
     public function getPost($postId)
@@ -36,8 +49,13 @@ class PostManager extends Manager
         );
 
         $req->execute(array($postId));
-        $post = $req->fetch();
+        //$post = $req->fetch();
+        //return new PostEntity($post);
+        //$post = [];
+        $data = $req->fetch();
+        $post = new PostEntity($data);
         return $post;
+
     }
     /* ************ 3 . AJOUTER UN ARTICLE ****************************/
     public function addPostRequest($title, $chapo, $author, $content, $image)

@@ -11,7 +11,6 @@
 9 . DELETE A COMMENT.
 ************************************************************************/
 
-require "vendor/autoload.php";
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;

@@ -1,6 +1,5 @@
 <?php
 
-require "vendor/autoload.php";
 /*use \Philippe\Blog\Model\Entities\PostEntity;
 use \Philippe\Blog\Model\Entities\CommentEntity;
 use \Philippe\Blog\Model\Entities\UserEntity;

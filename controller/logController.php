@@ -1,6 +1,5 @@
 <?php
 
-require "vendor/autoload.php";
 // use \Philippe\Blog\Model\Entities\PostEntity;
 // use \Philippe\Blog\Model\Entities\CommentEntity;
 use \Philippe\Blog\Model\Entities\UserEntity;
@@ -31,6 +30,7 @@ function login($pseudo,$passe, $ip)
         if ($count < 3) {
             if(password_verify($passe, $user['password'])) {
                 if ($user['is_active'] == 1) {
+                    //lauchSession($user);
                     $_SESSION['pseudo'] = $user['pseudo'];
                     $_SESSION['id'] = $user['id'];
                     $_SESSION['prenom'] = $user['first_name'];
@@ -39,7 +39,7 @@ function login($pseudo,$passe, $ip)
                     $_SESSION['password'] = $user['password'];
                     $_SESSION['autorisation'] = $user['authorization'];
                     $_SESSION['avatar'] = $user['avatar'];
-                    $_SESSION['registration'] = $user['registration_date_fr'];
+                    $_SESSION['registration'] = $user['registration_date'];
                     header('Location: index.php?action=blog');
                     exit();
                 }

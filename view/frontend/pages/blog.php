@@ -44,40 +44,40 @@
                 </ul>
             </div>
             <?php
-            while ($data = $posts->fetch())
-            {
+                foreach ($posts as $p) 
+                {
             ?>
             <div class="blog-posts">
             <div class="post box">
                 <div class="row">
                     <div class="col-sm-12 post-content">
                         <div class="post-title">
-                        <h2 class="post-title"><?= htmlspecialchars($data['title']); ?></h2>
-                        <h3 class="post-title"><?= htmlspecialchars($data['chapo']); ?></h3>
-                        <h4 class="post-title">Auteur : <?= htmlspecialchars($data['author']); ?></h4>
+                        <h2 class="post-title"><?= htmlspecialchars($p->getTitle()); ?></h2>
+                        <h3 class="post-title"><?= htmlspecialchars($p->getChapo()); ?></h3>
+                        <h4 class="post-title">Auteur : <?= htmlspecialchars($p->getAuthor()); ?></h4>
                         <div class="meta">
                             <span class="date"></span>
                             <?php
-                            if (isset($data['last_updated_fr'])) {
-                                echo ($data['last_updated_fr']);
+                            if ($p->getLastUpdated()) {
+                                echo ($p->getLastUpdated());
                             }
                             else {
-                                echo ($data['creation_date_fr']);
+                                echo ($p->getCreationdate());
                             }
                                 ?>
                             </div> 
                             <div class="divide30"></div>
-                            <?php if ($data['file_extension'] != '') : ?>
-                            <img src="public/images/posts/<?= $data['file_extension']; ?>" class="img-responsive imageblog1" />
+                            <?php if ($p->getFileExtension() != '') : ?>
+                            <img src="public/images/posts/<?= $p->getFileExtension(); ?>" class="img-responsive imageblog1" />
                             <?php else: ?>
                             <img src="public/images/posts/default.jpg" class="img-responsive imageblog1" />
                             <?php endif; ?>
                             <p>
-                                <?= htmlspecialchars($data['intro']); ?> ...
+                                <?= htmlspecialchars($p->getIntro()); ?> ...
                             </p>
                             <hr>
                             <p class="pull-right"> 
-                                <btn class="btn btn-default"><a href="index.php?action=blogpost&amp;id=<?= $data['id'] ?>">Voir plus</a></btn>
+                                <btn class="btn btn-default"><a href="index.php?action=blogpost&amp;id=<?= $p->getId() ?>">Voir plus</a></btn>
                             </p>
                         </div>
                     </div>
@@ -85,8 +85,8 @@
                 </div>
             </div>
             <?php
-            }
-                $posts->closeCursor();
+                }
+                
             ?>
             <div class="pagination box">
                 <ul>

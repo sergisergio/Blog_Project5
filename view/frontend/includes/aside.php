@@ -2,22 +2,21 @@
     <div class="sidebox box widget">
     <?php include "view/frontend/forms/form_search.php"; ?>
   </div>
-  <div class="sidebox box widget">
+  <!--<div class="sidebox box widget">
     <h4 class="text-center">Derniers articles</h4>
     <?php
-    while ($data = $posts1->fetch())
-    {
-        ?>
-      <ul>
-        <li>
-        <a href="index.php?action=blogpost&amp;id=<?php echo $data['id'] ?>"><?php echo htmlspecialchars($data['title']); ?></a>
-        </li>
-      </ul>
-        <?php  
-    } 
-        $posts1->closeCursor();
-        ?>
-  </div>
+        foreach ($posts1 as $p) 
+        {
+    ?>
+          <ul>
+            <li>
+            <a href="index.php?action=blogpost&amp;id=<?= $p->getId() ?>"><?= htmlspecialchars($p->getTitle()); ?></a>
+            </li>
+          </ul>
+    <?php  
+        } 
+    ?>
+  </div>-->
   <div class="sidebox box widget">
     <h4 class="text-center">Ressources</h4>
     <div class="panel-group" id="accordion">

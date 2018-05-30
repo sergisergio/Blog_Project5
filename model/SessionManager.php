@@ -9,6 +9,18 @@ require_once "model/Manager.php";
 class SessionManager extends Manager
 {
     /* ************ 1 . RECUPERER TOUS LES ARTICLES *******************/
+    public function lauchSession($user)
+    {
+        $_SESSION['pseudo'] = $user->getPseudo();
+        $_SESSION['id'] = $user->getId();
+        $_SESSION['prenom'] = $user->getFirstName();
+        $_SESSION['nom'] = $user->getlastName();
+        $_SESSION['email'] = $user->getEmail();
+        $_SESSION['password'] = $user->getPassword();
+        $_SESSION['autorisation'] = $user->getAuthorization();
+        $_SESSION['avatar'] = $user->getAvatar();
+        $_SESSION['registration'] = $user->getRegistrationDate();
+    }
     public function stopSession()
     {
         unset($_SESSION);

@@ -1,4 +1,4 @@
-<?php $title = 'Article'; ?>
+<?php $title = 'Article'; ?> 
 <?php ob_start(); ?>
     <div class="container inner">
         <div class="blog box mgbottom2 row">
@@ -31,64 +31,62 @@
                 <div class="blog-posts">
                     <div class="post box">
                         <div class="post-title">
-                            <h2><?php echo htmlspecialchars($post['title']) ?></h2>
-                            <h3 class="post-title"><?php echo htmlspecialchars($post['chapo']); ?></h3>
-                            <h4 class="post-title">Auteur : <?php echo ($post['author']); ?></h4>
+                            <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
+                            <h3 class="post-title"><?= htmlspecialchars($post->getChapo()); ?></h3>
+                            <h4 class="post-title">Auteur : <?= ($post->getAuthor()); ?></h4>
                             <div class="meta"> <span class="date">date de dernière publication</span>le 
                                 <?php
-                                if (isset($post['last_updated_fr'])) {
-                                    echo $post['last_updated_fr'];
+                                if (($post->getLastUpdated() != NULL)) {
+                                    echo ($post->getLastUpdated());
                                 }
                                 else {
-                                        echo $post['creation_date_fr'];
+                                    echo ($post->getCreationDate());
                                 }
                                 ?> 
                             </div>
                             <div class="divide30"></div>
-                            <?php if ($post['file_extension'] != '') : ?>
-                            <img src="public/images/posts/<?php echo $post['file_extension'] ?>" class="img-responsive" />
+                            <?php if ($post->getFileExtension() != '') : ?>
+                            <img src="public/images/posts/<?= $post->fileExtension() ?>" class="img-responsive" />
                             <div class="divide30"></div>
                             <?php else: ?>
                             <img src="public/images/posts/default.jpg" class="img-responsive" />
                             <?php endif; ?>
                             <p>
-                                <?php echo nl2br(htmlspecialchars(strip_tags($post['content']))) ?>
+                                <?= nl2br(htmlspecialchars($post->getContent())) ?>
                             </p>
                         </div>
                         <div class="divide20"></div>
                     </div>
                 </div>
                 <div class="divide20"></div>
-                
                 <div class="divide20"></div>
                 <div class="blog-posts" id="comments">
                     <div class="post box">
                             <?php if($nbCount == 0) : ?>
                             <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Il n'a aucun commentaire pour l'instant.</h3>
                             <?php else: ?>
-                            <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?php echo $nbCount; ?>)</h3>
+                            <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?= $nbCount; ?>)</h3>
                             <?php endif; ?>
                             <?php
-                            while ($comment = $comments->fetch())
+                            foreach ($comment as $c)
                             {
-                               
                             ?>
                             <p>
-                            <strong><?php echo htmlspecialchars($comment['author']) ?></strong> le 
+                            <strong><?= htmlspecialchars($c->getAuthor()) ?></strong> le 
                                 <?php
-                                if (isset($comment['last_updated_fr'])) {
-                                    echo $comment['last_updated_fr'];
+                                if ($c->getLastUpdated()) {
+                                    echo ($c->getLastUpdated());
                                 }
                                 else {
-                                    echo $comment['creation_date_fr'];
+                                    echo ($c->getCreationDate());
                                 }
                                     ?> 
                             </p>
                             <p>
-                                <?php echo nl2br(htmlspecialchars($comment['content'])) ?> 
-                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $comment['author'])) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
-                                    <a href="index.php?action=modifyCommentPage&amp;id=<?php echo $comment['id'] ?>"> (Modifier)</a> 
-                                    <a href="index.php?action=deleteComment&amp;id=<?php echo $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
+                                <?= nl2br(htmlspecialchars($c->getContent())) ?> 
+                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $c->getAuthor())) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
+                                    <a href="index.php?action=modifyCommentPage&amp;id=<?= $c->getId() ?>"> (Modifier)</a> 
+                                    <a href="index.php?action=deleteComment&amp;id=<?= $c->getId() ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
                                 <?php endif; ?>
                             </p>
                             <?php
@@ -111,7 +109,7 @@
                 </div>
                 <div class="divide60"></div>
             </div>
-                <?php require "view/frontend/includes/aside.php"; ?>
+            <?php require "view/frontend/includes/aside.php";?>
             </div>
             <div class="container bottomcontainer">
                 <div class="row">

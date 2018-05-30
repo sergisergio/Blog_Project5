@@ -33,14 +33,14 @@ class PostEntity /*extends Manager*/
                 $this->$method($value);
             }
         }*/
-        $this->setId($datas["id"]);
+        $this->setId($datas['id']);
         $this->setTitle($datas['title']);
         $this->setChapo($datas['chapo']);
-        $this->setChapo($datas['intro']);
+        $this->setIntro($datas['intro']);
         $this->setContent($datas['content']);
         $this->setAuthor($datas['author']);
-        $this->setCreationDate($datas['creation_date']);
-        $this->setLastUpdated($datas['last_updated']);
+        $this->setCreationDate($datas['creation_date_fr']);
+        $this->setLastUpdated($datas['last_updated_fr']);
         $this->setFileExtension($datas['file_extension']);
     }
 
