@@ -1,8 +1,8 @@
 <aside class="col-md-4 col-sm-12 sidebar">
     <div class="sidebox box widget">
     <?php include "view/frontend/forms/form_search.php"; ?>
-  </div>
-  <!--<div class="sidebox box widget">
+    </div>
+    <div class="sidebox box widget">
     <h4 class="text-center">Derniers articles</h4>
     <?php
         foreach ($posts1 as $p) 
@@ -16,7 +16,7 @@
     <?php  
         } 
     ?>
-  </div>-->
+  </div>
   <div class="sidebox box widget">
     <h4 class="text-center">Ressources</h4>
     <div class="panel-group" id="accordion">

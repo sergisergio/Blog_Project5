@@ -1,41 +1,41 @@
 <?php
 session_start();
 require "vendor/autoload.php";
-/* ************* RESUME **********************/
+/* ************* SUM UP **********************/
 /* ******************************************
-*              UTILISATEUR                  *
+*              USER                         *
 *********************************************
-1 . PAGE D'ACCUEIL DU BLOG.
-2 . PAGE QUI AFFICHE UN BLOG POST.
-3 . AJOUTER UN COMMENTAIRE.
-4 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE.
-5 . SUPPRIMER UN COMMENTAIRE.
-6 . MODIFIER UN COMMENTAIRE.
-7 . PAGE DE CONNEXION UTILISATEUR.
-8 . CONNEXION UTILISATEUR.
-9 . DECONNEXION UTILISATEUR. 
-10. PAGE INSCRIPTION UTILISATEUR.
-11. INSCRIPTION UTILISATEUR.
-12. CONFIRMATION INSCRIPTION UTILISATEUR.
-13. PAS LES DROITS ADMINISTRATEUR
-14. CONTACT
+1 . BLOG POSTS.
+2 . ONLY ONE BLOG POST.
+3 . ADD A COMMENT.
+4 . MODIFY COMMENT PAGE.
+5 . DELETE A COMMENT.
+6 . MODIFY A COMMENT.
+7 . CONNECTION PAGE.
+8 . CONNECTION.
+9 . DISCONNECTION. 
+10. REGISTRATION PAGE.
+11. REGISTRATION.
+12. CONFIRM REGISTRATION.
+13. CONTACT.
+14. SEARCH.
 /* ******************************************
-*              ADMINISTRATEUR               *
+*              ADMIN.                       *
 *********************************************
-1 . AFFICHER PAGE D'ACCUEIL ADMINISTRATEUR.
-2 . AFFICHER LA RUBRIQUE ARTICLES.
-3 . AFFICHER LA RUBRIQUE COMMENTAIRES.
-4 . AJOUTER UN ARTICLE.
-5 . AFFICHER LA PAGE POUR MODIFIER UN COMMENTAIRE.
-6 . MODIFIER UN ARTICLE.
-7 . SUPPRIMER UN ARTICLE.
-8 . VALIDER UN COMMENTAIRE.
-9 . SUPPRIMER UN COMMENTAIRE.
+1 . ADMIN HOME PAGE.
+2 . GET POSTS.
+3 . GET COMMENTS.
+4 . ADD A POST.
+5 . MODIFY POST PAGE.
+6 . MODIFY A POST.
+7 . DELETE A POST.
+8 . VALIDATE A COMMENT.
+9 . DELETE A COMMENT.
 /* ******************************************
 *              PAR DEFAUT                   *
 *********************************************
-1 . PAGE D'ACCUEIL DU SITE.
-************ FIN RESUME **********************/
+1 . HOME PAGE.
+************ END SUM UP **********************/
 
 require 'controller/defaultController.php';
 require 'controller/adminController.php';
@@ -44,117 +44,114 @@ require 'controller/commentController.php';
 require 'controller/logController.php';
 require 'controller/contactController.php';
 require 'controller/errorsController.php';
+require 'controller/searchController.php';
 try {
     if (isset($_GET['action'])) {
 /**********************************************
 *                  FRONT-END                  *
 **********************************************/
-        /* 1 . BLOG POSTS ****************************/
+/* 1 . BLOG POSTS ****************************/
         if ($_GET['action'] == 'blog') {
             listPosts();
         }
-        /* 2 . UN BLOG POST **************************/
+/* 2 . ONLY ONE BLOG POST ********************/
         elseif ($_GET['action'] == 'blogpost') {
             listPost($_GET['id']);
         }
-        /* 3 . AJOUTER UN COMMENTAIRE ****************/
+/* 3 . ADD A COMMENT *************************/
         elseif ($_GET['action'] == 'addcomment') {
             addComment($_GET['id'], $_SESSION['id'], $_POST['content']);
         }
-        /* 4 . PAGE POUR MODIFIER UN COMMENTAIRE *****/
+/* 4 . MODIFY COMMENT PAGE *******************/
         elseif ($_GET['action'] == 'modifyCommentPage') {
             modifyCommentPage($_GET['id'], $_GET['postId']);
 
         }
-        /* 5 . SUPPRIMER UN COMMENTAIRE **************/
+/* 5 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'deleteComment') {
             deleteComment($_GET['id'], $_GET['postId']);
         }
-        /* 6 . MODIFIER UN COMMENTAIRE ***************/
+/* 6 . MODIFY A COMMENT **********************/
         elseif ($_GET['action'] == 'modifyComment') {
             modifyComment($_GET['id'], $_SESSION['id'], $_POST['content'], $_GET['postId']);
             
         }
-        /* 7 . PAGE CONNEXION UTILISATEUR ************/
+/* 7 . CONNECTION PAGE ***********************/
         elseif ($_GET['action'] == 'loginPage') {
             loginPage();
         }
-        /* 8 . CONNEXION UTILISATEUR *****************/
+/* 8 . CONNECTION ****************************/
         elseif ($_GET['action'] == 'login') {
             login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR']);
         }
-        /* 9 . DECONNEXION UTILISATEUR ***************/
+/* 9 . DISCONNECTION *************************/
         elseif ($_GET['action'] == 'logout') {
             logout();
         }
-        /* 10. PAGE INSCRIPTION UTILISATEUR **********/
+/* 10. REGISTRATION PAGE *********************/
         elseif ($_GET['action'] == 'signupPage') {
              signupPage();
         }
-        /* 11. INSCRIPTION UTILISATEUR ***************/
+/* 11. REGISTRATION **************************/
         elseif ($_GET['action'] == 'addUser') {
              addUser($_POST['pseudo'], $_POST['email'], $_POST['passe'], $_POST['passe2']); 
         }
-        /* 12. CONFIRMATION INSCRIPTION UTILISATEUR **/
+/* 12. CONFIRM REGISTRATION ******************/
         elseif ($_GET['action'] == 'confirmRegistration') {
             confirmRegistration($_GET['id'], $_GET['token']); 
         }
-        /* 13 . PAS LES DROITS ADMINISTRATEUR ********/
-        elseif ($_GET['action'] == 'noAdmin') {
-            noAdmin();
-        }
-        /* 14 . CONTACT ******************************/
+/* 13. CONTACT *******************************/
         elseif ($_GET['action'] == 'contact') {
             contact($_POST['name'], $_POST['email'], $_POST['subject'], $_POST['message']);
         }
-        /* 15 . SEARCH ******************************/
+/* 14. SEARCH ********************************/
         elseif ($_GET['action'] == 'search') {
             search($_POST['search']);
         }
-        /* ********************************************
-        *           ADMINISTRATEUR                    *
-        **********************************************/
-        /* 1 . PAGE D'ACCUEIL ADMINISTRATEUR *********/
+/* ********************************************
+*           ADMINISTRATEUR                    *
+**********************************************/
+/* 1 . ADMIN HOME PAGE ***********************/
         elseif ($_GET['action'] == 'admin') {
             admin();
         }
-        /* 2 . AFFICHER LA RUBRIQUE ARTICLES *********/
+/* 2 . GET POSTS *****************************/
         elseif ($_GET['action'] == 'manage_posts') {
             managePosts();
         }
-        /* 3 . AFFICHER LA RUBRIQUE COMMENTAIRES *****/
+/* 3 . GET COMMENTS **************************/
         elseif ($_GET['action'] == 'manage_comments') {
             manageComments();
         }
-        /* 4 . AJOUTER UN ARTICLE ********************/
+/* 4 . ADD A POST ****************************/
         elseif ($_GET['action'] == 'addpost') {
             addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name']);
         }
-        /* 5 . PAGE POUR MODIFIER UN ARTICLE *********/
+/* 5 . MODIFY POST PAGE **********************/
         elseif ($_GET['action'] == 'modifyPostPage') {
                 modifyPostPage($_GET['id']);
         }
-        /* 6 . MODIFIER UN ARTICLE *******************/
+/* 6 . MODIFY A POST *************************/
         elseif ($_GET['action'] == 'modifyPost') {
             modifyPost($_GET['id'], $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content']);
         }       
-        /* 7 . EFFACER UN ARTICLE ********************/
+/* 7 . DELETE A POST *************************/
         elseif ($_GET['action'] == 'deletePost') {
                 deletePost($_GET['id']);
         }
-        /* 8 . VALIDER UN COMMENTAIRE ****************/
+/* 8 . VALIDATE A COMMENT ********************/
         elseif ($_GET['action'] == 'validateComment') {
                 validateComment($_GET['id']);
         } 
-        /* 9 . SUPPRIMER UN COMMENTAIRE **************/
+/* 9 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'adminDeleteComment') {
                 adminDeleteComment($_GET['id']);
         }
     }
-    /* ********************************************
-    *                    PAR DEFAUT               *
-    **********************************************/
-    /* 1 . PAGE D'ACCUEIL ************************/
+/* ********************************************
+*                    PAR DEFAUT               *
+**********************************************/
+/* 1 . HOME PAGE *****************************/
     else {
         home();
     }

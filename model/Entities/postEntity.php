@@ -1,7 +1,6 @@
 <?php 
 namespace Philippe\Blog\Model\Entities;
-//require_once "model/Manager.php";
-class PostEntity /*extends Manager*/
+class PostEntity
 {
     protected $id;
     protected $title;
@@ -16,7 +15,6 @@ class PostEntity /*extends Manager*/
     /*
      * Méthode de construction
      */
-    // Ce constructeur sera appelé à chaque nouvel objet de la classe PostEntity
     public function __construct($datas) 
       {
         $this->hydrate($datas);

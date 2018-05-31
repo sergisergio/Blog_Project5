@@ -46,17 +46,17 @@
 
 
                             <?php
-                              while ($data = $results->fetch())
+                              foreach ($searchResults as $sr)
                               {
                               ?>
                               <ul>
                                 <li>
-                                  <a href="index.php?action=blogpost&amp;id=<?= $data['id'] ?>"><?= htmlspecialchars($data['title']); ?></a>
+                                  <a href="index.php?action=blogpost&amp;id=<?= $sr->getId() ?>"><?= htmlspecialchars($sr->getTitle()); ?></a>
                                 </li>
                               </ul>
                               <?php  
                                 } 
-                                $results->closeCursor();
+                                
                               ?>
 
                         </div>

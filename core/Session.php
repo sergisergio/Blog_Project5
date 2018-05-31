@@ -1,13 +1,8 @@
 <?php
-/* ************************* RESUME *************************************
-1 . 
-2 . 
 
-************************** FIN RESUME **********************************/
 namespace Philippe\Blog\Core;
 class Session
 {
-    /* ************ 1 . RECUPERER TOUS LES ARTICLES *******************/
     public function lauchSession($user)
     {
         $_SESSION['pseudo'] = $user->getPseudo();
@@ -166,6 +161,27 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
         errors();
+        exit();
+    }
+
+    public function emptyContentsAdmin()
+    {
+        $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
+        errors();
+        exit();
+    }
+
+    public function noIdPostAdmin()
+    {
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
+        managePosts();
+        exit();
+    }
+
+    public function noIdCommentAdmin()
+    {
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
+        manageComments();
         exit();
     }
 }

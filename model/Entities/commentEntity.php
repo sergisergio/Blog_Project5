@@ -1,8 +1,7 @@
 <?php
 
 namespace Philippe\Blog\Model\Entities;
-//require_once "model/Manager.php";
-class CommentEntity /*extends Manager*/
+class CommentEntity 
 {
     protected $id;
     protected $post_id;
@@ -37,7 +36,7 @@ class CommentEntity /*extends Manager*/
         $this->setContent($datas['content']);
         $this->setCreationDate($datas['creation_date_fr']);
         $this->setLastUpdated($datas['last_updated_fr']);
-        //$this->setValidation($datas['validation']);
+        $this->setValidation($datas['validation']);
     }
 
     public function setId($id)

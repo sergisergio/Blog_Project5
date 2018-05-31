@@ -12,7 +12,7 @@
                                     </p>
                                     <p class="pull-right">
                                         <btn class="btn btn-default logoutbtn"> <a href="index.php?action=logout">Déconnexion</a> </btn>
-                                            <?php if ($_SESSION['avatar'] != '') : ?> <img class="img-responsive img-circle avatarblogpage" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+                                            <?php if ($_SESSION['avatar'] != '') : ?> <img class="img-responsive img-circle avatarblogpage" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
                                             <?php else: ?> <img class="img-responsive img-circle avatarblogpagedefault" src="public/images/avatar/avatardefaut.png" />
                                             <?php endif; ?>
                                     </p>

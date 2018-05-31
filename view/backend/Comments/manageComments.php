@@ -26,24 +26,26 @@
             </h5>
             <div class="divide20"></div>
             <?php
-            while ($data = $submittedcomments->fetch())
+            
+                foreach ($submittedComment as $s)
             {
             ?>
             <div class="post box">
                 <div class="row">
-                    <h3><?= htmlspecialchars($data['post_id']); ?></h3>
-                    <p>Commentaire de <?= htmlspecialchars($data['author']); ?> publié le <?= htmlspecialchars($data['creation_date_fr']); ?></p>
-                    <p><?= htmlspecialchars($data['content']); ?></p>
+                    <h3><?= htmlspecialchars($s->getPostId()); ?></h3>
+                    <p>Commentaire de <?= htmlspecialchars($s->getAuthor()); ?> publié le <?= htmlspecialchars($s->getCreationDate()); ?></p>
+                    <p><?= htmlspecialchars($s->getContent()); ?></p>
                 </div>
                 <btn class="btn btn-default" style="float: right;">
-                    <a href="index.php?action=validateComment&amp;id=<?= $data['id'] ?>">Valider</a>
+                    <a href="index.php?action=validateComment&amp;id=<?= $s->getId() ?>">Valider</a>
                 </btn>
                 <btn class="btn btn-default" style="float: right;">
-                    <a href="index.php?action=adminDeleteComment&amp;id=<?= $data['id'] ?>">Supprimer</a>
+                    <a href="index.php?action=adminDeleteComment&amp;id=<?= $s->getId() ?>">Supprimer</a>
                 </btn>
-            </div><?php
+            </div>
+            <?php
             } 
-            $submittedcomments->closeCursor();
+            
             ?></div>
             <div class="divide100"></div>
     </div>
