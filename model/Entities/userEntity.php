@@ -1,6 +1,6 @@
 <?php
 
-namespace Philippe\Blog\Model\Entity;
+namespace Philippe\Blog\Model\Entities;
 //require_once "model/Manager.php";
 class UserEntity /*extends Manager*/
 {

@@ -17,7 +17,7 @@
             <div class="divide20"></div>
             <h5 class="text-center">
                 <?php if($nbCount > 1) : ?>
-                Il y a <?php echo $nbCount; ?> commentaires à valider.
+                Il y a <?= $nbCount; ?> commentaires à valider.
                 <?php elseif($nbCount == 1) : ?>
                 Il y a un commentaire à valider.
                 <?php else: ?>
@@ -31,15 +31,15 @@
             ?>
             <div class="post box">
                 <div class="row">
-                    <h3><?php echo htmlspecialchars($data['post_id']); ?></h3>
-                    <p>Commentaire de <?php echo htmlspecialchars($data['author']); ?> publié le <?php echo htmlspecialchars($data['creation_date_fr']); ?></p>
-                    <p><?php echo htmlspecialchars($data['content']); ?></p>
+                    <h3><?= htmlspecialchars($data['post_id']); ?></h3>
+                    <p>Commentaire de <?= htmlspecialchars($data['author']); ?> publié le <?= htmlspecialchars($data['creation_date_fr']); ?></p>
+                    <p><?= htmlspecialchars($data['content']); ?></p>
                 </div>
                 <btn class="btn btn-default" style="float: right;">
-                    <a href="index.php?action=validateComment&amp;id=<?php echo $data['id'] ?>">Valider</a>
+                    <a href="index.php?action=validateComment&amp;id=<?= $data['id'] ?>">Valider</a>
                 </btn>
                 <btn class="btn btn-default" style="float: right;">
-                    <a href="index.php?action=adminDeleteComment&amp;id=<?php echo $data['id'] ?>">Supprimer</a>
+                    <a href="index.php?action=adminDeleteComment&amp;id=<?= $data['id'] ?>">Supprimer</a>
                 </btn>
             </div><?php
             } 

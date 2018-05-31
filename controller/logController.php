@@ -6,7 +6,7 @@ use \Philippe\Blog\Model\Entities\UserEntity;
 use \Philippe\Blog\Model\UserManager;
 // use \Philippe\Blog\Model\PostManager;
 // use \Philippe\Blog\Model\CommentManager;
-use \Philippe\Blog\Model\SessionManager;
+use \Philippe\Blog\Core\Session;
 use \Philippe\Blog\Model\SecurityManager;
 // use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\Exception;
@@ -21,51 +21,49 @@ function loginPage()
 function login($pseudo,$passe, $ip)
 {
     $userManager = new UserManager();
-    $sessionManager = new SessionManager();
+    $session = new Session();
     $securityManager = new SecurityManager();
     if(!empty($pseudo) && !empty($passe)) {
         $user = $userManager->loginRequest($pseudo, $passe);
         $count = $securityManager->checkBruteForce($ip);
 
         if ($count < 3) {
-            if(password_verify($passe, $user['password'])) {
-                if ($user['is_active'] == 1) {
+            if(password_verify($passe, $user->getPassword())) {
+                if ($user->getIsActive() == 1) {
                     //lauchSession($user);
-                    $_SESSION['pseudo'] = $user['pseudo'];
-                    $_SESSION['id'] = $user['id'];
-                    $_SESSION['prenom'] = $user['first_name'];
-                    $_SESSION['nom'] = $user['last_name'];
-                    $_SESSION['email'] = $user['email'];
-                    $_SESSION['password'] = $user['password'];
-                    $_SESSION['autorisation'] = $user['authorization'];
-                    $_SESSION['avatar'] = $user['avatar'];
-                    $_SESSION['registration'] = $user['registration_date'];
+                    $_SESSION['pseudo'] = $user->getPseudo();
+                    $_SESSION['id'] = $user->getId();
+                    $_SESSION['prenom'] = $user->getFirstName();
+                    $_SESSION['nom'] = $user->getLastName();
+                    $_SESSION['email'] = $user->getEmail();
+                    $_SESSION['password'] = $user->getPassword();
+                    $_SESSION['autorisation'] = $user->getAuthorization1();
+                    $_SESSION['avatar'] = $user->getAvatar();
+                    $_SESSION['registration'] = $user->getRegistrationDate();
                     header('Location: index.php?action=blog');
                     exit();
                 }
                 else {
-                    $sessionManager->activateAccount();
+                    $session->activateAccount();
                 }
             }
             else {
                 sleep(1);
-                $securityManager->registerAttempt($ip);
-                $sessionManager->errorPassword2();
+                $security->registerAttempt($ip);
+                $session->errorPassword2();
             }
         }
         else {
-            $_SESSION['flash']['danger'] = '4 tentatives ont été effectuées : veuillez contacter l\'administrateur pour vous reconnecter !';
-            errors();
-            exit();
+            $session->responsebruteForce();
         }
     }
     else {
-        $sessionManager->emptyContents2();
+        $session->emptyContents2();
     }
 }
 /* ***************** DECONNEXION *************************/
 function logout()
 {
-    $sessionManager = new SessionManager();
-    $sessionManager->stopSession();
+    $session = new Session();
+    $session->stopSession();
 }

@@ -4,9 +4,8 @@
 2 . 
 
 ************************** FIN RESUME **********************************/
-namespace Philippe\Blog\Model;
-require_once "model/Manager.php";
-class SessionManager extends Manager
+namespace Philippe\Blog\Core;
+class Session
 {
     /* ************ 1 . RECUPERER TOUS LES ARTICLES *******************/
     public function lauchSession($user)
@@ -26,6 +25,13 @@ class SessionManager extends Manager
         unset($_SESSION);
         session_destroy();
         header('Location: index.php?action=blog');
+    }
+
+    public function responseBruteForce()
+    {
+        $_SESSION['flash']['danger'] = '4 tentatives ont été effectuées : veuillez contacter l\'administrateur pour vous reconnecter !';
+        errors();
+        exit();
     }
 
     public function errorPseudo1()

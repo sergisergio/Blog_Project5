@@ -14,7 +14,7 @@
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
-use \Philippe\Blog\Model\SessionManager;
+use \Philippe\Blog\Core\Session;
 // use \Philippe\Blog\Model\MailManager;
 // use \Philippe\Blog\Model\SecurityManager;
 /* *********** 1 . HOME ***********************/

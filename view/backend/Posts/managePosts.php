@@ -61,7 +61,7 @@
                             }
                         }
                         ?>
-                    <li><?php echo '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage + 1) . '#viewposts' . '">'.'Suivant'.'</a> '; ?></li>
+                    <li><?= '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage + 1) . '#viewposts' . '">'.'Suivant'.'</a> '; ?></li>
                 </ul>
             </div>
             </div>

@@ -11,6 +11,7 @@
 *********************** FIN RESUME *************************************/
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
+use \Philippe\Blog\Model\Entities\UserEntity;
 class UserManager extends Manager
 {
     /* ************** 1 . RECUPERER TOUS LES MEMBRES ***********************/
@@ -99,7 +100,8 @@ class UserManager extends Manager
         $dbProjet5 = $this->dbConnect();
         $req = $dbProjet5->prepare('SELECT * FROM Users WHERE pseudo = :pseudo');
         $req->execute(array('pseudo' => $pseudo));
-        $user = $req->fetch();
+        $data = $req->fetch();
+        $user = new UserEntity($data);
         return $user;
     }
 }

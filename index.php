@@ -63,15 +63,17 @@ try {
         }
         /* 4 . PAGE POUR MODIFIER UN COMMENTAIRE *****/
         elseif ($_GET['action'] == 'modifyCommentPage') {
-            modifyCommentPage($_GET['id']);
+            modifyCommentPage($_GET['id'], $_GET['postId']);
+
         }
         /* 5 . SUPPRIMER UN COMMENTAIRE **************/
         elseif ($_GET['action'] == 'deleteComment') {
-            deleteComment($_GET['id']);
+            deleteComment($_GET['id'], $_GET['postId']);
         }
         /* 6 . MODIFIER UN COMMENTAIRE ***************/
         elseif ($_GET['action'] == 'modifyComment') {
-            modifyComment($_GET['id'], $_SESSION['id'], $_POST['content']);
+            modifyComment($_GET['id'], $_SESSION['id'], $_POST['content'], $_GET['postId']);
+            
         }
         /* 7 . PAGE CONNEXION UTILISATEUR ************/
         elseif ($_GET['action'] == 'loginPage') {

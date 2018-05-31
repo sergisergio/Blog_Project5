@@ -2,7 +2,7 @@
 
 use \Philippe\Blog\Model\Entities\UserEntity;
 use \Philippe\Blog\Model\UserManager;
-use \Philippe\Blog\Model\SessionManager;
+use \Philippe\Blog\Core\Session;
 use \Philippe\Blog\Model\SecurityManager;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -16,24 +16,24 @@ function signupPage()
 function addUser($pseudo, $email, $passe, $passe2)
 {
     $userManager = new UserManager();
-    $sessionManager = new SessionManager();
+    $session = new Session();
     if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
         $user = $userManager->existPseudo($pseudo);
         $usermail = $userManager->existMail($email);
         if ($user) {
-            $sessionManager->errorPseudo1();
+            $session->errorPseudo1();
         }
         elseif ($usermail) {
-            $sessionManager->errorEmail1();
+            $session->errorEmail1();
         }
         elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)) {
-            $sessionManager->errorPseudo2();
+            $session->errorPseudo2();
         }
         elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $sessionManager->errorEmail2();
+            $session->errorEmail2();
         }
         elseif (empty($passe) || $passe != $_POST['passe2']) {
-            $sessionManager->errorPassword();
+            $session->errorPassword();
         }
         else {
             $users = $userManager->addUserRequest($pseudo, $email, $passe);
@@ -61,14 +61,14 @@ function addUser($pseudo, $email, $passe, $passe2)
                 }*/
             
 
-            $sessionManager->registerSuccess();
+            $session->registerSuccess();
             if ($users === false) {
-                $sessionManager->badRequest();
+                $session->badRequest();
             }
         } 
     }
     else {
-        $sessionManager->emptyContents();
+        $session->emptyContents();
     }
 }
 /* ***************** CONFIRMATION INSCRIPTION ************/
@@ -100,11 +100,11 @@ function confirmRegistration($userId, $userToken)
                 }*/
         }
         else {
-            $sessionManager->errorToken();
+            $session->errorToken();
         } 
     }
     else {
-        $sessionManager->registerFailure();
+        $session->registerFailure();
     }  
 }
 /* ***************** PASSER USER EN ACTIF. ***************/

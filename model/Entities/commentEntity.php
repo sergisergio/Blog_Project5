@@ -35,9 +35,9 @@ class CommentEntity /*extends Manager*/
         $this->setPostId($datas['post_id']);
         $this->setAuthor($datas['author']);
         $this->setContent($datas['content']);
-        $this->setCreationDate($datas['creation_date']);
-        $this->setLastUpdated($datas['last_updated']);
-        $this->setValidation($datas['validation']);
+        $this->setCreationDate($datas['creation_date_fr']);
+        $this->setLastUpdated($datas['last_updated_fr']);
+        //$this->setValidation($datas['validation']);
     }
 
     public function setId($id)

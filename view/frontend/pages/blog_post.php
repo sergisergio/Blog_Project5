@@ -7,7 +7,7 @@
                     <p class="pull-right">
                         <btn class="btn btn-default logoutbtn"> <a href="index.php?action=logout">Déconnexion</a> </btn>
                             <?php if ($_SESSION['avatar'] != '') : ?> 
-                                <img class="img-responsive img-circle avatarblogpage2" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+                                <img class="img-responsive img-circle avatarblogpage2" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
                             <?php else: ?>  
                                 <img class="img-responsive img-circle avatarblogpagedefault" src="public/images/avatar/avatardefaut.png" />
                             <?php endif; ?>
@@ -68,25 +68,25 @@
                             <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?= $nbCount; ?>)</h3>
                             <?php endif; ?>
                             <?php
-                            while ($comment = $comments->fetch())
+                            foreach ($comment as $c)
                             {
                             ?>
                             <p>
-                            <strong><?= htmlspecialchars($comment['author']) ?></strong> le 
+                            <strong><?= htmlspecialchars($c->getAuthor()) ?></strong> le 
                                 <?php
-                                if (isset($comment['last_updated_fr'])) {
-                                    echo ($comment['last_updated_fr']);
+                                if ($c->getLastUpdated()) {
+                                    echo ($c->getLastUpdated());
                                 }
                                 else {
-                                    echo ($comment['creation_date_fr']);
+                                    echo ($c->getCreationDate());
                                 }
                                     ?> 
                             </p>
                             <p>
-                                <?= nl2br(htmlspecialchars($comment['content'])) ?> 
-                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $comment['author'])) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
-                                    <a href="index.php?action=modifyCommentPage&amp;id=<?= $comment['id'] ?>"> (Modifier)</a> 
-                                    <a href="index.php?action=deleteComment&amp;id=<?= $comment['id'] ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
+                                <?= nl2br(htmlspecialchars($c->getContent())) ?> 
+                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $c->getAuthor())) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
+                                    <a href="index.php?action=modifyCommentPage&amp;id=<?= $c->getId() ?>&amp;postId=<?= $post->getId() ?>"> (Modifier)</a> 
+                                    <a href="index.php?action=deleteComment&amp;id=<?= $c->getId() ?>&amp;postId=<?= $post->getId() ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
                                 <?php endif; ?>
                             </p>
                             <?php

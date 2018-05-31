@@ -12,6 +12,7 @@
 ************************* FIN RESUME ***********************************/
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
+use \Philippe\Blog\Model\Entities\CommentEntity;
 class CommentManager extends Manager
 {
     /* *********** 1 . RECUPERER TOUS LES COMMENTAIRES *********************/
@@ -19,7 +20,7 @@ class CommentManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $comments = $dbProjet5->prepare(
-            'SELECT c.id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
+            'SELECT c.id, c.post_id, u.pseudo AS author, c.content, c.validation, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 			FROM Comments c
             INNER JOIN Users u ON u.id = c.author
 			WHERE c.post_id = ?
@@ -27,20 +28,26 @@ class CommentManager extends Manager
 			ORDER BY creation_date'
         );
         $comments->execute(array($postId));
-        return $comments;
+        $comment = [];
+        while ($data = $comments->fetch()) {
+           $comment[] = new CommentEntity($data);
+        }
+        $comments->closeCursor();
+        return $comment;
     }
     /* *********** 2 . RECUPERER UN SEUL COMMENTAIRE ***********************/
     public function getComment($commentId)
     {
         $dbProjet5 = $this->dbConnect();
         $req = $dbProjet5->prepare(
-            'SELECT c.id, c.post_id, u.pseudo AS author, c.content, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
+            'SELECT c.id, c.post_id, u.pseudo AS author, c.content, c.validation, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 		 	FROM Comments c
             INNER JOIN Users u ON u.id = c.author
 		 	WHERE c.id = ?'
         );
         $req->execute(array($commentId));
-        $comment = $req->fetch();
+        $data = $req->fetch();
+        $comment = new CommentEntity($data);
         return $comment;
     }
     /* *********** 3 . AJOUTER UN COMMENTAIRE ******************************/

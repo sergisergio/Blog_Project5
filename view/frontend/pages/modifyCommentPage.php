@@ -11,7 +11,7 @@
               <a href="index.php?action=logout">Déconnexion</a> 
             </btn>
             <?php if ($_SESSION['avatar'] != '') : ?> 
-              <img class="img-responsive img-circle avatarblogpage2" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+              <img class="img-responsive img-circle avatarblogpage2" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
             <?php else: ?> <img class="img-responsive img-circle avatarblogpagedefault" src="public/images/avatar/avatardefaut.png" />
             <?php endif; ?>
           </p>
@@ -33,15 +33,15 @@
         <div class="blog-posts">
           <div class="post box">
             <p>
-              <a href="index.php?action=blogpost&amp;id=<?php echo $post['id'] ?>">Retour au billet</a>
+              <a href="index.php?action=blogpost&amp;id=<?= $post->getId() ?>">Retour au billet</a>
             </p>
             <div class="news">
               <h3>
-                <?php echo htmlspecialchars($post['title']) ?>
-                <em>le <?php echo $post['creation_date_fr'] ?></em>
+                <?= htmlspecialchars($post->getTitle()) ?>
+                <em>le <?= $post->getCreationDate() ?></em>
               </h3>
               <p>
-                <?php echo nl2br(htmlspecialchars($post['intro'])) ?>...
+                <?= nl2br(htmlspecialchars($post->getIntro())) ?>...
               </p>
             </div>
             <hr>

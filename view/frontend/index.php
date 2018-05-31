@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="body-wrapper">
-                        <?php require "includes/nav.php"; ?>
+            <?php require "includes/nav.php"; ?>
             <section id="home" class="naked">
                 <div class="fullscreenbanner-container revolution">
                     <div class="fullscreenbanner">

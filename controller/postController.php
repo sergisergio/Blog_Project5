@@ -6,7 +6,7 @@ use \Philippe\Blog\Model\Entities\UserEntity;
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
-use \Philippe\Blog\Model\SessionManager;
+use \Philippe\Blog\Core\Session;
 
 /* ***************** TOUS LES BLOG POSTS *****************/
 function listPosts()
@@ -36,19 +36,19 @@ function listPost($postId)
     $postManager = new PostManager();
     $commentManager = new CommentManager();
     $userManager = new UserManager();
-    $sessionManager = new SessionManager();
+    $session = new Session();
 
     $post = $postManager->getPost($postId);
     $posts1 = $postManager->getPosts(0, 5);
 
     if (isset($postId) && $postId > 0 && (!empty($post))) {
         
-        $comments = $commentManager->getComments($postId);
+        $comment = $commentManager->getComments($postId);
         $user = $userManager->getUser($postId);
         $nbCount = $commentManager->countCommentRequest($postId);
         include 'view/frontend/pages/blog_post.php';
     }   
     else {
-        $sessionManager->noIdPost();
+        $session->noIdPost();
     }
 }
