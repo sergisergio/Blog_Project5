@@ -3,30 +3,11 @@
 <div class="container inner">
     <div class="blog box mgbottom2 row">
         <div class="col-md-12">
-            <?php if (isset($_SESSION['pseudo'])) : ?>
-                <p class="pull-right">
-                    <btn class="btn btn-default logoutbtn"> 
-                        <a href="index.php?action=logout">Déconnexion</a> 
-                    </btn>
-                    <?php if ($_SESSION['avatar'] != '') : ?>
-                        <img class="img-responsive img-circle avatarblogpage" src="public/images/avatar/<?= $_SESSION['avatar']; ?>" />
-                    <?php else: ?> 
-                        <img class="img-responsive img-circle avatarblogpagedefault" src="public/images/avatar/avatardefaut.png" />
-                    <?php endif; ?>
-                </p>
-            <?php else: ?>
-                <p class="pull-right">
-                    <btn class="btn btn-default"> <a href="index.php?action=loginPage">Connexion</a> </btn>
-                </p>
-                <p class="pull-right">
-                    <btn class="btn btn-default"> <a href="index.php?action=signupPage">Inscription</a> </btn>&nbsp;&nbsp; 
-                </p>
-            <?php endif; ?>
+            <?php include 'view/frontend/includes/top.php' ?>
         </div>
     </div>
     <div class="blog list-view row">
         <div class="col-md-8 col-sm-12 content">
-            
             <div class="pagination box mgbottom25">
                 <ul>
                     <li><?= '<a class="btn" href="index.php?action=blog&page='. ($currentPage - 1) . '">'.'Précédent'.'</a> '; ?></li>

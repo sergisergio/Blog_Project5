@@ -42,12 +42,12 @@
         <script src="public/js/jquery.themepunch.tools.min.js"></script>
         <script src="public/js/classie.js"></script>
         <script src="public/js/plugins.js"></script>
-        <script src="public/js/scripts.js"></script>
+        <!--<script src="public/js/scripts.js"></script>-->
 
         <script>
             $.backstretch(["public/images/art/react2.png"]);
         </script>
-        <script>
+        <!--<script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip({
                     trigger: 'manual'
@@ -61,7 +61,7 @@
                     });
                 }
             });
-        </script>
+        </script>-->
         <script>
             $(".popconfirm").popConfirm();
             $("[data-toggle='confirmation']").popConfirm({

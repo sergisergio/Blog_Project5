@@ -19,6 +19,10 @@ require "vendor/autoload.php";
 12. CONFIRM REGISTRATION.
 13. CONTACT.
 14. SEARCH.
+15. PROFILE PAGE.
+16. DELETE ACCOUNT.
+17. MODIFY PROFILE.
+18. PUBLIC PROFILE.
 /* ******************************************
 *              ADMIN.                       *
 *********************************************
@@ -42,9 +46,11 @@ require 'controller/adminController.php';
 require 'controller/postController.php';
 require 'controller/commentController.php';
 require 'controller/logController.php';
+require 'controller/registerController.php';
 require 'controller/contactController.php';
 require 'controller/errorsController.php';
 require 'controller/searchController.php';
+require 'controller/profileController.php';
 try {
     if (isset($_GET['action'])) {
 /**********************************************
@@ -108,6 +114,45 @@ try {
         elseif ($_GET['action'] == 'search') {
             search($_POST['search']);
         }
+/* 15 . PROFILE PAGE *************************/
+        
+        elseif ($_GET['action'] == 'profilePage') {
+            profilePage($_SESSION['id']);
+        }
+/* 16 . DELETE ACCOUNT ***********************/
+
+        elseif ($_GET['action'] == 'deleteAccount') {
+            if (isset($_SESSION['id'])) {
+                  deleteAccount($_SESSION['id']); 
+            }
+            else {
+                $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet utilisateur !';
+                profilePage();
+                exit();
+            }
+        }
+/* 17 . MODIFY PROFILE ***********************/
+
+        elseif ($_GET['action'] == 'modifyProfile') {
+            /*if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                    $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
+                    profilePage();
+                    exit();
+            }
+            else {
+                // checkExistMail($_POST['email']);*/
+                //if ($_POST['email'] == $_SESSION['email']) {
+                
+            modifyProfile($_POST['userId'], $_FILES['avatar']['name'], $_POST['first_name'], $_POST['name'], $_POST['email'], $_POST['description']);
+        }
+/* 18 . PUBLIC PROFILE ***********************/
+
+        elseif ($_GET['action'] == 'publicProfile') {
+            if (isset($_GET['id'])) {
+                publicProfile($_GET['id']);
+            }
+        }
+
 /* ********************************************
 *           ADMINISTRATEUR                    *
 **********************************************/

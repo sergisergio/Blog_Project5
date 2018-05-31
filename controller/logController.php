@@ -16,41 +16,39 @@ use \Philippe\Blog\Model\SecurityManager;
         $userManager = new UserManager();
         $session = new Session();
         $securityManager = new SecurityManager();
-        if(!empty($pseudo) && !empty($passe)) {
+
+        if(!empty($pseudo) && !empty($passe)) 
+        {
             $user = $userManager->loginRequest($pseudo, $passe);
             $count = $securityManager->checkBruteForce($ip);
 
-            if ($count < 3) {
-                if(password_verify($passe, $user->getPassword())) {
-                    if ($user->getIsActive() == 1) {
-                        //lauchSession($user);
-                        $_SESSION['pseudo'] = $user->getPseudo();
-                        $_SESSION['id'] = $user->getId();
-                        $_SESSION['prenom'] = $user->getFirstName();
-                        $_SESSION['nom'] = $user->getLastName();
-                        $_SESSION['email'] = $user->getEmail();
-                        $_SESSION['password'] = $user->getPassword();
-                        $_SESSION['autorisation'] = $user->getAuthorization1();
-                        $_SESSION['avatar'] = $user->getAvatar();
-                        $_SESSION['registration'] = $user->getRegistrationDate();
-                        header('Location: index.php?action=blog');
-                        exit();
+            if ($count < 3) 
+            {
+                if(password_verify($passe, $user->getPassword())) 
+                {
+                    if ($user->getIsActive() == 1) 
+                    {
+                        $session->launchSession($user);
                     }
-                    else {
+                    else 
+                    {
                         $session->activateAccount();
                     }
                 }
-                else {
+                else 
+                {
                     sleep(1);
                     $security->registerAttempt($ip);
                     $session->errorPassword2();
                 }
             }
-            else {
+            else 
+            {
                 $session->responsebruteForce();
             }
         }
-        else {
+        else 
+        {
             $session->emptyContents2();
         }
     }

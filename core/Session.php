@@ -1,9 +1,10 @@
 <?php
 
 namespace Philippe\Blog\Core;
+
 class Session
 {
-    public function lauchSession($user)
+    public function launchSession($user)
     {
         $_SESSION['pseudo'] = $user->getPseudo();
         $_SESSION['id'] = $user->getId();
@@ -11,9 +12,13 @@ class Session
         $_SESSION['nom'] = $user->getlastName();
         $_SESSION['email'] = $user->getEmail();
         $_SESSION['password'] = $user->getPassword();
-        $_SESSION['autorisation'] = $user->getAuthorization();
+        $_SESSION['autorisation'] = $user->getAuthorization1();
         $_SESSION['avatar'] = $user->getAvatar();
         $_SESSION['registration'] = $user->getRegistrationDate();
+        $_SESSION['is_active'] = $user->getIsActive();
+        $_SESSION['description'] = $user->getDescription();
+        header('Location: index.php?action=blog');
+        exit();
     }
     public function stopSession()
     {
@@ -87,7 +92,7 @@ class Session
 
     public function activateAccount()
     {
-        $_SESSION['flash']['danger'] = 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !';
+        $_SESSION['flash']['success'] = 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !';
         loginPage();
         exit();
     }
@@ -115,7 +120,7 @@ class Session
 
     public function errorToken()
     {
-        $_SESSION['flash']['success'] = 'Ce token n est plus valide ! Veuillez réessayer ! !';
+        $_SESSION['flash']['danger'] = 'Ce token n est plus valide ! Veuillez réessayer ! !';
         signupPage();
         exit();
     }
@@ -134,20 +139,25 @@ class Session
         exit();
     }
 
-    public function addedComment()
+    public function addedComment($postId)
     {
         $_SESSION['flash']['success'] = 'Votre commentaire sera validé dans les plus brefs délais !';
-        
+        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+        exit();
     }
 
-    public function needsRegister()
+    public function needsRegister($postId)
     {
-        $_SESSION['flash']['success'] = 'Vous devez être inscrit pour ajouter un commentaire !';
+        $_SESSION['flash']['danger'] = 'Vous devez être inscrit pour ajouter un commentaire !';
+        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+        exit();
     }
 
-    public function emptyContent()
+    public function emptyContent($commentId)
     {
         $_SESSION['flash']['danger'] = 'Le champ est vide !';
+        header('Location: index.php?action=modifyCommentPage&id=' . $_GET['id']);
+        exit();
     }
 
     public function noIdComment()
@@ -171,6 +181,13 @@ class Session
         exit();
     }
 
+    public function modifyCommentError($commentId)
+    {
+        $_SESSION['flash']['danger'] = 'Impossible de modifier le commentaire !';
+        header('Location: index.php?action=modifyCommentPage&id=' . $commentId);
+        exit();
+    }
+
     public function noIdPostAdmin()
     {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
@@ -182,6 +199,104 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
         manageComments();
+        exit();
+    }
+
+    public function addedPost()
+    {
+        $_SESSION['flash']['success'] = 'L\'article a bien été ajouté !';
+        header('Location: index.php?action=manage_posts');
+        exit();
+    }
+
+    public function nonAddedPost()
+    {
+        $_SESSION['flash']['danger'] = 'impossible d\'ajouter l\'article !';
+        header('Location: index.php?action=manage_posts');
+        exit();
+    }
+
+    public function modifiedPost()
+    {
+        $_SESSION['flash']['success'] = 'L\'article a bien été modifié !';
+        header('Location: index.php?action=manage_posts');
+        exit();
+    }
+
+    public function nonModifiedPost($postId)
+    {
+        $_SESSION['flash']['danger'] = 'Impossible de modifier l\'article';
+        modifyPostPage($postId);
+        exit();
+    }
+
+    public function emptyContentModifiedPost($postId)
+    {
+        $_SESSION['flash']['danger'] = 'Veuillez remplir les champs !';
+        modifyPostPage($postId);
+        exit();
+    }
+
+    public function noIdModifiedPost($postId)
+    {
+        $_SESSION['flash']['danger'] = 'Pas d\'identifiant d\'article envoyé !';
+        modifyPostPage($postId);
+        exit();
+    }
+
+    public function deletedPost()
+    {
+        $_SESSION['flash']['success'] = 'L\'article a bien été supprimé !';
+        header('Location: index.php?action=manage_posts');
+        exit();
+    }
+
+    public function nonDeletedPost()
+    {
+        $_SESSION['flash']['danger'] = 'Impossible de supprimer l\'article';
+        header('Location: index.php?action=manage_posts');
+        exit();
+    }
+
+    public function nonValidatedComment()
+    {
+        $_SESSION['flash']['danger'] = 'Impossible de valider le commentaire';
+        header('Location: index.php?action=manage_comments');
+        exit();
+    }
+
+    public function validatedComment()
+    {
+        $_SESSION['flash']['success'] = 'Le commentaire a bien été validé !';
+        header('Location: index.php?action=manage_comments');
+        exit();
+    }
+
+    public function adminDeletedComment()
+    {
+        $_SESSION['flash']['success'] = 'Le commentaire a bien été supprimé !';
+        header('Location: index.php?action=manage_comments');
+        exit();
+    }
+
+    public function adminNonDeletedComment()
+    {
+        $_SESSION['flash']['danger'] = 'Impossible de supprimer le commentaire !';
+        header('Location: index.php?action=manage_comments');
+        exit();
+    }
+
+    public function nonDeletedComment($postId)
+    {
+        $_SESSION['flash']['danger'] = 'Impossible de supprimer le commentaire !';
+        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+        exit();
+    }
+
+    public function deletedComment($postId)
+    {
+        $_SESSION['flash']['success'] = 'Le commentaire a bien été supprimé !';
+        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
         exit();
     }
 }

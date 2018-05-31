@@ -15,6 +15,7 @@
                 <div class="divide20"></div>
                 <div class="post box">
                     <h2>Ajouter un article</h2>
+                    <?php include 'view/frontend/includes/responseAlert.php'; ?> 
                     <?php require "view/backend/forms/form_addpost.php"; ?>
                 </div>
                 <div class="divide20"></div>

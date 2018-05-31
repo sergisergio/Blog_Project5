@@ -101,7 +101,7 @@ class PostManager extends Manager
         return $postsTotal;
     }
 /* ************ 7 . COUNT SEARCH RESULTS ************/
-    /*public function countSearchRequest($search){
+    public function countSearchRequest($search){
 
         $dbProjet5 = $this->dbConnect();
 

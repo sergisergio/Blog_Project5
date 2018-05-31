@@ -27,13 +27,17 @@ use \Philippe\Blog\Core\Session;
         $postsTotal = $postManager->countPosts();
         $postsPerPage = 5;
         $totalPages = ceil($postsTotal / $postsPerPage);
-        if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
+
+        if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) 
+        {
             $_GET['page'] = intval($_GET['page']);
             $currentPage = $_GET['page'];
         }
-        else {
+        else 
+        {
             $currentPage = 1;
         }
+
         $start = ($currentPage-1)*$postsPerPage;
         $posts = $postManager->getPosts($start, $postsPerPage);
         include 'view/backend/Posts/managePosts.php';
@@ -47,30 +51,39 @@ use \Philippe\Blog\Core\Session;
         $file_extension_error = $_FILES['file_extension']['error'];
         $file_extension_size = $_FILES['file_extension']['size'];
         $file_extension_tmp = $_FILES['file_extension']['tmp_name'];
-        if (!empty($title) && !empty($content) && !empty($chapo)) {
-            // Testons si le fichier a bien été envoyé et s'il n'y a pas d'erreur
-            if (isset($file_extension) AND $file_extension_error == 0) {
-                // Testons si le fichier n'est pas trop gros
-                if ($file_extension_size <= 1000000) {
+
+        if (!empty($title) && !empty($content) && !empty($chapo)) 
+        {
+            if (isset($file_extension) AND $file_extension_error == 0) 
+            {
+                if ($file_extension_size <= 1000000) 
+                {
                     $infosfichier = pathinfo($image);
                     $extension_upload = $infosfichier['extension'];
                     $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
-                    if (in_array($extension_upload, $extensions_autorisees)) {
+
+                    if (in_array($extension_upload, $extensions_autorisees)) 
+                    {
                         // On peut valider le fichier et le stocker définitivement
                         move_uploaded_file($file_extension_tmp, 'public/images/posts/' . basename($image));
                         echo "L'envoi a bien été effectué !";
                     }
                 }
             }
+
             $affectedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $image);
-            if ($affectedPost === false) {
-                throw new Exception('Impossible d\'ajouter l\'article');
+
+            if ($affectedPost === false) 
+            {
+                $session->nonAddedPost();
             }
-            else {
-                header('Location: index.php?action=manage_posts#viewposts');
+            else 
+            {
+                $session->addedPost();
             }
         }
-        else {
+        else 
+        {
             $session->emptyContentsAdmin();
         }
     }
@@ -80,6 +93,7 @@ use \Philippe\Blog\Core\Session;
         $postManager = new PostManager();
         $post = $postManager->getPost($postId);
         $session = new Session();
+
         if (empty($post) || $postId <= 0) {
             $session->noIdPostAdmin();
         }
@@ -88,46 +102,56 @@ use \Philippe\Blog\Core\Session;
 /* *********** 5 . MODIFY A POST. *****************/
     function modifyPost($postId, $title, $chapo, $author, $content)
     {
-        $postManager = new PostManager();;
-        if (isset($postId) && $postId > 0) {
-            if (!empty($title) && !empty($content) && !empty($chapo)) {
+        $postManager = new PostManager();
+        $session = new Session();
+
+        if (isset($postId) && $postId > 0) 
+        {
+            if (!empty($title) && !empty($content) && !empty($chapo)) 
+            {
                 $post = $postManager->getPost($postId);
                 $success = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
-                if ($success === false) {
-                    throw new Exception('Impossible de modifier l\'article');
+
+                if ($success === false) 
+                {
+                    $session->nonModifiedPost($postId);
                 }
-                else {
-                    header('Location: index.php?action=manage_posts#viewposts');
+                else 
+                {
+                    $session->modifiedPost();
                 }
             }
-            else {
-                $_SESSION['flash']['danger'] = 'Veuillez remplir les champs !';
-                modifyPostPage($postId);
-                exit();
+            else 
+            {
+                $session->emptyContentModifiedPost($postId);
             }
         }
-        else {
-            $_SESSION['flash']['danger'] = 'Pas d\'identifiant d\'article envoyé !';
-            modifyPostPage($_GET['id']);
-            exit();
+        else 
+        {
+            $session->noIdModifiedPost($postId);
         }
     }
 /* *********** 6 . DELETE A POST ******************/
     function deletePost($postId)
     {
-
         $postManager = new PostManager();
+        $session = new Session();
         $success = $postManager->deletePostRequest($postId);
         $session = new Session();
-        if (isset($postId) && $postId > 0) {
-            if ($success === false) {
-                throw new Exception('Impossible de supprimer l\'article');
+
+        if (isset($postId) && $postId > 0) 
+        {
+            if ($success === false) 
+            {
+                $session->nonDeletedPost();
             }
-            else {
-                header('Location: index.php?action=manage_posts#viewposts');
+            else 
+            {
+                $session->deletedPost();
             }
         }
-        elseif ($postId <= 0) {
+        elseif ($postId <= 0) 
+        {
             $session->noIdPostAdmin();
         }
     }
@@ -145,15 +169,19 @@ use \Philippe\Blog\Core\Session;
         $commentManager = new CommentManager();
         $validated = $commentManager->validateCommentRequest($commentId);
         $session = new Session();
-        if (isset($commentId) && $commentId > 0) {
-            if ($validated === false) {
-                throw new Exception('Impossible de valider le commentaire');
+        if (isset($commentId) && $commentId > 0) 
+        {
+            if ($validated === false) 
+            {
+                $session->nonValidatedcomment();
             }
-            else {
-                header('Location: index.php?action=manage_comments');
+            else 
+            {
+                $session->validatedcomment();
             }
         }
-        elseif ($commentId <= 0) {
+        elseif ($commentId <= 0) 
+        {
             $session->noIdCommentAdmin();
         }
     }
@@ -165,15 +193,20 @@ use \Philippe\Blog\Core\Session;
         $comment = $commentManager->getComment($commentId);
         $success = $commentManager->deleteCommentRequest($commentId);
         $session = new Session();
-        if (isset($commentId) && $commentId > 0) {
-            if ($success === false) {
-                throw new Exception('Impossible de supprimer le commentaire');
+
+        if (isset($commentId) && $commentId > 0) 
+        {
+            if ($success === false) 
+            {
+                $session->adminNonDeletedComment();
             }
-            else {
-                header('Location: index.php?action=manage_comments');
+            else 
+            {
+                $session->admindeletedComment();
             }
         }
-        elseif ($commentId <= 0) {
+        elseif ($commentId <= 0) 
+        {
             $session->noIdCommentAdmin();
         }
     }

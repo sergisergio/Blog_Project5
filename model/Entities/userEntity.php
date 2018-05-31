@@ -14,6 +14,7 @@ class UserEntity
     protected $confirmation_token;
     protected $avatar;
     protected $is_active;
+    protected $description;
 
     /*
      * Méthode de construction
@@ -45,6 +46,7 @@ class UserEntity
         $this->setConfirmationToken($datas['confirmation_token']);
         $this->setAvatar($datas['avatar']);
         $this->setIsActive($datas['is_active']);
+        $this->setDescription($datas['description']);
     }
 
     public function setId($id)
@@ -134,5 +136,13 @@ class UserEntity
     public function getIsActive()
       {
         return $this->isActive;
+      }
+    public function setDescription($description)
+      {
+        $this->description = $description;
+      }
+    public function getDescription()
+      {
+        return $this->description;
       }
 }

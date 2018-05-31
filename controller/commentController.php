@@ -14,22 +14,21 @@ use \Philippe\Blog\Core\Session;
         $commentManager = new CommentManager();
         $session = new Session();
 
-        if (isset($postId) && $postId > 0) {
-            if (!empty($content)) {
+        if (isset($postId) && $postId > 0) 
+        {
+            if (!empty($content)) 
+            {
                 $affectedLines = $commentManager->postComment($postId, $author, $content);
-                $session->addedComment();
-                header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
-                exit();
-                if ($affectedLines === false) {
-                    $session->needsRegister();
-                    header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
-                    exit();
+                $session->addedComment($postId);
+                
+                if ($affectedLines === false) 
+                {
+                    $session->needsRegister($postId);
                 }
             }
-            else {
-                $session->emptyContent();
-                header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
-                exit();
+            else 
+            {
+                $session->emptyContent($postId);
             }
         }
         else {
@@ -46,11 +45,15 @@ use \Philippe\Blog\Core\Session;
         $comment = $commentManager->getComment($commentId);
         $post = $postManager->getPost($comment->getPostId());
         $posts1 = $postManager->getPosts(0, 5);
-        if (empty($comment) || $commentId <= 0 ) {
+
+        if (empty($comment) || $commentId <= 0 ) 
+        {
             $session->noIdComment();
         }
-        elseif (isset($commentId) && $commentId > 0) {
-            if (($_SESSION['pseudo'] != $comment->getAuthor()) && ($_SESSION['autorisation'] == 0)) {
+        elseif (isset($commentId) && $commentId > 0) 
+        {
+            if (($_SESSION['pseudo'] != $comment->getAuthor()) && ($_SESSION['autorisation'] == 0)) 
+            {
                 $session->noRightsComments();
             }
             else {
@@ -61,19 +64,22 @@ use \Philippe\Blog\Core\Session;
 /* **************** DELETE A COMMENT ***********/
     function deleteComment($commentId, $postId)
     {
-
         $commentManager = new CommentManager();
         $session = new Session();
         $success = $commentManager->deleteCommentRequest($commentId);
-        if ($success === false) {
-            throw new Exception('Impossible de supprimer le commentaire');
+
+        if ($success === false) 
+        {
+            $session->nonDeletedComment($postId);
         }
-        elseif (isset($commentId) && $commentId > 0) {
+        elseif (isset($commentId) && $commentId > 0) 
+        {
             $comment = $commentManager->getComment($commentId);
             $success = $commentManager->deleteCommentRequest($commentId);
-            header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+            $session->deletedComment($postId);
         }
-        elseif (empty($comment) || $commentId <= 0 ) {
+        elseif (empty($comment) || $commentId <= 0 ) 
+        {
             $session->noIdComment();
         }
     }
@@ -84,19 +90,25 @@ use \Philippe\Blog\Core\Session;
         $comment = $commentManager->getComment($commentId);
         $session = new Session();
         
-        if (isset($commentId) && $commentId > 0) {
-            if (!empty($content)) {
+        if (isset($commentId) && $commentId > 0) 
+        {
+            if (!empty($content)) 
+            {
                 $success = $commentManager->modifyCommentRequest($commentId, $author, $content);
-                $session->addedComment();
-                header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
-                if ($success === false) {
-                    throw new Exception('Impossible de modifier le commentaire !');
+                
+
+                if ($success === false) 
+                {
+                    $session->modifyCommentError($commentId);
+                }
+                else
+                {
+                    $session->addedComment($postId);
                 }
             }
-            else {
+            else 
+            {
                 $session->emptyContent();
-                header('Location: index.php?action=modifyCommentPage&id=' . $_GET['id']);
-                exit();
             }
         }
         elseif (empty($comment) || $commentId <= 0 ) {

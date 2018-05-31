@@ -33,7 +33,7 @@
 
         <?= $content ?>
     <script src="public/js/jquery.min.js"></script>
-    <script src="public/js/bootstrap.min.js"></script>
+    <!--<script src="public/js/bootstrap.min.js"></script>-->
     <script src="public/js/jquery.popconfirm.js"></script>
     <script src="public/js/jquery.themepunch.tools.min.js"></script>
     <script src="public/js/classie.js"></script>
@@ -44,7 +44,7 @@
     <script>
         $.backstretch(["public/images/art/react2.png"]);
     </script>
-    <script>
+    <!--<script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip({
                 trigger: 'manual'
@@ -58,7 +58,7 @@
                 });
             }
         });
-    </script>
+    </script>-->
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;

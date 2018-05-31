@@ -8,7 +8,7 @@ class SecurityManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
 		$search = $dbProjet5->prepare(" SELECT * FROM connexion WHERE ip = :ip ");
-		$search->bindParam(':id', $ip);
+		$search->bindParam(':ip', $ip);
 		$count = $search->execute();
 		$count = $search->rowCount();
 		return $count;
@@ -17,7 +17,7 @@ class SecurityManager extends Manager
 	public function registerAttempt($ip) {
 		$dbProjet5 = $this->dbConnect();
 		$req = $dbProjet5->prepare('INSERT INTO connexion(ip) VALUES(:ip)');
-		$req->bindParam(':id', $ip);
+		$req->bindParam(':ip', $ip);
 		$req->execute();
 	}
 

@@ -9,10 +9,12 @@
 7 . VALIDATE A COMMENT.
 8 . COUNT VALIDATED COMMENTS.
 9 . COUNT NOT YET VALIDATED COMMENTS.
+10. GET USER BY COMMENT.
 ************************* END SUM UP ***********************************/
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 use \Philippe\Blog\Model\Entities\CommentEntity;
+use \Philippe\Blog\Model\Entities\UserEntity;
 class CommentManager extends Manager
 {
 /* *********** 1 . GET ALL COMMENTS *********************/
@@ -130,5 +132,16 @@ class CommentManager extends Manager
         $count = $dbProjet5->query("SELECT id FROM Comments WHERE validation = 0 ");
         $nbCount = $count->rowCount();
         return $nbCount;
+    }
+/* ********** 10 . GET USER BY COMMENT ******************/
+    public function getUserByCommentRequest($commentAuthor)
+    {
+        $dbProjet5 = $this->dbConnect();
+        $userRequest = $dbProjet5->prepare("SELECT * FROM Users WHERE pseudo = :pseudo ");
+        $userRequest->bindParam(':pseudo', $commentAuthor);
+        $userRequest->execute();
+        $data = $userRequest->fetch();
+        $user = new UserEntity($data);
+        return $user;
     }
 }

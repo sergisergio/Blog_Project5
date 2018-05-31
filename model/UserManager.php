@@ -8,6 +8,8 @@
 6 . PSEUDO ALREADY USED ?
 7 . EMAIL ALREADY USED ?
 8 . CONNECTION.
+9 . VIEW PROFILE.
+10. DELETE ACCOUNT.
 ********************* END SUM UP *****************/
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
@@ -30,13 +32,17 @@ class UserManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $req = $dbProjet5->prepare(
-            'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%imin\') AS registration_date_fr, authorization, is_active
+            'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description
 			FROM Users 
 			WHERE id = :id'
         );
-        $req->bindParam(':id', $postId);
+        $req->bindParam(':id', $userId);
         $req->execute();
-        $post = $req->fetch();
+        $data = $req->fetch();
+        
+            
+        
+        $post = new UserEntity($data);
         return $post;
     }
 /* ******** 3 . GET LEVEL AUTHORIZATION ************/
@@ -114,5 +120,31 @@ class UserManager extends Manager
         $data = $req->fetch();
         $user = new UserEntity($data);
         return $user;
+    }
+/* ******** 9 . VIEW PROFILE ***********************/
+
+    public function modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description) 
+    {
+        $dbProjet5 = $this->dbConnect();
+
+        $req = $dbProjet5->prepare('UPDATE Users SET avatar = :avatar, first_name = :firstname, last_name = :lastname, email = :email, description = :description WHERE id = :id');
+        $req->bindParam(':avatar', $avatar);
+        $req->bindParam(':firstname', $first_name);
+        $req->bindParam(':lastname', $name);
+        $req->bindParam(':email', $email);
+        $req->bindParam(':description', $description);
+        $req->bindParam(':id', $userId);
+        $modifiedProfile = $req->execute();
+        return $modifiedProfile;
+    }
+/* ****** 10 . DELETE ACCOUNT ***********************/
+    public function deleteAccountRequest($userId){
+        $dbProjet5 = $this->dbConnect();
+
+        $post = $dbProjet5->prepare('DELETE FROM Users WHERE id = :id');
+        $post->bindParam(':id', $userId);
+        $deleteAccount = $post->execute();
+        
+        return $deleteAccount;
     }
 }

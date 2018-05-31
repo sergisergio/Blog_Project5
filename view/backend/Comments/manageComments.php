@@ -11,20 +11,25 @@
         <?php require "view/frontend/includes/nav.php"; ?>
         <div class="container">
             <?php require "view/backend/includes/management.php"; ?>
-            <h2 class="text-center">Gestion des commentaires</h2>
-            <div class="divide20"></div>
-            <p class="text-center">(Les commentaires déjà validés peuvent être supprimés directement sur le blog.)</p>
-            <div class="divide20"></div>
-            <h5 class="text-center">
-                <?php if($nbCount > 1) : ?>
-                Il y a <?= $nbCount; ?> commentaires à valider.
-                <?php elseif($nbCount == 1) : ?>
-                Il y a un commentaire à valider.
-                <?php else: ?>
-                Il n'y a aucun commentaire à valider.
-                <?php endif; ?>
-            </h5>
-            <div class="divide20"></div>
+            
+            <div class="post box">
+                    
+                    <h2 class="text-center">Gestion des commentaires</h2>
+                    <div class="divide20"></div>
+                    <p class="text-center">(Les commentaires déjà validés peuvent être supprimés directement sur le blog.)</p>
+                    <div class="divide20"></div>
+                    <h5 class="text-center">
+                        <?php if($nbCount > 1) : ?>
+                        Il y a <?= $nbCount; ?> commentaires à valider.
+                        <?php elseif($nbCount == 1) : ?>
+                        Il y a un commentaire à valider.
+                        <?php else: ?>
+                        Il n'y a aucun commentaire à valider.
+                        <?php endif; ?>
+                    </h5>
+                    <div class="divide20"></div>
+                    <?php include 'view/frontend/includes/responseAlert.php'; ?>
+            </div>
             <?php
             
                 foreach ($submittedComment as $s)
