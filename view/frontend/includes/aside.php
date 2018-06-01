@@ -1,6 +1,8 @@
 <aside class="col-md-4 col-sm-12 sidebar">
     <div class="sidebox box widget">
-    <?php include "view/frontend/forms/form_search.php"; ?>
+        <!-- FORM SEARCH -->
+        <?php include "view/frontend/forms/form_search.php"; ?>
+        <!-- END FORM SEARCH -->
     </div>
     <div class="sidebox box widget">
     <h4 class="text-center">Derniers articles</h4>

@@ -3,7 +3,9 @@
     <div class="container inner">
         <div class="blog box mgbottom2 row">
             <div class="col-md-12">
+                <!-- INCLUDE TOP -->
                 <?php include 'view/frontend/includes/top.php' ?>
+                <!-- END INCLUDE TOP -->
             </div>
         </div>
         <div class="blog list-view row">
@@ -13,7 +15,9 @@
                         <div class="row">
                             <div class="col-sm-12 post-content">
                                 <div class="meta">
+                                    <!-- INCLUDE RESPONSES -->
                                     <?php include 'view/frontend/includes/responseAlert.php'; ?> 
+                                    <!-- END INCLUDE RESPONSES -->
                                     <div class="row">
                                         <div class="col-md-4">
                                     <p>
@@ -41,7 +45,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- FORM MODIFY PROFILE -->
                                 <?php require 'view/frontend/forms/formProfile.php' ?>
+                                <!-- END FORM MODIFY PROFILE -->
                                 <hr>
                                 <btn class="btn btn-default">
                                     <a href="index.php?action=deleteAccount&amp;id=<?= $_SESSION['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer mon compte</a>
@@ -56,7 +62,9 @@
     </div>
     <div class="container bottomcontainer">
         <div class="row">
+            <!-- INCLUDE FOOTER -->
             <?php include "view/frontend/includes/footer.php"; ?>
+            <!-- END INCLUDE FOOTER -->
         </div>
     </div>
 </div>

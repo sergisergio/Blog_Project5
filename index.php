@@ -23,6 +23,11 @@ require "vendor/autoload.php";
 16. DELETE ACCOUNT.
 17. MODIFY PROFILE.
 18. PUBLIC PROFILE.
+19. FORGET PASSWORD PAGE.
+20. FORGET PASSWORD MAIL.
+21. CHANGE PASSWORD PAGE.
+22. CHANGE PASSWORD.
+13. DELETE USER.
 /* ******************************************
 *              ADMIN.                       *
 *********************************************
@@ -35,6 +40,9 @@ require "vendor/autoload.php";
 7 . DELETE A POST.
 8 . VALIDATE A COMMENT.
 9 . DELETE A COMMENT.
+10. GET USERS.
+11. GIVE RIGHTS ADMIN.
+12. CANCEL RIGHTS ADMIN.
 /* ******************************************
 *              PAR DEFAUT                   *
 *********************************************
@@ -115,12 +123,10 @@ try {
             search($_POST['search']);
         }
 /* 15 . PROFILE PAGE *************************/
-        
         elseif ($_GET['action'] == 'profilePage') {
             profilePage($_SESSION['id']);
         }
 /* 16 . DELETE ACCOUNT ***********************/
-
         elseif ($_GET['action'] == 'deleteAccount') {
             if (isset($_SESSION['id'])) {
                   deleteAccount($_SESSION['id']); 
@@ -146,12 +152,27 @@ try {
             modifyProfile($_POST['userId'], $_FILES['avatar']['name'], $_POST['first_name'], $_POST['name'], $_POST['email'], $_POST['description']);
         }
 /* 18 . PUBLIC PROFILE ***********************/
-
         elseif ($_GET['action'] == 'publicProfile') {
             if (isset($_GET['id'])) {
                 publicProfile($_GET['id']);
             }
         }
+/* 19 . FORGET PASSWORD PAGE *****************/
+        elseif ($_GET['action'] == 'forgetPasswordPage') {
+            forgetPasswordPage();
+        }
+/* 20 . FORGET PASSWORD MAIL *****************/
+        elseif ($_GET['action'] == 'forgetPassword') {
+                forgetPassword($_POST['email']);
+        }
+/* 21 . CHANGE PASSWORD PAGE *****************/
+        elseif ($_GET['action'] == 'changePasswordPage') {
+                changePasswordPage($_GET['id'], $_GET['token']);
+        }
+/* 22 . CHANGE PASSWORD **********************/
+        elseif ($_GET['action'] == 'changePassword') {
+            changePassword($_POST['userId'] , $_POST['passe']);
+           }
 
 /* ********************************************
 *           ADMINISTRATEUR                    *
@@ -191,6 +212,30 @@ try {
 /* 9 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'adminDeleteComment') {
                 adminDeleteComment($_GET['id']);
+        }
+/* 10. GET USERS *****************************/
+        elseif ($_GET['action'] == 'manage_users') {
+            manageUsers();
+        }
+/* 11. GIVE RIGHTS ADMIN *********************/
+        elseif ($_GET['action'] == 'giveAdminRights') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) 
+            {
+                giveAdminRights($_GET['id']);
+            }
+        }
+/* 12. CANCEL RIGHTS ADMIN *******************/
+        elseif ($_GET['action'] == 'cancelAdminRights'){
+            if (isset($_GET['id']) && $_GET['id'] > 0)
+            {
+                stopAdminRights($_GET['id']);
+            }
+        }
+/* 13. DELETE USER ***************************/
+        elseif ($_GET['action'] == 'deleteUser') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                deleteUser($_GET['id']);
+            }
         }
     }
 /* ********************************************

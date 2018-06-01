@@ -137,7 +137,7 @@ class CommentManager extends Manager
     public function getUserByCommentRequest($commentAuthor)
     {
         $dbProjet5 = $this->dbConnect();
-        $userRequest = $dbProjet5->prepare("SELECT * FROM Users WHERE pseudo = :pseudo ");
+        $userRequest = $dbProjet5->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description FROM Users WHERE pseudo = :pseudo ');
         $userRequest->bindParam(':pseudo', $commentAuthor);
         $userRequest->execute();
         $data = $userRequest->fetch();

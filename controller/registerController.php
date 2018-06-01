@@ -12,7 +12,7 @@ use PHPMailer\PHPMailer\Exception;
     {
         include 'view/frontend/pages/signup.php';
     }
-/* *****************  REGISTRATION ***********************/
+/* ***************** REGISTRATION ************************/
     function addUser($pseudo, $email, $passe, $passe2)
     {
         $userManager = new UserManager();
@@ -109,7 +109,6 @@ use PHPMailer\PHPMailer\Exception;
 /* ***************** SET ACTIVE USER *********************/
     function setActiveUser($userId)
     {
-
         $userManager = new UserManager();
         $activeUser = $userManager->setActiveRequest($userId);
     }

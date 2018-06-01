@@ -4,7 +4,9 @@
   <div class="container inner">
     <div class="blog box mgbottom2 row">
       <div class="col-md-12">
+        <!-- INCLUDE TOP -->
         <?php include 'view/frontend/includes/top.php' ?>
+        <!-- END INCLUDE TOP -->
       </div>
     </div>
     <div class="single blog row">
@@ -25,21 +27,23 @@
             </div>
             <hr>
             <h2>Modifier le commentaire</h2>
+            <!-- FORM MODIFY COMMENT -->
             <?php require "view/frontend/forms/form_modifycomment.php"; ?>
+            <!-- END FORM MODIFY COMMENT -->
             <div class="divide20"></div>
           </div>
         </div>
-        <div class="divide20"></div>
-        <div class="divide20"></div>
-        <div class="divide20"></div>
-        <div class="divide20"></div>
-        <div class="divide20"></div>
+        <div class="divide100"></div>
       </div>
-            <?php require "view/frontend/includes/aside.php"; ?>
+      <!-- INCLUDE ASIDE -->
+      <?php require "view/frontend/includes/aside.php"; ?>
+      <!-- END INCLUDE ASIDE -->
     </div>
       <div class="container bottomcontainer">
         <div class="row">
+            <!-- INCLUDE TOP -->
             <?php require "view/frontend/includes/footer.php"; ?>
+            <!-- END INCLUDE TOP -->
         </div>
       </div>
   </div>

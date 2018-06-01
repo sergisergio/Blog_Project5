@@ -3,18 +3,18 @@
 namespace Philippe\Blog\Model\Entities;
 class UserEntity
 {
-    protected $id;
-    protected $first_name;
-    protected $last_name;
-    protected $pseudo;
-    protected $password;
-    protected $email;
-    protected $registration_date;
-    protected $authorization;
-    protected $confirmation_token;
-    protected $avatar;
-    protected $is_active;
-    protected $description;
+    private $id;
+    private $first_name;
+    private $last_name;
+    private $pseudo;
+    private $password;
+    private $email;
+    private $registration_date;
+    private $authorization;
+    private $confirmation_token;
+    private $avatar;
+    private $is_active;
+    private $description;
 
     /*
      * Méthode de construction
@@ -27,27 +27,28 @@ class UserEntity
     /*
      * Methode d'hydratation
      */
-    public function hydrate($datas) {
-        /*foreach ($data as $key => $value) {
-            $method = 'set'.ucfirst($key);
-            
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }*/
-        $this->setId($datas['id']);
-        $this->setFirstName($datas['first_name']);
-        $this->setLastName($datas['last_name']);
-        $this->setPseudo($datas['pseudo']);
-        $this->setPassword($datas['password']);
-        $this->setEmail($datas['email']);
-        $this->setRegistrationDate($datas['registration_date']);
-        $this->setAuthorization($datas['authorization']);
-        $this->setConfirmationToken($datas['confirmation_token']);
-        $this->setAvatar($datas['avatar']);
-        $this->setIsActive($datas['is_active']);
-        $this->setDescription($datas['description']);
-    }
+    public function hydrate($datas) 
+      {
+          /*foreach ($data as $key => $value) {
+              $method = 'set'.ucfirst($key);
+              
+              if (method_exists($this, $method)) {
+                  $this->$method($value);
+              }
+          }*/
+          $this->setId($datas['id']);
+          $this->setFirstName($datas['first_name']);
+          $this->setLastName($datas['last_name']);
+          $this->setPseudo($datas['pseudo']);
+          $this->setPassword($datas['password']);
+          $this->setEmail($datas['email']);
+          $this->setRegistrationDate($datas['registration_date_fr']);
+          $this->setAuthorization($datas['authorization']);
+          $this->setConfirmationToken($datas['confirmation_token']);
+          $this->setAvatar($datas['avatar']);
+          $this->setIsActive($datas['is_active']);
+          $this->setDescription($datas['description']);
+      }
 
     public function setId($id)
       {

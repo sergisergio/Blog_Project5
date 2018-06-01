@@ -1,12 +1,12 @@
 <?php $title = 'Zone interdite'; ?>
-    <?php ob_start(); ?><body class="full-layout">
-        <div class="body-wrapper">
-            <?php require "view/frontend/includes/nav.php"; ?>
+    <?php ob_start(); ?>
                 <div class="container">
                     <section>
                         <div class="blog box mgbottom2 row">
                             <div class="col-md-12">
+                                <!-- INCLUDE TOP -->
                                 <?php include 'view/frontend/includes/top.php' ?>
+                                <!-- END INCLUDE TOP -->
                             </div>
                         </div>
                         <div class="box">

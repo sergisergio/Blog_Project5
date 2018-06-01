@@ -2,15 +2,15 @@
 namespace Philippe\Blog\Model\Entities;
 class PostEntity
 {
-    protected $id;
-    protected $title;
-    protected $chapo;
-    protected $intro;
-    protected $content;
-    protected $author;
-    protected $creation_date;
-    protected $last_updated;
-    protected $file_extension;
+    private $id;
+    private $title;
+    private $chapo;
+    private $intro;
+    private $content;
+    private $author;
+    private $creation_date;
+    private $last_updated;
+    private $file_extension;
 
     /*
      * Méthode de construction
@@ -23,24 +23,25 @@ class PostEntity
     /*
      * Methode d'hydratation
      */
-    public function hydrate($datas) {
-        /*foreach ($data as $key => $value) {
-            $method = 'set'.ucfirst($key);
-            
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }*/
-        $this->setId($datas['id']);
-        $this->setTitle($datas['title']);
-        $this->setChapo($datas['chapo']);
-        $this->setIntro($datas['intro']);
-        $this->setContent($datas['content']);
-        $this->setAuthor($datas['author']);
-        $this->setCreationDate($datas['creation_date_fr']);
-        $this->setLastUpdated($datas['last_updated_fr']);
-        $this->setFileExtension($datas['file_extension']);
-    }
+    public function hydrate($datas) 
+      {
+          /*foreach ($data as $key => $value) {
+              $method = 'set'.ucfirst($key);
+              
+              if (method_exists($this, $method)) {
+                  $this->$method($value);
+              }
+          }*/
+          $this->setId($datas['id']);
+          $this->setTitle($datas['title']);
+          $this->setChapo($datas['chapo']);
+          $this->setIntro($datas['intro']);
+          $this->setContent($datas['content']);
+          $this->setAuthor($datas['author']);
+          $this->setCreationDate($datas['creation_date_fr']);
+          $this->setLastUpdated($datas['last_updated_fr']);
+          $this->setFileExtension($datas['file_extension']);
+      }
 
     public function setId($id)
       {

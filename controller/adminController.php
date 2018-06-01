@@ -9,6 +9,10 @@
 7 . MANAGE COMMENTS PAGE.
 8 . VALIDATE A COMMENT.
 9 . DELETE A COMMENT.
+10 . GET USERS.
+11 . GIVE RIGHTS ADMIN.
+12 . CANCEL RIGHTS ADMIN.
+13 . DELETE A USER.
 ******************* END SUM UP ********************/
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
@@ -22,7 +26,6 @@ use \Philippe\Blog\Core\Session;
 /* *********** 2 . MANAGE POSTS PAGE **************/
     function managePosts()
     {
-
         $postManager = new PostManager();
         $postsTotal = $postManager->countPosts();
         $postsPerPage = 5;
@@ -188,7 +191,6 @@ use \Philippe\Blog\Core\Session;
 /* *********** 9 . DELETE A COMMENT ***************/
     function adminDeleteComment($commentId)
     {
-
         $commentManager = new CommentManager();
         $comment = $commentManager->getComment($commentId);
         $success = $commentManager->deleteCommentRequest($commentId);
@@ -208,5 +210,49 @@ use \Philippe\Blog\Core\Session;
         elseif ($commentId <= 0) 
         {
             $session->noIdCommentAdmin();
+        }
+    }
+/* ********** 10 . GET USERS **********************/
+    function manageUsers(){
+        $userManager = new \Philippe\Blog\Model\UserManager();
+        $req = $userManager->getUsers();
+        require('view/backend/Users/user_mgmt.php');
+    }
+/* ********** 11 . GIVE RIGHTS ADMIN **************/
+    function giveAdminRights($userId){
+
+        $userManager = new \Philippe\Blog\Model\UserManager();
+        $adminRights = $userManager->giveAdminRightsRequest($userId);
+        
+        if ($adminRights === false) {
+            throw new Exception('Impossible de donner les droits admin');
+        }
+        else {
+            header('Location: index.php?action=manage_users');
+        }
+    }
+/* ********** 12 . CANCEL RIGHTS ADMIN ************/
+    function stopAdminRights($userId){
+
+        $userManager = new \Philippe\Blog\Model\UserManager();
+        $adminRights = $userManager->stopAdminRightsRequest($userId);
+        
+        if ($adminRights === false) {
+            throw new Exception('Impossible de retirer les droits admin');
+        }
+        else {
+            header('Location: index.php?action=manage_users');
+        }
+    }
+/* ********** 13 . DELETE A USER ******************/
+    function deleteUser($userId){
+
+        $userManager = new \Philippe\Blog\Model\UserManager();
+        $affectedUser = $userManager->deleteUserRequest($userId);
+        if ($affectedUser === false){
+            throw new Exception('Impossible de supprimer ce membre');
+        }
+        else {
+            header('Location: index.php?action=manage_users');
         }
     }

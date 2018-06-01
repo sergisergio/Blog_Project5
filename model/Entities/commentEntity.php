@@ -3,13 +3,13 @@
 namespace Philippe\Blog\Model\Entities;
 class CommentEntity 
 {
-    protected $id;
-    protected $post_id;
-    protected $author;
-    protected $content;
-    protected $creation_date;
-    protected $last_updated;
-    protected $validation;
+    private $id;
+    private $post_id;
+    private $author;
+    private $content;
+    private $creation_date;
+    private $last_updated;
+    private $validation;
 
     /*
      * Méthode de construction
@@ -22,22 +22,23 @@ class CommentEntity
     /*
      * Methode d'hydratation
      */
-    public function hydrate($datas) {
-        /*foreach ($data as $key => $value) {
-            $method = 'set'.ucfirst($key);
-            
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }*/
-        $this->setId($datas['id']);
-        $this->setPostId($datas['post_id']);
-        $this->setAuthor($datas['author']);
-        $this->setContent($datas['content']);
-        $this->setCreationDate($datas['creation_date_fr']);
-        $this->setLastUpdated($datas['last_updated_fr']);
-        $this->setValidation($datas['validation']);
-    }
+    public function hydrate($datas) 
+      {
+          /*foreach ($data as $key => $value) {
+              $method = 'set'.ucfirst($key);
+              
+              if (method_exists($this, $method)) {
+                  $this->$method($value);
+              }
+          }*/
+          $this->setId($datas['id']);
+          $this->setPostId($datas['post_id']);
+          $this->setAuthor($datas['author']);
+          $this->setContent($datas['content']);
+          $this->setCreationDate($datas['creation_date_fr']);
+          $this->setLastUpdated($datas['last_updated_fr']);
+          $this->setValidation($datas['validation']);
+      }
 
     public function setId($id)
       {
