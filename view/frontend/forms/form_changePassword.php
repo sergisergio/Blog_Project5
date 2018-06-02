@@ -4,6 +4,10 @@
         <p></p><div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
+            <?php      
+                $csrfChangePasswordToken = md5(time()*rand(1, 1000));
+                $_SESSION['ChangePasswordToken'] = $csrfChangePasswordToken;        
+            ?>
             <form action="index.php?action=changePassword" method="post">
                 <fieldset>
                     <div class="row">
@@ -28,8 +32,11 @@
                                 <input type="reset" value="Effacer" name="reset" class="btn btn-submit bm0" /> 
                             </div>
                         </div>
+                        <div>
+                            <input type="hidden" name="token" id="token" value="<?= $csrfChangePasswordToken; ?>" />
+                        </div>
                         <input type="hidden" name="v_error" id="v-error" value="Required" />
-                        <input type="hidden" name="userId" value="<?php echo $_GET['id'] ?>"/> 
+                        <input type="hidden" name="userId" value="<?= $_GET['id'] ?>"/> 
                     </div>
                 </fieldset>
             </form>

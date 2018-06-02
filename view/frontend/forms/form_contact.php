@@ -1,3 +1,7 @@
+<?php      
+    $csrfContactToken = md5(time()*rand(1, 1000));
+    $_SESSION['contactToken'] = $csrfContactToken;        
+?>
 <form class="forms" action="index.php?action=contact" method="post">
     <fieldset>
         <div class="row">
@@ -37,6 +41,9 @@
                 <div class="button-row pull-left">
                     <input type="reset" value="Effacer" name="reset" class="btn btn-submit bm0" /> 
                 </div>
+            </div>
+            <div>
+                <input type="hidden" name="token" id="token" value="<?= $csrfContactToken; ?>" />
             </div>
             <input type="hidden" name="v_error" id="v-error" value="Required" />
             <input type="hidden" name="v_email" id="v-email" value="Enter a valid email" /> 

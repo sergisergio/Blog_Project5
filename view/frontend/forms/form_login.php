@@ -6,6 +6,10 @@
         <div class="form-container">
             <div class="response alert"></div>
             <?php require 'view/frontend/includes/responseAlert.php'; ?> 
+            <?php      
+                $csrfLoginToken = md5(time()*rand(1, 1000));
+                $_SESSION['csrfLoginToken'] = $csrfLoginToken;        
+            ?>
             <form action="index.php?action=login" method="post">
                 <fieldset>
                     <div class="row">
@@ -24,6 +28,9 @@
                         <div class="col-sm-6 col-xs-6 lp5">
                             <div class="button-row pull-left">
                                 <input type="reset" value="Effacer" name="reset" class="btn btn-submit bm0" /> </div>
+                        </div>
+                        <div>
+                            <input type="hidden" name="token" id="token" value="<?= $csrfLoginToken; ?>" />
                         </div>
                         <input type="hidden" name="v_error" id="v-error" value="Required" />
                         <input type="hidden" name="v_email" id="v-email" value="Enter a valid email" /> </div>

@@ -4,15 +4,26 @@ use \Philippe\Blog\Model\Entities\PostEntity;
 use \Philippe\Blog\Model\PostManager;
 
 /* ***************** SEARCH *****************/
-function search($search)
+function search($search, $csrfSearchToken)
 {
-    if (isset($search) && $search != null) {
-        $postManager = new PostManager();
-        $posts1 = $postManager->getPosts(0, 5);
-        $countSearchResults = $postManager->countSearchRequest($search);
-        $nbResults = $countSearchResults->rowCount();
-        $searchResults = $postManager->searchRequest($search);
+    if (isset($search) && $search != null) 
+    {
+    	if (isset($_SESSION['csrfSearchToken']) AND isset($csrfSearchToken) AND !empty($_SESSION['csrfSearchToken']) AND !empty($csrfSearchToken)) 
+    	{
+        	if ($_SESSION['csrfSearchToken'] == $csrfSearchToken) 
+        	{
+        		$postManager = new PostManager();
+        		$posts1 = $postManager->getPosts(0, 5);
+        		$countSearchResults = $postManager->countSearchRequest($search);
+        		$nbResults = $countSearchResults->rowCount();
+        		$searchResults = $postManager->searchRequest($search);
 
-        include 'view/frontend/pages/searchresults.php';
+        		include 'view/frontend/pages/searchresults.php';
+        	}
+        	else
+        	{
+            echo "Erreur de vérification";
+        	}
+        }
     }
 }

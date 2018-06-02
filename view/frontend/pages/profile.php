@@ -49,9 +49,10 @@
                                 <?php require 'view/frontend/forms/formProfile.php' ?>
                                 <!-- END FORM MODIFY PROFILE -->
                                 <hr>
-                                <btn class="btn btn-default">
+                                <?php require 'view/frontend/forms/form_deleteAccount.php' ?>
+                                <!--<btn class="btn btn-default">
                                     <a href="index.php?action=deleteAccount&amp;id=<?php echo $_SESSION['id'] ?>" data-toggle='confirmation' id="important_action">Supprimer mon compte</a>
-                                </btn>
+                                </btn>-->
                             </div>
                         </div>
                     </div>

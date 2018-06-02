@@ -75,7 +75,7 @@ try {
         }
         /* 3 . ADD A COMMENT *************************/
         elseif ($_GET['action'] == 'addcomment') {
-            addComment($_GET['id'], $_SESSION['id'], $_POST['content']);
+            addComment($_GET['id'], $_SESSION['id'], $_POST['content'], $_POST['token']);
         }
         /* 4 . MODIFY COMMENT PAGE *******************/
         elseif ($_GET['action'] == 'modifyCommentPage') {
@@ -84,11 +84,11 @@ try {
         }
         /* 5 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'deleteComment') {
-            deleteComment($_GET['id'], $_GET['postId']);
+            deleteComment($_GET['id'], $_GET['postId'], $_POST['token']);
         }
         /* 6 . MODIFY A COMMENT **********************/
         elseif ($_GET['action'] == 'modifyComment') {
-            modifyComment($_GET['id'], $_SESSION['id'], $_POST['content'], $_GET['postId']);
+            modifyComment($_GET['id'], $_SESSION['id'], $_POST['content'], $_GET['postId'], $_POST['token']);
             
         }
         /* 7 . CONNECTION PAGE ***********************/
@@ -97,7 +97,7 @@ try {
         }
         /* 8 . CONNECTION ****************************/
         elseif ($_GET['action'] == 'login') {
-            login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR']);
+            login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR'], $_POST['token']);
         }
         /* 9 . DISCONNECTION *************************/
         elseif ($_GET['action'] == 'logout') {
@@ -109,7 +109,7 @@ try {
         }
         /* 11. REGISTRATION **************************/
         elseif ($_GET['action'] == 'addUser') {
-             addUser($_POST['pseudo'], $_POST['email'], $_POST['passe'], $_POST['passe2']); 
+             addUser($_POST['pseudo'], $_POST['email'], $_POST['passe'], $_POST['passe2'], $_POST['token']); 
         }
         /* 12. CONFIRM REGISTRATION ******************/
         elseif ($_GET['action'] == 'confirmRegistration') {
@@ -117,11 +117,11 @@ try {
         }
         /* 13. CONTACT *******************************/
         elseif ($_GET['action'] == 'contact') {
-            contact($_POST['name'], $_POST['email'], $_POST['subject'], $_POST['message']);
+            contact($_POST['name'], $_POST['email'], $_POST['subject'], $_POST['message'], $_POST['token']);
         }
         /* 14. SEARCH ********************************/
         elseif ($_GET['action'] == 'search') {
-            search($_POST['search']);
+            search($_POST['search'], $_POST['token']);
         }
         /* 15 . PROFILE PAGE *************************/
         elseif ($_GET['action'] == 'profilePage') {
@@ -129,28 +129,12 @@ try {
         }
         /* 16 . DELETE ACCOUNT ***********************/
         elseif ($_GET['action'] == 'deleteAccount') {
-            if (isset($_SESSION['id'])) {
-                  deleteAccount($_SESSION['id']); 
-            }
-            else {
-                $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet utilisateur !';
-                profilePage();
-                exit();
-            }
+                  deleteAccount($_SESSION['id'], $_POST['token']);   
         }
         /* 17 . MODIFY PROFILE ***********************/
 
         elseif ($_GET['action'] == 'modifyProfile') {
-            /*if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                    $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
-                    profilePage();
-                    exit();
-            }
-            else {
-                // checkExistMail($_POST['email']);*/
-                //if ($_POST['email'] == $_SESSION['email']) {
-                
-            modifyProfile($_POST['userId'], $_FILES['avatar']['name'], $_POST['first_name'], $_POST['name'], $_POST['email'], $_POST['description']);
+            modifyProfile($_POST['userId'], $_FILES['avatar']['name'], $_POST['first_name'], $_POST['name'], $_POST['email'], $_POST['description'], $_POST['token']);
         }
         /* 18 . PUBLIC PROFILE ***********************/
         elseif ($_GET['action'] == 'publicProfile') {
@@ -164,7 +148,7 @@ try {
         }
         /* 20 . FORGET PASSWORD MAIL *****************/
         elseif ($_GET['action'] == 'forgetPassword') {
-                forgetPassword($_POST['email']);
+                forgetPassword($_POST['email'], $_POST['token']);
         }
         /* 21 . CHANGE PASSWORD PAGE *****************/
         elseif ($_GET['action'] == 'changePasswordPage') {
@@ -172,7 +156,7 @@ try {
         }
         /* 22 . CHANGE PASSWORD **********************/
         elseif ($_GET['action'] == 'changePassword') {
-            changePassword($_POST['userId'], $_POST['passe']);
+            changePassword($_POST['userId'], $_POST['passe'], $_POST['token']);
         }
 
         /* ********************************************

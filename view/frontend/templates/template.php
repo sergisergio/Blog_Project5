@@ -67,7 +67,7 @@
             $("[data-toggle='confirmation']").popConfirm({
                 title: "Certain ?",
                 content: "Dernière chance !",
-                placement: "left",
+                placement: "top",
                 yesBtn: 'Oui',
               noBtn: 'Non'
             });

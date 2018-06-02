@@ -13,30 +13,49 @@ function signupPage()
     include 'view/frontend/pages/signup.php';
 }
 /* ***************** REGISTRATION ************************/
-function addUser($pseudo, $email, $passe, $passe2)
+function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
 {
     $userManager = new UserManager();
     $session = new Session();
-    if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
+    if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) 
+    {
         $user = $userManager->existPseudo($pseudo);
         $usermail = $userManager->existMail($email);
-        if ($user) {
+        if ($user) 
+        {
             $session->errorPseudo1();
         }
-        elseif ($usermail) {
+        elseif ($usermail) 
+        {
             $session->errorEmail1();
         }
-        elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)) {
+        elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)) 
+        {
             $session->errorPseudo2();
         }
-        elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        {
             $session->errorEmail2();
         }
-        elseif (empty($passe) || $passe != $_POST['passe2']) {
+        elseif (empty($passe) || $passe != $_POST['passe2']) 
+        {
             $session->errorPassword();
         }
-        else {
-            $users = $userManager->addUserRequest($pseudo, $email, $passe);
+        else 
+        {
+            if (isset($_SESSION['csrfSignupToken']) AND isset($csrfSignupToken) AND !empty($_SESSION['csrfSignupToken']) AND !empty($csrfSignupToken)) 
+            {
+                if ($_SESSION['csrfSignupToken'] == $csrfSignupToken) 
+                {
+                    $users = $userManager->addUserRequest($pseudo, $email, $passe);
+                    if ($users === false) 
+                    {
+                        $session->badRequest();
+                    }
+                    else
+                    {
+                        $session->registerSuccess();
+                    }    
             /* test mail local */
             //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
             /* test mail online */
@@ -59,15 +78,16 @@ function addUser($pseudo, $email, $passe, $passe2)
                 catch (Exception $e) {
                 echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
                 }*/
-                
-
-            $session->registerSuccess();
-            if ($users === false) {
-                $session->badRequest();
+                }
+                else
+                {
+                    echo "Erreur de vérification";
+                }
             }
-        } 
-    }
-    else {
+        }                
+    } 
+    else 
+    {
         $session->emptyContents();
     }
 }

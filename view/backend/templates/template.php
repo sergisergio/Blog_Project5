@@ -33,12 +33,12 @@
 
         <?php echo $content ?>
     <script src="public/js/jquery.min.js"></script>
-    <!--<script src="public/js/bootstrap.min.js"></script>-->
+    <script src="public/js/bootstrap.min.js"></script>
     <script src="public/js/jquery.popconfirm.js"></script>
     <script src="public/js/jquery.themepunch.tools.min.js"></script>
     <script src="public/js/classie.js"></script>
     <script src="public/js/plugins.js"></script>
-    <script src="public/js/scripts.js"></script>
+    <!--<script src="public/js/scripts.js"></script>-->
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=duwupb31ji27dizkt7ys8otbzxe9i7o5tszs4iafqoxxp09h"></script>
 
     <script>
@@ -88,7 +88,7 @@
         $("[data-toggle='confirmation']").popConfirm({
             title: "Certain ?",
             content: "Dernière chance !",
-            placement: "left",
+            placement: "top",
             yesBtn: 'Oui',
           noBtn: 'Non'// (top, right, bottom, left)
         });

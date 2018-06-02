@@ -9,18 +9,30 @@ use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Core\Session;
 
 /* **************** ADD A COMMENT **************/
-function addComment($postId, $author, $content)
+function addComment($postId, $author, $content, $csrfAddCommentToken)
 {
     $commentManager = new CommentManager();
     $session = new Session();
 
-    if (isset($postId) && $postId > 0) {
-        if (!empty($content)) {
-            $affectedLines = $commentManager->postComment($postId, $author, $content);
-            $session->addedComment($postId);
-                
-            if ($affectedLines === false) {
-                $session->needsRegister($postId);
+    if (isset($postId) && $postId > 0) 
+    {
+        if (!empty($content)) 
+        {
+            if (isset($_SESSION['addCommentToken']) AND isset($csrfAddCommentToken) AND !empty($_SESSION['addCommentToken']) AND !empty($csrfAddCommentToken)) 
+            {
+                if ($_SESSION['addCommentToken'] == $csrfAddCommentToken) 
+                {
+                    $affectedLines = $commentManager->postComment($postId, $author, $content);
+                    $session->addedComment($postId);
+                    if ($affectedLines === false) 
+                    {
+                        $session->needsRegister($postId);
+                    }
+                }
+                else 
+                {
+                    echo "Erreur de vérification";
+                }
             }
         }
         else 
@@ -28,7 +40,8 @@ function addComment($postId, $author, $content)
             $session->emptyContent($postId);
         }
     }
-    else {
+    else 
+    {
         $sessionManager->noIdPost();
     }
 }
@@ -56,42 +69,68 @@ function modifyCommentPage($commentId, $postId)
     }
 }
 /* **************** DELETE A COMMENT ***********/
-function deleteComment($commentId, $postId)
+function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
 {
     $commentManager = new CommentManager();
     $session = new Session();
-    $success = $commentManager->deleteCommentRequest($commentId);
-
-    if ($success === false) {
-        $session->nonDeletedComment($postId);
-    }
-    elseif (isset($commentId) && $commentId > 0) {
-        $comment = $commentManager->getComment($commentId);
-        $success = $commentManager->deleteCommentRequest($commentId);
-        $session->deletedComment($postId);
-    }
-    elseif (empty($comment) || $commentId <= 0 ) {
-        $session->noIdComment();
+    
+    if (isset($_SESSION['csrfDeleteCommentToken']) AND isset($csrfDeleteCommentToken) AND !empty($_SESSION['csrfDeleteCommentToken']) AND !empty($csrfDeleteCommentToken)) 
+    {
+        if ($_SESSION['csrfDeleteCommentToken'] == $csrfDeleteCommentToken) 
+        {
+            if (isset($commentId) && $commentId > 0) 
+            {
+                $comment = $commentManager->getComment($commentId);
+                $success = $commentManager->deleteCommentRequest($commentId);         
+                if ($success === false) 
+                {
+                    $session->nonDeletedComment($postId);
+                }
+                else
+                {
+                    $session->deletedComment($postId);
+                }
+            }
+            elseif (empty($comment) || $commentId <= 0 ) 
+            {
+                $session->noIdComment();
+            }
+        }
+        else 
+        {
+            echo "Erreur de vérification";
+        }
     }
 }
 /* **************** MODIFY A COMMENT ***********/
-function modifyComment($commentId, $author, $content, $postId)
+function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommentToken)
 {
     $commentManager = new CommentManager();
     $comment = $commentManager->getComment($commentId);
     $session = new Session();
         
-    if (isset($commentId) && $commentId > 0) {
-        if (!empty($content)) {
-            $success = $commentManager->modifyCommentRequest($commentId, $author, $content);
-                
-
-            if ($success === false) {
-                $session->modifyCommentError($commentId);
-            }
-            else
+    if (isset($commentId) && $commentId > 0) 
+    {
+        if (!empty($content)) 
+        {
+            if (isset($_SESSION['csrfModifyCommentToken']) AND isset($csrfModifyCommentToken) AND !empty($_SESSION['csrfModifyCommentToken']) AND !empty($csrfModifyCommentToken)) 
             {
-                $session->addedComment($postId);
+                if ($_SESSION['csrfModifyCommentToken'] == $csrfModifyCommentToken) 
+                {
+                    $success = $commentManager->modifyCommentRequest($commentId, $author, $content);
+                    if ($success === false) 
+                    {
+                        $session->modifyCommentError($commentId);
+                    }
+                    else
+                    {
+                        $session->addedComment($postId);
+                    }
+                }
+                else 
+                {
+                    echo "Erreur de vérification";
+                }
             }
         }
         else 
@@ -99,7 +138,8 @@ function modifyComment($commentId, $author, $content, $postId)
             $session->emptyContent();
         }
     }
-    elseif (empty($comment) || $commentId <= 0 ) {
+    elseif (empty($comment) || $commentId <= 0 ) 
+    {
         $session->noIdComment();
     }
 }

@@ -71,7 +71,9 @@
                                 <?php echo nl2br(htmlspecialchars($c->getContent())) ?> 
                                 <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $c->getAuthor())) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
                                     <a href="index.php?action=modifyCommentPage&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>"> (Modifier)</a> 
-                                    <a href="index.php?action=deleteComment&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
+                                    <!--<a href="index.php?action=deleteComment&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>-->
+                                    
+                                    <?php require 'view/frontend/forms/form_deleteComment.php' ?>
                                 <?php endif; ?>
                             </p>
                             <?php
