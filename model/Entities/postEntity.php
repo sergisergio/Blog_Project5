@@ -45,7 +45,11 @@ class PostEntity
 
     public function setId($id)
       {
-        $this->id = $id;
+        $id = (int)$id;
+        if($id > 0)
+        {
+          $this->id = $id;
+        }  
       }
     public function getId()
       {
@@ -53,7 +57,11 @@ class PostEntity
       }
     public function setTitle($title)
       {
-        $this->title = $title;
+        if (is_string($title))
+        {
+          $this->title = $title;
+        }
+        
       }
     public function getTitle()
       {
@@ -61,7 +69,10 @@ class PostEntity
       }
     public function setChapo($chapo)
       {
-        $this->chapo = $chapo;
+        if (is_string($chapo))
+        {
+          $this->chapo = $chapo;
+        }
       }
     public function getChapo()
       {
@@ -69,7 +80,10 @@ class PostEntity
       }
     public function setIntro($intro)
       {
-        $this->intro = $intro;
+        if (is_string($intro))
+        {
+          $this->intro = $intro;
+        }
       }
     public function getIntro()
       {
@@ -77,7 +91,10 @@ class PostEntity
       }
     public function setContent($content)
       {
-        $this->content = $content;
+        if (is_string($content))
+        {
+          $this->content = $content;
+        }
       }
     public function getContent()
       {
@@ -85,7 +102,10 @@ class PostEntity
       }
     public function setAuthor($author)
       {
-        $this->author = $author;
+        if (is_string($author))
+        {
+          $this->author = $author;
+        }
       }
     public function getAuthor()
       {
@@ -109,7 +129,10 @@ class PostEntity
       }
     public function setFileExtension($file_extension)
       {
-        $this->fileExtension = $file_extension;
+        if (is_string($file_extension))
+        {
+          $this->fileExtension = $file_extension;
+        }
       }
     public function getFileExtension()
       {

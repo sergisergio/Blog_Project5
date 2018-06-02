@@ -213,46 +213,65 @@ use \Philippe\Blog\Core\Session;
         }
     }
 /* ********** 10 . GET USERS **********************/
-    function manageUsers(){
+    function manageUsers()
+    {
         $userManager = new \Philippe\Blog\Model\UserManager();
         $req = $userManager->getUsers();
         require('view/backend/Users/user_mgmt.php');
     }
 /* ********** 11 . GIVE RIGHTS ADMIN **************/
-    function giveAdminRights($userId){
-
+    function giveAdminRights($userId)
+    {
         $userManager = new \Philippe\Blog\Model\UserManager();
-        $adminRights = $userManager->giveAdminRightsRequest($userId);
         
-        if ($adminRights === false) {
+        if (isset($userId) && $userId > 0) 
+        {
+            $adminRights = $userManager->giveAdminRightsRequest($userId);
+
+            if ($adminRights === false) 
+            {
             throw new Exception('Impossible de donner les droits admin');
-        }
-        else {
-            header('Location: index.php?action=manage_users');
+            }
+            else 
+            {
+                header('Location: index.php?action=manage_users');
+            }
         }
     }
 /* ********** 12 . CANCEL RIGHTS ADMIN ************/
-    function stopAdminRights($userId){
-
+    function stopAdminRights($userId)
+    {
         $userManager = new \Philippe\Blog\Model\UserManager();
-        $adminRights = $userManager->stopAdminRightsRequest($userId);
         
-        if ($adminRights === false) {
-            throw new Exception('Impossible de retirer les droits admin');
-        }
-        else {
-            header('Location: index.php?action=manage_users');
+        if (isset($userId) && $userId > 0)
+        {
+            $adminRights = $userManager->stopAdminRightsRequest($userId);
+
+            if ($adminRights === false) 
+            {
+                throw new Exception('Impossible de retirer les droits admin');
+            }
+            else 
+            {
+                header('Location: index.php?action=manage_users');
+            }
         }
     }
 /* ********** 13 . DELETE A USER ******************/
     function deleteUser($userId){
 
         $userManager = new \Philippe\Blog\Model\UserManager();
-        $affectedUser = $userManager->deleteUserRequest($userId);
-        if ($affectedUser === false){
-            throw new Exception('Impossible de supprimer ce membre');
-        }
-        else {
-            header('Location: index.php?action=manage_users');
+        
+        if (isset($_GET['id']) && $_GET['id'] > 0) 
+        {
+            $affectedUser = $userManager->deleteUserRequest($userId);
+            
+            if ($affectedUser === false)
+            {
+                throw new Exception('Impossible de supprimer ce membre');
+            }
+            else {
+                header('Location: index.php?action=manage_users');
+            }
         }
     }

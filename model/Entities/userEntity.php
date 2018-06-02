@@ -52,7 +52,11 @@ class UserEntity
 
     public function setId($id)
       {
-        $this->id = $id;
+        $id = (int)$id;
+        if ($id > 0)
+        {
+          $this->id = $id;
+        }
       }
     public function getId()
       {
@@ -60,7 +64,10 @@ class UserEntity
       }
     public function setFirstName($first_name)
       {
-        $this->firstName = $first_name;
+        if (is_string($first_name))
+        {
+          $this->firstName = $first_name;
+        }
       }
     public function getFirstName()
       {
@@ -68,7 +75,10 @@ class UserEntity
       }
     public function setLastName($last_name)
       {
-        $this->lastName = $last_name;
+        if (is_string($last_name))
+        {
+          $this->lastName = $last_name;
+        }
       }
     public function getLastName()
       {
@@ -76,7 +86,10 @@ class UserEntity
       }
     public function setPseudo($pseudo)
       {
-        $this->pseudo = $pseudo;
+        if (is_string($pseudo))
+        {
+          $this->pseudo = $pseudo;
+        }
       }
     public function getPseudo()
       {
@@ -84,7 +97,10 @@ class UserEntity
       }
     public function setPassword($password)
       {
-        $this->password = $password;
+        if (is_string($password))
+        {
+          $this->password = $password;
+        }
       }
     public function getPassword()
       {
@@ -92,7 +108,10 @@ class UserEntity
       }
     public function setEmail($email)
       {
-        $this->email = $email;
+        if (is_string($email))
+        {
+          $this->email = $email;
+        }
       }
     public function getEmail()
       {
@@ -108,7 +127,11 @@ class UserEntity
       }
     public function setAuthorization($authorization)
       {
-        $this->authorization = $authorization;
+        $authorization = (int)$authorization;
+        if ($authorization >= 0)
+        {
+          $this->authorization = $authorization;
+        }
       }
     public function getAuthorization1()
       {
@@ -116,7 +139,10 @@ class UserEntity
       }
     public function setConfirmationToken($confirmation_token)
       {
-        $this->confirmationToken = $confirmation_token;
+        if (is_string($confirmation_token))
+        {
+          $this->confirmationToken = $confirmation_token;
+        }
       }
     public function getConfirmationToken()
       {
@@ -124,7 +150,10 @@ class UserEntity
       }
     public function setAvatar($avatar)
       {
-        $this->avatar = $avatar;
+        if (is_string($avatar))
+        {
+          $this->avatar = $avatar;
+        }
       }
     public function getAvatar()
       {
@@ -132,7 +161,11 @@ class UserEntity
       }
     public function setIsActive($is_active)
       {
-        $this->isActive = $is_active;
+        $is_active = (int)$is_active;
+        if ($is_active >= 0)
+        {
+          $this->isActive = $is_active;
+        }
       }
     public function getIsActive()
       {
@@ -140,7 +173,10 @@ class UserEntity
       }
     public function setDescription($description)
       {
+        if (is_string($description))
+        {
         $this->description = $description;
+        }
       }
     public function getDescription()
       {

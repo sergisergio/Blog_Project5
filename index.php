@@ -219,23 +219,15 @@ try {
         }
 /* 11. GIVE RIGHTS ADMIN *********************/
         elseif ($_GET['action'] == 'giveAdminRights') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) 
-            {
                 giveAdminRights($_GET['id']);
-            }
         }
 /* 12. CANCEL RIGHTS ADMIN *******************/
         elseif ($_GET['action'] == 'cancelAdminRights'){
-            if (isset($_GET['id']) && $_GET['id'] > 0)
-            {
                 stopAdminRights($_GET['id']);
-            }
         }
 /* 13. DELETE USER ***************************/
         elseif ($_GET['action'] == 'deleteUser') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
                 deleteUser($_GET['id']);
-            }
         }
     }
 /* ********************************************

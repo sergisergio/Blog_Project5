@@ -42,7 +42,11 @@ class CommentEntity
 
     public function setId($id)
       {
-        $this->id = $id;
+        $id = (int)$id;
+        if ($id > 0)
+        {
+          $this->id = $id;
+        }
       }
     public function getId()
       {
@@ -50,7 +54,11 @@ class CommentEntity
       }
     public function setPostId($post_id)
       {
-        $this->post_id = $post_id;
+        $post_id = (int)$post_id;
+        if ($post_id)
+        {
+          $this->post_id = $post_id;
+        }
       }
     public function getPostId()
       {
@@ -58,7 +66,10 @@ class CommentEntity
       }
     public function setAuthor($author)
       {
-        $this->author = $author;
+        if (is_string($author))
+        {
+          $this->author = $author;
+        }
       }
     public function getAuthor()
       {
@@ -66,7 +77,10 @@ class CommentEntity
       }
     public function setContent($content)
       {
-        $this->content = $content;
+        if (is_string($content))
+        {
+          $this->content = $content;
+        }
       }
     public function getContent()
       {
@@ -94,6 +108,10 @@ class CommentEntity
       }
     public function getValidation()
       {
-        return $this->validation;
+        $validation = (int)$validation;
+        if ($validation >= 0)
+        {
+          return $this->validation;
+        }
       }
 }
