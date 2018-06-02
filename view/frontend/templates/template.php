@@ -34,7 +34,7 @@
         <div class="body-wrapper">
             <?php require "view/frontend/includes/nav.php"; ?>
                         
-            <?= $content ?>
+            <?php echo $content ?>
 
         <script src="public/js/jquery.min.js"></script>
         <script src="public/js/bootstrap.min.js"></script>

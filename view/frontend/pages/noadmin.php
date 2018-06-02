@@ -5,7 +5,7 @@
                         <div class="blog box mgbottom2 row">
                             <div class="col-md-12">
                                 <!-- INCLUDE TOP -->
-                                <?php include 'view/frontend/includes/top.php' ?>
+                                <?php require 'view/frontend/includes/top.php' ?>
                                 <!-- END INCLUDE TOP -->
                             </div>
                         </div>

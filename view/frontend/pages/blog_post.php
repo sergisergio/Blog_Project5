@@ -4,7 +4,7 @@
         <div class="blog box mgbottom2 row">
             <!-- INCLUDE TOP -->
             <div class="col-md-12">
-                <?php include 'view/frontend/includes/top.php' ?>
+                <?php require 'view/frontend/includes/top.php' ?>
             </div>
             <!-- END INCLUDE TOP -->
         </div>
@@ -14,12 +14,12 @@
                     <!-- SINGLE POST -->
                     <div class="post box">
                         <div class="post-title">
-                            <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
-                            <h3 class="post-title"><?= htmlspecialchars($post->getChapo()); ?></h3>
-                            <h4 class="post-title">Auteur : <?= ($post->getAuthor()); ?></h4>
+                            <h2><?php echo htmlspecialchars($post->getTitle()) ?></h2>
+                            <h3 class="post-title"><?php echo htmlspecialchars($post->getChapo()); ?></h3>
+                            <h4 class="post-title">Auteur : <?php echo ($post->getAuthor()); ?></h4>
                             <div class="meta"> <span class="date">date de dernière publication</span>le 
                                 <?php
-                                if (($post->getLastUpdated() != NULL)) {
+                                if (($post->getLastUpdated() != null)) {
                                     echo ($post->getLastUpdated());
                                 }
                                 else {
@@ -29,13 +29,13 @@
                             </div>
                             <div class="divide30"></div>
                             <?php if ($post->getFileExtension() != '') : ?>
-                            <img src="public/images/posts/<?= $post->getFileExtension() ?>" class="img-responsive" />
+                            <img src="public/images/posts/<?php echo $post->getFileExtension() ?>" class="img-responsive" />
                             <div class="divide30"></div>
                             <?php else: ?>
                             <img src="public/images/posts/default.jpg" class="img-responsive" />
                             <?php endif; ?>
                             <p>
-                                <?= nl2br(htmlspecialchars($post->getContent())) ?>
+                                <?php echo nl2br(htmlspecialchars($post->getContent())) ?>
                             </p>
                         </div>
                         <div class="divide20"></div>
@@ -50,14 +50,14 @@
                             <?php if($nbCount == 0) : ?>
                             <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Il n'a aucun commentaire pour l'instant.</h3>
                             <?php else: ?>
-                            <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?= $nbCount; ?>)</h3>
+                            <h3><i class="budicon-comment-2"></i>&nbsp;&nbsp;Commentaires (<?php echo $nbCount; ?>)</h3>
                             <?php endif; ?>
                             <?php
                             foreach ($comment as $c)
                             {
                             ?>
                             <p>
-                            <a href="index.php?action=publicProfile&id=<?= $c->getAuthor() ?>"><strong><?= htmlspecialchars($c->getAuthor()) ?></strong></a> le 
+                            <a href="index.php?action=publicProfile&id=<?php echo $c->getAuthor() ?>"><strong><?php echo htmlspecialchars($c->getAuthor()) ?></strong></a> le 
                                 <?php
                                 if ($c->getLastUpdated()) {
                                     echo ($c->getLastUpdated());
@@ -68,10 +68,10 @@
                                     ?> 
                             </p>
                             <p>
-                                <?= nl2br(htmlspecialchars($c->getContent())) ?> 
+                                <?php echo nl2br(htmlspecialchars($c->getContent())) ?> 
                                 <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $c->getAuthor())) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
-                                    <a href="index.php?action=modifyCommentPage&amp;id=<?= $c->getId() ?>&amp;postId=<?= $post->getId() ?>"> (Modifier)</a> 
-                                    <a href="index.php?action=deleteComment&amp;id=<?= $c->getId() ?>&amp;postId=<?= $post->getId() ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
+                                    <a href="index.php?action=modifyCommentPage&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>"> (Modifier)</a> 
+                                    <a href="index.php?action=deleteComment&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
                                 <?php endif; ?>
                             </p>
                             <?php

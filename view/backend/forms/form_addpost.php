@@ -1,6 +1,6 @@
 <div class="form-container">
     <div class="response alert"></div>
-        <?php include 'view/frontend/includes/responseAlert.php'; ?> 
+        <?php require 'view/frontend/includes/responseAlert.php'; ?> 
 <form action="index.php?action=addpost" method="post" enctype="multipart/form-data">
     <div>
         <label for="title">Titre</label><br />

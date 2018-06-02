@@ -1,7 +1,7 @@
 <?php $title = 'Connexion'; ?>
 <?php ob_start(); ?>
     <div class="container">
-    	<!-- FORM LOGIN -->
+        <!-- FORM LOGIN -->
         <?php require "view/frontend/forms/form_login.php"; ?></div>
         <!-- END FORM LOGIN -->
     </div>

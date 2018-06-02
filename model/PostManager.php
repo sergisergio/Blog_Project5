@@ -8,12 +8,14 @@
 6 . COUNT POSTS.
 7 . SEARCH RESULTS.
 ******************* END SUMP UP *************************/
+
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 use \Philippe\Blog\Model\Entities\PostEntity;
 class PostManager extends Manager
-{ 
-/* ************ 1 . GET ALL POSTS *******************/
+{
+ 
+    /* ************ 1 . GET ALL POSTS *******************/
     public function getPosts($start, $postsPerPage)
     {
         $dbProjet5 = $this->dbConnect();
@@ -37,7 +39,7 @@ class PostManager extends Manager
         $req->closeCursor();  
         return $posts1;
     }
-/* ************ 2 . GET ONLY ONE POST ***************/
+    /* ************ 2 . GET ONLY ONE POST ***************/
     public function getPost($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -53,7 +55,7 @@ class PostManager extends Manager
         $post = new PostEntity($data);
         return $post;
     }
-/* ************ 3 . ADD A POST **********************/
+    /* ************ 3 . ADD A POST **********************/
     public function addPostRequest($title, $chapo, $author, $content, $image)
     {
         $dbProjet5 = $this->dbConnect();
@@ -68,7 +70,7 @@ class PostManager extends Manager
         $affectedPost = $post->execute();
         return $affectedPost;
     }
-/* ************ 4 . MODIFY A POST *******************/
+    /* ************ 4 . MODIFY A POST *******************/
     public function modifyPostRequest($postId, $title, $chapo, $author, $content)
     {
         $dbProjet5 = $this->dbConnect();
@@ -83,7 +85,7 @@ class PostManager extends Manager
         $affectedPost = $post->execute();
         return $affectedPost;
     }
-/* ************ 5 . DELETE A POST *******************/
+    /* ************ 5 . DELETE A POST *******************/
     public function deletePostRequest($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -92,7 +94,7 @@ class PostManager extends Manager
         $affectedPost = $post->execute();
         return $affectedPost;
     }
-/* ************ 6 . COUNT POSTS *********************/
+    /* ************ 6 . COUNT POSTS *********************/
     public function countPosts()
     {
         $dbProjet5 = $this->dbConnect();
@@ -100,8 +102,9 @@ class PostManager extends Manager
         $postsTotal = $postsTotalReq->rowCount();
         return $postsTotal;
     }
-/* ************ 7 . COUNT SEARCH RESULTS ************/
-    public function countSearchRequest($search){
+    /* ************ 7 . COUNT SEARCH RESULTS ************/
+    public function countSearchRequest($search)
+    {
 
         $dbProjet5 = $this->dbConnect();
 
@@ -109,7 +112,7 @@ class PostManager extends Manager
 
         return $countSearchResults;
     }
-/* ************ 8 . SEARCH RESULTS ******************/
+    /* ************ 8 . SEARCH RESULTS ******************/
     public function searchRequest($search)
     {
         $dbProjet5 = $this->dbConnect();

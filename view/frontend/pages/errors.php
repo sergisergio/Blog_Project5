@@ -1,12 +1,11 @@
 <?php $title = 'Erreur'; ?>
     <?php ob_start(); ?>
-
                 <div class="container">
                     <section>
                         <div class="blog box mgbottom2 row">
                             <div class="col-md-12">
                                 <!-- INCLUDE TOP -->
-                                <?php include 'view/frontend/includes/top.php' ?>
+                                <?php require 'view/frontend/includes/top.php' ?>
                                 <!-- END INCLUDE TOP -->
                             </div>
                         </div>
@@ -15,7 +14,7 @@
                             <div class="divide30"></div>
                             <div class="form-container">
                                 <!-- RESPONSE -->
-                                <?php include 'view/frontend/includes/responseAlert.php'; ?>
+                                <?php require 'view/frontend/includes/responseAlert.php'; ?>
                                 <!-- END RESPONSE -->
                             </div>
                             <div class="row">

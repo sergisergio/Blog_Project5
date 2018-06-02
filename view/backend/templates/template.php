@@ -31,7 +31,7 @@
       <![endif]-->
 </head>
 
-        <?= $content ?>
+        <?php echo $content ?>
     <script src="public/js/jquery.min.js"></script>
     <!--<script src="public/js/bootstrap.min.js"></script>-->
     <script src="public/js/jquery.popconfirm.js"></script>

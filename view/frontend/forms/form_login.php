@@ -5,7 +5,7 @@
         <div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
-            <?php include 'view/frontend/includes/responseAlert.php'; ?> 
+            <?php require 'view/frontend/includes/responseAlert.php'; ?> 
             <form action="index.php?action=login" method="post">
                 <fieldset>
                     <div class="row">

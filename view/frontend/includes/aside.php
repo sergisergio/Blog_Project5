@@ -1,22 +1,22 @@
 <aside class="col-md-4 col-sm-12 sidebar">
     <div class="sidebox box widget">
         <!-- FORM SEARCH -->
-        <?php include "view/frontend/forms/form_search.php"; ?>
+        <?php require "view/frontend/forms/form_search.php"; ?>
         <!-- END FORM SEARCH -->
     </div>
     <div class="sidebox box widget">
     <h4 class="text-center">Derniers articles</h4>
     <?php
-        foreach ($posts1 as $p) 
-        {
+    foreach ($posts1 as $p) 
+    {
     ?>
-          <ul>
-            <li>
-            <a href="index.php?action=blogpost&amp;id=<?= $p->getId() ?>"><?= htmlspecialchars($p->getTitle()); ?></a>
-            </li>
-          </ul>
+      <ul>
+        <li>
+        <a href="index.php?action=blogpost&amp;id=<?php echo $p->getId() ?>"><?php echo htmlspecialchars($p->getTitle()); ?></a>
+        </li>
+      </ul>
     <?php  
-        } 
+    } 
     ?>
   </div>
   <div class="sidebox box widget">

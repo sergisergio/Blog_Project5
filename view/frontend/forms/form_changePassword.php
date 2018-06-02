@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="v_error" id="v-error" value="Required" />
-                        <input type="hidden" name="userId" value="<?= $_GET['id'] ?>"/> 
+                        <input type="hidden" name="userId" value="<?php echo $_GET['id'] ?>"/> 
                     </div>
                 </fieldset>
             </form>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "vendor/autoload.php";
+
 /* ************* SUM UP **********************/
 /* ******************************************
 *              USER                         *
@@ -61,72 +62,72 @@ require 'controller/searchController.php';
 require 'controller/profileController.php';
 try {
     if (isset($_GET['action'])) {
-/**********************************************
+        /**********************************************
 *                  FRONT-END                  *
 **********************************************/
-/* 1 . BLOG POSTS ****************************/
+        /* 1 . BLOG POSTS ****************************/
         if ($_GET['action'] == 'blog') {
             listPosts();
         }
-/* 2 . ONLY ONE BLOG POST ********************/
+        /* 2 . ONLY ONE BLOG POST ********************/
         elseif ($_GET['action'] == 'blogpost') {
             listPost($_GET['id']);
         }
-/* 3 . ADD A COMMENT *************************/
+        /* 3 . ADD A COMMENT *************************/
         elseif ($_GET['action'] == 'addcomment') {
             addComment($_GET['id'], $_SESSION['id'], $_POST['content']);
         }
-/* 4 . MODIFY COMMENT PAGE *******************/
+        /* 4 . MODIFY COMMENT PAGE *******************/
         elseif ($_GET['action'] == 'modifyCommentPage') {
             modifyCommentPage($_GET['id'], $_GET['postId']);
 
         }
-/* 5 . DELETE A COMMENT **********************/
+        /* 5 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'deleteComment') {
             deleteComment($_GET['id'], $_GET['postId']);
         }
-/* 6 . MODIFY A COMMENT **********************/
+        /* 6 . MODIFY A COMMENT **********************/
         elseif ($_GET['action'] == 'modifyComment') {
             modifyComment($_GET['id'], $_SESSION['id'], $_POST['content'], $_GET['postId']);
             
         }
-/* 7 . CONNECTION PAGE ***********************/
+        /* 7 . CONNECTION PAGE ***********************/
         elseif ($_GET['action'] == 'loginPage') {
             loginPage();
         }
-/* 8 . CONNECTION ****************************/
+        /* 8 . CONNECTION ****************************/
         elseif ($_GET['action'] == 'login') {
             login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR']);
         }
-/* 9 . DISCONNECTION *************************/
+        /* 9 . DISCONNECTION *************************/
         elseif ($_GET['action'] == 'logout') {
             logout();
         }
-/* 10. REGISTRATION PAGE *********************/
+        /* 10. REGISTRATION PAGE *********************/
         elseif ($_GET['action'] == 'signupPage') {
              signupPage();
         }
-/* 11. REGISTRATION **************************/
+        /* 11. REGISTRATION **************************/
         elseif ($_GET['action'] == 'addUser') {
              addUser($_POST['pseudo'], $_POST['email'], $_POST['passe'], $_POST['passe2']); 
         }
-/* 12. CONFIRM REGISTRATION ******************/
+        /* 12. CONFIRM REGISTRATION ******************/
         elseif ($_GET['action'] == 'confirmRegistration') {
             confirmRegistration($_GET['id'], $_GET['token']); 
         }
-/* 13. CONTACT *******************************/
+        /* 13. CONTACT *******************************/
         elseif ($_GET['action'] == 'contact') {
             contact($_POST['name'], $_POST['email'], $_POST['subject'], $_POST['message']);
         }
-/* 14. SEARCH ********************************/
+        /* 14. SEARCH ********************************/
         elseif ($_GET['action'] == 'search') {
             search($_POST['search']);
         }
-/* 15 . PROFILE PAGE *************************/
+        /* 15 . PROFILE PAGE *************************/
         elseif ($_GET['action'] == 'profilePage') {
             profilePage($_SESSION['id']);
         }
-/* 16 . DELETE ACCOUNT ***********************/
+        /* 16 . DELETE ACCOUNT ***********************/
         elseif ($_GET['action'] == 'deleteAccount') {
             if (isset($_SESSION['id'])) {
                   deleteAccount($_SESSION['id']); 
@@ -137,7 +138,7 @@ try {
                 exit();
             }
         }
-/* 17 . MODIFY PROFILE ***********************/
+        /* 17 . MODIFY PROFILE ***********************/
 
         elseif ($_GET['action'] == 'modifyProfile') {
             /*if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
@@ -151,89 +152,89 @@ try {
                 
             modifyProfile($_POST['userId'], $_FILES['avatar']['name'], $_POST['first_name'], $_POST['name'], $_POST['email'], $_POST['description']);
         }
-/* 18 . PUBLIC PROFILE ***********************/
+        /* 18 . PUBLIC PROFILE ***********************/
         elseif ($_GET['action'] == 'publicProfile') {
             if (isset($_GET['id'])) {
                 publicProfile($_GET['id']);
             }
         }
-/* 19 . FORGET PASSWORD PAGE *****************/
+        /* 19 . FORGET PASSWORD PAGE *****************/
         elseif ($_GET['action'] == 'forgetPasswordPage') {
             forgetPasswordPage();
         }
-/* 20 . FORGET PASSWORD MAIL *****************/
+        /* 20 . FORGET PASSWORD MAIL *****************/
         elseif ($_GET['action'] == 'forgetPassword') {
                 forgetPassword($_POST['email']);
         }
-/* 21 . CHANGE PASSWORD PAGE *****************/
+        /* 21 . CHANGE PASSWORD PAGE *****************/
         elseif ($_GET['action'] == 'changePasswordPage') {
                 changePasswordPage($_GET['id'], $_GET['token']);
         }
-/* 22 . CHANGE PASSWORD **********************/
+        /* 22 . CHANGE PASSWORD **********************/
         elseif ($_GET['action'] == 'changePassword') {
-            changePassword($_POST['userId'] , $_POST['passe']);
-           }
+            changePassword($_POST['userId'], $_POST['passe']);
+        }
 
-/* ********************************************
-*           ADMINISTRATEUR                    *
-**********************************************/
-/* 1 . ADMIN HOME PAGE ***********************/
+        /* ********************************************
+        *           ADMINISTRATEUR                    *
+        **********************************************/
+        /* 1 . ADMIN HOME PAGE ***********************/
         elseif ($_GET['action'] == 'admin') {
             admin();
         }
-/* 2 . GET POSTS *****************************/
+        /* 2 . GET POSTS *****************************/
         elseif ($_GET['action'] == 'manage_posts') {
             managePosts();
         }
-/* 3 . GET COMMENTS **************************/
+        /* 3 . GET COMMENTS **************************/
         elseif ($_GET['action'] == 'manage_comments') {
             manageComments();
         }
-/* 4 . ADD A POST ****************************/
+        /* 4 . ADD A POST ****************************/
         elseif ($_GET['action'] == 'addpost') {
             addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name']);
         }
-/* 5 . MODIFY POST PAGE **********************/
+        /* 5 . MODIFY POST PAGE **********************/
         elseif ($_GET['action'] == 'modifyPostPage') {
                 modifyPostPage($_GET['id']);
         }
-/* 6 . MODIFY A POST *************************/
+        /* 6 . MODIFY A POST *************************/
         elseif ($_GET['action'] == 'modifyPost') {
             modifyPost($_GET['id'], $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content']);
         }       
-/* 7 . DELETE A POST *************************/
+        /* 7 . DELETE A POST *************************/
         elseif ($_GET['action'] == 'deletePost') {
                 deletePost($_GET['id']);
         }
-/* 8 . VALIDATE A COMMENT ********************/
+        /* 8 . VALIDATE A COMMENT ********************/
         elseif ($_GET['action'] == 'validateComment') {
                 validateComment($_GET['id']);
         } 
-/* 9 . DELETE A COMMENT **********************/
+        /* 9 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'adminDeleteComment') {
                 adminDeleteComment($_GET['id']);
         }
-/* 10. GET USERS *****************************/
+        /* 10. GET USERS *****************************/
         elseif ($_GET['action'] == 'manage_users') {
             manageUsers();
         }
-/* 11. GIVE RIGHTS ADMIN *********************/
+        /* 11. GIVE RIGHTS ADMIN *********************/
         elseif ($_GET['action'] == 'giveAdminRights') {
                 giveAdminRights($_GET['id']);
         }
-/* 12. CANCEL RIGHTS ADMIN *******************/
-        elseif ($_GET['action'] == 'cancelAdminRights'){
+        /* 12. CANCEL RIGHTS ADMIN *******************/
+        elseif ($_GET['action'] == 'cancelAdminRights') {
                 stopAdminRights($_GET['id']);
         }
-/* 13. DELETE USER ***************************/
+        /* 13. DELETE USER ***************************/
         elseif ($_GET['action'] == 'deleteUser') {
                 deleteUser($_GET['id']);
         }
     }
-/* ********************************************
-*                    PAR DEFAUT               *
-**********************************************/
-/* 1 . HOME PAGE *****************************/
+    /* ********************************************
+    *                    PAR DEFAUT               *
+    **********************************************/
+    /* 1 . HOME PAGE *****************************/
     else {
         home();
     }

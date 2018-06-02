@@ -11,13 +11,14 @@
 9 . COUNT NOT YET VALIDATED COMMENTS.
 10. GET USER BY COMMENT.
 ************************* END SUM UP ***********************************/
+
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 use \Philippe\Blog\Model\Entities\CommentEntity;
 use \Philippe\Blog\Model\Entities\UserEntity;
 class CommentManager extends Manager
 {
-/* *********** 1 . GET ALL COMMENTS *********************/
+    /* *********** 1 . GET ALL COMMENTS *********************/
     public function getComments($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -33,12 +34,12 @@ class CommentManager extends Manager
         $comments->execute();
         $comment = [];
         while ($data = $comments->fetch()) {
-           $comment[] = new CommentEntity($data);
+            $comment[] = new CommentEntity($data);
         }
         $comments->closeCursor();
         return $comment;
     }
-/* *********** 2 . GET ONLY ONE COMMENT *****************/
+    /* *********** 2 . GET ONLY ONE COMMENT *****************/
     public function getComment($commentId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -54,7 +55,7 @@ class CommentManager extends Manager
         $comment = new CommentEntity($data);
         return $comment;
     }
-/* *********** 3 . ADD A COMMENT ************************/
+    /* *********** 3 . ADD A COMMENT ************************/
     public function postComment($postId, $author, $content)
     {
         $dbProjet5 = $this->dbConnect();
@@ -65,7 +66,7 @@ class CommentManager extends Manager
         $affectedLines = $comments->execute();
         return $affectedLines;
     }
-/* *********** 4 . DELETE A COMMENT *********************/
+    /* *********** 4 . DELETE A COMMENT *********************/
     public function deleteCommentRequest($commentId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -74,7 +75,7 @@ class CommentManager extends Manager
         $affectedComment = $comments->execute();
         return $affectedComment;
     }
-/* *********** 5 . MODIFY A COMMENT *********************/
+    /* *********** 5 . MODIFY A COMMENT *********************/
     public function modifyCommentRequest($commentId, $author, $content)
     {
         $dbProjet5 = $this->dbConnect();
@@ -85,7 +86,7 @@ class CommentManager extends Manager
         $affectedLines = $comments->execute();
         return $affectedLines;
     }
-/* *********** 6 . VIEW COMS NOT YET VALIDATED **********/
+    /* *********** 6 . VIEW COMS NOT YET VALIDATED **********/
     public function submittedCommentRequest()
     {
         $dbProjet5 = $this->dbConnect();
@@ -102,11 +103,11 @@ class CommentManager extends Manager
         while ($data = $submittedcomments->fetch())
             {
                 $submittedComment[] = new CommentEntity($data);
-            }
+        }
         $submittedcomments->closeCursor();
         return $submittedComment;
     }
-/* *********** 7 . VALIDATE A COMMENT *******************/
+    /* *********** 7 . VALIDATE A COMMENT *******************/
     public function validateCommentRequest($commentId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -115,7 +116,7 @@ class CommentManager extends Manager
         $validated = $validatecomment->execute();
         return $validated;
     }
-/* *********** 8 . COUNT VALIDATED COMMENTS *************/
+    /* *********** 8 . COUNT VALIDATED COMMENTS *************/
     public function countCommentRequest($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -125,7 +126,7 @@ class CommentManager extends Manager
         $nbCount = $count->rowCount();
         return $nbCount;
     }
-/* *********** 9 . COUNT NOT YET VALIDATED COMMENTS *****/
+    /* *********** 9 . COUNT NOT YET VALIDATED COMMENTS *****/
     public function countCommentBackRequest()
     {
         $dbProjet5 = $this->dbConnect();
@@ -133,7 +134,7 @@ class CommentManager extends Manager
         $nbCount = $count->rowCount();
         return $nbCount;
     }
-/* ********** 10 . GET USER BY COMMENT ******************/
+    /* ********** 10 . GET USER BY COMMENT ******************/
     public function getUserByCommentRequest($commentAuthor)
     {
         $dbProjet5 = $this->dbConnect();

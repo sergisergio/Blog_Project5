@@ -3,6 +3,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+/* **************** CONTACT FORM **************/
 function contact($name, $email, $subject, $message)
 {
     if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
@@ -20,7 +21,7 @@ function contact($name, $email, $subject, $message)
             echo 'Le message a bien été envoyé';
         } 
         catch (Exception $e) {
-        echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
+            echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
         }
     }
 }

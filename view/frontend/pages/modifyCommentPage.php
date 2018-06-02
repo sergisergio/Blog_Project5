@@ -5,7 +5,7 @@
     <div class="blog box mgbottom2 row">
       <div class="col-md-12">
         <!-- INCLUDE TOP -->
-        <?php include 'view/frontend/includes/top.php' ?>
+        <?php require 'view/frontend/includes/top.php' ?>
         <!-- END INCLUDE TOP -->
       </div>
     </div>
@@ -14,15 +14,15 @@
         <div class="blog-posts">
           <div class="post box">
             <p>
-              <a href="index.php?action=blogpost&amp;id=<?= $post->getId() ?>">Retour au billet</a>
+              <a href="index.php?action=blogpost&amp;id=<?php echo $post->getId() ?>">Retour au billet</a>
             </p>
             <div class="news">
               <h3>
-                <?= htmlspecialchars($post->getTitle()) ?>
-                <em>le <?= $post->getCreationDate() ?></em>
+                <?php echo htmlspecialchars($post->getTitle()) ?>
+                <em>le <?php echo $post->getCreationDate() ?></em>
               </h3>
               <p>
-                <?= nl2br(htmlspecialchars($post->getIntro())) ?>...
+                <?php echo nl2br(htmlspecialchars($post->getIntro())) ?>...
               </p>
             </div>
             <hr>
@@ -36,7 +36,7 @@
         <div class="divide100"></div>
       </div>
       <!-- INCLUDE ASIDE -->
-      <?php require "view/frontend/includes/aside.php"; ?>
+        <?php require "view/frontend/includes/aside.php"; ?>
       <!-- END INCLUDE ASIDE -->
     </div>
       <div class="container bottomcontainer">

@@ -1,7 +1,7 @@
 <?php $title = 'Inscription'; ?>
 <?php ob_start(); ?>
     <div class="container">
-    	<!-- FORM SIGNUP -->
+        <!-- FORM SIGNUP -->
         <?php require "view/frontend/forms/form_signup.php"; ?>
         <!-- END FORM SIGNUP -->
     </div>

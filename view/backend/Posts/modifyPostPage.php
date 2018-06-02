@@ -1,5 +1,5 @@
 <?php 
-    if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
     header('Location: index.php?action=noAdmin');
     exit();
 }

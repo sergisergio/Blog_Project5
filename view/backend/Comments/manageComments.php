@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
     header('Location: index.php?action=noAdmin');
     exit();
 }
@@ -20,7 +20,7 @@
                     <div class="divide20"></div>
                     <h5 class="text-center">
                         <?php if($nbCount > 1) : ?>
-                        Il y a <?= $nbCount; ?> commentaires à valider.
+                        Il y a <?php echo $nbCount; ?> commentaires à valider.
                         <?php elseif($nbCount == 1) : ?>
                         Il y a un commentaire à valider.
                         <?php else: ?>
@@ -28,25 +28,25 @@
                         <?php endif; ?>
                     </h5>
                     <div class="divide20"></div>
-                    <?php include 'view/frontend/includes/responseAlert.php'; ?>
+                    <?php require 'view/frontend/includes/responseAlert.php'; ?>
             </div>
             <?php
             
-                foreach ($submittedComment as $s)
+            foreach ($submittedComment as $s)
             {
             ?>
             <div class="post box">
-                <div class="row">
-                    <h3><?= htmlspecialchars($s->getPostId()); ?></h3>
-                    <p>Commentaire de <?= htmlspecialchars($s->getAuthor()); ?> publié le <?= htmlspecialchars($s->getCreationDate()); ?></p>
-                    <p><?= htmlspecialchars($s->getContent()); ?></p>
-                </div>
-                <btn class="btn btn-default" style="float: right;">
-                    <a href="index.php?action=validateComment&amp;id=<?= $s->getId() ?>">Valider</a>
-                </btn>
-                <btn class="btn btn-default" style="float: right;">
-                    <a href="index.php?action=adminDeleteComment&amp;id=<?= $s->getId() ?>">Supprimer</a>
-                </btn>
+            <div class="row">
+                <h3><?php echo htmlspecialchars($s->getPostId()); ?></h3>
+                <p>Commentaire de <?php echo htmlspecialchars($s->getAuthor()); ?> publié le <?php echo htmlspecialchars($s->getCreationDate()); ?></p>
+                <p><?php echo htmlspecialchars($s->getContent()); ?></p>
+            </div>
+            <btn class="btn btn-default" style="float: right;">
+                <a href="index.php?action=validateComment&amp;id=<?php echo $s->getId() ?>">Valider</a>
+            </btn>
+            <btn class="btn btn-default" style="float: right;">
+                <a href="index.php?action=adminDeleteComment&amp;id=<?php echo $s->getId() ?>">Supprimer</a>
+            </btn>
             </div>
             <?php
             } 

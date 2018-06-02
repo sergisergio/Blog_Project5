@@ -1,8 +1,8 @@
 <div class="form-container">
     <div class="response alert"></div>
-    <?php include 'view/frontend/includes/responseAlert.php'; ?>       
+    <?php require 'view/frontend/includes/responseAlert.php'; ?>       
                 
-<form action="index.php?action=addcomment&amp;id=<?= $post->getId() ?>" method="post">
+<form action="index.php?action=addcomment&amp;id=<?php echo $post->getId() ?>" method="post">
     <div>
         <label for="content">Commentaire</label>
         <br />

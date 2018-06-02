@@ -22,18 +22,23 @@ require_once "model/Manager.php";
 use \Philippe\Blog\Model\Entities\UserEntity;
 class UserManager extends Manager
 {
-/* ******** 1 . GET ALL USERS **********************/
+    /* ******** 1 . GET ALL USERS **********************/
     public function getUsers()
     {
         $dbProjet5 = $this->dbConnect();
         $req = $dbProjet5->query(
-            'SELECT * 
+            'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description
 			FROM Users 
 			ORDER BY pseudo'
         );
-        return $req;
+        $users = [];
+        while ($data = $req->fetch()) {
+            $users[] = new UserEntity($data);
+        }
+        $req->closeCursor();
+        return $users;
     }
-/* ******** 2 . GET ONLY ONE USER ******************/
+    /* ******** 2 . GET ONLY ONE USER ******************/
     public function getUser($userId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -45,13 +50,10 @@ class UserManager extends Manager
         $req->bindParam(':id', $userId);
         $req->execute();
         $data = $req->fetch();
-        
-            
-        
         $post = new UserEntity($data);
         return $post;
     }
-/* ******** 3 . GET LEVEL AUTHORIZATION ************/
+    /* ******** 3 . GET LEVEL AUTHORIZATION ************/
     public function getAuthorization($pseudo)
     {
         $dbProjet5 = $this->dbConnect();
@@ -66,7 +68,7 @@ class UserManager extends Manager
         $access = $req->fetch();
         return $access;
     }
-/* ******** 4 . REGISTRATION ***********************/
+    /* ******** 4 . REGISTRATION ***********************/
     public function addUserRequest($pseudo, $email, $passe)
     {
         $dbProjet5 = $this->dbConnect();
@@ -87,7 +89,7 @@ class UserManager extends Manager
         $user_id = $dbProjet5->lastInsertId();
         mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
     }
-/* ******** 5 . CONFIRM REGISTRATION ***************/
+    /* ******** 5 . CONFIRM REGISTRATION ***************/
     public function setActiveRequest($userId) 
     {
         $dbProjet5 = $this->dbConnect();
@@ -96,7 +98,7 @@ class UserManager extends Manager
         $activeUser = $req->execute();
         return $activeUser;
     }
-/* ******** 6 . PSEUDO ALREADY USED ? **************/
+    /* ******** 6 . PSEUDO ALREADY USED ? **************/
     public function existPseudo($pseudo)
     {
         $dbProjet5 = $this->dbConnect();
@@ -106,7 +108,7 @@ class UserManager extends Manager
         $user = $req->fetch();
         return $user;
     }
-/* ******** 7 . EMAIL ALREADY USED ? ***************/
+    /* ******** 7 . EMAIL ALREADY USED ? ***************/
     public function existMail($email)
     {
         $dbProjet5 = $this->dbConnect();
@@ -116,7 +118,7 @@ class UserManager extends Manager
         $usermail = $req->fetch();
         return $usermail;
     }
-/* ******** 8 . CONNECTION *************************/
+    /* ******** 8 . CONNECTION *************************/
     public function loginRequest($pseudo, $passe)
     {
         $dbProjet5 = $this->dbConnect();
@@ -127,7 +129,7 @@ class UserManager extends Manager
         $user = new UserEntity($data);
         return $user;
     }
-/* ******** 9 . VIEW PROFILE ***********************/
+    /* ******** 9 . VIEW PROFILE ***********************/
 
     public function modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description) 
     {
@@ -143,8 +145,9 @@ class UserManager extends Manager
         $modifiedProfile = $req->execute();
         return $modifiedProfile;
     }
-/* ******* 10 . DELETE ACCOUNT *********************/
-    public function deleteAccountRequest($userId){
+    /* ******* 10 . DELETE ACCOUNT *********************/
+    public function deleteAccountRequest($userId)
+    {
         $dbProjet5 = $this->dbConnect();
 
         $post = $dbProjet5->prepare('DELETE FROM Users WHERE id = :id');
@@ -153,9 +156,10 @@ class UserManager extends Manager
         
         return $deleteAccount;
     }
-/* ******* 11. FORGET PASSWORD *********************/
+    /* ******* 11. FORGET PASSWORD *********************/
 
-    public function forgetPasswordRequest($email) {
+    public function forgetPasswordRequest($email) 
+    {
         
         $dbProjet5 = $this->dbConnect();
         
@@ -165,9 +169,10 @@ class UserManager extends Manager
         $user = $req->fetch();
         if($user) {
 
-            function str_random($length){
-            $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-            return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
+            function str_random($length)
+            {
+                $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+                return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
             }
 
             $reset_token = str_random(100);
@@ -179,7 +184,7 @@ class UserManager extends Manager
 
             $subject = 'Changement de votre mot de passe';
             $body = "Afin de changer votre mot de passe, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=changePasswordPage&id=$user_id&token=$reset_token";
-            mail($email, $subject , $body);
+            mail($email, $subject, $body);
 
             /* test mail local */
             //mail($email, $subject, "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
@@ -189,8 +194,9 @@ class UserManager extends Manager
         } 
         return $user;
     }
-/* ******* 12. CHANGE PASSWORD *********************/
-    public function changePasswordRequest($userId, $passe) {
+    /* ******* 12. CHANGE PASSWORD *********************/
+    public function changePasswordRequest($userId, $passe) 
+    {
         $dbProjet5 = $this->dbConnect();
         
         $passe = password_hash($passe, PASSWORD_BCRYPT);
@@ -198,11 +204,11 @@ class UserManager extends Manager
         $req->bindParam(':password', $passe);
         $req->bindParam(':id', $userId);
         $changePassword = $req->execute();
-
         return $changePassword;
     }
-/* ******* 13. CHECK RESET TOKEN *******************/
-    public function checkResetTokenRequest($userId, $token){
+    /* ******* 13. CHECK RESET TOKEN *******************/
+    public function checkResetTokenRequest($userId, $token)
+    {
 
         $dbProjet5 = $this->dbConnect();
 
@@ -213,35 +219,35 @@ class UserManager extends Manager
         $user = $req->fetch();
         return $user;
     }
-/* ******* 14. DELETE A USER ***********************/
-    public function deleteUserRequest($userId){
+    /* ******* 14. DELETE A USER ***********************/
+    public function deleteUserRequest($userId)
+    {
         $dbProjet5 = $this->dbConnect();
 
         $post = $dbProjet5->prepare('DELETE FROM Users WHERE id = :id');
         $post->bindParam(':id', $userId);
 
         $affectedUser = $post->execute();
-        
         return $affectedUser;
     }
-/* ******* 15. GIVE RIGHT ADMINS *******************/
-    public function giveAdminRightsRequest($userId) {
+    /* ******* 15. GIVE RIGHT ADMINS *******************/
+    public function giveAdminRightsRequest($userId) 
+    {
         $dbProjet5 = $this->dbConnect();
 
         $req = $dbProjet5->prepare('UPDATE Users SET authorization = 1 WHERE id = :id');
         $req->bindParam(':id', $userId);
         $adminRights = $req->execute();
-
         return $adminRights;
     }
-/* ******* 16. CANCEL RIGHT ADMINS *****************/
-    public function stopAdminRightsRequest($userId) {
+    /* ******* 16. CANCEL RIGHT ADMINS *****************/
+    public function stopAdminRightsRequest($userId) 
+    {
         $dbProjet5 = $this->dbConnect();
 
         $req = $dbProjet5->prepare('UPDATE Users SET authorization = 0 WHERE id = :id');
         $req->bindParam(':id', $userId);
         $adminRights = $req->execute();
-
         return $adminRights;
     }
 }

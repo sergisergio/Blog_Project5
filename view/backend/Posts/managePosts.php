@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
     header('Location: index.php?action=noAdmin');
     exit();
 }
@@ -15,7 +15,7 @@
                 <div class="divide20"></div>
                 <div class="post box">
                     <h2>Ajouter un article</h2>
-                    <?php include 'view/frontend/includes/responseAlert.php'; ?> 
+                    <?php require 'view/frontend/includes/responseAlert.php'; ?> 
                     <?php require "view/backend/forms/form_addpost.php"; ?>
                 </div>
                 <div class="divide20"></div>
@@ -23,26 +23,26 @@
                 <h2 class="text-center">Modifier/Supprimer un article</h2>
                 <div class="divide20"></div>
                 <?php
-                    foreach ($posts as $p)
+                foreach ($posts as $p)
                 {
                 ?>
                 <div class="post box" id="viewposts">
                 <div class="row">
-                    <h2 class="post-title">
-                        <a href="index.php?action=blogpost&amp;id=<?= $p->getId() ?>" target="_blank"><?= htmlspecialchars($p->getTitle()); ?></a>
-                    </h2>
-                    <?php if ($p->getFileExtension() != '') : ?>
-                        <img src="public/images/posts/<?= $p->getFileExtension(); ?>" class="img-responsive" style="width: 10%;" />
+                <h2 class="post-title">
+                    <a href="index.php?action=blogpost&amp;id=<?php echo $p->getId() ?>" target="_blank"><?php echo htmlspecialchars($p->getTitle()); ?></a>
+                </h2>
+                <?php if ($p->getFileExtension() != '') : ?>
+                        <img src="public/images/posts/<?php echo $p->getFileExtension(); ?>" class="img-responsive" style="width: 10%;" />
                         <?php else: ?>
                         <img src="public/images/posts/default.jpg" class="img-responsive" style="width: 10%;" />
                         <?php endif; ?>
 
-                    <btn class="btn btn-default" style="float: right;">
-                        <a href="index.php?action=deletePost&amp;id=<?= $p->getId() ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
-                    </btn>
-                    <btn class="btn btn-default" style="float: right;">
-                        <a href="index.php?action=modifyPostPage&amp;id=<?= $p->getId() ?>">Modifier</a>
-                    </btn>
+                <btn class="btn btn-default" style="float: right;">
+                    <a href="index.php?action=deletePost&amp;id=<?php echo $p->getId() ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
+                </btn>
+                <btn class="btn btn-default" style="float: right;">
+                    <a href="index.php?action=modifyPostPage&amp;id=<?php echo $p->getId() ?>">Modifier</a>
+                </btn>
                 </div>
                 </div>
                 <?php
@@ -51,7 +51,7 @@
                 ?>
                 <div class="pagination box">
                 <ul>
-                    <li><?= '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage - 1) . '#viewposts' . '">'.'Précédent'.'</a> '; ?></li>
+                    <li><?php echo '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage - 1) . '#viewposts' . '">'.'Précédent'.'</a> '; ?></li>
                         <?php
                         for($i=1;$i<=$totalPages;$i++){
                             if($i == $currentPage) {
@@ -62,7 +62,7 @@
                             }
                         }
                         ?>
-                    <li><?= '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage + 1) . '#viewposts' . '">'.'Suivant'.'</a> '; ?></li>
+                    <li><?php echo '<a class="btn" href="index.php?action=manage_posts&page='. ($currentPage + 1) . '#viewposts' . '">'.'Suivant'.'</a> '; ?></li>
                 </ul>
             </div>
             </div>

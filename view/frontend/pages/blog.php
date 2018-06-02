@@ -4,7 +4,7 @@
     <div class="blog box mgbottom2 row">
         <div class="col-md-12">
         <!-- INCLUDE TOP -->
-            <?php include 'view/frontend/includes/top.php' ?>
+            <?php require 'view/frontend/includes/top.php' ?>
         <!-- END INCLUDE TOP -->
         </div>
     </div>
@@ -17,40 +17,40 @@
             <!-- END PAGINATION -->
             <!-- ALL POSTS -->
             <?php
-                foreach ($posts as $p) 
-                {
+            foreach ($posts as $p) 
+            {
             ?>
             <div class="blog-posts">
-                <div class="post box">
-                    <div class="row">
-                        <div class="col-sm-12 post-content">
-                            <div class="post-title">
-                            <h2 class="post-title"><?= htmlspecialchars($p->getTitle()); ?></h2>
-                            <h3 class="post-title"><?= htmlspecialchars($p->getChapo()); ?></h3>
-                            <h4 class="post-title">Auteur : <?= htmlspecialchars($p->getAuthor()); ?></h4>
-                                <div class="meta">
-                                    <span class="date"></span>
-                                    <?php
-                                    if ($p->getLastUpdated()) {
-                                        echo ($p->getLastUpdated());
-                                    }
-                                    else {
-                                        echo ($p->getCreationdate());
-                                    }
-                                        ?>
+            <div class="post box">
+                <div class="row">
+                    <div class="col-sm-12 post-content">
+                        <div class="post-title">
+                        <h2 class="post-title"><?php echo htmlspecialchars($p->getTitle()); ?></h2>
+                        <h3 class="post-title"><?php echo htmlspecialchars($p->getChapo()); ?></h3>
+                        <h4 class="post-title">Auteur : <?php echo htmlspecialchars($p->getAuthor()); ?></h4>
+                            <div class="meta">
+                                <span class="date"></span>
+                                <?php
+                                if ($p->getLastUpdated()) {
+                                    echo ($p->getLastUpdated());
+                                }
+                                else {
+                                    echo ($p->getCreationdate());
+                                }
+                                    ?>
                                 </div> 
                                 <div class="divide30"></div>
                                 <?php if ($p->getFileExtension() != '') : ?>
-                                <img src="public/images/posts/<?= $p->getFileExtension(); ?>" class="img-responsive imageblog1" />
+                                <img src="public/images/posts/<?php echo $p->getFileExtension(); ?>" class="img-responsive imageblog1" />
                                 <?php else: ?>
                                 <img src="public/images/posts/default.jpg" class="img-responsive imageblog1" />
                                 <?php endif; ?>
                                 <p>
-                                    <?= htmlspecialchars($p->getIntro()); ?> ...
+                                    <?php echo htmlspecialchars($p->getIntro()); ?> ...
                                 </p>
                                 <hr>
                                 <p class="pull-right"> 
-                                    <btn class="btn btn-default"><a href="index.php?action=blogpost&amp;id=<?= $p->getId() ?>">Voir plus</a></btn>
+                                    <btn class="btn btn-default"><a href="index.php?action=blogpost&amp;id=<?php echo $p->getId() ?>">Voir plus</a></btn>
                                 </p>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <?php
-                }
+            }
             ?>
             <!-- END ALL POSTS -->
             <!-- PAGINATION -->
