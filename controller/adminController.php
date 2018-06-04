@@ -46,7 +46,7 @@ function managePosts()
     include 'view/backend/Posts/managePosts.php';
 }
 /* *********** 3 . ADD A POST *********************/
-function addPost($title, $chapo, $author, $content, $image)
+function addPost($title, $chapo, $author, $content, $image, $csrfAddPostToken)
 {
     $postManager = new PostManager();
     $session = new Session();
@@ -55,34 +55,49 @@ function addPost($title, $chapo, $author, $content, $image)
     $file_extension_size = $_FILES['file_extension']['size'];
     $file_extension_tmp = $_FILES['file_extension']['tmp_name'];
 
-    if (!empty($title) && !empty($content) && !empty($chapo)) {
-        if (isset($file_extension) AND $file_extension_error == 0) {
-            if ($file_extension_size <= 1000000) {
-                $infosfichier = pathinfo($image);
-                $extension_upload = $infosfichier['extension'];
-                $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
+    if (isset($_SESSION['csrfAddPostToken']) AND isset($csrfAddPostToken) AND !empty($_SESSION['csrfAddPostToken']) AND !empty($csrfAddPostToken)) 
+    {
+        if ($_SESSION['csrfAddPostToken'] == $csrfAddPostToken) 
+        {
+            if (!empty($title) && !empty($content) && !empty($chapo)) 
+            {
+                if (isset($file_extension) AND $file_extension_error == 0) 
+                {
+                    if ($file_extension_size <= 1000000) 
+                    {
+                        $infosfichier = pathinfo($image);
+                        $extension_upload = $infosfichier['extension'];
+                        $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
 
-                if (in_array($extension_upload, $extensions_autorisees)) {
-                    // On peut valider le fichier et le stocker définitivement
-                    move_uploaded_file($file_extension_tmp, 'public/images/posts/' . basename($image));
-                    echo "L'envoi a bien été effectué !";
+                        if (in_array($extension_upload, $extensions_autorisees)) 
+                        {
+                            // On peut valider le fichier et le stocker définitivement
+                            move_uploaded_file($file_extension_tmp, 'public/images/posts/' . basename($image));
+                            echo "L'envoi a bien été effectué !";
+                        }
+                    }
+                }
+
+                $affectedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $image);
+
+                if ($affectedPost === false) 
+                {
+                    $session->nonAddedPost();
+                }
+                else 
+                {
+                    $session->addedPost();
                 }
             }
+            else 
+            {
+                $session->emptyContentsAdmin();
+            }
         }
-
-        $affectedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $image);
-
-        if ($affectedPost === false) {
-            $session->nonAddedPost();
-        }
-        else 
+        else
         {
-            $session->addedPost();
+            echo "Erreur de vérification";
         }
-    }
-    else 
-    {
-        $session->emptyContentsAdmin();
     }
 }
 /* *********** 4 . MODIFY POST PAGE ***************/
@@ -98,32 +113,41 @@ function modifyPostPage($postId)
     include 'view/backend/Posts/modifyPostPage.php';
 }
 /* *********** 5 . MODIFY A POST. *****************/
-function modifyPost($postId, $title, $chapo, $author, $content)
+function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostToken)
 {
     $postManager = new PostManager();
     $session = new Session();
+    if (isset($_SESSION['csrfModifyPostToken']) AND isset($csrfModifyPostToken) AND !empty($_SESSION['csrfModifyPostToken']) AND !empty($csrfModifyPostToken)) 
+    {
+        if ($_SESSION['csrfModifyPostToken'] == $csrfModifyPostToken) 
+        {
+            if (isset($postId) && $postId > 0) {
+                if (!empty($title) && !empty($content) && !empty($chapo)) {
+                    $post = $postManager->getPost($postId);
+                    $success = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
 
-    if (isset($postId) && $postId > 0) {
-        if (!empty($title) && !empty($content) && !empty($chapo)) {
-            $post = $postManager->getPost($postId);
-            $success = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
-
-            if ($success === false) {
-                $session->nonModifiedPost($postId);
+                    if ($success === false) {
+                        $session->nonModifiedPost($postId);
+                    }
+                    else 
+                    {
+                        $session->modifiedPost();
+                    }
+                }
+                else 
+                {
+                    $session->emptyContentModifiedPost($postId);
+                }
             }
             else 
             {
-                $session->modifiedPost();
+                $session->noIdModifiedPost($postId);
             }
         }
-        else 
+        else
         {
-            $session->emptyContentModifiedPost($postId);
+            echo "Erreur de vérification";
         }
-    }
-    else 
-    {
-        $session->noIdModifiedPost($postId);
     }
 }
 /* *********** 6 . DELETE A POST ******************/
@@ -131,11 +155,13 @@ function deletePost($postId)
 {
     $postManager = new PostManager();
     $session = new Session();
-    $success = $postManager->deletePostRequest($postId);
-    $session = new Session();
-
-    if (isset($postId) && $postId > 0) {
-        if ($success === false) {
+    
+    if (isset($postId) && $postId > 0) 
+    {
+        $post = $postManager->getPost($postId);
+        $success = $postManager->deletePostRequest($postId);
+        if ($success === false) 
+        {
             $session->nonDeletedPost();
         }
         else 
@@ -143,7 +169,8 @@ function deletePost($postId)
             $session->deletedPost();
         }
     }
-    elseif ($postId <= 0) {
+    elseif ($postId <= 0) 
+    {
         $session->noIdPostAdmin();
     }
 }

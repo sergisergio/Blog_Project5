@@ -9,6 +9,7 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
+            'Philippe\\Blog\\Model\\Entities\\' => 29,
             'Philippe\\Blog\\Model\\' => 20,
             'Philippe\\Blog\\Core\\' => 19,
             'PHPMailer\\PHPMailer\\' => 20,
@@ -20,6 +21,10 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
     );
 
     public static $prefixDirsPsr4 = array (
+        'Philippe\\Blog\\Model\\Entities\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/model/Entities',
+        ),
         'Philippe\\Blog\\Model\\' => 
         array (
             0 => __DIR__ . '/../..' . '/model',

@@ -101,6 +101,8 @@
         <script src="public/js/classie.js"></script>
         <script src="public/js/plugins.js"></script>
         <script src="public/js/scripts.js"></script>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+
         <script>
             $.backstretch(["public/images/art/react2.png"]);
         </script>

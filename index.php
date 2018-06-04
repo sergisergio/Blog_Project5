@@ -63,8 +63,9 @@ require 'controller/profileController.php';
 try {
     if (isset($_GET['action'])) {
         /**********************************************
-*                  FRONT-END                  *
-**********************************************/
+        *                  FRONT-END                  *
+        **********************************************/
+
         /* 1 . BLOG POSTS ****************************/
         if ($_GET['action'] == 'blog') {
             listPosts();
@@ -117,7 +118,7 @@ try {
         }
         /* 13. CONTACT *******************************/
         elseif ($_GET['action'] == 'contact') {
-            contact($_POST['name'], $_POST['email'], $_POST['subject'], $_POST['message'], $_POST['token']);
+            contact($_POST['name'], $_POST['email'], $_POST['subject'], $_POST['message'], $_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
         }
         /* 14. SEARCH ********************************/
         elseif ($_GET['action'] == 'search') {
@@ -176,7 +177,7 @@ try {
         }
         /* 4 . ADD A POST ****************************/
         elseif ($_GET['action'] == 'addpost') {
-            addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name']);
+            addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name'], $_POST['token']);
         }
         /* 5 . MODIFY POST PAGE **********************/
         elseif ($_GET['action'] == 'modifyPostPage') {
@@ -184,11 +185,11 @@ try {
         }
         /* 6 . MODIFY A POST *************************/
         elseif ($_GET['action'] == 'modifyPost') {
-            modifyPost($_GET['id'], $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content']);
+            modifyPost($_GET['id'], $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_POST['token']);
         }       
         /* 7 . DELETE A POST *************************/
         elseif ($_GET['action'] == 'deletePost') {
-                deletePost($_GET['id']);
+            deletePost($_GET['id']);
         }
         /* 8 . VALIDATE A COMMENT ********************/
         elseif ($_GET['action'] == 'validateComment') {

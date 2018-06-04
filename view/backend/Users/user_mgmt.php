@@ -30,13 +30,13 @@
                         <?php if ($u->getAuthorization1() == 1) : ?>
                                 <?php echo 'Oui'; ?><br />
                                 <btn class="btn btn-default">
-                                    <a href="index.php?action=cancelAdminRights&amp;id=<?php echo $u->getId() ?>">Retirer les droits admin</a>
+                                    <a href="index.php?action=cancelAdminRights&amp;id=<?php echo $u->getId() ?>" data-toggle='confirmation' id="important_action">Retirer les droits admin</a>
                                 </btn>
                             <?php else: ?>
                                 <?php echo 'Non'; ?>
                                 <br />
                                 <btn class="btn btn-default">
-                                    <a href="index.php?action=giveAdminRights&amp;id=<?php echo $u->getId() ?>">Donner les droits admin</a>
+                                    <a href="index.php?action=giveAdminRights&amp;id=<?php echo $u->getId() ?>" data-toggle='confirmation' id="important_action">Donner les droits admin</a>
                                 </btn>
                             <?php endif; ?>
                     </h5>

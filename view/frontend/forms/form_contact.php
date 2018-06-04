@@ -32,6 +32,13 @@
                     <input id="nocomment" value="" name="nocomment" /> 
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="g-recaptcha" data-sitekey="6LeS_lwUAAAAAPKectEG91x_IZYFu3UbFbfRtvNw"></div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-6">
                 <div class="button-row pull-right">
                     <input type="submit" value="Envoyer" name="submit" class="btn btn-submit bm0" /> 

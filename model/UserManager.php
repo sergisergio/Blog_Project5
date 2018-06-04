@@ -19,6 +19,11 @@
 ********************* END SUM UP *****************/
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
+
+require_once "model/Entities/commentEntity.php";
+require_once "model/Entities/postEntity.php";
+require_once "model/Entities/userEntity.php";
+
 use \Philippe\Blog\Model\Entities\UserEntity;
 class UserManager extends Manager
 {

@@ -1,13 +1,10 @@
 <div class="form-container">
     <div class="response alert"></div>
-        <?php if(isset($_SESSION['flash'])) : ?>
-            <?php foreach($_SESSION['flash'] as $type => $message): ?>
-                <div class="text-center alert alert-<?php echo $type; ?>">
-                    <?php echo $message; ?>
-                </div>
-            <?php endforeach; ?>
-            <?php unset($_SESSION['flash']); ?>
-        <?php endif; ?>
+        <?php include 'view/frontend/includes/responseAlert.php'; ?>
+        <?php      
+            $csrfModifyPostToken = md5(time()*rand(1, 1000));
+            $_SESSION['csrfModifyPostToken'] = $csrfModifyPostToken;        
+        ?>
 <form action="index.php?action=modifyPost&amp;id=<?php echo $post->getId() ?>" method="post">
     <div>
         <label for="title">Titre</label><br />
@@ -27,6 +24,9 @@
     <div class="divide40"></div>
     <div>
         <input class="btn btn-default" type="submit" style="width: 100px;display: block; margin: 0 auto;"/>
+    </div>
+    <div>
+        <input type="hidden" name="token" id="token" value="<?= $csrfModifyPostToken; ?>" />
     </div>
 </form>
 </div>

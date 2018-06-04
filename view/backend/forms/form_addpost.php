@@ -1,6 +1,10 @@
 <div class="form-container">
     <div class="response alert"></div>
         <?php require 'view/frontend/includes/responseAlert.php'; ?> 
+        <?php      
+            $csrfAddPostToken = md5(time()*rand(1, 1000));
+            $_SESSION['csrfAddPostToken'] = $csrfAddPostToken;        
+        ?>
 <form action="index.php?action=addpost" method="post" enctype="multipart/form-data">
     <div>
         <label for="title">Titre</label><br />
@@ -23,6 +27,9 @@
     <div class="divide20"></div>
     <div>
         <input class="btn btn-default" type="submit" style="width: 100px;display: block; margin: 0 auto;"/>
+    </div>
+    <div>
+        <input type="hidden" name="token" id="token" value="<?= $csrfAddPostToken; ?>" />
     </div>
 </form>
 </div>

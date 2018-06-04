@@ -42,7 +42,7 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                 <p><?php echo htmlspecialchars($s->getContent()); ?></p>
             </div>
             <btn class="btn btn-default" style="float: right;">
-                <a href="index.php?action=validateComment&amp;id=<?php echo $s->getId() ?>">Valider</a>
+                <a href="index.php?action=validateComment&amp;id=<?php echo $s->getId() ?>"  data-toggle='confirmation' id="important_action">Valider</a>
             </btn>
             <btn class="btn btn-default" style="float: right;">
                 <a href="index.php?action=adminDeleteComment&amp;id=<?php echo $s->getId() ?>"  data-toggle='confirmation' id="important_action">Supprimer</a>
