@@ -20,9 +20,28 @@ use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Core\Session;
 /* *********** 1 . HOME ***************************/
-function admin()
+function admin($accessAdminToken)
 {
-    include 'view/backend/admin.php';
+    $session = new Session();
+
+    if (isset($_SESSION['accessAdminToken']) AND isset($accessAdminToken) AND !empty($_SESSION['accessAdminToken']) AND !empty($accessAdminToken)) 
+    {
+        if ($_SESSION['accessAdminToken'] == $accessAdminToken) 
+        {
+            if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+                header('Location: index.php?action=noAdmin');
+                exit();
+            }
+            else
+            {
+                include 'view/backend/admin.php';
+            }
+        }
+        else
+        {
+            echo 'Erreur de vérification';
+        }
+    }
 }
 /* *********** 2 . MANAGE POSTS PAGE **************/
 function managePosts()
@@ -78,9 +97,9 @@ function addPost($title, $chapo, $author, $content, $image, $csrfAddPostToken)
                     }
                 }
 
-                $affectedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $image);
+                $addedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $image);
 
-                if ($affectedPost === false) 
+                if ($addedPost === false) 
                 {
                     $session->nonAddedPost();
                 }
@@ -96,7 +115,7 @@ function addPost($title, $chapo, $author, $content, $image, $csrfAddPostToken)
         }
         else
         {
-            echo "Erreur de vérification";
+            $session->csrfPost();
         }
     }
 }
@@ -124,9 +143,9 @@ function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostT
             if (isset($postId) && $postId > 0) {
                 if (!empty($title) && !empty($content) && !empty($chapo)) {
                     $post = $postManager->getPost($postId);
-                    $success = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
+                    $modify = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
 
-                    if ($success === false) {
+                    if ($modify === false) {
                         $session->nonModifiedPost($postId);
                     }
                     else 
@@ -146,32 +165,42 @@ function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostT
         }
         else
         {
-            echo "Erreur de vérification";
+            $session->csrfModifyPost($postId);
         }
     }
 }
 /* *********** 6 . DELETE A POST ******************/
-function deletePost($postId)
+function deletePost($postId, $csrfDeletePostToken)
 {
     $postManager = new PostManager();
     $session = new Session();
-    
-    if (isset($postId) && $postId > 0) 
+    $_SESSION['csrfDeletePostToken'] = $csrfDeletePostToken;
+    if (isset($_SESSION['csrfDeletePostToken']) AND isset($csrfDeletePostToken) AND !empty($_SESSION['csrfDeletePostToken']) AND !empty($csrfDeletePostToken)) 
     {
-        $post = $postManager->getPost($postId);
-        $success = $postManager->deletePostRequest($postId);
-        if ($success === false) 
+        if ($_SESSION['csrfDeletePostToken'] == $csrfDeletePostToken) 
         {
-            $session->nonDeletedPost();
+            if (isset($postId) && $postId > 0) 
+            {
+                $post = $postManager->getPost($postId);
+                $delete = $postManager->deletePostRequest($postId);
+                if ($delete === false) 
+                {
+                    $session->nonDeletedPost();
+                }
+                else 
+                {
+                    $session->deletedPost();
+                }
+            }
+            elseif ($postId <= 0) 
+            {
+                $session->noIdPostAdmin();
+            }
         }
-        else 
+        else
         {
-            $session->deletedPost();
+            $session->deletePostCsrfError();
         }
-    }
-    elseif ($postId <= 0) 
-    {
-        $session->noIdPostAdmin();
     }
 }
 /* *********** 7 . MANAGE COMMENTS PAGE ***********/
@@ -183,43 +212,64 @@ function manageComments()
     include 'view/backend/Comments/manageComments.php';
 }
 /* *********** 8 . VALIDATE A COMMENT *************/
-function validateComment($commentId)
+function validateComment($commentId, $csrfValidateCommentToken)
 {
     $commentManager = new CommentManager();
     $validated = $commentManager->validateCommentRequest($commentId);
     $session = new Session();
-    if (isset($commentId) && $commentId > 0) {
-        if ($validated === false) {
-            $session->nonValidatedcomment();
-        }
-        else 
+    $_SESSION['csrfValidateCommentToken'] = $csrfValidateCommentToken;
+    if (isset($_SESSION['csrfValidateCommentToken']) AND isset($csrfValidateCommentToken) AND !empty($_SESSION['csrfValidateCommentToken']) AND !empty($csrfValidateCommentToken)) 
+    {
+        if ($_SESSION['csrfValidateCommentToken'] == $csrfValidateCommentToken) 
         {
-            $session->validatedcomment();
+            if (isset($commentId) && $commentId > 0) {
+                if ($validated === false) {
+                    $session->nonValidatedcomment();
+                }
+                else 
+                {
+                    $session->validatedcomment();
+                }
+            }
+            elseif ($commentId <= 0) {
+                $session->noIdCommentAdmin();
+            }
         }
-    }
-    elseif ($commentId <= 0) {
-        $session->noIdCommentAdmin();
+        else
+        {
+            $session->validateCommentCsrfError();
+        }
     }
 }
 /* *********** 9 . DELETE A COMMENT ***************/
-function adminDeleteComment($commentId)
+function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
 {
     $commentManager = new CommentManager();
     $comment = $commentManager->getComment($commentId);
-    $success = $commentManager->deleteCommentRequest($commentId);
     $session = new Session();
-
-    if (isset($commentId) && $commentId > 0) {
-        if ($success === false) {
-            $session->adminNonDeletedComment();
-        }
-        else 
+    $_SESSION['csrfAdminDeleteCommentToken'] = $csrfAdminDeleteCommentToken;
+    if (isset($_SESSION['csrfAdminDeleteCommentToken']) AND isset($csrfAdminDeleteCommentToken) AND !empty($_SESSION['csrfAdminDeleteCommentToken']) AND !empty($csrfAdminDeleteCommentToken)) 
+    {
+        if ($_SESSION['csrfAdminDeleteCommentToken'] == $csrfAdminDeleteCommentToken) 
         {
-            $session->admindeletedComment();
+            if (isset($commentId) && $commentId > 0) {
+                if ($success === false) {
+                    $session->adminNonDeletedComment();
+                }
+                else 
+                {   
+                    $success = $commentManager->deleteCommentRequest($commentId);
+                    $session->admindeletedComment();
+                }
+            }
+            elseif ($commentId <= 0) {
+                $session->noIdCommentAdmin();
+            }
         }
-    }
-    elseif ($commentId <= 0) {
-        $session->noIdCommentAdmin();
+        else
+        {
+            $session->adminDeleteCommentCsrfError();
+        }
     }
 }
 /* ********** 10 . GET USERS **********************/
@@ -230,53 +280,85 @@ function manageUsers()
     include 'view/backend/Users/user_mgmt.php';
 }
 /* ********** 11 . GIVE RIGHTS ADMIN **************/
-function giveAdminRights($userId)
+function giveAdminRights($userId, $csrfGiveAdminRightsToken)
 {
     $userManager = new \Philippe\Blog\Model\UserManager();
-        
-    if (isset($userId) && $userId > 0) {
-        $adminRights = $userManager->giveAdminRightsRequest($userId);
-
-        if ($adminRights === false) {
-            throw new Exception('Impossible de donner les droits admin');
-        }
-        else 
+    $session = new Session();
+    $_SESSION['csrfGiveAdminRightsToken'] = $csrfGiveAdminRightsToken;
+    if (isset($_SESSION['csrfGiveAdminRightsToken']) AND isset($csrfGiveAdminRightsToken) AND !empty($_SESSION['csrfGiveAdminRightsToken']) AND !empty($csrfGiveAdminRightsToken)) 
+    {
+        if ($_SESSION['csrfGiveAdminRightsToken'] == $csrfGiveAdminRightsToken) 
         {
-            header('Location: index.php?action=manage_users');
+            if (isset($userId) && $userId > 0) {
+                $adminRights = $userManager->giveAdminRightsRequest($userId);
+
+                if ($adminRights === false) {
+                    throw new Exception('Impossible de donner les droits admin');
+                }
+                else 
+                {
+                    header('Location: index.php?action=manage_users');
+                }
+            }
+        }
+        else
+        {
+            $session->giveAdminRightsCsrfError();
         }
     }
 }
 /* ********** 12 . CANCEL RIGHTS ADMIN ************/
-function stopAdminRights($userId)
+function stopAdminRights($userId, $csrfCancelAdminRightsToken)
 {
     $userManager = new \Philippe\Blog\Model\UserManager();
-        
-    if (isset($userId) && $userId > 0) {
-        $adminRights = $userManager->stopAdminRightsRequest($userId);
-
-        if ($adminRights === false) {
-            throw new Exception('Impossible de retirer les droits admin');
-        }
-        else 
+    $session = new Session();
+    $_SESSION['csrfCancelAdminRightsToken'] = $csrfCancelAdminRightsToken;
+    if (isset($_SESSION['csrfCancelAdminRightsToken']) AND isset($csrfCancelAdminRightsToken) AND !empty($_SESSION['csrfCancelAdminRightsToken']) AND !empty($csrfCancelAdminRightsToken)) 
+    {
+        if ($_SESSION['csrfCancelAdminRightsToken'] == $csrfCancelAdminRightsToken) 
         {
-            header('Location: index.php?action=manage_users');
+            if (isset($userId) && $userId > 0) {
+                $adminRights = $userManager->stopAdminRightsRequest($userId);
+
+                if ($adminRights === false) {
+                    throw new Exception('Impossible de retirer les droits admin');
+                }
+                else 
+                {
+                    header('Location: index.php?action=manage_users');
+                }
+            }
+        }
+        else
+        {
+            $session->cancelAdminRightsCsrfError();
         }
     }
 }
 /* ********** 13 . DELETE A USER ******************/
-function deleteUser($userId)
+function deleteUser($userId, $csrfDeleteUserToken)
 {
-
     $userManager = new \Philippe\Blog\Model\UserManager();
-        
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
-        $affectedUser = $userManager->deleteUserRequest($userId);
+    $_SESSION['csrfDeleteUserToken'] = $csrfDeleteUserToken;
+    if (isset($_SESSION['csrfDeleteUserToken']) AND isset($csrfDeleteUserToken) AND !empty($_SESSION['csrfDeleteUserToken']) AND !empty($csrfDeleteUserToken)) 
+    {
+        if ($_SESSION['csrfDeleteUserToken'] == $csrfDeleteUserToken) 
+        {
+            if (isset($_GET['id']) && $_GET['id'] > 0) 
+            {
+                $affectedUser = $userManager->deleteUserRequest($userId);
 
-        if ($affectedUser === false) {
-            throw new Exception('Impossible de supprimer ce membre');
+                if ($affectedUser === false) {
+                    throw new Exception('Impossible de supprimer ce membre');
+                }
+                else {
+                    header('Location: index.php?action=manage_users');
+                }
+            }
         }
-        else {
-            header('Location: index.php?action=manage_users');
+        else
+        {
+            $session->deleteUserCsrfError();
         }
     }
 }

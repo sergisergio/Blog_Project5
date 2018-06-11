@@ -22,7 +22,7 @@ function contact($name, $email, $subject, $message, $response, $remoteip)
             $mail = new PHPMailer(true);                             
             try 
             {
-                $mail->setFrom($email, 'Mailer');
+                $mail->setFrom($email, 'Expediteur');
                 $mail->addAddress('contact@philippetraon.com', 'Philippe Traon');
                 $mail->addReplyTo($email, 'Information');
                 $ip = $_SERVER["REMOTE_ADDR"];
@@ -31,16 +31,16 @@ function contact($name, $email, $subject, $message, $response, $remoteip)
                 $mail->Body    = '<b>Auteur : </b>' . $name . '<br />' . '<b>IP : </b>' . $ip . '<br />' . '<b>Message : </b>' . $message;
                 $mail->AltBody = 'Message non-HTML : '.$message;
                 $mail->send();
-                echo 'Le message a bien été envoyé';
+                echo '<p style="font-weight: bold;text-align: center;">Le message a bien été envoyé</p>';
             } 
             catch (Exception $e) 
             {
-                echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
+                echo '<p style="color:red; font-weight: bold;text-align: center;">Un problème est survenu ! Le message n\'a pas pu être envoyé : </p>';
             }
         }
         else 
         {
-            echo 'Veuillez confirmer le captcha !';
+            echo '<p style="color:red; font-weight: bold;text-align: center;">Veuillez confirmer le captcha !</p>';
         }
     }
 }

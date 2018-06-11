@@ -4,7 +4,9 @@
         "phpmailer/phpmailer": "^6.0"
     },
     "autoload": {
-    	"psr-4" : {"Philippe\\Blog\\Model\\" : "model/", "Philippe\\Blog\\Core\\" : "core/", "Philippe\\Blog\\Model\\Entities\\" : "model/Entities/"}
+    	"psr-4" : {"Philippe\\Blog\\Model\\" : "model/",
+         "Philippe\\Blog\\Core\\" : "core/",
+          "Philippe\\Blog\\Model\\Entities\\" : "Entities/"}
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*"

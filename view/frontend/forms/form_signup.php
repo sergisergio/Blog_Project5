@@ -1,4 +1,4 @@
-<section>
+<section style="margin-bottom: 0px;">
     <div class="box">
         <h2 class="section-title text-center">Inscription</h2>
         <p></p>
@@ -47,6 +47,24 @@
                     </div>
                 </fieldset>
             </form>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <h3 class="section-title text-center">Conseils</h3>
+        <div class="divide30"></div>
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6 col-sm-12">
+                <ul>
+                    <li>- Eviter les mots de passe simples ( prénom, date, etc...)</li>
+                    <li>- Ne pas divulguer ou noter son mot de passe.</li>
+                    <li>- Utiliser un mot de passe différent pour chaque site.</li>
+                    <li>- Changer régulièrement son mot de passe.</li>
+                    <li>- Se déconnecter avant de quitter le site.</li>
+                    <li>- Les mots de passe sont chiffrés et ne sont pas stockés en clair..</li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>

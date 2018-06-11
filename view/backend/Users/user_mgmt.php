@@ -29,19 +29,28 @@
                         Administrateur : 
                         <?php if ($u->getAuthorization1() == 1) : ?>
                                 <?php echo 'Oui'; ?><br />
+                                <?php      
+                                    $csrfCancelAdminRightsToken = md5(time()*rand(1, 1000));
+                                ?>
                                 <btn class="btn btn-default">
-                                    <a href="index.php?action=cancelAdminRights&amp;id=<?php echo $u->getId() ?>" data-toggle='confirmation' id="important_action">Retirer les droits admin</a>
+                                    <a href="index.php?action=cancelAdminRights&amp;id=<?php echo $u->getId() ?>&amp;token=<?php echo $csrfCancelAdminRightsToken ?>" data-toggle='confirmation' id="important_action">Retirer les droits admin</a>
                                 </btn>
                             <?php else: ?>
                                 <?php echo 'Non'; ?>
                                 <br />
+                                <?php      
+                                    $csrfGiveAdminRightsToken = md5(time()*rand(1, 1000));
+                                ?>
                                 <btn class="btn btn-default">
-                                    <a href="index.php?action=giveAdminRights&amp;id=<?php echo $u->getId() ?>" data-toggle='confirmation' id="important_action">Donner les droits admin</a>
+                                    <a href="index.php?action=giveAdminRights&amp;id=<?php echo $u->getId() ?>&amp;token=<?php echo $csrfGiveAdminRightsToken ?>" data-toggle='confirmation' id="important_action">Donner les droits admin</a>
                                 </btn>
                             <?php endif; ?>
                     </h5>
+                    <?php      
+                        $csrfDeleteUserToken = md5(time()*rand(1, 1000));
+                    ?>
                     <btn class="btn btn-default" style="float: right;">
-                        <a href="index.php?action=deleteUser&amp;id=<?php echo $u->getId() ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
+                        <a href="index.php?action=deleteUser&amp;id=<?php echo $u->getId() ?>&amp;token=<?php echo $csrfDeleteUserToken ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
                     </btn>
                 </div>
             </div>

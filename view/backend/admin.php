@@ -1,11 +1,3 @@
-<?php if(session_status() == PHP_SESSION_NONE) {
-        session_start();
-}
-if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
-    header('Location: index.php?action=noAdmin');
-    exit();
-}
-?>
 <?php $title = 'Administration'; ?>
 <?php ob_start(); ?>
 <body class="full-layout">

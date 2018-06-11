@@ -7,7 +7,7 @@
     <div class="sidebox box widget">
     <h4 class="text-center">Derniers articles</h4>
     <?php
-    foreach ($posts1 as $p) 
+    foreach ($postsAside as $p) 
     {
     ?>
       <ul>

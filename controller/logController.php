@@ -11,7 +11,7 @@ function loginPage()
     include 'view/frontend/pages/login.php';
 }
 /* ***************** CONNEXION ***************************/
-function login($pseudo,$passe, $ip, $csrfLoginToken)
+function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
 {
     $userManager = new UserManager();
     $session = new Session();
@@ -28,6 +28,22 @@ function login($pseudo,$passe, $ip, $csrfLoginToken)
                 if ($count < 3) {
                     if(password_verify($passe, $user->getPassword())) {
                         if ($user->getIsActive() == 1) {
+                            
+                            if(isset($remember))
+                            {
+                                /*function str_random($length)
+                                {
+                                    $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+                                    return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
+                                }
+                                $remember_token = str_random(250);
+                                    
+                                $addCookie = $userManager->addCookie($pseudo, $remember_token);
+                                setcookie('remember', $_SESSION['id'] . '==' . $remember_token . sha1($_SESSION['id'] . 'philippetraon'), time() + 60 * 60 * 24 * 7);*/
+                                setcookie('pseudo', $pseudo, time() + 60 * 60 * 24 * 7);
+                                //setcookie('password', sha1($passe), time() + 60 * 60 * 24 * 7);
+                                $userManager->userCookie($_COOKIE['pseudo']);
+                            }
                             $session->launchSession($user);
                         }
                         else 
@@ -40,6 +56,7 @@ function login($pseudo,$passe, $ip, $csrfLoginToken)
                         sleep(1);
                         $securityManager->registerAttempt($ip);
                         $session->errorPassword2();
+
                     }
                 }
                 else 
@@ -54,7 +71,7 @@ function login($pseudo,$passe, $ip, $csrfLoginToken)
         }
         else
         {
-            echo "Erreur de vérification";
+            $session->loginCsrfError();
         }
     }
 }
@@ -72,37 +89,39 @@ function forgetPasswordPage()
 /* ***************** FORGET PASSWORD MAIL ****************/
 function forgetPassword($email, $csrfForgetToken)
 {
-    $userManager = new \Philippe\Blog\Model\UserManager();
-       
+    $userManager = new UserManager();
+    $session = new Session();  
 
     if (empty($email)) {
-            $_SESSION['flash']['danger'] = 'Veuillez renseigner un email !';
-            forgetPasswordPage();
-            exit();
+            $session->emptyMail();
     }
     else 
     {
         if (isset($_SESSION['forgetToken']) AND isset($csrfForgetToken) AND !empty($_SESSION['forgetToken']) AND !empty($csrfForgetToken)) 
         {
-            if ($_SESSION['token'] == $csrfForgetToken) 
+            if ($_SESSION['forgetToken'] == $csrfForgetToken) 
             {
-                $user = $userManager->forgetPasswordRequest($email);
-                if ($user === false) 
+                if(filter_var($email, FILTER_VALIDATE_EMAIL))
                 {
-                    $_SESSION['flash']['success'] = 'Une erreur est survenue !';
-                    loginPage();
-                    exit();
+                    $user = $userManager->forgetPasswordRequest($email);
+                    if ($user === false) 
+                    {
+                        $session->errorForgetPassword();
+                    }
+                    else 
+                    {
+                        $session->mailForgetPassword();
+                    } 
                 }
+
                 else 
                 {
-                    $_SESSION['flash']['success'] = 'Vous allez recevoir un email pour réinitialiser votre mot de passe !';
-                    loginPage();
-                    exit();
-                } 
+                    $session->nonMail();
+                }
             }
             else
             {
-                echo "Erreur de vérification";
+                $session->forgetCsrfError();
             }
         }
     }
@@ -110,7 +129,8 @@ function forgetPassword($email, $csrfForgetToken)
 /* ***************** CHANGE PASSWORD PAGE ****************/
 function changePasswordPage($userId, $resetToken)
 {
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
+    $session = new Session(); 
         
     if ((isset($_GET['id']) && $_GET['id'] > 0) && isset($_GET['token'])) {
         $user = $userManager->checkResetTokenRequest($userId, $resetToken);
@@ -120,40 +140,38 @@ function changePasswordPage($userId, $resetToken)
         }
         else 
         {
-            echo 'Ce token n est plus valide ! Veuillez réessayer !';
+            $session->forgetTokenError();
         }
     }
     else 
     {
-        $_SESSION['flash']['danger'] = 'Aucun id ou token ne coresspond à cet email, veuillez réessayer !';
-        forgetPasswordPage();
-        exit();
+        $session->tokenPassword();
     }
 }
 /* ***************** CHANGE PASSWORD *********************/
-function changePassword($userId, $passe, $csrfToken)
+function changePassword($userId, $passe, $csrfChangePasswordToken)
 {
-    $userManager = new \Philippe\Blog\Model\UserManager();
-
+    $userManager = new UserManager();
+    $session = new Session(); 
+    
+    $_SESSION['csrfChangePasswordToken'] = $csrfChangePasswordToken; 
     if(!empty($_POST['passe']) && $_POST['passe'] == $_POST['passe2']) 
     {
-        if (isset($_SESSION['ChangePasswordToken']) AND isset($csrfChangePasswordToken) AND !empty($_SESSION['ChangePasswordToken']) AND !empty($csrfChangePasswordToken)) 
+        if (isset($_SESSION['csrfChangePasswordToken']) AND isset($csrfChangePasswordToken) AND !empty($_SESSION['csrfChangePasswordToken']) AND !empty($csrfChangePasswordToken)) 
         {
-            if ($_SESSION['ChangePasswordToken'] == $csrfChangePasswordToken) 
+            if ($_SESSION['csrfChangePasswordToken'] == $csrfChangePasswordToken) 
             {
                 $userManager->changePasswordRequest($userId, $passe);
-                $_SESSION['flash']['success'] = 'Le mot de passe a bien été réinitialisé !';
-                loginPage();
-                exit();
+                $session->changedPassword();
             }
             else
             {
-                echo "Erreur de vérification";
+                $session->changeCsrfError();
             }
         }
     }
     else 
     {
-        echo 'Veuillez entrer un mot de passe';
+        $session->emptyPassword();
     }
 }

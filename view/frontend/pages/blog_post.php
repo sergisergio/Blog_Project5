@@ -35,7 +35,7 @@
                             <img src="public/images/posts/default.jpg" class="img-responsive" />
                             <?php endif; ?>
                             <p>
-                                <?php echo nl2br(htmlspecialchars($post->getContent())) ?>
+                                <?php echo nl2br(htmlspecialchars_decode($post->getContent())) ?>
                             </p>
                         </div>
                         <div class="divide20"></div>
@@ -70,10 +70,11 @@
                             <p>
                                 <?php echo nl2br(htmlspecialchars($c->getContent())) ?> 
                                 <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $c->getAuthor())) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
-                                    <a href="index.php?action=modifyCommentPage&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>"> (Modifier)</a> 
-                                    <!--<a href="index.php?action=deleteComment&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>-->
-                                    
-                                    <?php require 'view/frontend/forms/form_deleteComment.php' ?>
+                                    <a href="index.php?action=modifyCommentPage&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>"> (Modifier)</a>
+                                    <?php      
+                                        $csrfDeleteCommentToken = md5(time()*rand(1, 1000));
+                                    ?>
+                                    <a href="index.php?action=deleteComment&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>&amp;token=<?php echo $csrfDeleteCommentToken ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
                                 <?php endif; ?>
                             </p>
                             <?php

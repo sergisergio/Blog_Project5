@@ -1,6 +1,8 @@
 <?php
 session_start();
 require "vendor/autoload.php";
+//require_once 'core/Cookie.php';
+//reconnect_from_cookie(); 
 
 /* ************* SUM UP **********************/
 /* ******************************************
@@ -85,12 +87,11 @@ try {
         }
         /* 5 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'deleteComment') {
-            deleteComment($_GET['id'], $_GET['postId'], $_POST['token']);
+            deleteComment($_GET['id'], $_GET['postId'], $_GET['token']);
         }
         /* 6 . MODIFY A COMMENT **********************/
         elseif ($_GET['action'] == 'modifyComment') {
             modifyComment($_GET['id'], $_SESSION['id'], $_POST['content'], $_GET['postId'], $_POST['token']);
-            
         }
         /* 7 . CONNECTION PAGE ***********************/
         elseif ($_GET['action'] == 'loginPage') {
@@ -98,7 +99,7 @@ try {
         }
         /* 8 . CONNECTION ****************************/
         elseif ($_GET['action'] == 'login') {
-            login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR'], $_POST['token']);
+            login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR'], $_POST['token'], $_POST['remember']);
         }
         /* 9 . DISCONNECTION *************************/
         elseif ($_GET['action'] == 'logout') {
@@ -159,13 +160,17 @@ try {
         elseif ($_GET['action'] == 'changePassword') {
             changePassword($_POST['userId'], $_POST['passe'], $_POST['token']);
         }
+        /* 23 . NO ADMIN **********************/
+        elseif ($_GET['action'] == 'noAdmin') {
+            noAdmin();
+        }
 
         /* ********************************************
         *           ADMINISTRATEUR                    *
         **********************************************/
         /* 1 . ADMIN HOME PAGE ***********************/
         elseif ($_GET['action'] == 'admin') {
-            admin();
+            admin($_GET['token']);
         }
         /* 2 . GET POSTS *****************************/
         elseif ($_GET['action'] == 'manage_posts') {
@@ -189,15 +194,15 @@ try {
         }       
         /* 7 . DELETE A POST *************************/
         elseif ($_GET['action'] == 'deletePost') {
-            deletePost($_GET['id']);
+            deletePost($_GET['id'], $_GET['token']);
         }
         /* 8 . VALIDATE A COMMENT ********************/
         elseif ($_GET['action'] == 'validateComment') {
-                validateComment($_GET['id']);
+                validateComment($_GET['id'], $_GET['token']);
         } 
         /* 9 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'adminDeleteComment') {
-                adminDeleteComment($_GET['id']);
+                adminDeleteComment($_GET['id'], $_GET['token']);
         }
         /* 10. GET USERS *****************************/
         elseif ($_GET['action'] == 'manage_users') {
@@ -205,15 +210,15 @@ try {
         }
         /* 11. GIVE RIGHTS ADMIN *********************/
         elseif ($_GET['action'] == 'giveAdminRights') {
-                giveAdminRights($_GET['id']);
+                giveAdminRights($_GET['id'], $_GET['token']);
         }
         /* 12. CANCEL RIGHTS ADMIN *******************/
         elseif ($_GET['action'] == 'cancelAdminRights') {
-                stopAdminRights($_GET['id']);
+                stopAdminRights($_GET['id'], $_GET['token']);
         }
         /* 13. DELETE USER ***************************/
         elseif ($_GET['action'] == 'deleteUser') {
-                deleteUser($_GET['id']);
+                deleteUser($_GET['id'], $_GET['token']);
         }
     }
     /* ********************************************

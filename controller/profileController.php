@@ -16,6 +16,7 @@ function modifyProfile($userId, $avatar, $first_name, $name, $email, $descriptio
 {
 
     $userManager = new \Philippe\Blog\Model\UserManager();
+    $session = new Session();
 
     if (!empty($_POST['email'])) 
     {
@@ -42,28 +43,24 @@ function modifyProfile($userId, $avatar, $first_name, $name, $email, $descriptio
                 $modifiedProfile = $userManager->modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description);
                 if ($modifiedProfile === false) 
                 {
-                    throw new Exception('Impossible de modifier le profil');
+                    $session->errorModifyProfile();
                 }
                 else 
                 {
-                    $_SESSION['flash']['success'] = 'Modification effectuée !';
-                    profilePage($_SESSION['id']);
-                    exit();
+                    $session->successModifyProfile();
                     unset($_SESSION['avatar']);
                     $_SESSION['avatar'] = $avatar;
                 }
             }
             else
             {
-                echo "Erreur de vérification";
+                $session->csrfModifyProfile();
             }
         }
     }
     else 
     {
-        $_SESSION['flash']['danger'] = 'Tous les champs ne sont pas remplis !';
-        profilePage($_SESSION['id']);
-        exit();
+        $session->emptyModifyProfile();
     }
 }
 /* ***************** DELETE ACCOUNT ***************/
@@ -83,26 +80,23 @@ function deleteAccount($userId, $csrfDeleteAccountToken)
 
                 if ($deleteAccount === false) 
                 {
-                    throw new Exception('Impossible de supprimer le profil');
+                    $session->errorDeleteAccount2();
                 }
                 else 
                 {
-                    //header('Location: index.php?action=blog');
                     home();
                     exit();
                 }
             }
             else
             {
-                echo "Erreur de vérification";
+                $session->csrfDeleteAccount();
             }
         }
     }
     else 
     {
-        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet utilisateur !';
-        profilePage();
-        exit();
+        $session->errorDeleteAccount();
     }
 }
 /* ***************** PUBLIC PROFILE ***************/

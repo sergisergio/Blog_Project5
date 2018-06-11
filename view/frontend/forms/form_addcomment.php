@@ -3,7 +3,7 @@
     <?php require 'view/frontend/includes/responseAlert.php'; ?>       
     <?php      
         $csrfAddCommentToken = md5(time()*rand(1, 1000));
-        $_SESSION['addCommentToken'] = $csrfAddCommentToken;        
+        $_SESSION['csrfAddCommentToken'] = $csrfAddCommentToken;        
     ?>
 <form action="index.php?action=addcomment&amp;id=<?= $post->getId() ?>" method="post">
     <div>

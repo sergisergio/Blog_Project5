@@ -6,15 +6,17 @@
 4 . DELETE A POST.
 5 . EFFACER UN ARTICLE.
 6 . COUNT POSTS.
-7 . SEARCH RESULTS.
+7 . COUNT SEARCH RESULTS.
+8 . SEARCH RESULTS.
+9 . CHECK EXIST POST.
 ******************* END SUMP UP *************************/
 
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 // l'autoloader n'arrive pas à charger les entités en production
-require_once "model/Entities/commentEntity.php";
+/*require_once "model/Entities/commentEntity.php";
 require_once "model/Entities/postEntity.php";
-require_once "model/Entities/userEntity.php";
+require_once "model/Entities/userEntity.php";*/
 
 use \Philippe\Blog\Model\Entities\PostEntity;
 class PostManager extends Manager
@@ -24,39 +26,32 @@ class PostManager extends Manager
     public function getPosts($start, $postsPerPage)
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->query(
+        $getPosts = $dbProjet5->query(
             'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage
         );
         $posts = [];
-        while ($data = $req->fetch()) {
+        while ($data = $getPosts->fetch()) {
             $posts[] = new PostEntity($data);
         }
-        $posts1 = [];
-        while ($data = $req->fetch()) {
-            $posts1[] = new PostEntity($data);
-        }
-        $req->closeCursor();
+        $getPosts->closeCursor();
         return $posts;
-        
-        $req->closeCursor();  
-        return $posts1;
     }
     /* ************ 2 . GET ONLY ONE POST ***************/
     public function getPost($postId)
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->prepare(
+        $getPost = $dbProjet5->prepare(
             'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			WHERE p.id = :id'
         );
-        $req->bindParam(':id', $postId);
-        $req->execute();
-        $data = $req->fetch();
+        $getPost->bindParam(':id', $postId);
+        $getPost->execute();
+        $data = $getPost->fetch();
         $post = new PostEntity($data);
         return $post;
     }
@@ -64,40 +59,46 @@ class PostManager extends Manager
     public function addPostRequest($title, $chapo, $author, $content, $image)
     {
         $dbProjet5 = $this->dbConnect();
-        $post = $dbProjet5->prepare('INSERT INTO Posts(title, chapo, intro, author, content, file_extension, creation_date) VALUES(:title, :chapo, :intro, :author, :content, :image, NOW()) ');
+        $addPost = $dbProjet5->prepare('INSERT INTO Posts(title, chapo, intro, author, content, file_extension, creation_date) VALUES(:title, :chapo, :intro, :author, :content, :image, NOW()) ');
         $intro = substr($content, 0, 600);
-        $post->bindParam(':title', $title);
-        $post->bindParam(':chapo', $chapo);
-        $post->bindParam(':intro', $intro);
-        $post->bindParam(':author', $author);
-        $post->bindParam(':content', $content);
-        $post->bindParam(':image', $image);
-        $affectedPost = $post->execute();
-        return $affectedPost;
+        $addPost->bindParam(':title', $title);
+        $addPost->bindParam(':chapo', $chapo);
+        $addPost->bindParam(':intro', $intro);
+        $addPost->bindParam(':author', $author);
+        $addPost->bindParam(':content', $content);
+        $addPost->bindParam(':image', $image);
+        $addPost->execute();
+        $data = $addPost->fetch();
+        $addedPost = new PostEntity($data);
+        return $addedPost;
     }
     /* ************ 4 . MODIFY A POST *******************/
     public function modifyPostRequest($postId, $title, $chapo, $author, $content)
     {
         $dbProjet5 = $this->dbConnect();
-        $post = $dbProjet5->prepare('UPDATE Posts SET title = :title, intro = :intro, chapo = :chapo, author = :author, content = :content, last_updated = NOW() WHERE id = :id');
+        $modifyPost = $dbProjet5->prepare('UPDATE Posts SET title = :title, intro = :intro, chapo = :chapo, author = :author, content = :content, last_updated = NOW() WHERE id = :id');
         $intro = substr($content, 0, 600);
-        $post->bindParam(':title', $title);
-        $post->bindParam(':intro', $intro);
-        $post->bindParam(':chapo', $chapo);
-        $post->bindParam(':author', $author);
-        $post->bindParam(':content', $content);
-        $post->bindParam(':id', $postId);
-        $affectedPost = $post->execute();
-        return $affectedPost;
+        $modifyPost->bindParam(':title', $title);
+        $modifyPost->bindParam(':intro', $intro);
+        $modifyPost->bindParam(':chapo', $chapo);
+        $modifyPost->bindParam(':author', $author);
+        $modifyPost->bindParam(':content', $content);
+        $modifyPost->bindParam(':id', $postId);
+        $modifyPost->execute();
+        $data = $modifyPost->fetch();
+        $modifiedPost = new PostEntity($data);
+        return $modifiedPost;
     }
     /* ************ 5 . DELETE A POST *******************/
     public function deletePostRequest($postId)
     {
         $dbProjet5 = $this->dbConnect();
-        $post = $dbProjet5->prepare('DELETE FROM Posts WHERE id = :id');
-        $post->bindParam(':id', $postId);
-        $affectedPost = $post->execute();
-        return $affectedPost;
+        $deletePost = $dbProjet5->prepare('DELETE FROM Posts WHERE id = :id');
+        $deletePost->bindParam(':id', $postId);
+        $deletePost->execute();
+        $data = $deletePost->fetch();
+        $deletedPost = new PostEntity($data);
+        return $deletedPost;
     }
     /* ************ 6 . COUNT POSTS *********************/
     public function countPosts()
@@ -110,11 +111,8 @@ class PostManager extends Manager
     /* ************ 7 . COUNT SEARCH RESULTS ************/
     public function countSearchRequest($search)
     {
-
         $dbProjet5 = $this->dbConnect();
-
         $countSearchResults  = $dbProjet5->query("SELECT id, title, chapo, content FROM Posts WHERE content LIKE '%$search%' ");
-
         return $countSearchResults;
     }
     /* ************ 8 . SEARCH RESULTS ******************/
@@ -129,5 +127,15 @@ class PostManager extends Manager
         }
         $results->closeCursor(); 
         return $searchResults;
+    }
+    /* ************ 9 . CHECK EXIST POST ******************/
+    public function checkExistPost($postId)
+    {
+        $dbProjet5 = $this->dbConnect();
+        $existPost = $dbProjet5->prepare('SELECT * FROM Posts WHERE id = :id');
+        $existPost->bindParam(':id', $postId);
+        $existPost->execute();
+        $isPost = $existPost->fetch();
+        return $isPost;
     }
 }

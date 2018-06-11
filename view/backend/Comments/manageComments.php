@@ -41,11 +41,17 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                 <p>Commentaire de <?php echo htmlspecialchars($s->getAuthor()); ?> publié le <?php echo htmlspecialchars($s->getCreationDate()); ?></p>
                 <p><?php echo htmlspecialchars($s->getContent()); ?></p>
             </div>
+            <?php      
+                    $csrfValidateCommentToken = md5(time()*rand(1, 1000));
+            ?>
             <btn class="btn btn-default" style="float: right;">
-                <a href="index.php?action=validateComment&amp;id=<?php echo $s->getId() ?>"  data-toggle='confirmation' id="important_action">Valider</a>
+                <a href="index.php?action=validateComment&amp;id=<?php echo $s->getId() ?>&amp;token=<?php echo $csrfValidateCommentToken ?>"  data-toggle='confirmation' id="important_action">Valider</a>
             </btn>
+            <?php      
+                    $csrfAdminDeleteCommentToken = md5(time()*rand(1, 1000));
+            ?>
             <btn class="btn btn-default" style="float: right;">
-                <a href="index.php?action=adminDeleteComment&amp;id=<?php echo $s->getId() ?>"  data-toggle='confirmation' id="important_action">Supprimer</a>
+                <a href="index.php?action=adminDeleteComment&amp;id=<?php echo $s->getId() ?>&amp;token=<?php echo $csrfAdminDeleteCommentToken ?>"  data-toggle='confirmation' id="important_action">Supprimer</a>
             </btn>
             </div>
             <?php

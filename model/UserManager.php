@@ -20,9 +20,9 @@
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 
-require_once "model/Entities/commentEntity.php";
+/*require_once "model/Entities/commentEntity.php";
 require_once "model/Entities/postEntity.php";
-require_once "model/Entities/userEntity.php";
+require_once "model/Entities/userEntity.php";*/
 
 use \Philippe\Blog\Model\Entities\UserEntity;
 class UserManager extends Manager
@@ -31,30 +31,30 @@ class UserManager extends Manager
     public function getUsers()
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->query(
+        $getUsers = $dbProjet5->query(
             'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description
 			FROM Users 
 			ORDER BY pseudo'
         );
         $users = [];
-        while ($data = $req->fetch()) {
+        while ($data = $getUsers->fetch()) {
             $users[] = new UserEntity($data);
         }
-        $req->closeCursor();
+        $getUsers->closeCursor();
         return $users;
     }
     /* ******** 2 . GET ONLY ONE USER ******************/
     public function getUser($userId)
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->prepare(
+        $getUser = $dbProjet5->prepare(
             'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description
 			FROM Users 
 			WHERE id = :id'
         );
-        $req->bindParam(':id', $userId);
-        $req->execute();
-        $data = $req->fetch();
+        $getUser->bindParam(':id', $userId);
+        $getUser->execute();
+        $data = $getUser->fetch();
         $post = new UserEntity($data);
         return $post;
     }
@@ -62,22 +62,23 @@ class UserManager extends Manager
     public function getAuthorization($pseudo)
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->prepare(
+        $getAuthorization = $dbProjet5->prepare(
             'SELECT authorization
 			FROM Users 
 			WHERE pseudo = :pseudo
 			'
         );
-        $req->bindParam(':id', $pseudo);
-        $req->execute();
-        $access = $req->fetch();
+        $getAuthorization->bindParam(':id', $pseudo);
+        $getAuthorization->execute();
+        $data = $getAuthorization->fetch();
+        $access = new UserEntity($data);
         return $access;
     }
     /* ******** 4 . REGISTRATION ***********************/
     public function addUserRequest($pseudo, $email, $passe)
     {
         $dbProjet5 = $this->dbConnect();
-        $post = $dbProjet5->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(:pseudo, :email, :password, :confirmationtoken)');
+        $addUser = $dbProjet5->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(:pseudo, :email, :password, :confirmationtoken)');
         $passe = password_hash($passe, PASSWORD_BCRYPT);
         function str_random($length)
         {
@@ -86,51 +87,63 @@ class UserManager extends Manager
         }
         $token = str_random(100);
 
-        $post->bindParam(':pseudo', $pseudo);
-        $post->bindParam(':email', $email);
-        $post->bindParam(':password', $passe);
-        $post->bindParam(':confirmationtoken', $token);
-        $users = $post->execute();
+        $addUser->bindParam(':pseudo', $pseudo);
+        $addUser->bindParam(':email', $email);
+        $addUser->bindParam(':password', $passe);
+        $addUser->bindParam(':confirmationtoken', $token);
+        $addUser->execute();
+        $data = $addUser->fetch();
         $user_id = $dbProjet5->lastInsertId();
-        mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
+        $to      = $email;
+        $subject = 'Confirmation de votre compte';
+        $message = "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token";
+        $headers = 'From: contact@philippetraon.com' . "\r\n" .
+        'Reply-To: contact@philippetraon.com' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+
+        mail($to, $subject, $message, $headers);
+        //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
+
+        $users = new UserEntity($data);
+        return $users;
     }
     /* ******** 5 . CONFIRM REGISTRATION ***************/
     public function setActiveRequest($userId) 
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->prepare('UPDATE Users SET is_active = 1, confirmation_token = NULL, registration_date = NOW() WHERE id = :id');
-        $req->bindParam(':id', $userId);
-        $activeUser = $req->execute();
+        $setActive = $dbProjet5->prepare('UPDATE Users SET is_active = 1, confirmation_token = NULL, registration_date = NOW() WHERE id = :id');
+        $setActive->bindParam(':id', $userId);
+        $activeUser = $setActive->execute();
         return $activeUser;
     }
     /* ******** 6 . PSEUDO ALREADY USED ? **************/
     public function existPseudo($pseudo)
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->prepare('SELECT id FROM Users WHERE pseudo = :pseudo');
-        $req->bindParam(':pseudo', $pseudo);
-        $req->execute();
-        $user = $req->fetch();
+        $existPseudo = $dbProjet5->prepare('SELECT id FROM Users WHERE pseudo = :pseudo');
+        $existPseudo->bindParam(':pseudo', $pseudo);
+        $existPseudo->execute();
+        $user = $existPseudo->fetch();
         return $user;
     }
     /* ******** 7 . EMAIL ALREADY USED ? ***************/
     public function existMail($email)
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->prepare('SELECT id FROM Users WHERE email = :email');
-        $req->bindParam(':email', $email);
-        $req->execute();
-        $usermail = $req->fetch();
+        $existMail = $dbProjet5->prepare('SELECT id FROM Users WHERE email = :email');
+        $existMail->bindParam(':email', $email);
+        $existMail->execute();
+        $usermail = $existMail->fetch();
         return $usermail;
     }
     /* ******** 8 . CONNECTION *************************/
     public function loginRequest($pseudo, $passe)
     {
         $dbProjet5 = $this->dbConnect();
-        $req = $dbProjet5->prepare('SELECT * FROM Users WHERE pseudo = :pseudo');
-        $req->bindParam(':pseudo', $pseudo);
-        $req->execute();
-        $data = $req->fetch();
+        $login = $dbProjet5->prepare('SELECT * FROM Users WHERE pseudo = :pseudo OR email = :pseudo');
+        $login->bindParam(':pseudo', $pseudo);
+        $login->execute();
+        $data = $login->fetch();
         $user = new UserEntity($data);
         return $user;
     }
@@ -140,24 +153,23 @@ class UserManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
 
-        $req = $dbProjet5->prepare('UPDATE Users SET avatar = :avatar, first_name = :firstname, last_name = :lastname, email = :email, description = :description WHERE id = :id');
-        $req->bindParam(':avatar', $avatar);
-        $req->bindParam(':firstname', $first_name);
-        $req->bindParam(':lastname', $name);
-        $req->bindParam(':email', $email);
-        $req->bindParam(':description', $description);
-        $req->bindParam(':id', $userId);
-        $modifiedProfile = $req->execute();
+        $modifyProfile = $dbProjet5->prepare('UPDATE Users SET avatar = :avatar, first_name = :firstname, last_name = :lastname, email = :email, description = :description WHERE id = :id');
+        $modifyProfile->bindParam(':avatar', $avatar);
+        $modifyProfile->bindParam(':firstname', $first_name);
+        $modifyProfile->bindParam(':lastname', $name);
+        $modifyProfile->bindParam(':email', $email);
+        $modifyProfile->bindParam(':description', $description);
+        $modifyProfile->bindParam(':id', $userId);
+        $modifiedProfile = $modifyProfile->execute();
         return $modifiedProfile;
     }
     /* ******* 10 . DELETE ACCOUNT *********************/
     public function deleteAccountRequest($userId)
     {
         $dbProjet5 = $this->dbConnect();
-
-        $post = $dbProjet5->prepare('DELETE FROM Users WHERE id = :id');
-        $post->bindParam(':id', $userId);
-        $deleteAccount = $post->execute();
+        $deleteAccount = $dbProjet5->prepare('DELETE FROM Users WHERE id = :id');
+        $deleteAccount->bindParam(':id', $userId);
+        $deleteAccount = $deleteAccount->execute();
         
         return $deleteAccount;
     }
@@ -168,10 +180,10 @@ class UserManager extends Manager
         
         $dbProjet5 = $this->dbConnect();
         
-        $req = $dbProjet5->prepare('SELECT * FROM Users where email = :email AND registration_date IS NOT NULL');
-         $req->bindParam(':email', $email);
-        $req->execute();
-        $user = $req->fetch();
+        $forgetPassword = $dbProjet5->prepare('SELECT * FROM Users where email = :email AND registration_date IS NOT NULL');
+        $forgetPassword->bindParam(':email', $email);
+        $forgetPassword->execute();
+        $user = $forgetPassword->fetch();
         if($user) {
 
             function str_random($length)
@@ -182,14 +194,23 @@ class UserManager extends Manager
 
             $reset_token = str_random(100);
             $user_id = $user['id'];
-            $dbProjet5->prepare('UPDATE Users SET reset_token = :token, reset_at = NOW() WHERE id = :id');
-            $dbProjet5->bindParam(':token', $reset_token);
-            $dbProjet5->bindParam(':id', $user_id);
-            $dbProjet5->execute();
+            $forgetUpdate = $dbProjet5->prepare('UPDATE Users SET reset_token = :token, reset_at = NOW() WHERE id = :id');
+            $forgetUpdate->bindParam(':token', $reset_token);
+            $forgetUpdate->bindParam(':id', $user_id);
+            $forgetUpdate->execute();
 
-            $subject = 'Changement de votre mot de passe';
+            /*$subject = 'Changement de votre mot de passe';
             $body = "Afin de changer votre mot de passe, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=changePasswordPage&id=$user_id&token=$reset_token";
-            mail($email, $subject, $body);
+            mail($email, $subject, $body);*/
+
+            $to      = $email;
+            $subject = 'Changement de votre mot de passe';
+            $message = "Afin de changer votre mot de passe, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=changePasswordPage&id=$user_id&token=$reset_token";
+            $headers = 'From: contact@philippetraon.com' . "\r\n" .
+            'Reply-To: contact@philippetraon.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+            mail($to, $subject, $message, $headers);
 
             /* test mail local */
             //mail($email, $subject, "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
@@ -205,10 +226,10 @@ class UserManager extends Manager
         $dbProjet5 = $this->dbConnect();
         
         $passe = password_hash($passe, PASSWORD_BCRYPT);
-        $req = $dbProjet5->prepare('UPDATE Users SET password = :password, reset_token = NULL, reset_at = NULL WHERE id = :id');
-        $req->bindParam(':password', $passe);
-        $req->bindParam(':id', $userId);
-        $changePassword = $req->execute();
+        $changePassword = $dbProjet5->prepare('UPDATE Users SET password = :password, reset_token = NULL, reset_at = NULL WHERE id = :id');
+        $changePassword->bindParam(':password', $passe);
+        $changePassword->bindParam(':id', $userId);
+        $changePassword = $changePassword->execute();
         return $changePassword;
     }
     /* ******* 13. CHECK RESET TOKEN *******************/
@@ -217,11 +238,11 @@ class UserManager extends Manager
 
         $dbProjet5 = $this->dbConnect();
 
-        $req = $dbProjet5->prepare('SELECT * FROM Users WHERE id = :id AND reset_token IS NOT NULL AND reset_token = :token AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
-        $req->bindParam(':id', $userId);
-        $req->bindParam(':token', $token);
-        $req->execute();
-        $user = $req->fetch();
+        $checkResetToken = $dbProjet5->prepare('SELECT * FROM Users WHERE id = :id AND reset_token IS NOT NULL AND reset_token = :token AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+        $checkResetToken->bindParam(':id', $userId);
+        $checkResetToken->bindParam(':token', $token);
+        $checkResetToken->execute();
+        $user = $checkResetToken->fetch();
         return $user;
     }
     /* ******* 14. DELETE A USER ***********************/
@@ -229,10 +250,10 @@ class UserManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
 
-        $post = $dbProjet5->prepare('DELETE FROM Users WHERE id = :id');
-        $post->bindParam(':id', $userId);
+        $deleteUser = $dbProjet5->prepare('DELETE FROM Users WHERE id = :id');
+        $deleteUser->bindParam(':id', $userId);
 
-        $affectedUser = $post->execute();
+        $affectedUser = $deleteUser->execute();
         return $affectedUser;
     }
     /* ******* 15. GIVE RIGHT ADMINS *******************/
@@ -240,9 +261,9 @@ class UserManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
 
-        $req = $dbProjet5->prepare('UPDATE Users SET authorization = 1 WHERE id = :id');
-        $req->bindParam(':id', $userId);
-        $adminRights = $req->execute();
+        $giveAdminRights = $dbProjet5->prepare('UPDATE Users SET authorization = 1 WHERE id = :id');
+        $giveAdminRights->bindParam(':id', $userId);
+        $adminRights = $giveAdminRights->execute();
         return $adminRights;
     }
     /* ******* 16. CANCEL RIGHT ADMINS *****************/
@@ -250,9 +271,20 @@ class UserManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
 
-        $req = $dbProjet5->prepare('UPDATE Users SET authorization = 0 WHERE id = :id');
-        $req->bindParam(':id', $userId);
-        $adminRights = $req->execute();
+        $stopAdminRights = $dbProjet5->prepare('UPDATE Users SET authorization = 0 WHERE id = :id');
+        $stopAdminRights->bindParam(':id', $userId);
+        $adminRights = $stopAdminRights->execute();
         return $adminRights;
+    }
+    /* ******* 17 . INFO USER COOKIE *****************************/
+    public function userCookie($cookiepseudo) 
+    {
+        $dbProjet5 = $this->dbConnect();
+
+        $req = $dbProjet5->prepare('SELECT * FROM users WHERE pseudo = :pseudo AND password = :password');
+        $req->bindParam(':pseudo', $cookiepseudo);
+        $req->execute();
+        $user = $req->fetch();
+        return $user;
     }
 }

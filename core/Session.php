@@ -22,6 +22,9 @@ class Session
     }
     public function stopSession()
     {
+        session_start();
+        setcookie('pseudo', NULL, -1);
+        setcookie('password', NULL, -1);
         unset($_SESSION);
         session_destroy();
         header('Location: index.php?action=blog');
@@ -33,7 +36,7 @@ class Session
         errors();
         exit();
     }
-
+    /********************************** REGISTER ******************************************/
     public function errorPseudo1()
     {
         $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';
@@ -65,6 +68,13 @@ class Session
     public function errorPassword()
     {
         $_SESSION['flash']['danger'] = 'Vous devez entrer un mot de passe valide !';
+        signupPage();
+        exit();
+    }
+
+    public function errorLengthPassword()
+    {
+        $_SESSION['flash']['danger'] = 'Votre mot de passe doit faire entre 6 et 50 caractères !';
         signupPage();
         exit();
     }
@@ -153,6 +163,13 @@ class Session
         exit();
     }
 
+    public function csrfAddPost($postId)
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+        exit();
+    }
+
     public function emptyContent($commentId)
     {
         $_SESSION['flash']['danger'] = 'Le champ est vide !';
@@ -188,6 +205,13 @@ class Session
         exit();
     }
 
+    public function csrfModifyCommentError($commentId)
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        header('Location: index.php?action=modifyCommentPage&id=' . $commentId);
+        exit();
+    }
+
     public function noIdPostAdmin()
     {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
@@ -216,6 +240,13 @@ class Session
         exit();
     }
 
+    public function csrfPost()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        header('Location: index.php?action=manage_posts');
+        exit();
+    }
+
     public function modifiedPost()
     {
         $_SESSION['flash']['success'] = 'L\'article a bien été modifié !';
@@ -226,6 +257,13 @@ class Session
     public function nonModifiedPost($postId)
     {
         $_SESSION['flash']['danger'] = 'Impossible de modifier l\'article';
+        modifyPostPage($postId);
+        exit();
+    }
+
+    public function csrfModifyPost($postId)
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         modifyPostPage($postId);
         exit();
     }
@@ -297,6 +335,188 @@ class Session
     {
         $_SESSION['flash']['success'] = 'Le commentaire a bien été supprimé !';
         header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+        exit();
+    }
+
+    public function csrfDeleteComment($postId)
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+        exit();
+    }
+
+    public function errorForgetPassword()
+    {
+        $_SESSION['flash']['danger'] = 'Une erreur est survenue !';
+        loginPage();
+        exit();
+    }
+
+    public function mailForgetPassword()
+    {
+        $_SESSION['flash']['success'] = 'Vous allez recevoir un email pour réinitialiser votre mot de passe !';
+        loginPage();
+        exit();
+    }
+
+    public function emptyMail()
+    {
+        $_SESSION['flash']['danger'] = 'Veuillez renseigner un email !';
+        forgetPasswordPage();
+        exit();
+    }
+
+    public function nonMail()
+    {
+        $_SESSION['flash']['danger'] = 'Cet email n\'est pas valide !';
+        loginPage();
+        exit();
+    }
+
+    public function tokenPassword()
+    {
+        $_SESSION['flash']['danger'] = 'Aucun id ou token ne coresspond à cet email, veuillez réessayer !';
+        forgetPasswordPage();
+        exit();
+    }
+
+    public function changedPassword()
+    {
+        $_SESSION['flash']['success'] = 'Le mot de passe a bien été réinitialisé !';
+        loginPage();
+        exit();
+    }
+
+    public function emptyPassword()
+    {
+        $_SESSION['flash']['danger'] = 'Veuillez entrer un mot de passe !';
+        forgetPasswordPage();
+        exit();
+    }
+
+    public function loginCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        loginPage();
+        exit();
+    }
+
+    public function deletePostCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        managePosts();
+        exit();
+    }
+
+    public function forgetCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        forgetPasswordPage();
+        exit();
+    }
+
+    public function forgetTokenError()
+    {
+        $_SESSION['flash']['danger'] = 'Ce token n\' est plus valide ! Veuillez réessayer !';
+        forgetPasswordPage();
+        exit();
+    }
+
+    public function changeCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        changePasswordPage();
+        exit();
+    }
+
+    public function validateCommentCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        manageComments();
+        exit();
+    }
+
+    public function adminDeleteCommentCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        manageComments();
+        exit();
+    }
+
+    public function emptyModifyProfile()
+    {
+        $_SESSION['flash']['danger'] = 'Tous les champs ne sont pas remplis !';
+        profilePage($_SESSION['id']);
+        exit();
+    }
+
+    public function csrfModifyProfile()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        profilePage($_SESSION['id']);
+        exit();
+    }
+
+    public function successModifyProfile()
+    {
+        $_SESSION['flash']['success'] = 'Modification effectuée !';
+        profilePage($_SESSION['id']);
+        exit();
+    }
+
+    public function errorModifyProfile()
+    {
+        $_SESSION['flash']['danger'] = 'Impossible de modifier le profil !';
+        profilePage($_SESSION['id']);
+        exit();
+    }
+
+    public function errorDeleteAccount()
+    {
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet utilisateur !';
+        profilePage();
+        exit();
+    }
+
+    public function csrfDeleteAccount()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        profilePage();
+        exit();
+    }
+
+    public function errorDeleteAccount2()
+    {
+        $_SESSION['flash']['danger'] = 'Impossible de supprimer le profil !';
+        profilePage();
+        exit();
+    }
+
+    public function csrfRegister()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        loginPage();
+        exit();
+    }
+
+    public function giveAdminRightsCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        manageUsers();
+        exit();
+    }
+
+    public function cancelAdminRightsCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        manageUsers();
+        exit();
+    }
+
+    public function deleteUserCsrfError()
+    {
+        $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+        manageUsers();
         exit();
     }
 }

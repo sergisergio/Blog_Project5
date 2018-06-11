@@ -46,7 +46,7 @@
                                 <img src="public/images/posts/default.jpg" class="img-responsive imageblog1" />
                                 <?php endif; ?>
                                 <p>
-                                    <?php echo htmlspecialchars($p->getIntro()); ?> ...
+                                    <?php echo htmlspecialchars_decode($p->getIntro()); ?> ...
                                 </p>
                                 <hr>
                                 <p class="pull-right"> 

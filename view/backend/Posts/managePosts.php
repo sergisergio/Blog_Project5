@@ -36,13 +36,15 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                         <?php else: ?>
                         <img src="public/images/posts/default.jpg" class="img-responsive" style="width: 10%;" />
                         <?php endif; ?>
-
-                <btn class="btn btn-default" style="float: right;">
-                    <a href="index.php?action=deletePost&amp;id=<?php echo $p->getId() ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
-                </btn>
-                <btn class="btn btn-default" style="float: right;">
+                <?php      
+                    $csrfDeletePostToken = md5(time()*rand(1, 1000));
+                ?>
+                <button class="btn btn-default" style="float: right;">
+                    <a href="index.php?action=deletePost&amp;id=<?php echo $p->getId() ?>&amp;token=<?php echo $csrfDeletePostToken ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
+                </button>
+                <button class="btn btn-default" style="float: right;">
                     <a href="index.php?action=modifyPostPage&amp;id=<?php echo $p->getId() ?>">Modifier</a>
-                </btn>
+                </button>
                 </div>
                 </div>
                 <?php

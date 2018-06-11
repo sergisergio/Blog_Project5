@@ -5,8 +5,7 @@
         <div class="form-container">
             <div class="response alert"></div>
             <?php      
-                $csrfChangePasswordToken = md5(time()*rand(1, 1000));
-                $_SESSION['ChangePasswordToken'] = $csrfChangePasswordToken;        
+                $csrfChangePasswordToken = md5(time()*rand(1, 1000));       
             ?>
             <form action="index.php?action=changePassword" method="post">
                 <fieldset>

@@ -76,7 +76,10 @@ class CommentEntity
     }
     public function setValidation($validation)
     {
+        $validation = (int)$validation;
+        if ($validation >= 0) {
         $this->validation = $validation;
+        }
     }
 
     public function getId()
@@ -105,9 +108,6 @@ class CommentEntity
     }
     public function getValidation()
     {
-        $validation = (int)$validation;
-        if ($validation >= 0) {
-            return $this->validation;
-        }
+        return $this->validation;
     }
 }

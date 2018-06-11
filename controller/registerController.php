@@ -21,28 +21,40 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
     {
         $user = $userManager->existPseudo($pseudo);
         $usermail = $userManager->existMail($email);
+        // if pseudo already exists
         if ($user) 
         {
             $session->errorPseudo1();
         }
+        // if mail already exists
         elseif ($usermail) 
         {
             $session->errorEmail1();
         }
-        elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]+$/', $pseudo)) 
+        // caractères spéciaux
+        elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) 
         {
             $session->errorPseudo2();
         }
+        // validité du mail
         elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) 
         {
             $session->errorEmail2();
         }
+        // same passwords
         elseif (empty($passe) || $passe != $_POST['passe2']) 
         {
             $session->errorPassword();
         }
+        // same passwords
+        elseif (strlen($passe) < 6 || strlen($passe) > 50) 
+        {
+            $session->errorLengthPassword();
+        }
         else 
         {
+            
+            
             if (isset($_SESSION['csrfSignupToken']) AND isset($csrfSignupToken) AND !empty($_SESSION['csrfSignupToken']) AND !empty($csrfSignupToken)) 
             {
                 if ($_SESSION['csrfSignupToken'] == $csrfSignupToken) 
@@ -53,7 +65,27 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
                         $session->badRequest();
                     }
                     else
-                    {
+                    {   
+                        //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
+                        /*$mail = new PHPMailer(true);                             
+                        try {
+                            $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
+                            $mail->addAddress($email, $pseudo);
+                            $mail->addReplyTo('contact@philippetraon.com', 'Information');
+                            $mail->isHTML(true);                                  
+                            $mail->Subject = 'Message';
+                            $mail->Body = '<b>Blog de Philippe Traon : </b>' . '<br />' . 'Afin de valider votre compte, merci de cliquer sur ce lien : ' . '<br />' . 
+                            //'<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$user_id.'&token='.$token.'>'.'Lien de confirmation</a>';
+                            '<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$user_id.'&token='.$token.'">'.'Lien de confirmation</a>';
+                            //$mail->AltBody = 'Message non-HTML : '.$message;
+                            $mail->send();
+                            // echo 'Le message a bien été envoyé';
+                        } 
+                        catch (Exception $e) {
+                        echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
+                        }*/
+                        
+
                         $session->registerSuccess();
                     }    
             /* test mail local */
@@ -61,27 +93,11 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
             /* test mail online */
                 
 
-                /*$mail = new PHPMailer(true);                             
-                try {
-                    $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
-                    $mail->addAddress($email, $pseudo);
-                    $mail->addReplyTo('contact@philippetraon.com', 'Information');
-                    $mail->isHTML(true);                                  
-                    $mail->Subject = 'Message';
-                    $mail->Body = '<b>Blog de Philippe Traon : </b>' . '<br />' . 'Afin de valider votre compte, merci de cliquer sur ce lien : ' . '<br />' . 
-                    //'<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$user_id.'&token='.$token.'>'.'Lien de confirmation</a>';
-                    '<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$user_id.'&token='.$token.'">'.'Lien de confirmation</a>';
-                    //$mail->AltBody = 'Message non-HTML : '.$message;
-                    $mail->send();
-                    // echo 'Le message a bien été envoyé';
-                } 
-                catch (Exception $e) {
-                echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
-                }*/
+                    
                 }
                 else
                 {
-                    echo "Erreur de vérification";
+                    $session->csrfRegister();
                 }
             }
         }                
@@ -99,7 +115,7 @@ function confirmRegistration($userId, $userToken)
     $user = $userManager->getUser($userId);
     $session = new Session();
     if (isset($_GET['id']) && isset($_GET['token'])) {
-        if ($user &&  $user['confirmation_token'] == $userToken) {
+        if ($user &&  $user->getConfirmationToken() == $userToken) {
             $userManager->setActiveRequest($userId);
             $session->registerSuccess2();
             /*$mail = new PHPMailer(true);                             

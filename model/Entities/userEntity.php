@@ -15,6 +15,8 @@ class UserEntity
     private $avatar;
     private $is_active;
     private $description;
+    private $reset_token;
+    private $reset_at;
 
     /*
      * Méthode de construction
@@ -48,6 +50,8 @@ class UserEntity
           $this->setAvatar($datas['avatar']);
           $this->setIsActive($datas['is_active']);
           $this->setDescription($datas['description']);
+          $this->setResetToken($datas['reset_token']);
+          $this->setResetAt($datas['reset_at']);
     }
 
     public function setId($id)
@@ -60,13 +64,13 @@ class UserEntity
     public function setFirstName($first_name)
     {
         if (is_string($first_name)) {
-            $this->firstName = $first_name;
+            $this->first_name = $first_name;
         }
     }
     public function setLastName($last_name)
     {
         if (is_string($last_name)) {
-            $this->lastName = $last_name;
+            $this->last_name = $last_name;
         }
     }
     public function setPseudo($pseudo)
@@ -89,7 +93,7 @@ class UserEntity
     }
     public function setRegistrationDate($registration_date)
     {
-        $this->registrationDate = $registration_date;
+        $this->registration_date = $registration_date;
     }
     public function setAuthorization($authorization)
     {
@@ -101,7 +105,7 @@ class UserEntity
     public function setConfirmationToken($confirmation_token)
     {
         if (is_string($confirmation_token)) {
-            $this->confirmationToken = $confirmation_token;
+            $this->confirmation_token = $confirmation_token;
         }
     }
     public function setAvatar($avatar)
@@ -114,7 +118,7 @@ class UserEntity
     {
         $is_active = (int)$is_active;
         if ($is_active >= 0) {
-            $this->isActive = $is_active;
+            $this->is_active = $is_active;
         }
     }
     public function setDescription($description)
@@ -123,6 +127,16 @@ class UserEntity
             $this->description = $description;
         }
     }
+    public function setResetToken($reset_token)
+    {
+        if (is_string($reset_token)) {
+            $this->reset_token = $reset_token;
+        }
+    }
+    public function setResetAt($reset_at)
+    {
+        $this->reset_at = $reset_at;
+    }
 
     public function getId()
     {
@@ -130,11 +144,11 @@ class UserEntity
     }
     public function getFirstName()
     {
-        return $this->firstName;
+        return $this->first_name;
     }
     public function getLastName()
     {
-        return $this->lastName;
+        return $this->last_name;
     }
     public function getPseudo()
     {
@@ -150,7 +164,7 @@ class UserEntity
     }
     public function getRegistrationDate()
     {
-        return $this->registrationDate;
+        return $this->registration_date;
     }
     public function getAuthorization1()
     {
@@ -158,7 +172,7 @@ class UserEntity
     }
     public function getConfirmationToken()
     {
-        return $this->confirmationToken;
+        return $this->confirmation_token;
     }
     public function getAvatar()
     {
@@ -166,10 +180,18 @@ class UserEntity
     }
     public function getIsActive()
     {
-        return $this->isActive;
+        return $this->is_active;
     }
     public function getDescription()
     {
         return $this->description;
+    }
+    public function getResetToken()
+    {
+        return $this->reset_token;
+    }
+    public function getResetAt()
+    {
+        return $this->reset_at;
     }
 }

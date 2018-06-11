@@ -25,29 +25,34 @@ function listPosts()
     }
     $start = ($currentPage-1)*$postsPerPage;
     $posts = $postManager->getPosts($start, $postsPerPage);
-    $posts1 = $postManager->getPosts(0, 5);
+    $postsAside = $postManager->getPosts(0, 5);
 
     include 'view/frontend/pages/blog.php';
 }
 /* ***************** ONLY ONE POST *************/
 function listPost($postId)
 {
-
     $postManager = new PostManager();
     $commentManager = new CommentManager();
     $userManager = new UserManager();
     $session = new Session();
 
     $post = $postManager->getPost($postId);
-    $posts1 = $postManager->getPosts(0, 5);
+    $postsAside = $postManager->getPosts(0, 5);
+    $isPost = $postManager->checkExistPost($postId);
 
-    if (isset($postId) && $postId > 0 && (!empty($post))) {
-            
-        $comment = $commentManager->getComments($postId);
-        $user = $userManager->getUser($postId);
-        $nbCount = $commentManager->countCommentRequest($postId);
-        include 'view/frontend/pages/blog_post.php';
-    }   
+    if (isset($postId) && $postId > 0) {
+        if ($isPost == false) {
+            $session->noIdPost();
+        }
+        else
+        {
+            $comment = $commentManager->getComments($postId);
+            $user = $userManager->getUser($postId);
+            $nbCount = $commentManager->countCommentRequest($postId);
+            include 'view/frontend/pages/blog_post.php';
+        }
+    }
     else {
         $session->noIdPost();
     }

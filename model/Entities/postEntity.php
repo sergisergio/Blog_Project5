@@ -82,16 +82,16 @@ class PostEntity
     }
     public function setCreationDate($creation_date)
     {
-        $this->creationDate = $creation_date;
+        $this->creation_date = $creation_date;
     }
     public function setLastUpdated($last_updated)
     {
-        $this->lastUpdated = $last_updated;
+        $this->last_updated = $last_updated;
     }
     public function setFileExtension($file_extension)
     {
         if (is_string($file_extension)) {
-            $this->fileExtension = $file_extension;
+            $this->file_extension = $file_extension;
         }
     }
 
@@ -121,14 +121,14 @@ class PostEntity
     }
     public function getCreationDate()
     {
-        return $this->creationDate;
+        return $this->creation_date;
     }
     public function getLastUpdated()
     {
-        return $this->lastUpdated;
+        return $this->last_updated;
     }
     public function getFileExtension()
     {
-        return $this->fileExtension;
+        return $this->file_extension;
     }
 }

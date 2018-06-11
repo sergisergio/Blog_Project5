@@ -82,7 +82,7 @@
                         </div>
                         <div class="divide30"></div>
                         <div class="form-container">
-                            <div class="response alert alert-success"></div>
+                            <div class="response alert alert-success" style="text-align-center"></div>
                                 <!-- FORM CONTACT -->
                                 <?php require "forms/form_contact.php"; ?>
                                 <!-- END FORM CONTACT -->
