@@ -72,7 +72,6 @@ function managePosts()
 function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddPostToken)
 {
     $postManager = new PostManager();
-    $categoryManager = new CategoryManager();
     $session = new Session();
 
 
@@ -105,7 +104,6 @@ function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddP
                 }
 
                 $addedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $category, $image);
-                //$addedCategory = $categoryManager->addCategory($category);
 
                 if ($addedPost === false) 
                 {
@@ -385,8 +383,6 @@ function addCategory($category, $csrfAddCategoryToken)
             if (!empty($category))
             {
                 $categoryManager->addCategoryRequest($category);
-                var_dump($categoryManager);
-                die();
                 if ($categoryManager === false) 
                     {
                         $session->nonAddedCategory();
@@ -403,7 +399,7 @@ function addCategory($category, $csrfAddCategoryToken)
         }
         else
         {
-            $session->crsfPost();
+            $session->csrfPost();
         }
     }    
 }
