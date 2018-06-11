@@ -7,8 +7,7 @@
             <div class="response alert"></div>
             <?php require 'view/frontend/includes/responseAlert.php'; ?> 
             <?php      
-                $csrfSignupToken = md5(time()*rand(1, 1000));
-                $_SESSION['csrfSignupToken'] = $csrfSignupToken;        
+                $csrfSignupToken = md5(time()*rand(1, 1000));       
             ?>
             <form action="index.php?action=addUser" method="post">
                 <fieldset>

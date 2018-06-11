@@ -2,8 +2,7 @@
     <div class="response alert"></div>
         <?php include 'view/frontend/includes/responseAlert.php'; ?>
         <?php      
-            $csrfModifyPostToken = md5(time()*rand(1, 1000));
-            $_SESSION['csrfModifyPostToken'] = $csrfModifyPostToken;        
+            $csrfModifyPostToken = md5(time()*rand(1, 1000));       
         ?>
 <form action="index.php?action=modifyPost&amp;id=<?php echo $post->getId() ?>" method="post">
     <div>

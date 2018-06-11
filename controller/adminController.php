@@ -13,10 +13,12 @@
 11 . GIVE RIGHTS ADMIN.
 12 . CANCEL RIGHTS ADMIN.
 13 . DELETE A USER.
+14 . ADD CATEGORY.
 ******************* END SUM UP ********************/
 
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
+use \Philippe\Blog\Model\CategoryManager;
 use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Core\Session;
 /* *********** 1 . HOME ***************************/
@@ -47,9 +49,11 @@ function admin($accessAdminToken)
 function managePosts()
 {
     $postManager = new PostManager();
+    $categoryManager = new CategoryManager();
     $postsTotal = $postManager->countPosts();
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
+    $categories = $categoryManager->getCategoryRequest();
 
     if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
         $_GET['page'] = intval($_GET['page']);
@@ -65,10 +69,13 @@ function managePosts()
     include 'view/backend/Posts/managePosts.php';
 }
 /* *********** 3 . ADD A POST *********************/
-function addPost($title, $chapo, $author, $content, $image, $csrfAddPostToken)
+function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddPostToken)
 {
     $postManager = new PostManager();
+    $categoryManager = new CategoryManager();
     $session = new Session();
+
+
     $file_extension = $_FILES['file_extension'];
     $file_extension_error = $_FILES['file_extension']['error'];
     $file_extension_size = $_FILES['file_extension']['size'];
@@ -97,7 +104,8 @@ function addPost($title, $chapo, $author, $content, $image, $csrfAddPostToken)
                     }
                 }
 
-                $addedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $image);
+                $addedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $category, $image);
+                //$addedCategory = $categoryManager->addCategory($category);
 
                 if ($addedPost === false) 
                 {
@@ -136,6 +144,7 @@ function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostT
 {
     $postManager = new PostManager();
     $session = new Session();
+    $_SESSION['csrfModifyPostToken'] = $csrfModifyPostToken; 
     if (isset($_SESSION['csrfModifyPostToken']) AND isset($csrfModifyPostToken) AND !empty($_SESSION['csrfModifyPostToken']) AND !empty($csrfModifyPostToken)) 
     {
         if ($_SESSION['csrfModifyPostToken'] == $csrfModifyPostToken) 
@@ -275,14 +284,14 @@ function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
 /* ********** 10 . GET USERS **********************/
 function manageUsers()
 {
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $users = $userManager->getUsers();
     include 'view/backend/Users/user_mgmt.php';
 }
 /* ********** 11 . GIVE RIGHTS ADMIN **************/
 function giveAdminRights($userId, $csrfGiveAdminRightsToken)
 {
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $session = new Session();
     $_SESSION['csrfGiveAdminRightsToken'] = $csrfGiveAdminRightsToken;
     if (isset($_SESSION['csrfGiveAdminRightsToken']) AND isset($csrfGiveAdminRightsToken) AND !empty($_SESSION['csrfGiveAdminRightsToken']) AND !empty($csrfGiveAdminRightsToken)) 
@@ -310,7 +319,7 @@ function giveAdminRights($userId, $csrfGiveAdminRightsToken)
 /* ********** 12 . CANCEL RIGHTS ADMIN ************/
 function stopAdminRights($userId, $csrfCancelAdminRightsToken)
 {
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $session = new Session();
     $_SESSION['csrfCancelAdminRightsToken'] = $csrfCancelAdminRightsToken;
     if (isset($_SESSION['csrfCancelAdminRightsToken']) AND isset($csrfCancelAdminRightsToken) AND !empty($_SESSION['csrfCancelAdminRightsToken']) AND !empty($csrfCancelAdminRightsToken)) 
@@ -338,7 +347,7 @@ function stopAdminRights($userId, $csrfCancelAdminRightsToken)
 /* ********** 13 . DELETE A USER ******************/
 function deleteUser($userId, $csrfDeleteUserToken)
 {
-    $userManager = new \Philippe\Blog\Model\UserManager();
+    $userManager = new UserManager();
     $_SESSION['csrfDeleteUserToken'] = $csrfDeleteUserToken;
     if (isset($_SESSION['csrfDeleteUserToken']) AND isset($csrfDeleteUserToken) AND !empty($_SESSION['csrfDeleteUserToken']) AND !empty($csrfDeleteUserToken)) 
     {
@@ -361,4 +370,40 @@ function deleteUser($userId, $csrfDeleteUserToken)
             $session->deleteUserCsrfError();
         }
     }
+}
+/* ********** 14 . ADD CATEGORY ******************/
+function addCategory($category, $csrfAddCategoryToken)
+{
+    $categoryManager = new CategoryManager();
+    $session = new Session();
+    $_SESSION['csrfAddCategoryToken'] = $csrfAddCategoryToken; 
+    if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken) AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)) 
+    {
+        
+        if ($_SESSION['csrfAddCategoryToken'] == $csrfAddCategoryToken) 
+        {
+            if (!empty($category))
+            {
+                $categoryManager->addCategoryRequest($category);
+                var_dump($categoryManager);
+                die();
+                if ($categoryManager === false) 
+                    {
+                        $session->nonAddedCategory();
+                    }
+                    else 
+                    {
+                        $session->addedCategory();
+                    }
+            }
+            else
+            {
+                $session->emptyCategory();
+            }
+        }
+        else
+        {
+            $session->crsfPost();
+        }
+    }    
 }

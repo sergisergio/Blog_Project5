@@ -19,6 +19,11 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                     <?php require "view/backend/forms/form_addpost.php"; ?>
                 </div>
                 <div class="divide20"></div>
+                <h2 class="text-center">Ajouter une catégorie</h2>
+                <div class="divide20"></div>
+                <div class="post box">
+                <?php require "view/backend/forms/form_addcategory.php"; ?>
+                </div>
                 <div class="divide20"></div>
                 <h2 class="text-center">Modifier/Supprimer un article</h2>
                 <div class="divide20"></div>

@@ -30,7 +30,7 @@ class CommentManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $getComments = $dbProjet5->prepare(
-            'SELECT c.id, c.post_id, u.pseudo AS author, c.content, c.validation, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
+            'SELECT c.id, c.post_id, u.pseudo AS author, u.avatar AS avatar, c.content, c.validation, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 			FROM Comments c
             INNER JOIN Users u ON u.id = c.author
 			WHERE c.post_id = :id
@@ -51,7 +51,7 @@ class CommentManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $getComment = $dbProjet5->prepare(
-            'SELECT c.id, c.post_id, u.pseudo AS author, c.content, c.validation, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
+            'SELECT c.id, c.post_id, u.pseudo AS author, u.avatar AS avatar, c.content, c.validation, DATE_FORMAT(c.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(c.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 		 	FROM Comments c
             INNER JOIN Users u ON u.id = c.author
 		 	WHERE c.id = :id'
@@ -150,7 +150,7 @@ class CommentManager extends Manager
     public function getUserByCommentRequest($commentAuthor)
     {
         $dbProjet5 = $this->dbConnect();
-        $getUserByComment = $dbProjet5->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description FROM Users WHERE pseudo = :pseudo ');
+        $getUserByComment = $dbProjet5->prepare('SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description, reset_token, reset_at FROM Users WHERE pseudo = :pseudo ');
         $getUserByComment->bindParam(':pseudo', $commentAuthor);
         $getUserByComment->execute();
         $data = $getUserByComment->fetch();

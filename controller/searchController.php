@@ -6,13 +6,15 @@ use \Philippe\Blog\Model\PostManager;
 /* ***************** SEARCH *****************/
 function search($search, $csrfSearchToken)
 {
+    $postManager = new PostManager();
+    $_SESSION['csrfSearchToken'] = $csrfSearchToken;
     if (isset($search) && $search != null) 
     {
     	if (isset($_SESSION['csrfSearchToken']) AND isset($csrfSearchToken) AND !empty($_SESSION['csrfSearchToken']) AND !empty($csrfSearchToken)) 
     	{
         	if ($_SESSION['csrfSearchToken'] == $csrfSearchToken) 
         	{
-        		$postManager = new PostManager();
+        		
         		$posts1 = $postManager->getPosts(0, 5);
         		$countSearchResults = $postManager->countSearchRequest($search);
         		$nbResults = $countSearchResults->rowCount();

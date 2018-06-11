@@ -7,8 +7,7 @@
             <div class="response alert"></div>
             <?php require 'view/frontend/includes/responseAlert.php'; ?>
             <?php      
-                $csrfForgetToken = md5(time()*rand(1, 1000));
-                $_SESSION['forgetToken'] = $csrfForgetToken;        
+                $csrfForgetToken = md5(time()*rand(1, 1000));      
             ?>
             <form action="index.php?action=forgetPassword" method="POST">
         <div class="col-md-offset-3 col-md-6 col-sm-12">

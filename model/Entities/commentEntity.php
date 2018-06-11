@@ -10,6 +10,7 @@ class CommentEntity
     private $creation_date;
     private $last_updated;
     private $validation;
+    private $avatar;
 
     /*
      * Méthode de construction
@@ -38,6 +39,7 @@ class CommentEntity
           $this->setCreationDate($datas['creation_date_fr']);
           $this->setLastUpdated($datas['last_updated_fr']);
           $this->setValidation($datas['validation']);
+          $this->setAvatar($datas['avatar']);
     }
 
     public function setId($id)
@@ -81,6 +83,12 @@ class CommentEntity
         $this->validation = $validation;
         }
     }
+    public function setAvatar($avatar)
+    {
+        if (is_string($avatar)) {
+            $this->avatar = $avatar;
+        }
+    }
 
     public function getId()
     {
@@ -109,5 +117,9 @@ class CommentEntity
     public function getValidation()
     {
         return $this->validation;
+    }
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
 }

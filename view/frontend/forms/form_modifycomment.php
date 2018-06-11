@@ -1,7 +1,6 @@
 <?php require 'view/frontend/includes/responseAlert.php'; ?> 
 <?php      
-    $csrfModifyCommentToken = md5(time()*rand(1, 1000));
-    $_SESSION['csrfModifyCommentToken'] = $csrfModifyCommentToken;        
+    $csrfModifyCommentToken = md5(time()*rand(1, 1000));       
 ?>
 <form action="index.php?action=modifyComment&amp;id=<?php echo $comment->getId() ?>&amp;postId=<?php echo $post->getId() ?>" method="post">
     <div>

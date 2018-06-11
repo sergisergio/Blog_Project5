@@ -30,7 +30,8 @@ require "vendor/autoload.php";
 20. FORGET PASSWORD MAIL.
 21. CHANGE PASSWORD PAGE.
 22. CHANGE PASSWORD.
-13. DELETE USER.
+23. DELETE USER.
+24. CATEGORIES RESULTS.
 /* ******************************************
 *              ADMIN.                       *
 *********************************************
@@ -46,6 +47,8 @@ require "vendor/autoload.php";
 10. GET USERS.
 11. GIVE RIGHTS ADMIN.
 12. CANCEL RIGHTS ADMIN.
+13. DELETE USER.
+14. ADD CATEGORY.
 /* ******************************************
 *              PAR DEFAUT                   *
 *********************************************
@@ -62,6 +65,7 @@ require 'controller/contactController.php';
 require 'controller/errorsController.php';
 require 'controller/searchController.php';
 require 'controller/profileController.php';
+require 'controller/categoryController.php';
 try {
     if (isset($_GET['action'])) {
         /**********************************************
@@ -160,9 +164,13 @@ try {
         elseif ($_GET['action'] == 'changePassword') {
             changePassword($_POST['userId'], $_POST['passe'], $_POST['token']);
         }
-        /* 23 . NO ADMIN **********************/
+        /* 23 . NO ADMIN ****************************/
         elseif ($_GET['action'] == 'noAdmin') {
             noAdmin();
+        }
+        /* 24 . CATEGORY RESULTS ********************/
+        elseif ($_GET['action'] == 'categoryresults') {
+            categoryResults($_GET['id']);
         }
 
         /* ********************************************
@@ -182,7 +190,7 @@ try {
         }
         /* 4 . ADD A POST ****************************/
         elseif ($_GET['action'] == 'addpost') {
-            addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name'], $_POST['token']);
+            addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name'], $_POST['category'], $_POST['token']);
         }
         /* 5 . MODIFY POST PAGE **********************/
         elseif ($_GET['action'] == 'modifyPostPage') {
@@ -198,11 +206,11 @@ try {
         }
         /* 8 . VALIDATE A COMMENT ********************/
         elseif ($_GET['action'] == 'validateComment') {
-                validateComment($_GET['id'], $_GET['token']);
+            validateComment($_GET['id'], $_GET['token']);
         } 
         /* 9 . DELETE A COMMENT **********************/
         elseif ($_GET['action'] == 'adminDeleteComment') {
-                adminDeleteComment($_GET['id'], $_GET['token']);
+            adminDeleteComment($_GET['id'], $_GET['token']);
         }
         /* 10. GET USERS *****************************/
         elseif ($_GET['action'] == 'manage_users') {
@@ -210,15 +218,19 @@ try {
         }
         /* 11. GIVE RIGHTS ADMIN *********************/
         elseif ($_GET['action'] == 'giveAdminRights') {
-                giveAdminRights($_GET['id'], $_GET['token']);
+            giveAdminRights($_GET['id'], $_GET['token']);
         }
         /* 12. CANCEL RIGHTS ADMIN *******************/
         elseif ($_GET['action'] == 'cancelAdminRights') {
-                stopAdminRights($_GET['id'], $_GET['token']);
+            stopAdminRights($_GET['id'], $_GET['token']);
         }
         /* 13. DELETE USER ***************************/
         elseif ($_GET['action'] == 'deleteUser') {
-                deleteUser($_GET['id'], $_GET['token']);
+            deleteUser($_GET['id'], $_GET['token']);
+        }
+        /* 14. ADD CATEGORY **************************/
+        elseif ($_GET['action'] == 'addcategory') {
+            addCategory($_POST['category'], $_POST['token']);
         }
     }
     /* ********************************************

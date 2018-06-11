@@ -57,25 +57,42 @@
                             {
                             ?>
                             <p>
-                            <a href="index.php?action=publicProfile&id=<?php echo $c->getAuthor() ?>"><strong><?php echo htmlspecialchars($c->getAuthor()) ?></strong></a> le 
-                                <?php
-                                if ($c->getLastUpdated()) {
-                                    echo ($c->getLastUpdated());
-                                }
-                                else {
-                                    echo ($c->getCreationDate());
-                                }
+                            <div class="row">
+                                <div class="col-md-1 col-sm-1 col-xs-2">
+                                    <img class="img-responsive img-circle" src="public/images/avatar/<?= $c->getAvatar() ?>" />
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-10">
+                                    <a href="index.php?action=publicProfile&id=<?php echo $c->getAuthor() ?>"><strong><?php echo htmlspecialchars($c->getAuthor()) ?></strong></a> 
+                                    <em style="font-weight: 200">le 
+                                    <?php
+                                        if ($c->getLastUpdated()) {
+                                            echo ($c->getLastUpdated());
+                                        }
+                                        else {
+                                            echo ($c->getCreationDate());
+                                        }
                                     ?> 
+                                    </em>
+                                </div>
+                            </div>
                             </p>
                             <p>
-                                <?php echo nl2br(htmlspecialchars($c->getContent())) ?> 
-                                <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $c->getAuthor())) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
-                                    <a href="index.php?action=modifyCommentPage&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>"> (Modifier)</a>
-                                    <?php      
-                                        $csrfDeleteCommentToken = md5(time()*rand(1, 1000));
-                                    ?>
-                                    <a href="index.php?action=deleteComment&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>&amp;token=<?php echo $csrfDeleteCommentToken ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
-                                <?php endif; ?>
+                                <div class="row">
+                                    <div class="col-md-1 col-sm-1 col-xs-2">
+                                    </div>
+                                    <div class="col-md-11 col-sm-11 col-xs-10">
+                                        <p style="margin: -10px 0 0px !important;font-weight: 700;">
+                                        <?php echo nl2br(htmlspecialchars($c->getContent())) ?> 
+                                        </p>
+                                        <?php if ((isset($_SESSION['pseudo']) && ($_SESSION['pseudo'] == $c->getAuthor())) || (isset($_SESSION['autorisation']) && ($_SESSION['autorisation']) == 1)) : ?>
+                                            <a href="index.php?action=modifyCommentPage&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>"> (Modifier)</a>
+                                            <?php      
+                                                $csrfDeleteCommentToken = md5(time()*rand(1, 1000));
+                                            ?>
+                                            <a href="index.php?action=deleteComment&amp;id=<?php echo $c->getId() ?>&amp;postId=<?php echo $post->getId() ?>&amp;token=<?php echo $csrfDeleteCommentToken ?>" data-toggle='confirmation' id="important_action"> (Supprimer)</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                             </p>
                             <?php
                             }

@@ -17,6 +17,7 @@ function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
     $session = new Session();
     $securityManager = new SecurityManager();
 
+    $_SESSION['csrfLoginToken'] = $csrfLoginToken;  
     if (isset($_SESSION['csrfLoginToken']) AND isset($csrfLoginToken) AND !empty($_SESSION['csrfLoginToken']) AND !empty($csrfLoginToken)) 
     {
         if ($_SESSION['csrfLoginToken'] == $csrfLoginToken) 
@@ -92,6 +93,7 @@ function forgetPassword($email, $csrfForgetToken)
     $userManager = new UserManager();
     $session = new Session();  
 
+    $_SESSION['forgetToken'] = $csrfForgetToken;  
     if (empty($email)) {
             $session->emptyMail();
     }

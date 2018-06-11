@@ -193,7 +193,7 @@ class Session
 
     public function emptyContentsAdmin()
     {
-        $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
+        $_SESSION['flash']['danger'] = 'Un ou plusieurs champs ne sont pas remplis !';
         errors();
         exit();
     }
@@ -517,6 +517,27 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         manageUsers();
+        exit();
+    }
+
+    public function nonAddedCategory()
+    {
+        $_SESSION['flash']['danger'] = 'Impossible d\'ajouter cette catégorie !';
+        managePosts();
+        exit();
+    }
+
+    public function addedCategory()
+    {
+        $_SESSION['flash']['success'] = 'La catégorie a bien été ajoutée !';
+        managePosts();
+        exit();
+    }
+
+    public function emptyCategory()
+    {
+        $_SESSION['flash']['danger'] = 'Le champ est vide !';
+        managePosts();
         exit();
     }
 }

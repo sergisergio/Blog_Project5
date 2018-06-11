@@ -17,6 +17,7 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
 {
     $userManager = new UserManager();
     $session = new Session();
+    $_SESSION['csrfSignupToken'] = $csrfSignupToken; 
     if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) 
     {
         $user = $userManager->existPseudo($pseudo);
@@ -53,8 +54,6 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
         }
         else 
         {
-            
-            
             if (isset($_SESSION['csrfSignupToken']) AND isset($csrfSignupToken) AND !empty($_SESSION['csrfSignupToken']) AND !empty($csrfSignupToken)) 
             {
                 if ($_SESSION['csrfSignupToken'] == $csrfSignupToken) 

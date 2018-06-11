@@ -14,9 +14,9 @@ function profilePage($userId)
 /* ***************** MODIFY PROFILE ***************/
 function modifyProfile($userId, $avatar, $first_name, $name, $email, $description, $csrfProfileToken)
 {
-
     $userManager = new \Philippe\Blog\Model\UserManager();
     $session = new Session();
+    $_SESSION['csrfProfileToken'] = $csrfProfileToken; 
 
     if (!empty($_POST['email'])) 
     {
@@ -69,6 +69,7 @@ function deleteAccount($userId, $csrfDeleteAccountToken)
     $userManager = new \Philippe\Blog\Model\UserManager();
     $session = new Session();
     
+    $_SESSION['csrfDeleteAccountToken'] = $csrfDeleteAccountToken;  
     if (isset($userId)) 
     {
         if (isset($_SESSION['csrfDeleteAccountToken']) AND isset($csrfDeleteAccountToken) AND !empty($_SESSION['csrfDeleteAccountToken']) AND !empty($csrfDeleteAccountToken)) 

@@ -1,7 +1,3 @@
-<?php      
-    $csrfContactToken = md5(time()*rand(1, 1000));
-    $_SESSION['contactToken'] = $csrfContactToken;        
-?>
 <form class="forms" action="index.php?action=contact" method="post">
     <fieldset>
         <div class="row">

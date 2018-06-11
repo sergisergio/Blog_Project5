@@ -7,8 +7,7 @@
             <div class="response alert"></div>
             <?php require 'view/frontend/includes/responseAlert.php'; ?> 
             <?php      
-                $csrfLoginToken = md5(time()*rand(1, 1000));
-                $_SESSION['csrfLoginToken'] = $csrfLoginToken;        
+                $csrfLoginToken = md5(time()*rand(1, 1000));      
             ?>
             <form action="index.php?action=login" method="post">
                 <fieldset>

@@ -14,7 +14,7 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
     $commentManager = new CommentManager();
     $session = new Session();
     
-
+    $_SESSION['csrfAddPostToken'] = $csrfAddPostToken; 
     if (isset($postId) && $postId > 0) 
     {
         if (!empty($content)) 
@@ -118,6 +118,7 @@ function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommen
     $comment = $commentManager->getComment($commentId);
     $session = new Session();
 
+    $_SESSION['csrfModifyCommentToken'] = $csrfModifyCommentToken; 
     if (isset($commentId) && $commentId > 0) 
     {
         if (!empty($content)) 

@@ -27,13 +27,13 @@ class PostManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $getPosts = $dbProjet5->query(
-            'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
+            'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.category_id, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage
         );
         $posts = [];
-        while ($data = $getPosts->fetch()) {
+        while ($data = $getPosts->fetch()){
             $posts[] = new PostEntity($data);
         }
         $getPosts->closeCursor();
@@ -44,7 +44,7 @@ class PostManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $getPost = $dbProjet5->prepare(
-            'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
+            'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.category_id, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			WHERE p.id = :id'
@@ -56,18 +56,23 @@ class PostManager extends Manager
         return $post;
     }
     /* ************ 3 . ADD A POST **********************/
-    public function addPostRequest($title, $chapo, $author, $content, $image)
+    public function addPostRequest($title, $chapo, $author, $content, $category, $image)
     {
+        
         $dbProjet5 = $this->dbConnect();
-        $addPost = $dbProjet5->prepare('INSERT INTO Posts(title, chapo, intro, author, content, file_extension, creation_date) VALUES(:title, :chapo, :intro, :author, :content, :image, NOW()) ');
+        $getIdCat = $dbProjet5->query('SELECT c.category_id AS category_id FROM Posts p INNER JOIN Category c ON c.category_id = p.category_id ');
+        $addPost = $dbProjet5->prepare('INSERT INTO Posts(title, chapo, intro, author, content, category_id, file_extension, creation_date) VALUES(:title, :chapo, :intro, :author, :content, :category, :image,  NOW()) ');
+        $category = (int)$category;
         $intro = substr($content, 0, 600);
         $addPost->bindParam(':title', $title);
         $addPost->bindParam(':chapo', $chapo);
         $addPost->bindParam(':intro', $intro);
         $addPost->bindParam(':author', $author);
         $addPost->bindParam(':content', $content);
+        $addPost->bindParam(':category', $category);
         $addPost->bindParam(':image', $image);
         $addPost->execute();
+         
         $data = $addPost->fetch();
         $addedPost = new PostEntity($data);
         return $addedPost;
@@ -137,5 +142,19 @@ class PostManager extends Manager
         $existPost->execute();
         $isPost = $existPost->fetch();
         return $isPost;
+    }
+    /* ************* 11. SEARCH *****************/
+    function categoryResultsRequest($categoryId)
+    {
+        $dbProjet5 = $this->dbConnect();
+        $catResults  = $dbProjet5->prepare(' SELECT id, title, author, file_extension, category_id, chapo, intro, content, creation_date AS creation_date_fr, last_updated AS last_updated_fr FROM Posts WHERE category_id = :id ORDER BY id DESC ');
+        $catResults->bindParam(':id', $categoryId);
+        $catResults->execute();
+        $cResults = [];
+        while ($data = $catResults->fetch()) {
+            $cResults[] = new PostEntity($data);
+        }
+        $catResults->closeCursor(); 
+        return $cResults;
     }
 }

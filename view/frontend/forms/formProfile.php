@@ -1,6 +1,5 @@
 <?php      
-    $csrfProfileToken = md5(time()*rand(1, 1000));
-    $_SESSION['csrfProfileToken'] = $csrfProfileToken;        
+    $csrfProfileToken = md5(time()*rand(1, 1000));       
 ?>
 <form action="index.php?action=modifyProfile&amp;id=<?= $_SESSION['id'] ?>" method="post" enctype="multipart/form-data">
     <div>

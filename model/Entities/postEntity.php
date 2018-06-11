@@ -11,6 +11,7 @@ class PostEntity
     private $creation_date;
     private $last_updated;
     private $file_extension;
+    private $category;
 
     /*
      * Méthode de construction
@@ -41,6 +42,7 @@ class PostEntity
           $this->setCreationDate($datas['creation_date_fr']);
           $this->setLastUpdated($datas['last_updated_fr']);
           $this->setFileExtension($datas['file_extension']);
+          $this->setCategory($datas['category_id']);
     }
 
     public function setId($id)
@@ -94,6 +96,13 @@ class PostEntity
             $this->file_extension = $file_extension;
         }
     }
+    public function setCategory($category)
+    {
+        $category = (int)$category;
+        if($category > 0) {
+            $this->category = $category;
+        }  
+    }
 
     public function getId()
     {
@@ -130,5 +139,9 @@ class PostEntity
     public function getFileExtension()
     {
         return $this->file_extension;
+    }
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

@@ -20,6 +20,21 @@
     ?>
   </div>
   <div class="sidebox box widget">
+    <h4 class="text-center">catégories</h4>
+    <?php
+    foreach ($categories as $c) 
+    {
+    ?>
+      <ul>
+        <li>
+        <a href="index.php?action=categoryresults&amp;id=<?php echo $c->getCategoryId() ?>"><?php echo htmlspecialchars($c->getCategory()); ?></a>
+        </li>
+      </ul>
+    <?php  
+    } 
+    ?>
+  </div>
+  <div class="sidebox box widget">
     <h4 class="text-center">Ressources</h4>
     <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
