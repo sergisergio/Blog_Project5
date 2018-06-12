@@ -10,7 +10,11 @@ use \Philippe\Blog\Model\CategoryManager;
 use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Core\Session;
 
-/* ***************** ALL POSTS *****************/
+/**
+ * Function listsPosts
+ * 
+ * @return [type]
+ */
 function listPosts()
 {
     $postManager = new PostManager();
@@ -19,11 +23,10 @@ function listPosts()
     $postsPerPage = 5;
     $totalPages = ceil($postsTotal / $postsPerPage);
 
-    if(isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
+    if (isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
         $_GET['page'] = intval($_GET['page']);
         $currentPage = $_GET['page'];
-    }
-    else {
+    } else {
         $currentPage = 1;
     }
     $start = ($currentPage-1)*$postsPerPage;
@@ -33,7 +36,13 @@ function listPosts()
 
     include 'view/frontend/pages/blog.php';
 }
-/* ***************** ONLY ONE POST *************/
+/**
+ * Function listPost
+ * 
+ * @param postId $postId the post's id
+ * 
+ * @return [type]
+ */
 function listPost($postId)
 {
     $postManager = new PostManager();
@@ -50,16 +59,13 @@ function listPost($postId)
     if (isset($postId) && $postId > 0) {
         if ($isPost == false) {
             $session->noIdPost();
-        }
-        else
-        {
+        } else {
             $comment = $commentManager->getComments($postId);
             $user = $userManager->getUser($postId);
             $nbCount = $commentManager->countCommentRequest($postId);
             include 'view/frontend/pages/blog_post.php';
         }
-    }
-    else {
+    } else {
         $session->noIdPost();
     }
 }

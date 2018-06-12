@@ -43,11 +43,16 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         ),
     );
 
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/../..' . '/controller',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe::$fallbackDirsPsr4;
 
         }, null, ClassLoader::class);
     }

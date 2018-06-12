@@ -8,7 +8,16 @@ use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Core\Session;
 
-/* **************** ADD A COMMENT **************/
+/**
+ * Function addComment
+ * 
+ * @param postId              $postId              the post's id
+ * @param author              $author              the author
+ * @param content             $content             the content
+ * @param csrfAddCommentToken $csrfAddCommentToken the token to tryto avoid csrf
+ *
+ * @return [<description>]
+ */
 function addComment($postId, $author, $content, $csrfAddCommentToken)
 {
     $commentManager = new CommentManager();
@@ -24,24 +33,25 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
                     if ($addedComment === false) {
                         $session->needsRegister($postId);
                     }
-                }
-                else 
-                {
+                } else {
                     echo "Erreur de vérification";
                 }
             }
-        }
-        else 
-        {
+        } else {
             $session->csrfAddPost($postId);
         }
-    }
-    else 
-    {
+    } else {
         $session->noIdPost();
     }
 }
-/* **************** MODIFY COMMENT PAGE ********/
+/**
+ * Function modifyCommentPage
+ * 
+ * @param commentId $commentId the comment's id
+ * @param postId    $postId    the post's id
+ * 
+ * @return [type]
+ */
 function modifyCommentPage($commentId, $postId)
 {
     $postManager = new PostManager();
@@ -56,23 +66,27 @@ function modifyCommentPage($commentId, $postId)
 
     if (empty($comment) || $commentId <= 0 ) {
         $session->noIdComment();
-    }
-    elseif ($isComment == false) {
+    } elseif ($isComment == false) {
         $session->noIdComment();
-    }
-    elseif ($isPost == false) {
+    } elseif ($isPost == false) {
         $session->noIdPost();
-    }
-    elseif (isset($commentId) && $commentId > 0) {
+    } elseif (isset($commentId) && $commentId > 0) {
         if (($_SESSION['pseudo'] != $comment->getAuthor()) && ($_SESSION['autorisation'] == 0)) {
             $session->noRightsComments();
-        }
-        else {
+        } else {
             include 'view/frontend/pages/modifyCommentPage.php';
         }
     }
 }
-/* **************** DELETE A COMMENT ***********/
+/**
+ * Function deleteComment
+ * 
+ * @param commentId              $commentId              the comment's id
+ * @param postId                 $postId                 the post's id
+ * @param csrfDeleteCommentToken $csrfDeleteCommentToken the token to try to avoid csrf
+ * 
+ * @return [type]
+ */
 function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
 {
     $commentManager = new CommentManager();
@@ -85,23 +99,28 @@ function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
                 $deletedComment = $commentManager->deleteCommentRequest($commentId);         
                 if ($deletedComment === false) {
                     $session->nonDeletedComment($postId);
-                }
-                else
-                {
+                } else {
                     $session->deletedComment($postId);
                 }
-            }
-            elseif (empty($comment) || $commentId <= 0 ) {
+            } elseif (empty($comment) || $commentId <= 0 ) {
                 $session->noIdComment();
             }
-        }
-        else 
-        {
+        } else {
             $session->csrfDeleteComment($postId);
         }
     }
 }
-/* **************** MODIFY A COMMENT ***********/
+/**
+ * Function modifyComment
+ * 
+ * @param commentId              $commentId              the comment's id
+ * @param author                 $author                 the author
+ * @param content                $content                the content
+ * @param postId                 $postId                 the post's id
+ * @param csrfModifyCommentToken $csrfModifyCommentToken the token to try to avoid csrf
+ * 
+ * @return [type]
+ */
 function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommentToken)
 {
     $commentManager = new CommentManager();
@@ -116,24 +135,17 @@ function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommen
                     $modifiedComment = $commentManager->modifyCommentRequest($commentId, $author, $content);
                     if ($modifiedComment === false) {
                         $session->modifyCommentError($commentId);
-                    }
-                    else
-                    {
+                    } else {
                         $session->addedComment($postId);
                     }
-                }
-                else 
-                {
+                } else {
                     $session->csrfModifyCommentError($commentId);
                 }
             }
-        }
-        else 
-        {
+        } else {
             $session->emptyContent();
         }
-    }
-    elseif (empty($comment) || $commentId <= 0) {
+    } elseif (empty($comment) || $commentId <= 0) {
         $session->noIdComment();
     }
 }

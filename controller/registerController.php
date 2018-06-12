@@ -7,12 +7,26 @@ use \Philippe\Blog\Model\SecurityManager;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-/* ***************** REGISTRATION PAGE *******************/
+/**
+ * Function signupPage
+ * 
+ * @return [type]
+ */
 function signupPage()
 {
     include 'view/frontend/pages/signup.php';
 }
-/* ***************** REGISTRATION ************************/
+/**
+ * Function addUser
+ * 
+ * @param pseudo          $pseudo          pseudo
+ * @param email           $email           email
+ * @param passe           $passe           password1
+ * @param passe2          $passe2          password2
+ * @param csrfSignupToken $csrfSignupToken the token to try to avoid csrf
+ *
+ * @return [type]
+ */
 function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
 {
     $userManager = new UserManager();
@@ -21,40 +35,27 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
     if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
         $user = $userManager->existPseudo($pseudo);
         $usermail = $userManager->existMail($email);
-        // if pseudo already exists
         if ($user) {
             $session->errorPseudo1();
-        }
-        // if mail already exists
-        elseif ($usermail) {
+        } elseif ($usermail) {
             $session->errorEmail1();
-        }
-        // caractères spéciaux
-        elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) {
+        } elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) {
             $session->errorPseudo2();
-        }
-        // validité du mail
-        elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $session->errorEmail2();
-        }
-        // same passwords
-        elseif (empty($passe) || $passe != $_POST['passe2']) {
+        } elseif (empty($passe) || $passe != $_POST['passe2']) {
             $session->errorPassword();
-        }
-        // same passwords
-        elseif (strlen($passe) < 6 || strlen($passe) > 50) {
+        } elseif (strlen($passe) < 6 || strlen($passe) > 50) {
             $session->errorLengthPassword();
-        }
-        else 
-        {
+        } else {
             if (isset($_SESSION['csrfSignupToken']) AND isset($csrfSignupToken) AND !empty($_SESSION['csrfSignupToken']) AND !empty($csrfSignupToken)) {
                 if ($_SESSION['csrfSignupToken'] == $csrfSignupToken) {
                     $users = $userManager->addUserRequest($pseudo, $email, $passe);
                     if ($users === false) {
                         $session->badRequest();
-                    }
-                    else
-                    {   
+                    } else {   
+                        //$user_id = $users->getId();
+                        //$token = $users->getConfirmationToken();
                         //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
                         /*$mail = new PHPMailer(true);                             
                         try {
@@ -73,33 +74,30 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
                         catch (Exception $e) {
                         echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
                         }*/
-                        
-
                         $session->registerSuccess();
                     }    
                     /* test mail local */
                     //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
                     /* test mail online */
-                
-
-                    
-                }
-                else
-                {
+                } else {
                     $session->csrfRegister();
                 }
             }
         }                
-    } 
-    else 
-    {
+    } else {
         $session->emptyContents();
     }
 }
-/* ***************** CONFIRM REGISTRATION ****************/
+/**
+ * Function confirmRegistration
+ * 
+ * @param userId    $userId    the user's id
+ * @param userToken $userToken the token to confirm the registration
+ * 
+ * @return [type]
+ */
 function confirmRegistration($userId, $userToken)
 {
-
     $userManager = new UserManager();
     $user = $userManager->getUser($userId);
     $session = new Session();
@@ -122,16 +120,20 @@ function confirmRegistration($userId, $userToken)
                 catch (Exception $e) {
                 echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
                 }*/
-        }
-        else {
+        } else {
             $session->errorToken();
         } 
-    }
-    else {
+    } else {
         $session->registerFailure();
     }  
 }
-/* ***************** SET ACTIVE USER *********************/
+/**
+ * Function setActiveUser
+ * 
+ * @param userId $userId the user's id
+ *
+ * @return [type]
+ */
 function setActiveUser($userId)
 {
     $userManager = new UserManager();

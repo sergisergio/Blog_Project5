@@ -35,9 +35,6 @@ class Session
         $_SESSION['flash']['danger'] = '4 tentatives ont été effectuées : veuillez contacter l\'administrateur pour vous reconnecter !';
         errors();
     }
-    /**********************************
-     * REGISTER 
-     ******************************************/
     public function errorPseudo1()
     {
         $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';

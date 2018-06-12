@@ -11,4 +11,5 @@ return array(
     'Philippe\\Blog\\Core\\' => array($baseDir . '/core'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Michelf\\' => array($vendorDir . '/michelf/php-markdown/Michelf'),
+    '' => array($baseDir . '/controller'),
 );

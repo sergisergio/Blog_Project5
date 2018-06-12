@@ -1,11 +1,19 @@
 <?php
 
-/* **************** ERRORS PAGE ****************/
+/**
+ * Function errors
+ * 
+ * @return [type]
+ */
 function errors()
 {
     include 'view/frontend/pages/errors.php';
 }
-/* **************** NO ADMIN PAGE **************/
+/**
+ * Function noAdmin
+ * 
+ * @return [type]
+ */
 function noAdmin()
 {
     include 'view/frontend/pages/noadmin.php';

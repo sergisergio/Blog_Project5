@@ -3,7 +3,18 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-/* **************** CONTACT FORM **************/
+/**
+ * Function contact
+ * 
+ * @param name     $name     mailer's name
+ * @param email    $email    mailer's email
+ * @param subject  $subject  mailer's subject
+ * @param message  $message  mailer's message
+ * @param response $response captcha
+ * @param remoteip $remoteip mailer's IP address
+ * 
+ * @return [type]
+ */
 function contact($name, $email, $subject, $message, $response, $remoteip)
 {
     if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
@@ -35,9 +46,7 @@ function contact($name, $email, $subject, $message, $response, $remoteip)
             {
                 echo '<p style="color:red; font-weight: bold;text-align: center;">Un problème est survenu ! Le message n\'a pas pu être envoyé : </p>';
             }
-        }
-        else 
-        {
+        } else {
             echo '<p style="color:red; font-weight: bold;text-align: center;">Veuillez confirmer le captcha !</p>';
         }
     }

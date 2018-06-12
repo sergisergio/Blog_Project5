@@ -5,7 +5,13 @@ use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\Entities\CategoryEntity;
 use \Philippe\Blog\Model\CategoryManager;
 
-/* ***************** SEARCH *****************/
+/**
+ * Function categoryResults
+ * 
+ * @param categoryId $categoryId the category's id
+ * 
+ * @return [type]
+ */
 function categoryResults($categoryId)
 {
     $postManager = new PostManager();

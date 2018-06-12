@@ -94,6 +94,7 @@ class UserManager extends Manager
         $addUser->execute();
         $data = $addUser->fetch();
         $user_id = $dbProjet5->lastInsertId();
+
         $to      = $email;
         $subject = 'Confirmation de votre compte';
         $message = "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token";
@@ -102,7 +103,7 @@ class UserManager extends Manager
         'X-Mailer: PHP/' . phpversion();
 
         mail($to, $subject, $message, $headers);
-        //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");
+        //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");*/
 
         $users = new UserEntity($data);
         return $users;

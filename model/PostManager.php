@@ -13,10 +13,6 @@
 
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
-// l'autoloader n'arrive pas à charger les entités en production
-/*require_once "model/Entities/commentEntity.php";
-require_once "model/Entities/postEntity.php";
-require_once "model/Entities/userEntity.php";*/
 
 use \Philippe\Blog\Model\Entities\PostEntity;
 class PostManager extends Manager
@@ -58,7 +54,6 @@ class PostManager extends Manager
     /* ************ 3 . ADD A POST **********************/
     public function addPostRequest($title, $chapo, $author, $content, $category, $image)
     {
-        
         $dbProjet5 = $this->dbConnect();
         $getIdCat = $dbProjet5->query('SELECT c.category_id AS category_id FROM Posts p INNER JOIN Category c ON c.category_id = p.category_id ');
         $addPost = $dbProjet5->prepare('INSERT INTO Posts(title, chapo, intro, author, content, category_id, file_extension, creation_date) VALUES(:title, :chapo, :intro, :author, :content, :category, :image,  NOW()) ');
