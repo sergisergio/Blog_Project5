@@ -26,10 +26,8 @@ function admin($accessAdminToken)
 {
     $session = new Session();
 
-    if (isset($_SESSION['accessAdminToken']) AND isset($accessAdminToken) AND !empty($_SESSION['accessAdminToken']) AND !empty($accessAdminToken)) 
-    {
-        if ($_SESSION['accessAdminToken'] == $accessAdminToken) 
-        {
+    if (isset($_SESSION['accessAdminToken']) AND isset($accessAdminToken) AND !empty($_SESSION['accessAdminToken']) AND !empty($accessAdminToken)) {
+        if ($_SESSION['accessAdminToken'] == $accessAdminToken) {
             if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                 header('Location: index.php?action=noAdmin');
                 exit();
@@ -80,22 +78,16 @@ function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddP
     $file_extension_size = $_FILES['file_extension']['size'];
     $file_extension_tmp = $_FILES['file_extension']['tmp_name'];
 
-    if (isset($_SESSION['csrfAddPostToken']) AND isset($csrfAddPostToken) AND !empty($_SESSION['csrfAddPostToken']) AND !empty($csrfAddPostToken)) 
-    {
-        if ($_SESSION['csrfAddPostToken'] == $csrfAddPostToken) 
-        {
-            if (!empty($title) && !empty($content) && !empty($chapo)) 
-            {
-                if (isset($file_extension) AND $file_extension_error == 0) 
-                {
-                    if ($file_extension_size <= 1000000) 
-                    {
+    if (isset($_SESSION['csrfAddPostToken']) AND isset($csrfAddPostToken) AND !empty($_SESSION['csrfAddPostToken']) AND !empty($csrfAddPostToken)) {
+        if ($_SESSION['csrfAddPostToken'] == $csrfAddPostToken) {
+            if (!empty($title) && !empty($content) && !empty($chapo)) {
+                if (isset($file_extension) AND $file_extension_error == 0) {
+                    if ($file_extension_size <= 1000000) {
                         $infosfichier = pathinfo($image);
                         $extension_upload = $infosfichier['extension'];
                         $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
 
-                        if (in_array($extension_upload, $extensions_autorisees)) 
-                        {
+                        if (in_array($extension_upload, $extensions_autorisees)) {
                             // On peut valider le fichier et le stocker définitivement
                             move_uploaded_file($file_extension_tmp, 'public/images/posts/' . basename($image));
                             echo "L'envoi a bien été effectué !";
@@ -105,8 +97,7 @@ function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddP
 
                 $addedPost = $postManager->addPostRequest($title, $chapo, $author, $content, $category, $image);
 
-                if ($addedPost === false) 
-                {
+                if ($addedPost === false) {
                     $session->nonAddedPost();
                 }
                 else 
@@ -143,10 +134,8 @@ function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostT
     $postManager = new PostManager();
     $session = new Session();
     $_SESSION['csrfModifyPostToken'] = $csrfModifyPostToken; 
-    if (isset($_SESSION['csrfModifyPostToken']) AND isset($csrfModifyPostToken) AND !empty($_SESSION['csrfModifyPostToken']) AND !empty($csrfModifyPostToken)) 
-    {
-        if ($_SESSION['csrfModifyPostToken'] == $csrfModifyPostToken) 
-        {
+    if (isset($_SESSION['csrfModifyPostToken']) AND isset($csrfModifyPostToken) AND !empty($_SESSION['csrfModifyPostToken']) AND !empty($csrfModifyPostToken)) {
+        if ($_SESSION['csrfModifyPostToken'] == $csrfModifyPostToken) {
             if (isset($postId) && $postId > 0) {
                 if (!empty($title) && !empty($content) && !empty($chapo)) {
                     $post = $postManager->getPost($postId);
@@ -182,16 +171,12 @@ function deletePost($postId, $csrfDeletePostToken)
     $postManager = new PostManager();
     $session = new Session();
     $_SESSION['csrfDeletePostToken'] = $csrfDeletePostToken;
-    if (isset($_SESSION['csrfDeletePostToken']) AND isset($csrfDeletePostToken) AND !empty($_SESSION['csrfDeletePostToken']) AND !empty($csrfDeletePostToken)) 
-    {
-        if ($_SESSION['csrfDeletePostToken'] == $csrfDeletePostToken) 
-        {
-            if (isset($postId) && $postId > 0) 
-            {
+    if (isset($_SESSION['csrfDeletePostToken']) AND isset($csrfDeletePostToken) AND !empty($_SESSION['csrfDeletePostToken']) AND !empty($csrfDeletePostToken)) {
+        if ($_SESSION['csrfDeletePostToken'] == $csrfDeletePostToken) {
+            if (isset($postId) && $postId > 0) {
                 $post = $postManager->getPost($postId);
                 $delete = $postManager->deletePostRequest($postId);
-                if ($delete === false) 
-                {
+                if ($delete === false) {
                     $session->nonDeletedPost();
                 }
                 else 
@@ -199,8 +184,7 @@ function deletePost($postId, $csrfDeletePostToken)
                     $session->deletedPost();
                 }
             }
-            elseif ($postId <= 0) 
-            {
+            elseif ($postId <= 0) {
                 $session->noIdPostAdmin();
             }
         }
@@ -225,10 +209,8 @@ function validateComment($commentId, $csrfValidateCommentToken)
     $validated = $commentManager->validateCommentRequest($commentId);
     $session = new Session();
     $_SESSION['csrfValidateCommentToken'] = $csrfValidateCommentToken;
-    if (isset($_SESSION['csrfValidateCommentToken']) AND isset($csrfValidateCommentToken) AND !empty($_SESSION['csrfValidateCommentToken']) AND !empty($csrfValidateCommentToken)) 
-    {
-        if ($_SESSION['csrfValidateCommentToken'] == $csrfValidateCommentToken) 
-        {
+    if (isset($_SESSION['csrfValidateCommentToken']) AND isset($csrfValidateCommentToken) AND !empty($_SESSION['csrfValidateCommentToken']) AND !empty($csrfValidateCommentToken)) {
+        if ($_SESSION['csrfValidateCommentToken'] == $csrfValidateCommentToken) {
             if (isset($commentId) && $commentId > 0) {
                 if ($validated === false) {
                     $session->nonValidatedcomment();
@@ -255,10 +237,8 @@ function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
     $comment = $commentManager->getComment($commentId);
     $session = new Session();
     $_SESSION['csrfAdminDeleteCommentToken'] = $csrfAdminDeleteCommentToken;
-    if (isset($_SESSION['csrfAdminDeleteCommentToken']) AND isset($csrfAdminDeleteCommentToken) AND !empty($_SESSION['csrfAdminDeleteCommentToken']) AND !empty($csrfAdminDeleteCommentToken)) 
-    {
-        if ($_SESSION['csrfAdminDeleteCommentToken'] == $csrfAdminDeleteCommentToken) 
-        {
+    if (isset($_SESSION['csrfAdminDeleteCommentToken']) AND isset($csrfAdminDeleteCommentToken) AND !empty($_SESSION['csrfAdminDeleteCommentToken']) AND !empty($csrfAdminDeleteCommentToken)) {
+        if ($_SESSION['csrfAdminDeleteCommentToken'] == $csrfAdminDeleteCommentToken) {
             if (isset($commentId) && $commentId > 0) {
                 if ($success === false) {
                     $session->adminNonDeletedComment();
@@ -292,10 +272,8 @@ function giveAdminRights($userId, $csrfGiveAdminRightsToken)
     $userManager = new UserManager();
     $session = new Session();
     $_SESSION['csrfGiveAdminRightsToken'] = $csrfGiveAdminRightsToken;
-    if (isset($_SESSION['csrfGiveAdminRightsToken']) AND isset($csrfGiveAdminRightsToken) AND !empty($_SESSION['csrfGiveAdminRightsToken']) AND !empty($csrfGiveAdminRightsToken)) 
-    {
-        if ($_SESSION['csrfGiveAdminRightsToken'] == $csrfGiveAdminRightsToken) 
-        {
+    if (isset($_SESSION['csrfGiveAdminRightsToken']) AND isset($csrfGiveAdminRightsToken) AND !empty($_SESSION['csrfGiveAdminRightsToken']) AND !empty($csrfGiveAdminRightsToken)) {
+        if ($_SESSION['csrfGiveAdminRightsToken'] == $csrfGiveAdminRightsToken) {
             if (isset($userId) && $userId > 0) {
                 $adminRights = $userManager->giveAdminRightsRequest($userId);
 
@@ -320,10 +298,8 @@ function stopAdminRights($userId, $csrfCancelAdminRightsToken)
     $userManager = new UserManager();
     $session = new Session();
     $_SESSION['csrfCancelAdminRightsToken'] = $csrfCancelAdminRightsToken;
-    if (isset($_SESSION['csrfCancelAdminRightsToken']) AND isset($csrfCancelAdminRightsToken) AND !empty($_SESSION['csrfCancelAdminRightsToken']) AND !empty($csrfCancelAdminRightsToken)) 
-    {
-        if ($_SESSION['csrfCancelAdminRightsToken'] == $csrfCancelAdminRightsToken) 
-        {
+    if (isset($_SESSION['csrfCancelAdminRightsToken']) AND isset($csrfCancelAdminRightsToken) AND !empty($_SESSION['csrfCancelAdminRightsToken']) AND !empty($csrfCancelAdminRightsToken)) {
+        if ($_SESSION['csrfCancelAdminRightsToken'] == $csrfCancelAdminRightsToken) {
             if (isset($userId) && $userId > 0) {
                 $adminRights = $userManager->stopAdminRightsRequest($userId);
 
@@ -347,12 +323,9 @@ function deleteUser($userId, $csrfDeleteUserToken)
 {
     $userManager = new UserManager();
     $_SESSION['csrfDeleteUserToken'] = $csrfDeleteUserToken;
-    if (isset($_SESSION['csrfDeleteUserToken']) AND isset($csrfDeleteUserToken) AND !empty($_SESSION['csrfDeleteUserToken']) AND !empty($csrfDeleteUserToken)) 
-    {
-        if ($_SESSION['csrfDeleteUserToken'] == $csrfDeleteUserToken) 
-        {
-            if (isset($_GET['id']) && $_GET['id'] > 0) 
-            {
+    if (isset($_SESSION['csrfDeleteUserToken']) AND isset($csrfDeleteUserToken) AND !empty($_SESSION['csrfDeleteUserToken']) AND !empty($csrfDeleteUserToken)) {
+        if ($_SESSION['csrfDeleteUserToken'] == $csrfDeleteUserToken) {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $affectedUser = $userManager->deleteUserRequest($userId);
 
                 if ($affectedUser === false) {
@@ -375,22 +348,18 @@ function addCategory($category, $csrfAddCategoryToken)
     $categoryManager = new CategoryManager();
     $session = new Session();
     $_SESSION['csrfAddCategoryToken'] = $csrfAddCategoryToken; 
-    if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken) AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)) 
-    {
+    if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken) AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)) {
         
-        if ($_SESSION['csrfAddCategoryToken'] == $csrfAddCategoryToken) 
-        {
-            if (!empty($category))
-            {
+        if ($_SESSION['csrfAddCategoryToken'] == $csrfAddCategoryToken) {
+            if (!empty($category)) {
                 $categoryManager->addCategoryRequest($category);
-                if ($categoryManager === false) 
-                    {
+                if ($categoryManager === false) {
                         $session->nonAddedCategory();
-                    }
-                    else 
+                }
+                else 
                     {
-                        $session->addedCategory();
-                    }
+                    $session->addedCategory();
+                }
             }
             else
             {

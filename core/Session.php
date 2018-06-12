@@ -23,8 +23,8 @@ class Session
     public function stopSession()
     {
         session_start();
-        setcookie('pseudo', NULL, -1);
-        setcookie('password', NULL, -1);
+        setcookie('pseudo', null, -1);
+        setcookie('password', null, -1);
         unset($_SESSION);
         session_destroy();
         header('Location: index.php?action=blog');
@@ -34,70 +34,62 @@ class Session
     {
         $_SESSION['flash']['danger'] = '4 tentatives ont été effectuées : veuillez contacter l\'administrateur pour vous reconnecter !';
         errors();
-        exit();
     }
-    /********************************** REGISTER ******************************************/
+    /**********************************
+     * REGISTER 
+     ******************************************/
     public function errorPseudo1()
     {
         $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';
         signupPage();
-        exit();
     }
 
     public function errorPseudo2()
     {
         $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide (caractères alphanumériques et underscore permis... !';
         signupPage();
-        exit();
     }
 
     public function errorEmail1()
     {
         $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
         signupPage();
-        exit();
     }
 
     public function errorEmail2()
     {
         $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
         signupPage();
-        exit();
     }
 
     public function errorPassword()
     {
         $_SESSION['flash']['danger'] = 'Vous devez entrer un mot de passe valide !';
         signupPage();
-        exit();
     }
 
     public function errorLengthPassword()
     {
         $_SESSION['flash']['danger'] = 'Votre mot de passe doit faire entre 6 et 50 caractères !';
         signupPage();
-        exit();
     }
 
     public function emptyContents()
     {
         $_SESSION['flash']['danger'] = 'Vous devez remplir tous les champs !';
         signupPage();
-        exit();
     }
 
     public function badRequest()
     {
         $_SESSION['flash']['danger'] = 'Inscription impossible !';
         signupPage();
-        exit();
     }
 
     public function registerSuccess()
     {
         $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
         loginPage();
-        exit();
     }
 
     public function activateAccount()
@@ -125,28 +117,24 @@ class Session
     {
         $_SESSION['flash']['success'] = 'Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !';
         loginPage();
-        exit();
     }
 
     public function errorToken()
     {
         $_SESSION['flash']['danger'] = 'Ce token n est plus valide ! Veuillez réessayer ! !';
         signupPage();
-        exit();
     }
 
     public function registerFailure()
     {
         $_SESSION['flash']['danger'] = 'Echec de l\'inscription ! Veuillez réessayer sinon contactez l\'administrateur';
         signupPage();
-        exit();
     }
 
     public function noIdPost()
     {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
         errors();
-        exit();
     }
 
     public function addedComment($postId)
@@ -173,7 +161,7 @@ class Session
     public function emptyContent($commentId)
     {
         $_SESSION['flash']['danger'] = 'Le champ est vide !';
-        header('Location: index.php?action=modifyCommentPage&id=' . $_GET['id']);
+        header('Location: index.php?action=modifyCommentPage&id=' . $commentId);
         exit();
     }
 
@@ -195,7 +183,6 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Un ou plusieurs champs ne sont pas remplis !';
         errors();
-        exit();
     }
 
     public function modifyCommentError($commentId)
@@ -209,35 +196,30 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         header('Location: index.php?action=modifyCommentPage&id=' . $commentId);
-        exit();
     }
 
     public function noIdPostAdmin()
     {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
         managePosts();
-        exit();
     }
 
     public function noIdCommentAdmin()
     {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
         manageComments();
-        exit();
     }
 
     public function addedPost()
     {
         $_SESSION['flash']['success'] = 'L\'article a bien été ajouté !';
-        header('Location: index.php?action=manage_posts');
-        exit();
+        managePosts();
     }
 
     public function nonAddedPost()
     {
         $_SESSION['flash']['danger'] = 'impossible d\'ajouter l\'article !';
-        header('Location: index.php?action=manage_posts');
-        exit();
+        managePosts();
     }
 
     public function csrfPost()
@@ -279,21 +261,18 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Pas d\'identifiant d\'article envoyé !';
         modifyPostPage($postId);
-        exit();
     }
 
     public function deletedPost()
     {
         $_SESSION['flash']['success'] = 'L\'article a bien été supprimé !';
         header('Location: index.php?action=manage_posts');
-        exit();
     }
 
     public function nonDeletedPost()
     {
         $_SESSION['flash']['danger'] = 'Impossible de supprimer l\'article';
         header('Location: index.php?action=manage_posts');
-        exit();
     }
 
     public function nonValidatedComment()
@@ -349,28 +328,24 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Une erreur est survenue !';
         loginPage();
-        exit();
     }
 
     public function mailForgetPassword()
     {
         $_SESSION['flash']['success'] = 'Vous allez recevoir un email pour réinitialiser votre mot de passe !';
         loginPage();
-        exit();
     }
 
     public function emptyMail()
     {
         $_SESSION['flash']['danger'] = 'Veuillez renseigner un email !';
         forgetPasswordPage();
-        exit();
     }
 
     public function nonMail()
     {
         $_SESSION['flash']['danger'] = 'Cet email n\'est pas valide !';
         loginPage();
-        exit();
     }
 
     public function tokenPassword()
@@ -384,160 +359,137 @@ class Session
     {
         $_SESSION['flash']['success'] = 'Le mot de passe a bien été réinitialisé !';
         loginPage();
-        exit();
     }
 
     public function emptyPassword()
     {
         $_SESSION['flash']['danger'] = 'Veuillez entrer un mot de passe !';
         forgetPasswordPage();
-        exit();
     }
 
     public function loginCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         loginPage();
-        exit();
     }
 
     public function deletePostCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         managePosts();
-        exit();
     }
 
     public function forgetCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         forgetPasswordPage();
-        exit();
     }
 
     public function forgetTokenError()
     {
         $_SESSION['flash']['danger'] = 'Ce token n\' est plus valide ! Veuillez réessayer !';
         forgetPasswordPage();
-        exit();
     }
 
     public function changeCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         changePasswordPage();
-        exit();
     }
 
     public function validateCommentCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         manageComments();
-        exit();
     }
 
     public function adminDeleteCommentCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         manageComments();
-        exit();
     }
 
     public function emptyModifyProfile()
     {
         $_SESSION['flash']['danger'] = 'Tous les champs ne sont pas remplis !';
         profilePage($_SESSION['id']);
-        exit();
     }
 
     public function csrfModifyProfile()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         profilePage($_SESSION['id']);
-        exit();
     }
 
     public function successModifyProfile()
     {
         $_SESSION['flash']['success'] = 'Modification effectuée !';
         profilePage($_SESSION['id']);
-        exit();
     }
 
     public function errorModifyProfile()
     {
         $_SESSION['flash']['danger'] = 'Impossible de modifier le profil !';
         profilePage($_SESSION['id']);
-        exit();
     }
 
     public function errorDeleteAccount()
     {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet utilisateur !';
         profilePage();
-        exit();
     }
 
     public function csrfDeleteAccount()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         profilePage();
-        exit();
     }
 
     public function errorDeleteAccount2()
     {
         $_SESSION['flash']['danger'] = 'Impossible de supprimer le profil !';
         profilePage();
-        exit();
     }
 
     public function csrfRegister()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         loginPage();
-        exit();
     }
 
     public function giveAdminRightsCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         manageUsers();
-        exit();
     }
 
     public function cancelAdminRightsCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         manageUsers();
-        exit();
     }
 
     public function deleteUserCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         manageUsers();
-        exit();
     }
 
     public function nonAddedCategory()
     {
         $_SESSION['flash']['danger'] = 'Impossible d\'ajouter cette catégorie !';
         managePosts();
-        exit();
     }
 
     public function addedCategory()
     {
         $_SESSION['flash']['success'] = 'La catégorie a bien été ajoutée !';
         managePosts();
-        exit();
     }
 
     public function emptyCategory()
     {
         $_SESSION['flash']['danger'] = 'Le champ est vide !';
         managePosts();
-        exit();
     }
 }

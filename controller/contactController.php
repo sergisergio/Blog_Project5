@@ -6,19 +6,17 @@ use PHPMailer\PHPMailer\Exception;
 /* **************** CONTACT FORM **************/
 function contact($name, $email, $subject, $message, $response, $remoteip)
 {
-    if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) 
-    {
+    if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
         
         $secret = "6LeS_lwUAAAAABD6EBW4fo0y2jVBfLr_ho0IGZ2j";
         $api_url = "https://www.google.com/recaptcha/api/siteverify?secret=" 
-    . $secret
-    . "&response=" . $response
-    . "&remoteip=" . $remoteip ;
+        . $secret
+        . "&response=" . $response
+        . "&remoteip=" . $remoteip ;
 
         $decode = json_decode(file_get_contents($api_url), true);
     
-        if ($decode['success'] == true) 
-        {
+        if ($decode['success'] == true) {
             $mail = new PHPMailer(true);                             
             try 
             {

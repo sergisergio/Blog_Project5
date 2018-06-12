@@ -18,10 +18,8 @@ function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
     $securityManager = new SecurityManager();
 
     $_SESSION['csrfLoginToken'] = $csrfLoginToken;  
-    if (isset($_SESSION['csrfLoginToken']) AND isset($csrfLoginToken) AND !empty($_SESSION['csrfLoginToken']) AND !empty($csrfLoginToken)) 
-    {
-        if ($_SESSION['csrfLoginToken'] == $csrfLoginToken) 
-        {
+    if (isset($_SESSION['csrfLoginToken']) AND isset($csrfLoginToken) AND !empty($_SESSION['csrfLoginToken']) AND !empty($csrfLoginToken)) {
+        if ($_SESSION['csrfLoginToken'] == $csrfLoginToken) {
             if(!empty($pseudo) && !empty($passe)) {
                 $user = $userManager->loginRequest($pseudo, $passe);
                 $count = $securityManager->checkBruteForce($ip);
@@ -30,8 +28,7 @@ function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
                     if(password_verify($passe, $user->getPassword())) {
                         if ($user->getIsActive() == 1) {
                             
-                            if(isset($remember))
-                            {
+                            if(isset($remember)) {
                                 /*function str_random($length)
                                 {
                                     $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
@@ -99,15 +96,11 @@ function forgetPassword($email, $csrfForgetToken)
     }
     else 
     {
-        if (isset($_SESSION['forgetToken']) AND isset($csrfForgetToken) AND !empty($_SESSION['forgetToken']) AND !empty($csrfForgetToken)) 
-        {
-            if ($_SESSION['forgetToken'] == $csrfForgetToken) 
-            {
-                if(filter_var($email, FILTER_VALIDATE_EMAIL))
-                {
+        if (isset($_SESSION['forgetToken']) AND isset($csrfForgetToken) AND !empty($_SESSION['forgetToken']) AND !empty($csrfForgetToken)) {
+            if ($_SESSION['forgetToken'] == $csrfForgetToken) {
+                if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $user = $userManager->forgetPasswordRequest($email);
-                    if ($user === false) 
-                    {
+                    if ($user === false) {
                         $session->errorForgetPassword();
                     }
                     else 
@@ -157,12 +150,9 @@ function changePassword($userId, $passe, $csrfChangePasswordToken)
     $session = new Session(); 
     
     $_SESSION['csrfChangePasswordToken'] = $csrfChangePasswordToken; 
-    if(!empty($_POST['passe']) && $_POST['passe'] == $_POST['passe2']) 
-    {
-        if (isset($_SESSION['csrfChangePasswordToken']) AND isset($csrfChangePasswordToken) AND !empty($_SESSION['csrfChangePasswordToken']) AND !empty($csrfChangePasswordToken)) 
-        {
-            if ($_SESSION['csrfChangePasswordToken'] == $csrfChangePasswordToken) 
-            {
+    if(!empty($_POST['passe']) && $_POST['passe'] == $_POST['passe2']) {
+        if (isset($_SESSION['csrfChangePasswordToken']) AND isset($csrfChangePasswordToken) AND !empty($_SESSION['csrfChangePasswordToken']) AND !empty($csrfChangePasswordToken)) {
+            if ($_SESSION['csrfChangePasswordToken'] == $csrfChangePasswordToken) {
                 $userManager->changePasswordRequest($userId, $passe);
                 $session->changedPassword();
             }

@@ -28,7 +28,7 @@ class categoryManager extends Manager
         $getCategory->execute();
         $categories = [];
         while ($data = $getCategory->fetch()){
-        	$categories[] = new CategoryEntity($data);
+            $categories[] = new CategoryEntity($data);
         }
         $getCategory->closeCursor();
         return $categories;

@@ -18,49 +18,39 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
     $userManager = new UserManager();
     $session = new Session();
     $_SESSION['csrfSignupToken'] = $csrfSignupToken; 
-    if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) 
-    {
+    if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
         $user = $userManager->existPseudo($pseudo);
         $usermail = $userManager->existMail($email);
         // if pseudo already exists
-        if ($user) 
-        {
+        if ($user) {
             $session->errorPseudo1();
         }
         // if mail already exists
-        elseif ($usermail) 
-        {
+        elseif ($usermail) {
             $session->errorEmail1();
         }
         // caractères spéciaux
-        elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) 
-        {
+        elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) {
             $session->errorPseudo2();
         }
         // validité du mail
-        elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) 
-        {
+        elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $session->errorEmail2();
         }
         // same passwords
-        elseif (empty($passe) || $passe != $_POST['passe2']) 
-        {
+        elseif (empty($passe) || $passe != $_POST['passe2']) {
             $session->errorPassword();
         }
         // same passwords
-        elseif (strlen($passe) < 6 || strlen($passe) > 50) 
-        {
+        elseif (strlen($passe) < 6 || strlen($passe) > 50) {
             $session->errorLengthPassword();
         }
         else 
         {
-            if (isset($_SESSION['csrfSignupToken']) AND isset($csrfSignupToken) AND !empty($_SESSION['csrfSignupToken']) AND !empty($csrfSignupToken)) 
-            {
-                if ($_SESSION['csrfSignupToken'] == $csrfSignupToken) 
-                {
+            if (isset($_SESSION['csrfSignupToken']) AND isset($csrfSignupToken) AND !empty($_SESSION['csrfSignupToken']) AND !empty($csrfSignupToken)) {
+                if ($_SESSION['csrfSignupToken'] == $csrfSignupToken) {
                     $users = $userManager->addUserRequest($pseudo, $email, $passe);
-                    if ($users === false) 
-                    {
+                    if ($users === false) {
                         $session->badRequest();
                     }
                     else
@@ -87,9 +77,9 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
 
                         $session->registerSuccess();
                     }    
-            /* test mail local */
-            //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
-            /* test mail online */
+                    /* test mail local */
+                    //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
+                    /* test mail online */
                 
 
                     

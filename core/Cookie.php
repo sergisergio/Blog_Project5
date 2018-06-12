@@ -3,17 +3,16 @@
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Core\Session;
 
-function reconnect_from_cookie(){
-    if(session_status() == PHP_SESSION_NONE){
+function reconnect_from_cookie()
+{
+    if(session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    if(isset($_COOKIE['pseudo'], $_COOKIE['password']) && !isset($_SESSION['pseudo']) && !empty($_COOKIE['pseudo']) && !empty($_COOKIE['password']))
-    {
+    if(isset($_COOKIE['pseudo'], $_COOKIE['password']) && !isset($_SESSION['pseudo']) && !empty($_COOKIE['pseudo']) && !empty($_COOKIE['password'])) {
         $userManager = new UserManager();
         $session = new Session();
         $user = $userManager->userCookie($_COOKIE['pseudo'], $_COOKIE['password']);
-        if($user)
-        {
+        if($user) {
             $session->launchSession($user);
         }
         else

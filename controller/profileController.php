@@ -18,14 +18,10 @@ function modifyProfile($userId, $avatar, $first_name, $name, $email, $descriptio
     $session = new Session();
     $_SESSION['csrfProfileToken'] = $csrfProfileToken; 
 
-    if (!empty($_POST['email'])) 
-    {
-        if (isset($_SESSION['csrfProfileToken']) AND isset($csrfProfileToken) AND !empty($_SESSION['csrfProfileToken']) AND !empty($csrfProfileToken)) 
-        {
-            if ($_SESSION['csrfProfileToken'] == $csrfProfileToken) 
-            {
-                if (isset($_FILES['avatar']) AND $_FILES['avatar']['error'] == 0) 
-                {
+    if (!empty($_POST['email'])) {
+        if (isset($_SESSION['csrfProfileToken']) AND isset($csrfProfileToken) AND !empty($_SESSION['csrfProfileToken']) AND !empty($csrfProfileToken)) {
+            if ($_SESSION['csrfProfileToken'] == $csrfProfileToken) {
+                if (isset($_FILES['avatar']) AND $_FILES['avatar']['error'] == 0) {
             
                     if ($_FILES['avatar']['size'] <= 1000000) { 
                 
@@ -41,8 +37,7 @@ function modifyProfile($userId, $avatar, $first_name, $name, $email, $descriptio
                     }
                 }
                 $modifiedProfile = $userManager->modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description);
-                if ($modifiedProfile === false) 
-                {
+                if ($modifiedProfile === false) {
                     $session->errorModifyProfile();
                 }
                 else 
@@ -70,17 +65,13 @@ function deleteAccount($userId, $csrfDeleteAccountToken)
     $session = new Session();
     
     $_SESSION['csrfDeleteAccountToken'] = $csrfDeleteAccountToken;  
-    if (isset($userId)) 
-    {
-        if (isset($_SESSION['csrfDeleteAccountToken']) AND isset($csrfDeleteAccountToken) AND !empty($_SESSION['csrfDeleteAccountToken']) AND !empty($csrfDeleteAccountToken)) 
-        {
-            if ($_SESSION['csrfDeleteAccountToken'] == $csrfDeleteAccountToken) 
-            {
+    if (isset($userId)) {
+        if (isset($_SESSION['csrfDeleteAccountToken']) AND isset($csrfDeleteAccountToken) AND !empty($_SESSION['csrfDeleteAccountToken']) AND !empty($csrfDeleteAccountToken)) {
+            if ($_SESSION['csrfDeleteAccountToken'] == $csrfDeleteAccountToken) {
                 $deleteAccount = $userManager->deleteAccountRequest($userId);
                 $session->stopSession();
 
-                if ($deleteAccount === false) 
-                {
+                if ($deleteAccount === false) {
                     $session->errorDeleteAccount2();
                 }
                 else 

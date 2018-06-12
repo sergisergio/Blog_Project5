@@ -15,18 +15,13 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
     $session = new Session();
     
     $_SESSION['csrfAddPostToken'] = $csrfAddPostToken; 
-    if (isset($postId) && $postId > 0) 
-    {
-        if (!empty($content)) 
-        {
-            if (isset($_SESSION['csrfAddCommentToken']) AND isset($csrfAddCommentToken) AND !empty($_SESSION['csrfAddCommentToken']) AND !empty($csrfAddCommentToken)) 
-            {
-                if ($_SESSION['csrfAddCommentToken'] == $csrfAddCommentToken) 
-                {
+    if (isset($postId) && $postId > 0) {
+        if (!empty($content)) {
+            if (isset($_SESSION['csrfAddCommentToken']) AND isset($csrfAddCommentToken) AND !empty($_SESSION['csrfAddCommentToken']) AND !empty($csrfAddCommentToken)) {
+                if ($_SESSION['csrfAddCommentToken'] == $csrfAddCommentToken) {
                     $addedComment = $commentManager->postComment($postId, $author, $content);
                     $session->addedComment($postId);
-                    if ($affectedLines === false) 
-                    {
+                    if ($affectedLines === false) {
                         $session->needsRegister($postId);
                     }
                 }
@@ -62,10 +57,10 @@ function modifyCommentPage($commentId, $postId)
     if (empty($comment) || $commentId <= 0 ) {
         $session->noIdComment();
     }
-    elseif ($isComment == false){
+    elseif ($isComment == false) {
         $session->noIdComment();
     }
-    elseif ($isPost == false){
+    elseif ($isPost == false) {
         $session->noIdPost();
     }
     elseif (isset($commentId) && $commentId > 0) {
@@ -83,16 +78,12 @@ function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
     $commentManager = new CommentManager();
     $session = new Session();
     $_SESSION['csrfDeleteCommentToken'] = $csrfDeleteCommentToken;
-    if (isset($_SESSION['csrfDeleteCommentToken']) AND isset($csrfDeleteCommentToken) AND !empty($_SESSION['csrfDeleteCommentToken']) AND !empty($csrfDeleteCommentToken)) 
-    {
-        if ($_SESSION['csrfDeleteCommentToken'] == $csrfDeleteCommentToken) 
-        {
-            if (isset($commentId) && $commentId > 0) 
-            {
+    if (isset($_SESSION['csrfDeleteCommentToken']) AND isset($csrfDeleteCommentToken) AND !empty($_SESSION['csrfDeleteCommentToken']) AND !empty($csrfDeleteCommentToken)) {
+        if ($_SESSION['csrfDeleteCommentToken'] == $csrfDeleteCommentToken) {
+            if (isset($commentId) && $commentId > 0) {
                 $comment = $commentManager->getComment($commentId);
                 $deletedComment = $commentManager->deleteCommentRequest($commentId);         
-                if ($deletedComment === false) 
-                {
+                if ($deletedComment === false) {
                     $session->nonDeletedComment($postId);
                 }
                 else
@@ -100,8 +91,7 @@ function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
                     $session->deletedComment($postId);
                 }
             }
-            elseif (empty($comment) || $commentId <= 0 ) 
-            {
+            elseif (empty($comment) || $commentId <= 0 ) {
                 $session->noIdComment();
             }
         }
@@ -119,17 +109,12 @@ function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommen
     $session = new Session();
 
     $_SESSION['csrfModifyCommentToken'] = $csrfModifyCommentToken; 
-    if (isset($commentId) && $commentId > 0) 
-    {
-        if (!empty($content)) 
-        {
-            if (isset($_SESSION['csrfModifyCommentToken']) AND isset($csrfModifyCommentToken) AND !empty($_SESSION['csrfModifyCommentToken']) AND !empty($csrfModifyCommentToken)) 
-            {
-                if ($_SESSION['csrfModifyCommentToken'] == $csrfModifyCommentToken) 
-                {
+    if (isset($commentId) && $commentId > 0) {
+        if (!empty($content)) {
+            if (isset($_SESSION['csrfModifyCommentToken']) AND isset($csrfModifyCommentToken) AND !empty($_SESSION['csrfModifyCommentToken']) AND !empty($csrfModifyCommentToken)) {
+                if ($_SESSION['csrfModifyCommentToken'] == $csrfModifyCommentToken) {
                     $modifiedComment = $commentManager->modifyCommentRequest($commentId, $author, $content);
-                    if ($modifiedComment === false) 
-                    {
+                    if ($modifiedComment === false) {
                         $session->modifyCommentError($commentId);
                     }
                     else
@@ -148,8 +133,7 @@ function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommen
             $session->emptyContent();
         }
     }
-    elseif (empty($comment) || $commentId <= 0) 
-    {
+    elseif (empty($comment) || $commentId <= 0) {
         $session->noIdComment();
     }
 }

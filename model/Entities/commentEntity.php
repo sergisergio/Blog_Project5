@@ -80,7 +80,7 @@ class CommentEntity
     {
         $validation = (int)$validation;
         if ($validation >= 0) {
-        $this->validation = $validation;
+            $this->validation = $validation;
         }
     }
     public function setAvatar($avatar)
