@@ -105,15 +105,20 @@ function addPost($title, $chapo, $author, $content, $image, $category,
                     $author, $content, $category, $image
                 );
                 if ($addedPost === false) {
-                    $session->nonAddedPost();
+                    $_SESSION['flash']['danger'] = 'impossible d\'ajouter l\'article !';
+                    managePosts();
                 } else {
-                    $session->addedPost();
+                    $_SESSION['flash']['success'] = 'L\'article a bien été ajouté !';
+                    managePosts();
                 }
             } else {
-                $session->emptyContentsAdmin();
+                $_SESSION['flash']['danger'] = 'Un ou plusieurs champs ne sont pas remplis !';
+                errors();
             }
         } else {
-            $session->csrfPost();
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            header('Location: index.php?action=manage_posts');
+            exit();
         }
     }
 }
@@ -131,7 +136,8 @@ function modifyPostPage($postId)
     $session = new Session();
 
     if (empty($post) || $postId <= 0) {
-        $session->noIdPostAdmin();
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
+        managePosts();
     }
     include 'view/backend/Posts/modifyPostPage.php';
 }
@@ -161,18 +167,24 @@ function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostT
                     $post = $postManager->getPost($postId);
                     $modify = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
                     if ($modify === false) {
-                        $session->nonModifiedPost($postId);
+                        $_SESSION['flash']['danger'] = 'Impossible de modifier l\'article';
+                        modifyPostPage($postId);
                     } else {
-                        $session->modifiedPost();
+                        $_SESSION['flash']['success'] = 'L\'article a bien été modifié !';
+                        header('Location: index.php?action=manage_posts');
+                        exit();
                     }
                 } else {
-                    $session->emptyContentModifiedPost($postId);
+                    $_SESSION['flash']['danger'] = 'Veuillez remplir les champs !';
+                    modifyPostPage($postId);
                 }
             } else {
-                $session->noIdModifiedPost($postId);
+                $_SESSION['flash']['danger'] = 'Pas d\'identifiant d\'article envoyé !';
+                modifyPostPage($postId);
             }
         } else {
-            $session->csrfModifyPost($postId);
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            modifyPostPage($postId);
         }
     }
 }
@@ -197,15 +209,19 @@ function deletePost($postId, $csrfDeletePostToken)
                 $post = $postManager->getPost($postId);
                 $delete = $postManager->deletePostRequest($postId);
                 if ($delete === false) {
-                    $session->nonDeletedPost();
+                    $_SESSION['flash']['danger'] = 'Impossible de supprimer l\'article';
+                    header('Location: index.php?action=manage_posts');
                 } else {
-                    $session->deletedPost();
+                    $_SESSION['flash']['success'] = 'L\'article a bien été supprimé !';
+                    header('Location: index.php?action=manage_posts');
                 }
             } elseif ($postId <= 0) {
-                $session->noIdPostAdmin();
+                $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
+                managePosts();
             }
         } else {
-            $session->deletePostCsrfError();
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            managePosts();
         }
     }
 }
@@ -242,15 +258,21 @@ function validateComment($commentId, $csrfValidateCommentToken)
         if ($_SESSION['csrfValidateCommentToken'] == $csrfValidateCommentToken) {
             if (isset($commentId) && $commentId > 0) {
                 if ($validated === false) {
-                    $session->nonValidatedcomment();
+                    $_SESSION['flash']['danger'] = 'Impossible de valider le commentaire';
+                    header('Location: index.php?action=manage_comments');
+                    exit();
                 } else {
-                    $session->validatedcomment();
+                    $_SESSION['flash']['success'] = 'Le commentaire a bien été validé !';
+                    header('Location: index.php?action=manage_comments');
+                    exit();
                 }
             } elseif ($commentId <= 0) {
-                $session->noIdCommentAdmin();
+                $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
+                manageComments();
             }
         } else {
-            $session->validateCommentCsrfError();
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            manageComments();
         }
     }
 }
@@ -275,15 +297,21 @@ function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
             if (isset($commentId) && $commentId > 0) {
                 $success = $commentManager->deleteCommentRequest($commentId);
                 if ($success === false) {
-                    $session->adminNonDeletedComment();
+                    $_SESSION['flash']['danger'] = 'Impossible de supprimer le commentaire !';
+                    header('Location: index.php?action=manage_comments');
+                    exit();
                 } else {   
-                    $session->admindeletedComment();
+                    $_SESSION['flash']['success'] = 'Le commentaire a bien été supprimé !';
+                    header('Location: index.php?action=manage_comments');
+                    exit();
                 }
             } elseif ($commentId <= 0) {
-                $session->noIdCommentAdmin();
+                $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
+                manageComments();
             }
         } else {
-            $session->adminDeleteCommentCsrfError();
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            manageComments();
         }
     }
 }
@@ -325,7 +353,8 @@ function giveAdminRights($userId, $csrfGiveAdminRightsToken)
                 }
             }
         } else {
-            $session->giveAdminRightsCsrfError();
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            manageUsers();
         }
     }
 }
@@ -356,7 +385,8 @@ function stopAdminRights($userId, $csrfCancelAdminRightsToken)
                 }
             }
         } else {
-            $session->cancelAdminRightsCsrfError();
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            manageUsers();
         }
     }
 }
@@ -386,7 +416,8 @@ function deleteUser($userId, $csrfDeleteUserToken)
                 }
             }
         } else {
-            $session->deleteUserCsrfError();
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            manageUsers();
         }
     }
 }
@@ -411,15 +442,20 @@ function addCategory($category, $csrfAddCategoryToken)
             if (!empty($category)) {
                 $categoryManager->addCategoryRequest($category);
                 if ($categoryManager === false) {
-                        $session->nonAddedCategory();
+                    $_SESSION['flash']['danger'] = 'Impossible d\'ajouter cette catégorie !';
+                    managePosts();
                 } else {
-                    $session->addedCategory();
+                    $_SESSION['flash']['success'] = 'La catégorie a bien été ajoutée !';
+                    managePosts();
                 }
             } else {
-                $session->emptyCategory();
+                $_SESSION['flash']['danger'] = 'Le champ est vide !';
+                managePosts();
             }
         } else {
-            $session->csrfPost();
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            header('Location: index.php?action=manage_posts');
+            exit();
         }
     }    
 }

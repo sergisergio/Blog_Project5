@@ -36,23 +36,30 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
         $user = $userManager->existPseudo($pseudo);
         $usermail = $userManager->existMail($email);
         if ($user) {
-            $session->errorPseudo1();
+            $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';
+            signupPage();
         } elseif ($usermail) {
-            $session->errorEmail1();
+            $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
+            signupPage();
         } elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) {
-            $session->errorPseudo2();
+            $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide (caractères alphanumériques et underscore permis... !';
+            signupPage();
         } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $session->errorEmail2();
+            $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
+            signupPage();
         } elseif (empty($passe) || $passe != $_POST['passe2']) {
-            $session->errorPassword();
+            $_SESSION['flash']['danger'] = 'Vous devez entrer un mot de passe valide !';
+            signupPage();
         } elseif (strlen($passe) < 6 || strlen($passe) > 50) {
-            $session->errorLengthPassword();
+            $_SESSION['flash']['danger'] = 'Votre mot de passe doit faire entre 6 et 50 caractères !';
+            signupPage();
         } else {
             if (isset($_SESSION['csrfSignupToken']) AND isset($csrfSignupToken) AND !empty($_SESSION['csrfSignupToken']) AND !empty($csrfSignupToken)) {
                 if ($_SESSION['csrfSignupToken'] == $csrfSignupToken) {
                     $users = $userManager->addUserRequest($pseudo, $email, $passe);
                     if ($users === false) {
-                        $session->badRequest();
+                        $_SESSION['flash']['danger'] = 'Inscription impossible !';
+                        signupPage();
                     } else {   
                         //$user_id = $users->getId();
                         //$token = $users->getConfirmationToken();
@@ -74,18 +81,21 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
                         catch (Exception $e) {
                         echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
                         }*/
-                        $session->registerSuccess();
+                        $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
+                        loginPage();
                     }    
                     /* test mail local */
                     //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
                     /* test mail online */
                 } else {
-                    $session->csrfRegister();
+                    $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+                    loginPage();
                 }
             }
         }                
     } else {
-        $session->emptyContents();
+        $_SESSION['flash']['danger'] = 'Vous devez remplir tous les champs !';
+        signupPage();
     }
 }
 /**
@@ -104,7 +114,8 @@ function confirmRegistration($userId, $userToken)
     if (isset($_GET['id']) && isset($_GET['token'])) {
         if ($user &&  $user->getConfirmationToken() == $userToken) {
             $userManager->setActiveRequest($userId);
-            $session->registerSuccess2();
+            $_SESSION['flash']['success'] = 'Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !';
+            loginPage();
             /*$mail = new PHPMailer(true);                             
                 try {
                     $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
@@ -121,10 +132,12 @@ function confirmRegistration($userId, $userToken)
                 echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
                 }*/
         } else {
-            $session->errorToken();
+            $_SESSION['flash']['danger'] = 'Ce token n est plus valide ! Veuillez réessayer ! !';
+            signupPage();
         } 
     } else {
-        $session->registerFailure();
+        $_SESSION['flash']['danger'] = 'Echec de l\'inscription ! Veuillez réessayer sinon contactez l\'administrateur';
+        signupPage();
     }  
 }
 /**

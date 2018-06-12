@@ -58,7 +58,8 @@ function listPost($postId)
 
     if (isset($postId) && $postId > 0) {
         if ($isPost == false) {
-            $session->noIdPost();
+            $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
+            errors();
         } else {
             $comment = $commentManager->getComments($postId);
             $user = $userManager->getUser($postId);
@@ -66,6 +67,7 @@ function listPost($postId)
             include 'view/frontend/pages/blog_post.php';
         }
     } else {
-        $session->noIdPost();
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
+        errors();
     }
 }

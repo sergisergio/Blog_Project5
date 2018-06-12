@@ -29,19 +29,26 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
             if (isset($_SESSION['csrfAddCommentToken']) AND isset($csrfAddCommentToken) AND !empty($_SESSION['csrfAddCommentToken']) AND !empty($csrfAddCommentToken)) {
                 if ($_SESSION['csrfAddCommentToken'] == $csrfAddCommentToken) {
                     $addedComment = $commentManager->postComment($postId, $author, $content);
-                    $session->addedComment($postId);
+                    $_SESSION['flash']['success'] = 'Votre commentaire sera validé dans les plus brefs délais !';
+                    header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+                    exit();
                     if ($addedComment === false) {
-                        $session->needsRegister($postId);
+                        $_SESSION['flash']['danger'] = 'Vous devez être inscrit pour ajouter un commentaire !';
+                        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+                        exit();
                     }
                 } else {
                     echo "Erreur de vérification";
                 }
             }
         } else {
-            $session->csrfAddPost($postId);
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+            exit();
         }
     } else {
-        $session->noIdPost();
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
+        errors();
     }
 }
 /**
@@ -65,14 +72,18 @@ function modifyCommentPage($commentId, $postId)
     $isPost = $postManager->checkExistPost($postId);
 
     if (empty($comment) || $commentId <= 0 ) {
-        $session->noIdComment();
+        $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
+        errors();
     } elseif ($isComment == false) {
-        $session->noIdComment();
+        $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
+        errors();
     } elseif ($isPost == false) {
-        $session->noIdPost();
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
+        errors();
     } elseif (isset($commentId) && $commentId > 0) {
         if (($_SESSION['pseudo'] != $comment->getAuthor()) && ($_SESSION['autorisation'] == 0)) {
-            $session->noRightsComments();
+            $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
+            errors();
         } else {
             include 'view/frontend/pages/modifyCommentPage.php';
         }
@@ -98,15 +109,22 @@ function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
                 $comment = $commentManager->getComment($commentId);
                 $deletedComment = $commentManager->deleteCommentRequest($commentId);         
                 if ($deletedComment === false) {
-                    $session->nonDeletedComment($postId);
+                    $_SESSION['flash']['danger'] = 'Impossible de supprimer le commentaire !';
+                    header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+                    exit();
                 } else {
-                    $session->deletedComment($postId);
+                    $_SESSION['flash']['success'] = 'Le commentaire a bien été supprimé !';
+                    header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+                    exit();
                 }
             } elseif (empty($comment) || $commentId <= 0 ) {
-                $session->noIdComment();
+                $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
+                errors();
             }
         } else {
-            $session->csrfDeleteComment($postId);
+            $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+            header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+            exit();
         }
     }
 }
@@ -134,18 +152,26 @@ function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommen
                 if ($_SESSION['csrfModifyCommentToken'] == $csrfModifyCommentToken) {
                     $modifiedComment = $commentManager->modifyCommentRequest($commentId, $author, $content);
                     if ($modifiedComment === false) {
-                        $session->modifyCommentError($commentId);
+                        $_SESSION['flash']['danger'] = 'Impossible de modifier le commentaire !';
+                        header('Location: index.php?action=modifyCommentPage&id=' . $commentId);
+                        exit();
                     } else {
-                        $session->addedComment($postId);
+                        $_SESSION['flash']['success'] = 'Votre commentaire sera validé dans les plus brefs délais !';
+                        header('Location: index.php?action=blogpost&id=' . $postId . '#comments');
+                        exit();
                     }
                 } else {
-                    $session->csrfModifyCommentError($commentId);
+                    $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+                    header('Location: index.php?action=modifyCommentPage&id=' . $commentId);
                 }
             }
         } else {
-            $session->emptyContent();
+            $_SESSION['flash']['danger'] = 'Le champ est vide !';
+            header('Location: index.php?action=modifyCommentPage&id=' . $commentId);
+            exit();
         }
     } elseif (empty($comment) || $commentId <= 0) {
-        $session->noIdComment();
+        $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
+        errors();
     }
 }

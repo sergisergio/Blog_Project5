@@ -52,18 +52,22 @@ function modifyProfile($userId, $avatar, $first_name, $name, $email, $descriptio
                 }
                 $modifiedProfile = $userManager->modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description);
                 if ($modifiedProfile === false) {
-                    $session->errorModifyProfile();
+                    $_SESSION['flash']['danger'] = 'Impossible de modifier le profil !';
+                    profilePage($_SESSION['id']);
                 } else {
-                    $session->successModifyProfile();
+                    $_SESSION['flash']['success'] = 'Modification effectuée !';
+                    profilePage($_SESSION['id']);
                     unset($_SESSION['avatar']);
                     $_SESSION['avatar'] = $avatar;
                 }
             } else {
-                $session->csrfModifyProfile();
+                $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+                profilePage($_SESSION['id']);
             }
         }
     } else {
-        $session->emptyModifyProfile();
+        $_SESSION['flash']['danger'] = 'Tous les champs ne sont pas remplis !';
+        profilePage($_SESSION['id']);
     }
 }
 /**
@@ -86,17 +90,20 @@ function deleteAccount($userId, $csrfDeleteAccountToken)
                 $deleteAccount = $userManager->deleteAccountRequest($userId);
                 $session->stopSession();
                 if ($deleteAccount === false) {
-                    $session->errorDeleteAccount2();
+                    $_SESSION['flash']['danger'] = 'Impossible de supprimer le profil !';
+                    profilePage();
                 } else {
                     home();
                     exit();
                 }
             } else {
-                $session->csrfDeleteAccount();
+                $_SESSION['flash']['danger'] = 'Erreur de vérification !';
+                profilePage();
             }
         }
     } else {
-        $session->errorDeleteAccount();
+        $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet utilisateur !';
+        profilePage();
     }
 }
 /**
