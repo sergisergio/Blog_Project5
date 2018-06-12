@@ -240,12 +240,12 @@ function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
     if (isset($_SESSION['csrfAdminDeleteCommentToken']) AND isset($csrfAdminDeleteCommentToken) AND !empty($_SESSION['csrfAdminDeleteCommentToken']) AND !empty($csrfAdminDeleteCommentToken)) {
         if ($_SESSION['csrfAdminDeleteCommentToken'] == $csrfAdminDeleteCommentToken) {
             if (isset($commentId) && $commentId > 0) {
+                $success = $commentManager->deleteCommentRequest($commentId);
                 if ($success === false) {
                     $session->adminNonDeletedComment();
                 }
                 else 
                 {   
-                    $success = $commentManager->deleteCommentRequest($commentId);
                     $session->admindeletedComment();
                 }
             }

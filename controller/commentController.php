@@ -21,7 +21,7 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
                 if ($_SESSION['csrfAddCommentToken'] == $csrfAddCommentToken) {
                     $addedComment = $commentManager->postComment($postId, $author, $content);
                     $session->addedComment($postId);
-                    if ($affectedLines === false) {
+                    if ($addedComment === false) {
                         $session->needsRegister($postId);
                     }
                 }
@@ -38,7 +38,7 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
     }
     else 
     {
-        $sessionManager->noIdPost();
+        $session->noIdPost();
     }
 }
 /* **************** MODIFY COMMENT PAGE ********/

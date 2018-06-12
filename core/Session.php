@@ -96,21 +96,18 @@ class Session
     {
         $_SESSION['flash']['success'] = 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !';
         loginPage();
-        exit();
     }
 
     public function errorPassword2()
     {
         $_SESSION['flash']['danger'] = 'Mauvais identifiant ou mot de passe !';
         loginPage();
-        exit();
     }
 
     public function emptyContents2()
     {
         $_SESSION['flash']['danger'] = 'Vous devez remplir tous les champs !';
         loginPage();
-        exit();
     }
 
     public function registerSuccess2()
@@ -169,14 +166,12 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
         errors();
-        exit();
     }
 
     public function noRightsComments()
     {
         $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
         errors();
-        exit();
     }
 
     public function emptyContentsAdmin()
@@ -240,21 +235,18 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Impossible de modifier l\'article';
         modifyPostPage($postId);
-        exit();
     }
 
     public function csrfModifyPost($postId)
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
         modifyPostPage($postId);
-        exit();
     }
 
     public function emptyContentModifiedPost($postId)
     {
         $_SESSION['flash']['danger'] = 'Veuillez remplir les champs !';
         modifyPostPage($postId);
-        exit();
     }
 
     public function noIdModifiedPost($postId)
@@ -352,7 +344,6 @@ class Session
     {
         $_SESSION['flash']['danger'] = 'Aucun id ou token ne coresspond à cet email, veuillez réessayer !';
         forgetPasswordPage();
-        exit();
     }
 
     public function changedPassword()
@@ -394,7 +385,7 @@ class Session
     public function changeCsrfError()
     {
         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-        changePasswordPage();
+        loginPage();
     }
 
     public function validateCommentCsrfError()
