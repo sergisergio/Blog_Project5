@@ -240,7 +240,6 @@ try {
     else {
         home();
     }
-}
-catch(Exception $e) {
+} catch(Exception $e) {
     echo 'Erreur : ' . $e->getMessage();
 }
