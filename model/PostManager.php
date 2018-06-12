@@ -1,15 +1,4 @@
 <?php
-/* **************** SUM UP *******************************
-1 . GET ALL POSTS.
-2 . GET ONLY ONE POST.
-3 . ADD A POST.
-4 . DELETE A POST.
-5 . EFFACER UN ARTICLE.
-6 . COUNT POSTS.
-7 . COUNT SEARCH RESULTS.
-8 . SEARCH RESULTS.
-9 . CHECK EXIST POST.
-******************* END SUMP UP *************************/
 
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
@@ -17,8 +6,14 @@ require_once "model/Manager.php";
 use \Philippe\Blog\Model\Entities\PostEntity;
 class PostManager extends Manager
 {
- 
-    /* ************ 1 . GET ALL POSTS *******************/
+    /**
+     * Function getPosts
+     * 
+     * @param start        $start        start
+     * @param postsPerPage $postsPerPage postsPerPage
+     * 
+     * @return [type]
+     */
     public function getPosts($start, $postsPerPage)
     {
         $dbProjet5 = $this->dbConnect();
@@ -29,13 +24,19 @@ class PostManager extends Manager
 			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage
         );
         $posts = [];
-        while ($data = $getPosts->fetch()){
+        while ($data = $getPosts->fetch()) {
             $posts[] = new PostEntity($data);
         }
         $getPosts->closeCursor();
         return $posts;
     }
-    /* ************ 2 . GET ONLY ONE POST ***************/
+    /**
+     * Function getPost
+     * 
+     * @param postId $postId post's id
+     * 
+     * @return [type]
+     */
     public function getPost($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -51,7 +52,18 @@ class PostManager extends Manager
         $post = new PostEntity($data);
         return $post;
     }
-    /* ************ 3 . ADD A POST **********************/
+    /**
+     * Function addPostRequest
+     * 
+     * @param title    $title    title
+     * @param chapo    $chapo    chapo
+     * @param author   $author   author
+     * @param content  $content  content
+     * @param category $category category
+     * @param image    $image    image
+     *
+     * @return [type]
+     */
     public function addPostRequest($title, $chapo, $author, $content, $category, $image)
     {
         $dbProjet5 = $this->dbConnect();
@@ -72,7 +84,17 @@ class PostManager extends Manager
         $addedPost = new PostEntity($data);
         return $addedPost;
     }
-    /* ************ 4 . MODIFY A POST *******************/
+    /**
+     * Function modifyPostRequest
+     * 
+     * @param postId  $postId  the post's id
+     * @param title   $title   title
+     * @param chapo   $chapo   chapo
+     * @param author  $author  author
+     * @param content $content content
+     * 
+     * @return [type]
+     */
     public function modifyPostRequest($postId, $title, $chapo, $author, $content)
     {
         $dbProjet5 = $this->dbConnect();
@@ -89,7 +111,13 @@ class PostManager extends Manager
         $modifiedPost = new PostEntity($data);
         return $modifiedPost;
     }
-    /* ************ 5 . DELETE A POST *******************/
+    /**
+     * Function deletePostRequest
+     * 
+     * @param postId $postId the post's id
+     * 
+     * @return [type]
+     */
     public function deletePostRequest($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -100,7 +128,11 @@ class PostManager extends Manager
         $deletedPost = new PostEntity($data);
         return $deletedPost;
     }
-    /* ************ 6 . COUNT POSTS *********************/
+    /**
+     * Function countPosts
+     * 
+     * @return [type]
+     */
     public function countPosts()
     {
         $dbProjet5 = $this->dbConnect();
@@ -108,14 +140,26 @@ class PostManager extends Manager
         $postsTotal = $postsTotalReq->rowCount();
         return $postsTotal;
     }
-    /* ************ 7 . COUNT SEARCH RESULTS ************/
+    /**
+     * Function countSearchRequest
+     * 
+     * @param search $search search
+     * 
+     * @return [type]
+     */
     public function countSearchRequest($search)
     {
         $dbProjet5 = $this->dbConnect();
         $countSearchResults  = $dbProjet5->query("SELECT id, title, chapo, content FROM Posts WHERE content LIKE '%$search%' ");
         return $countSearchResults;
     }
-    /* ************ 8 . SEARCH RESULTS ******************/
+    /**
+     * Function searchRequest
+     * 
+     * @param search $search search
+     * 
+     * @return [type]
+     */
     public function searchRequest($search)
     {
         $dbProjet5 = $this->dbConnect();
@@ -128,7 +172,13 @@ class PostManager extends Manager
         $results->closeCursor(); 
         return $searchResults;
     }
-    /* ************ 9 . CHECK EXIST POST ******************/
+    /**
+     * Function checkExistPost
+     * 
+     * @param postId $postId postId
+     * 
+     * @return [type]
+     */
     public function checkExistPost($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -138,7 +188,13 @@ class PostManager extends Manager
         $isPost = $existPost->fetch();
         return $isPost;
     }
-    /* ************* 11. SEARCH *****************/
+    /**
+     * Function categoryResultsRequest
+     * 
+     * @param categoryId $categoryId categoryId
+     * 
+     * @return [type]
+     */
     function categoryResultsRequest($categoryId)
     {
         $dbProjet5 = $this->dbConnect();

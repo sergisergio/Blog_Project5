@@ -1,33 +1,16 @@
 <?php
-/* ****************** SUM UP *********************
-1 . GET ALL USERS.
-2 . GET ONLY ONE USER.
-3 . GET LEVEL AUTHORIZATION.
-4 . REGISTRATION.
-5 . CONFIRM REGISTRATION.
-6 . PSEUDO ALREADY USED ?
-7 . EMAIL ALREADY USED ?
-8 . CONNECTION.
-9 . VIEW PROFILE.
-10. DELETE ACCOUNT.
-11. FORGET PASSWORD.
-12. CHANGE PASSWORD.
-13. CHECK RESET TOKEN.
-14. DELETE A USER.
-15. GIVE RIGHT ADMINS.
-16. CANCEL RIGHT ADMINS.
-********************* END SUM UP *****************/
+
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
-
-/*require_once "model/Entities/commentEntity.php";
-require_once "model/Entities/postEntity.php";
-require_once "model/Entities/userEntity.php";*/
 
 use \Philippe\Blog\Model\Entities\UserEntity;
 class UserManager extends Manager
 {
-    /* ******** 1 . GET ALL USERS **********************/
+    /**
+     * Function getUsers
+     * 
+     * @return [type]
+     */
     public function getUsers()
     {
         $dbProjet5 = $this->dbConnect();
@@ -43,7 +26,13 @@ class UserManager extends Manager
         $getUsers->closeCursor();
         return $users;
     }
-    /* ******** 2 . GET ONLY ONE USER ******************/
+    /**
+     * Function getUser
+     * 
+     * @param userId $userId userId
+     * 
+     * @return [type]
+     */
     public function getUser($userId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -58,7 +47,13 @@ class UserManager extends Manager
         $post = new UserEntity($data);
         return $post;
     }
-    /* ******** 3 . GET LEVEL AUTHORIZATION ************/
+    /**
+     * Function getAuthorization
+     * 
+     * @param pseudo $pseudo pseudo
+     * 
+     * @return [type]
+     */
     public function getAuthorization($pseudo)
     {
         $dbProjet5 = $this->dbConnect();
@@ -74,7 +69,15 @@ class UserManager extends Manager
         $access = new UserEntity($data);
         return $access;
     }
-    /* ******** 4 . REGISTRATION ***********************/
+    /**
+     * Function addUserRequest
+     * 
+     * @param pseudo $pseudo pseudo
+     * @param email  $email  email
+     * @param passe  $passe  password
+     *
+     * @return [type]
+     */
     public function addUserRequest($pseudo, $email, $passe)
     {
         $dbProjet5 = $this->dbConnect();
@@ -108,7 +111,13 @@ class UserManager extends Manager
         $users = new UserEntity($data);
         return $users;
     }
-    /* ******** 5 . CONFIRM REGISTRATION ***************/
+    /**
+     * Function setActiveRequest
+     * 
+     * @param userId $userId userId
+     *
+     * @return [type]
+     */
     public function setActiveRequest($userId) 
     {
         $dbProjet5 = $this->dbConnect();
@@ -117,7 +126,13 @@ class UserManager extends Manager
         $activeUser = $setActive->execute();
         return $activeUser;
     }
-    /* ******** 6 . PSEUDO ALREADY USED ? **************/
+    /**
+     * Function existPseudo
+     * 
+     * @param pseudo $pseudo pseudo
+     * 
+     * @return [type]
+     */
     public function existPseudo($pseudo)
     {
         $dbProjet5 = $this->dbConnect();
@@ -127,7 +142,13 @@ class UserManager extends Manager
         $user = $existPseudo->fetch();
         return $user;
     }
-    /* ******** 7 . EMAIL ALREADY USED ? ***************/
+    /**
+     * Function existMail
+     * 
+     * @param email $email email
+     * 
+     * @return [type]
+     */
     public function existMail($email)
     {
         $dbProjet5 = $this->dbConnect();
@@ -137,7 +158,14 @@ class UserManager extends Manager
         $usermail = $existMail->fetch();
         return $usermail;
     }
-    /* ******** 8 . CONNECTION *************************/
+    /**
+     * Function loginRequest
+     * 
+     * @param pseudo $pseudo pseudo
+     * @param passe  $passe  password
+     * 
+     * @return [type]
+     */
     public function loginRequest($pseudo, $passe)
     {
         $dbProjet5 = $this->dbConnect();
@@ -148,8 +176,18 @@ class UserManager extends Manager
         $user = new UserEntity($data);
         return $user;
     }
-    /* ******** 9 . VIEW PROFILE ***********************/
-
+    /**
+     * Function modifyProfileRequest
+     * 
+     * @param userId      $userId      userId
+     * @param avatar      $avatar      avatar
+     * @param first_name  $first_name  $first_name
+     * @param name        $name        name
+     * @param email       $email       email
+     * @param description $description description
+     * 
+     * @return [type]
+     */
     public function modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description) 
     {
         $dbProjet5 = $this->dbConnect();
@@ -164,7 +202,13 @@ class UserManager extends Manager
         $modifiedProfile = $modifyProfile->execute();
         return $modifiedProfile;
     }
-    /* ******* 10 . DELETE ACCOUNT *********************/
+    /**
+     * Function deleteAccountRequest
+     * 
+     * @param userId $userId userId
+     * 
+     * @return [type]
+     */
     public function deleteAccountRequest($userId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -174,18 +218,22 @@ class UserManager extends Manager
         
         return $deleteAccount;
     }
-    /* ******* 11. FORGET PASSWORD *********************/
-
+    /**
+     * Function forgetPasswordRequest
+     * 
+     * @param email $email email
+     * 
+     * @return [type]
+     */
     public function forgetPasswordRequest($email) 
     {
-        
         $dbProjet5 = $this->dbConnect();
         
         $forgetPassword = $dbProjet5->prepare('SELECT * FROM Users where email = :email AND registration_date IS NOT NULL');
         $forgetPassword->bindParam(':email', $email);
         $forgetPassword->execute();
         $user = $forgetPassword->fetch();
-        if($user) {
+        if ($user) {
 
             function str_random($length)
             {
@@ -215,13 +263,19 @@ class UserManager extends Manager
 
             /* test mail local */
             //mail($email, $subject, "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
-        }
-        else {
+        } else {
             echo 'Aucun compte ne correspond à cette adresse';
         } 
         return $user;
     }
-    /* ******* 12. CHANGE PASSWORD *********************/
+    /**
+     * Function changePasswordRequest
+     * 
+     * @param userId $userId userId
+     * @param passe  $passe  password
+     * 
+     * @return [type]
+     */
     public function changePasswordRequest($userId, $passe) 
     {
         $dbProjet5 = $this->dbConnect();
@@ -233,7 +287,14 @@ class UserManager extends Manager
         $changePassword = $changePassword->execute();
         return $changePassword;
     }
-    /* ******* 13. CHECK RESET TOKEN *******************/
+    /**
+     * Function checkResetTokenRequest
+     * 
+     * @param userId $userId userId
+     * @param token  $token  token
+     * 
+     * @return [type]
+     */
     public function checkResetTokenRequest($userId, $token)
     {
 
@@ -246,7 +307,13 @@ class UserManager extends Manager
         $user = $checkResetToken->fetch();
         return $user;
     }
-    /* ******* 14. DELETE A USER ***********************/
+    /**
+     * Function deleteUserRequest
+     * 
+     * @param userId $userId ueserId
+     * 
+     * @return [type]
+     */
     public function deleteUserRequest($userId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -257,7 +324,13 @@ class UserManager extends Manager
         $affectedUser = $deleteUser->execute();
         return $affectedUser;
     }
-    /* ******* 15. GIVE RIGHT ADMINS *******************/
+    /**
+     * Function giveAdminRightsRequest
+     * 
+     * @param userId $userId userId
+     * 
+     * @return [type]
+     */
     public function giveAdminRightsRequest($userId) 
     {
         $dbProjet5 = $this->dbConnect();
@@ -267,7 +340,13 @@ class UserManager extends Manager
         $adminRights = $giveAdminRights->execute();
         return $adminRights;
     }
-    /* ******* 16. CANCEL RIGHT ADMINS *****************/
+    /**
+     * FunctionstopAdminRightsRequest
+     * 
+     * @param userId $userId userId
+     * 
+     * @return [type]
+     */
     public function stopAdminRightsRequest($userId) 
     {
         $dbProjet5 = $this->dbConnect();
@@ -277,7 +356,13 @@ class UserManager extends Manager
         $adminRights = $stopAdminRights->execute();
         return $adminRights;
     }
-    /* ******* 17 . INFO USER COOKIE *****************************/
+    /**
+     * Function userCookie
+     * 
+     * @param cookiepseudo $cookiepseudo cookiepseudo
+     * 
+     * @return [type]
+     */
     public function userCookie($cookiepseudo) 
     {
         $dbProjet5 = $this->dbConnect();

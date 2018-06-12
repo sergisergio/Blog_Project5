@@ -4,7 +4,13 @@ namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class SecurityManager extends Manager
 {
-    /* ************ GET IPs ****************************/
+    /**
+     * Function checkBruteForce
+     * 
+     * @param ip $ip IP address
+     * 
+     * @return [type]
+     */
     public function checkBruteForce($ip)
     {
         $dbProjet5 = $this->dbConnect();
@@ -14,7 +20,13 @@ class SecurityManager extends Manager
         $count = $search->rowCount();
         return $count;
     }
-    /* ************ SET IPs ****************************/
+    /**
+     * Function registerAttempt
+     * 
+     * @param ip $ip IP address
+     * 
+     * @return [type]
+     */
     public function registerAttempt($ip) 
     {
         $dbProjet5 = $this->dbConnect();
@@ -22,7 +34,11 @@ class SecurityManager extends Manager
         $req->bindParam(':ip', $ip);
         $req->execute();
     }
-    /* ************ CSRF *******************************/
+    /**
+     * Function checkCSRF
+     * 
+     * @return [type]
+     */
     public function checkCSRF() 
     {
         if (!isset($_SESSION['csrf_token'])) {
