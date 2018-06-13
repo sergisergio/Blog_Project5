@@ -109,7 +109,7 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
     }
 }
 /**
- * Function confirmRegistration
+ * Confirm the registration
  * 
  * @param int    $userId    the user's id
  * @param string $userToken the token to confirm the registration
