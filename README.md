@@ -4,6 +4,8 @@
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sergisergio/Blog_Project5/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sergisergio/Blog_Project5/?branch=master)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/67c34d5964e136ebc035/maintainability)](https://codeclimate.com/github/sergisergio/Blog_Project5/maintainability)
+
 
 ## Purpose
 This is the 5th project in the Openclassrooms "PHP/Symfony" Course. The main goal is to create my own blog with PHP. No frameworks such as Laravel or Symfony for this blog. Everything is done from A to Z.
