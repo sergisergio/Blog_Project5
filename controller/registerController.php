@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Register Controller
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 use \Philippe\Blog\Model\Entities\UserEntity;
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Core\Session;
@@ -10,7 +21,7 @@ use PHPMailer\PHPMailer\Exception;
 /**
  * Function signupPage
  * 
- * @return [type]
+ * @return mixed
  */
 function signupPage()
 {
@@ -19,13 +30,13 @@ function signupPage()
 /**
  * Function addUser
  * 
- * @param pseudo          $pseudo          pseudo
- * @param email           $email           email
- * @param passe           $passe           password1
- * @param passe2          $passe2          password2
- * @param csrfSignupToken $csrfSignupToken the token to try to avoid csrf
+ * @param string $pseudo          pseudo
+ * @param string $email           email
+ * @param string $passe           password1
+ * @param string $passe2          password2
+ * @param string $csrfSignupToken the token to try to avoid csrf
  *
- * @return [type]
+ * @return mixed
  */
 function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
 {
@@ -41,7 +52,7 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
         } elseif ($usermail) {
             $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
             signupPage();
-        } elseif(empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) {
+        } elseif (empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) {
             $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide (caractères alphanumériques et underscore permis... !';
             signupPage();
         } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -101,10 +112,10 @@ function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
 /**
  * Function confirmRegistration
  * 
- * @param userId    $userId    the user's id
- * @param userToken $userToken the token to confirm the registration
+ * @param int    $userId    the user's id
+ * @param string $userToken the token to confirm the registration
  * 
- * @return [type]
+ * @return mixed
  */
 function confirmRegistration($userId, $userToken)
 {
@@ -143,9 +154,9 @@ function confirmRegistration($userId, $userToken)
 /**
  * Function setActiveUser
  * 
- * @param userId $userId the user's id
+ * @param id $userId the user's id
  *
- * @return [type]
+ * @return mixed
  */
 function setActiveUser($userId)
 {

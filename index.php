@@ -1,4 +1,16 @@
 <?php
+/**
+ * My own blog.
+ *
+ * Router
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 session_start();
 require "vendor/autoload.php";
 
@@ -54,7 +66,8 @@ try {
         } elseif ($_GET['action'] == 'contact') {
             contact(
                 $_POST['name'], $_POST['email'], $_POST['subject'],
-                $_POST['message'], $_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']
+                $_POST['message'], $_POST['g-recaptcha-response'],
+                $_SERVER['REMOTE_ADDR']
             );
         } elseif ($_GET['action'] == 'search') {
             search($_POST['search'], $_POST['token']);
@@ -92,8 +105,9 @@ try {
             manageComments();
         } elseif ($_GET['action'] == 'addpost') {
             addPost(
-                $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'],
-                $_FILES['file_extension']['name'], $_POST['category'], $_POST['token']
+                $_POST['title'], $_POST['chapo'], $_SESSION['id'],
+                $_POST['content'], $_FILES['file_extension']['name'], 
+                $_POST['category'], $_POST['token']
             );
         } elseif ($_GET['action'] == 'modifyPostPage') {
                 modifyPostPage($_GET['id']);
@@ -119,7 +133,7 @@ try {
         } elseif ($_GET['action'] == 'addcategory') {
             addCategory($_POST['category'], $_POST['token']);
         }
-    } else {
+    } else { 
         home();
     }
 } catch(Exception $e) {

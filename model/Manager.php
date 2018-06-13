@@ -1,4 +1,16 @@
 <?php
+/**
+ * My own blog.
+ *
+ * Main manager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model;
 
 class Manager
@@ -7,7 +19,7 @@ class Manager
     /**
      * Function dbConnect
      * 
-     * @return [type]
+     * @return mixed
      */
     protected function dbConnect()
     {

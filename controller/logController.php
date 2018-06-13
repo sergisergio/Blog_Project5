@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Log Controller
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 use \Philippe\Blog\Model\Entities\UserEntity;
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Core\Session;
@@ -8,7 +19,7 @@ use \Philippe\Blog\Model\SecurityManager;
 /**
  * Function loginPage
  * 
- * @return [type]
+ * @return mixed
  */
 function loginPage()
 {
@@ -17,13 +28,13 @@ function loginPage()
 /**
  * Function login
  * 
- * @param pseudo         $pseudo         pseudo
- * @param passe          $passe          password
- * @param ip             $ip             IP address
- * @param csrfLoginToken $csrfLoginToken token to avoid csrf
- * @param remember       $remember       remember session to reconnect
+ * @param string $pseudo         pseudo
+ * @param string $passe          password
+ * @param string $ip             IP address
+ * @param string $csrfLoginToken token to avoid csrf
+ * @param string $remember       remember session to reconnect
  * 
- * @return [type]
+ * @return mixed
  */
 function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
 {
@@ -73,7 +84,7 @@ function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
 /**
  * Function logout
  * 
- * @return [type]
+ * @return mixed
  */
 function logout()
 {
@@ -83,7 +94,7 @@ function logout()
 /**
  * Function forgetPasswordPage
  * 
- * @return [type]
+ * @return mixed
  */
 function forgetPasswordPage()
 {
@@ -92,15 +103,14 @@ function forgetPasswordPage()
 /**
  * Function forgetPassword
  * 
- * @param email           $email           email
- * @param csrfForgetToken $csrfForgetToken token to avoid csrf
+ * @param string $email           email
+ * @param string $csrfForgetToken token to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function forgetPassword($email, $csrfForgetToken)
 {
-    $userManager = new UserManager();
-    $session = new Session();  
+    $userManager = new UserManager(); 
 
     $_SESSION['forgetToken'] = $csrfForgetToken;  
     if (empty($email)) {
@@ -132,10 +142,10 @@ function forgetPassword($email, $csrfForgetToken)
 /**
  * Function changePasswordPage
  * 
- * @param userId     $userId     user's id
- * @param resetToken $resetToken token to reset the password
+ * @param int    $userId     user's id
+ * @param string $resetToken token to reset the password
  * 
- * @return [type]
+ * @return mixed
  */
 function changePasswordPage($userId, $resetToken)
 {
@@ -158,11 +168,11 @@ function changePasswordPage($userId, $resetToken)
 /**
  * Function changePassword
  * 
- * @param userId                  $userId                  the user's id
- * @param passe                   $passe                   password
- * @param csrfChangePasswordToken $csrfChangePasswordToken the token to avoid csrf
+ * @param int    $userId                  the user's id
+ * @param string $passe                   password
+ * @param string $csrfChangePasswordToken the token to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function changePassword($userId, $passe, $csrfChangePasswordToken)
 { 

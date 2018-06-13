@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Profile Controller
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 use \Philippe\Blog\Model\Entities\UserEntity;
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Core\Session;
@@ -7,9 +18,9 @@ use \Philippe\Blog\Core\Session;
 /**
  * Function profilePage
  * 
- * @param userId $userId the user's id
+ * @param int $userId the user's id
  * 
- * @return [type]
+ * @return mixed
  */
 function profilePage($userId)
 {
@@ -20,15 +31,15 @@ function profilePage($userId)
 /**
  * Function modifyProfile
  * 
- * @param userId           $userId           the user's id
- * @param avatar           $avatar           avatar
- * @param first_name       $first_name       first_name
- * @param name             $name             name
- * @param email            $email            email
- * @param description      $description      description
- * @param csrfProfileToken $csrfProfileToken token to avoid csrf
+ * @param int    $userId           the user's id
+ * @param string $avatar           avatar
+ * @param string $first_name       first_name
+ * @param string $name             name
+ * @param string $email            email
+ * @param string $description      description
+ * @param string $csrfProfileToken token to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function modifyProfile($userId, $avatar, $first_name, $name, $email, $description, $csrfProfileToken)
 {
@@ -73,10 +84,10 @@ function modifyProfile($userId, $avatar, $first_name, $name, $email, $descriptio
 /**
  * Function deleteAccount
  * 
- * @param userId                 $userId                 the user's id
- * @param csrfDeleteAccountToken $csrfDeleteAccountToken the token to avoid csrf
+ * @param int    $userId                 the user's id
+ * @param string $csrfDeleteAccountToken the token to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function deleteAccount($userId, $csrfDeleteAccountToken)
 {
@@ -109,9 +120,9 @@ function deleteAccount($userId, $csrfDeleteAccountToken)
 /**
  * Function publicProfile
  * 
- * @param commentAuthor $commentAuthor comment's author
+ * @param string $commentAuthor comment's author
  * 
- * @return [type]
+ * @return mixed
  */
 function publicProfile($commentAuthor)
 {

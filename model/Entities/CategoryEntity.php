@@ -1,4 +1,16 @@
 <?php 
+/**
+ * My own blog.
+ *
+ * Category Entity
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model\Entities;
 class CategoryEntity
 {
@@ -8,9 +20,9 @@ class CategoryEntity
     /**
      * Construct
      *
-     * @param datas $datas datas
+     * @param array $datas datas
      *
-     * @return [type] 
+     * @return array 
      */
     public function __construct($datas) 
     {
@@ -20,9 +32,9 @@ class CategoryEntity
     /**
      * Hydrate
      * 
-     * @param datas $datas datas
+     * @param array $datas datas
      * 
-     * @return [type]
+     * @return array
      */
     public function hydrate($datas) 
     {
@@ -39,9 +51,9 @@ class CategoryEntity
     /**
      * Setter Id
      * 
-     * @param category_id $category_id category's id
+     * @param int $category_id category's id
      *
-     * @return [type]
+     * @return int
      */
     public function setCategoryId($category_id)
     {
@@ -53,9 +65,9 @@ class CategoryEntity
     /**
      * Setter category
      * 
-     * @param category $category category
+     * @param string $category category
      *
-     * @return [type]
+     * @return string
      */
     public function setCategory($category)
     {
@@ -66,7 +78,7 @@ class CategoryEntity
     /**
      * Getter Id
      * 
-     * @return [type]
+     * @return id
      */
     public function getCategoryId()
     {
@@ -75,7 +87,7 @@ class CategoryEntity
     /**
      * Getter Category
      * 
-     * @return [type]
+     * @return string
      */
     public function getCategory()
     {

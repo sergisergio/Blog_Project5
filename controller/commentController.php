@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Comment Controller
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 use \Philippe\Blog\Model\Entities\PostEntity;
 use \Philippe\Blog\Model\Entities\CommentEntity;
 use \Philippe\Blog\Model\Entities\UserEntity;
@@ -11,17 +22,16 @@ use \Philippe\Blog\Core\Session;
 /**
  * Function addComment
  * 
- * @param postId              $postId              the post's id
- * @param author              $author              the author
- * @param content             $content             the content
- * @param csrfAddCommentToken $csrfAddCommentToken the token to tryto avoid csrf
+ * @param int                 $postId              the post's id
+ * @param string              $author              the author
+ * @param string              $content             the content
+ * @param string              $csrfAddCommentToken the token to tryto avoid csrf
  *
- * @return [<description>]
+ * @return mixed
  */
 function addComment($postId, $author, $content, $csrfAddCommentToken)
 {
     $commentManager = new CommentManager();
-    $session = new Session();
     
     $_SESSION['csrfAddPostToken'] = $csrfAddPostToken; 
     if (isset($postId) && $postId > 0) {
@@ -54,10 +64,10 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
 /**
  * Function modifyCommentPage
  * 
- * @param commentId $commentId the comment's id
- * @param postId    $postId    the post's id
+ * @param int       $commentId the comment's id
+ * @param int    $postId    the post's id
  * 
- * @return [type]
+ * @return mixed
  */
 function modifyCommentPage($commentId, $postId)
 {
@@ -92,16 +102,15 @@ function modifyCommentPage($commentId, $postId)
 /**
  * Function deleteComment
  * 
- * @param commentId              $commentId              the comment's id
- * @param postId                 $postId                 the post's id
- * @param csrfDeleteCommentToken $csrfDeleteCommentToken the token to try to avoid csrf
+ * @param int                    $commentId              the comment's id
+ * @param int                    $postId                 the post's id
+ * @param string                 $csrfDeleteCommentToken the token to try to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
 {
     $commentManager = new CommentManager();
-    $session = new Session();
     $_SESSION['csrfDeleteCommentToken'] = $csrfDeleteCommentToken;
     if (isset($_SESSION['csrfDeleteCommentToken']) AND isset($csrfDeleteCommentToken) AND !empty($_SESSION['csrfDeleteCommentToken']) AND !empty($csrfDeleteCommentToken)) {
         if ($_SESSION['csrfDeleteCommentToken'] == $csrfDeleteCommentToken) {
@@ -131,19 +140,18 @@ function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
 /**
  * Function modifyComment
  * 
- * @param commentId              $commentId              the comment's id
- * @param author                 $author                 the author
- * @param content                $content                the content
- * @param postId                 $postId                 the post's id
- * @param csrfModifyCommentToken $csrfModifyCommentToken the token to try to avoid csrf
+ * @param id                     $commentId              the comment's id
+ * @param string                 $author                 the author
+ * @param string                 $content                the content
+ * @param id                     $postId                 the post's id
+ * @param string                 $csrfModifyCommentToken the token to try to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommentToken)
 {
     $commentManager = new CommentManager();
     $comment = $commentManager->getComment($commentId);
-    $session = new Session();
 
     $_SESSION['csrfModifyCommentToken'] = $csrfModifyCommentToken; 
     if (isset($commentId) && $commentId > 0) {

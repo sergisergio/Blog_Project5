@@ -1,15 +1,26 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Search Controller
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 use \Philippe\Blog\Model\Entities\PostEntity;
 use \Philippe\Blog\Model\PostManager;
 
 /**
  * Function search
  * 
- * @param search          $search          search
- * @param csrfSearchToken $csrfSearchToken the token to try to avoid csrf
+ * @param string $search          search
+ * @param string $csrfSearchToken the token to try to avoid csrf
  * 
- * @return [type]
+ * @return string
  */
 function search($search, $csrfSearchToken)
 {

@@ -1,19 +1,30 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Contact Controller
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 /**
  * Function contact
  * 
- * @param name     $name     mailer's name
- * @param email    $email    mailer's email
- * @param subject  $subject  mailer's subject
- * @param message  $message  mailer's message
- * @param response $response captcha
- * @param remoteip $remoteip mailer's IP address
+ * @param string $name     mailer's name
+ * @param string $email    mailer's email
+ * @param string $subject  mailer's subject
+ * @param string $message  mailer's message
+ * @param string $response captcha
+ * @param string $remoteip mailer's IP address
  * 
- * @return [type]
+ * @return mixed
  */
 function contact($name, $email, $subject, $message, $response, $remoteip)
 {

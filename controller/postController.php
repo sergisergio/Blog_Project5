@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Post Controller
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 use \Philippe\Blog\Model\Entities\PostEntity;
 use \Philippe\Blog\Model\Entities\CommentEntity;
 use \Philippe\Blog\Model\Entities\UserEntity;
@@ -11,9 +22,9 @@ use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Core\Session;
 
 /**
- * Function listsPosts
+ * Show all blog posts
  * 
- * @return [type]
+ * @return mixed
  */
 function listPosts()
 {
@@ -37,11 +48,11 @@ function listPosts()
     include 'view/frontend/pages/blog.php';
 }
 /**
- * Function listPost
+ * Show only one blog post
  * 
- * @param postId $postId the post's id
+ * @param int $postId the post's id
  * 
- * @return [type]
+ * @return mixed
  */
 function listPost($postId)
 {

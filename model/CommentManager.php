@@ -1,18 +1,16 @@
 <?php
-/* ************************* SUM UP *************************************
-1 . GET ALL COMMENTS.
-2 . GET ONLY ONE COMMENT.
-3 . ADD A COMMENT.
-4 . DELETE A COMMENT.
-5 . MODIFY A COMMENT.
-6 . VIEW COMS NOT YET VALIDATED.
-7 . VALIDATE A COMMENT.
-8 . COUNT VALIDATED COMMENTS.
-9 . COUNT NOT YET VALIDATED COMMENTS.
-10. GET USER BY COMMENT.
-11. CHECK EXIST COMMENT.
-************************* END SUM UP ***********************************/
-
+/**
+ * My own blog.
+ *
+ * Comment manager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 
@@ -20,7 +18,13 @@ use \Philippe\Blog\Model\Entities\CommentEntity;
 use \Philippe\Blog\Model\Entities\UserEntity;
 class CommentManager extends Manager
 {
-    /* *********** 1 . GET ALL COMMENTS *********************/
+    /**
+     * Get all comments
+     * 
+     * @param int $postId postId
+     * 
+     * @return int
+     */
     public function getComments($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -41,7 +45,13 @@ class CommentManager extends Manager
         $getComments->closeCursor();
         return $comment;
     }
-    /* *********** 2 . GET ONLY ONE COMMENT *****************/
+    /**
+     * Get only one comment
+     * 
+     * @param int $commentId commentId
+     * 
+     * @return int
+     */
     public function getComment($commentId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -57,7 +67,15 @@ class CommentManager extends Manager
         $comment = new CommentEntity($data);
         return $comment;
     }
-    /* *********** 3 . ADD A COMMENT ************************/
+    /**
+     * Add a comment
+     * 
+     * @param int    $postId  postId
+     * @param string $author  author
+     * @param string $content content
+     * 
+     * @return mixed
+     */
     public function postComment($postId, $author, $content)
     {
         $dbProjet5 = $this->dbConnect();
@@ -70,7 +88,13 @@ class CommentManager extends Manager
         $addedComment = new CommentEntity($data);
         return $addedComment;
     }
-    /* *********** 4 . DELETE A COMMENT *********************/
+    /**
+     * Delete a comment
+     * 
+     * @param int $commentId commentId
+     * 
+     * @return int
+     */
     public function deleteCommentRequest($commentId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -81,7 +105,15 @@ class CommentManager extends Manager
         $deletedComment = new CommentEntity($data);
         return $deletedComment;
     }
-    /* *********** 5 . MODIFY A COMMENT *********************/
+    /**
+     * Modify a comment
+     * 
+     * @param int    $commentId commentId
+     * @param string $author    author
+     * @param string $content   content
+     * 
+     * @return mixed
+     */
     public function modifyCommentRequest($commentId, $author, $content)
     {
         $dbProjet5 = $this->dbConnect();
@@ -94,7 +126,11 @@ class CommentManager extends Manager
         $modifiedComment = new CommentEntity($data);
         return $modifiedComment;
     }
-    /* *********** 6 . VIEW COMS NOT YET VALIDATED **********/
+    /**
+     * View comments not yet validated
+     * 
+     * @return mixed
+     */
     public function submittedCommentRequest()
     {
         $dbProjet5 = $this->dbConnect();
@@ -108,13 +144,19 @@ class CommentManager extends Manager
         );
         $modifyComment->execute(array());
         $submittedComment = [];
-        while ($data = $modifyComment->fetch()){
+        while ($data = $modifyComment->fetch()) {
             $submittedComment[] = new CommentEntity($data);
         }
         $modifyComment->closeCursor();
         return $submittedComment;
     }
-    /* *********** 7 . VALIDATE A COMMENT *******************/
+    /**
+     * Validate a comment
+     * 
+     * @param int $commentId commentId
+     * 
+     * @return mixed
+     */
     public function validateCommentRequest($commentId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -123,7 +165,13 @@ class CommentManager extends Manager
         $validated = $validateComment->execute();
         return $validated;
     }
-    /* *********** 8 . COUNT VALIDATED COMMENTS *************/
+    /**
+     * Count validated comments
+     * 
+     * @param int $postId postId
+     * 
+     * @return int
+     */
     public function countCommentRequest($postId)
     {
         $dbProjet5 = $this->dbConnect();
@@ -133,7 +181,11 @@ class CommentManager extends Manager
         $nbCount = $countComment->rowCount();
         return $nbCount;
     }
-    /* *********** 9 . COUNT NOT YET VALIDATED COMMENTS *****/
+    /**
+     * Count not yet validated comments
+     * 
+     * @return mixed
+     */
     public function countCommentBackRequest()
     {
         $dbProjet5 = $this->dbConnect();
@@ -141,7 +193,13 @@ class CommentManager extends Manager
         $nbCount = $countCommentBack->rowCount();
         return $nbCount;
     }
-    /* ********** 10 . GET USER BY COMMENT ******************/
+    /**
+     * Get user by comment
+     * 
+     * @param string $commentAuthor commentAuthor
+     * 
+     * @return string
+     */
     public function getUserByCommentRequest($commentAuthor)
     {
         $dbProjet5 = $this->dbConnect();
@@ -152,7 +210,13 @@ class CommentManager extends Manager
         $user = new UserEntity($data);
         return $user;
     }
-    /* ************ 11 . CHECK EXIST COMMENT ******************/
+    /**
+     * Check exist Comment
+     * 
+     * @param int $commentId commentId
+     * 
+     * @return int
+     */
     public function checkExistComment($commentId)
     {
         $dbProjet5 = $this->dbConnect();

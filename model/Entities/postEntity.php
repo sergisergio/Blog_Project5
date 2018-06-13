@@ -1,4 +1,16 @@
 <?php 
+/**
+ * My own blog.
+ *
+ * Post Entity
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model\Entities;
 class PostEntity
 {
@@ -16,9 +28,9 @@ class PostEntity
     /**
      * Construct
      * 
-     * @param datas $datas datas
+     * @param array $datas datas
      *
-     * @return [type] 
+     * @return array 
      */
     public function __construct($datas) 
     {
@@ -27,9 +39,9 @@ class PostEntity
     /**
      * Hydrate
      * 
-     * @param datas $datas datas
+     * @param array $datas datas
      * 
-     * @return [type]
+     * @return array
      */
     public function hydrate($datas) 
     {
@@ -54,9 +66,9 @@ class PostEntity
     /**
      * Setter Id
      * 
-     * @param id $id id
+     * @param int $id id
      *
-     * @return [type] [<description>]
+     * @return int
      */
     public function setId($id)
     {
@@ -68,9 +80,9 @@ class PostEntity
     /**
      * Setter Title
      * 
-     * @param title $title title
+     * @param string $title title
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setTitle($title)
     {
@@ -81,9 +93,9 @@ class PostEntity
     /**
      * Setter Chapo
      * 
-     * @param chapo $chapo chapo
+     * @param string $chapo chapo
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setChapo($chapo)
     {
@@ -94,9 +106,9 @@ class PostEntity
     /**
      * Setter Intro
      * 
-     * @param intro $intro intro
+     * @param string $intro intro
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setIntro($intro)
     {
@@ -107,9 +119,9 @@ class PostEntity
     /**
      * Setter Content
      * 
-     * @param content $content content
+     * @param string $content content
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setContent($content)
     {
@@ -120,9 +132,9 @@ class PostEntity
     /**
      * Setter Author
      * 
-     * @param author $author author
+     * @param string $author author
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setAuthor($author)
     {
@@ -133,9 +145,9 @@ class PostEntity
     /**
      * Setter Creationdate
      * 
-     * @param creation_date $creation_date creation date
+     * @param string $creation_date creation date
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setCreationDate($creation_date)
     {
@@ -144,9 +156,9 @@ class PostEntity
     /**
      * Setter lastupdated
      * 
-     * @param last_updated $last_updated last_updated
+     * @param string $last_updated last_updated
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setLastUpdated($last_updated)
     {
@@ -155,9 +167,9 @@ class PostEntity
     /**
      * Setter image
      * 
-     * @param file_extension $file_extension file_extension
+     * @param string $file_extension file_extension
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setFileExtension($file_extension)
     {
@@ -168,9 +180,9 @@ class PostEntity
     /**
      * Setter category
      * 
-     * @param category $category category
+     * @param string $category category
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setCategory($category)
     {
@@ -182,7 +194,7 @@ class PostEntity
     /**
      * Getter Id
      * 
-     * @return [type]
+     * @return int
      */
     public function getId()
     {
@@ -191,7 +203,7 @@ class PostEntity
     /**
      * Getter Title
      * 
-     * @return [type]
+     * @return string
      */
     public function getTitle()
     {
@@ -200,7 +212,7 @@ class PostEntity
     /**
      * Getter Chapo
      * 
-     * @return [type]
+     * @return string
      */
     public function getChapo()
     {
@@ -209,7 +221,7 @@ class PostEntity
     /**
      * Getter Intro
      * 
-     * @return [type]
+     * @return string
      */
     public function getIntro()
     {
@@ -218,7 +230,7 @@ class PostEntity
     /**
      * Getter Content
      * 
-     * @return [type]
+     * @return string
      */
     public function getContent()
     {
@@ -227,7 +239,7 @@ class PostEntity
     /**
      * Getter Author
      * 
-     * @return [type]
+     * @return string
      */
     public function getAuthor()
     {
@@ -236,7 +248,7 @@ class PostEntity
     /**
      * Getter Creationdate
      * 
-     * @return [type]
+     * @return string
      */
     public function getCreationDate()
     {
@@ -245,7 +257,7 @@ class PostEntity
     /**
      * Getter lastUpdated
      * 
-     * @return [type]
+     * @return string
      */
     public function getLastUpdated()
     {
@@ -254,7 +266,7 @@ class PostEntity
     /**
      * Getter Image
      * 
-     * @return [type]
+     * @return string
      */
     public function getFileExtension()
     {
@@ -263,7 +275,7 @@ class PostEntity
     /**
      * Getter category
      * 
-     * @return [type]
+     * @return string
      */
     public function getCategory()
     {

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Comment Entity
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model\Entities;
 class CommentEntity
 {
@@ -15,9 +26,9 @@ class CommentEntity
     /**
      * Construct
      * 
-     * @param datas $datas datas
+     * @param array $datas datas
      *
-     * @return [type]
+     * @return array
      */
     public function __construct($datas) 
     {
@@ -27,9 +38,9 @@ class CommentEntity
     /**
      * Hydrate
      * 
-     * @param datas $datas datas
+     * @param array $datas datas
      * 
-     * @return [type]
+     * @return array
      */
     public function hydrate($datas) 
     {
@@ -52,9 +63,9 @@ class CommentEntity
     /**
      * Setter Id
      * 
-     * @param id $id id
+     * @param int $id id
      *
-     * @return [type]
+     * @return int
      */
     public function setId($id)
     {
@@ -66,9 +77,9 @@ class CommentEntity
     /**
      * Setter PostId
      * 
-     * @param postid $post_id postid
+     * @param int $post_id postid
      *
-     * @return [type]
+     * @return int
      */
     public function setPostId($post_id)
     {
@@ -80,9 +91,9 @@ class CommentEntity
     /**
      * Setter Author
      * 
-     * @param author $author author
+     * @param string $author author
      *
-     * @return [type]
+     * @return string
      */
     public function setAuthor($author)
     {
@@ -93,9 +104,9 @@ class CommentEntity
     /**
      * Setter Content
      * 
-     * @param content $content content
+     * @param string $content content
      *
-     * @return [type]
+     * @return string
      */
     public function setContent($content)
     {
@@ -106,9 +117,9 @@ class CommentEntity
     /**
      * Setter lastUpdated
      * 
-     * @param last_updated $last_updated last_updated
+     * @param string $last_updated last_updated
      *
-     * @return [type]
+     * @return string
      */
     public function setLastUpdated($last_updated)
     {
@@ -117,9 +128,9 @@ class CommentEntity
     /**
      * Setter creationDate
      * 
-     * @param creation_date $creation_date creation_date
+     * @param string $creation_date creation_date
      *
-     * @return [type]
+     * @return string
      */
     public function setCreationDate($creation_date)
     {
@@ -128,9 +139,9 @@ class CommentEntity
     /**
      * Setter validation
      * 
-     * @param validation $validation validation
+     * @param int $validation validation
      *
-     * @return [type]
+     * @return int
      */
     public function setValidation($validation)
     {
@@ -142,9 +153,9 @@ class CommentEntity
     /**
      * Setter avatar
      * 
-     * @param avatar $avatar avatar
+     * @param string $avatar avatar
      *
-     * @return [type]
+     * @return string
      */
     public function setAvatar($avatar)
     {
@@ -155,7 +166,7 @@ class CommentEntity
     /**
      * Getter Id
      * 
-     * @return [type]
+     * @return int
      */
     public function getId()
     {
@@ -164,7 +175,7 @@ class CommentEntity
     /**
      * Getter PostId
      * 
-     * @return [type]
+     * @return int
      */
     public function getPostId()
     {
@@ -173,7 +184,7 @@ class CommentEntity
     /**
      * Getter Author
      * 
-     * @return [type]
+     * @return string
      */
     public function getAuthor()
     {
@@ -182,7 +193,7 @@ class CommentEntity
     /**
      * Getter Content
      * 
-     * @return [type]
+     * @return string
      */
     public function getContent()
     {
@@ -191,7 +202,7 @@ class CommentEntity
     /**
      * Getter creationDate
      * 
-     * @return [type]
+     * @return string
      */
     public function getCreationDate()
     {
@@ -200,7 +211,7 @@ class CommentEntity
     /**
      * Getter LastUpdated
      * 
-     * @return [type]
+     * @return string
      */
     public function getLastUpdated()
     {
@@ -209,7 +220,7 @@ class CommentEntity
     /**
      * Getter Validation
      * 
-     * @return [type]
+     * @return int
      */
     public function getValidation()
     {
@@ -218,7 +229,7 @@ class CommentEntity
     /**
      * Getter Avatar
      * 
-     * @return [type]
+     * @return string
      */
     public function getAvatar()
     {

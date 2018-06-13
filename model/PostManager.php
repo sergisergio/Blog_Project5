@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Post manager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 
@@ -9,10 +20,10 @@ class PostManager extends Manager
     /**
      * Function getPosts
      * 
-     * @param start        $start        start
-     * @param postsPerPage $postsPerPage postsPerPage
+     * @param int $start        start
+     * @param int $postsPerPage postsPerPage
      * 
-     * @return [type]
+     * @return int
      */
     public function getPosts($start, $postsPerPage)
     {
@@ -33,9 +44,9 @@ class PostManager extends Manager
     /**
      * Function getPost
      * 
-     * @param postId $postId post's id
+     * @param int $postId post's id
      * 
-     * @return [type]
+     * @return int
      */
     public function getPost($postId)
     {
@@ -55,14 +66,14 @@ class PostManager extends Manager
     /**
      * Function addPostRequest
      * 
-     * @param title    $title    title
-     * @param chapo    $chapo    chapo
-     * @param author   $author   author
-     * @param content  $content  content
-     * @param category $category category
-     * @param image    $image    image
+     * @param string $title    title
+     * @param string $chapo    chapo
+     * @param string $author   author
+     * @param string $content  content
+     * @param string $category category
+     * @param string $image    image
      *
-     * @return [type]
+     * @return mixed
      */
     public function addPostRequest($title, $chapo, $author, $content, $category, $image)
     {
@@ -87,13 +98,13 @@ class PostManager extends Manager
     /**
      * Function modifyPostRequest
      * 
-     * @param postId  $postId  the post's id
-     * @param title   $title   title
-     * @param chapo   $chapo   chapo
-     * @param author  $author  author
-     * @param content $content content
+     * @param int    $postId  the post's id
+     * @param string $title   title
+     * @param string $chapo   chapo
+     * @param string $author  author
+     * @param string $content content
      * 
-     * @return [type]
+     * @return mixed
      */
     public function modifyPostRequest($postId, $title, $chapo, $author, $content)
     {
@@ -114,9 +125,9 @@ class PostManager extends Manager
     /**
      * Function deletePostRequest
      * 
-     * @param postId $postId the post's id
+     * @param int $postId the post's id
      * 
-     * @return [type]
+     * @return int
      */
     public function deletePostRequest($postId)
     {
@@ -131,7 +142,7 @@ class PostManager extends Manager
     /**
      * Function countPosts
      * 
-     * @return [type]
+     * @return int
      */
     public function countPosts()
     {
@@ -143,9 +154,9 @@ class PostManager extends Manager
     /**
      * Function countSearchRequest
      * 
-     * @param search $search search
+     * @param string $search search
      * 
-     * @return [type]
+     * @return string
      */
     public function countSearchRequest($search)
     {
@@ -156,9 +167,9 @@ class PostManager extends Manager
     /**
      * Function searchRequest
      * 
-     * @param search $search search
+     * @param int $search search
      * 
-     * @return [type]
+     * @return int
      */
     public function searchRequest($search)
     {
@@ -175,9 +186,9 @@ class PostManager extends Manager
     /**
      * Function checkExistPost
      * 
-     * @param postId $postId postId
+     * @param int $postId postId
      * 
-     * @return [type]
+     * @return int
      */
     public function checkExistPost($postId)
     {
@@ -191,9 +202,9 @@ class PostManager extends Manager
     /**
      * Function categoryResultsRequest
      * 
-     * @param categoryId $categoryId categoryId
+     * @param int $categoryId categoryId
      * 
-     * @return [type]
+     * @return int
      */
     function categoryResultsRequest($categoryId)
     {

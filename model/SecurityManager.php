@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Security manager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 class SecurityManager extends Manager
@@ -7,9 +18,9 @@ class SecurityManager extends Manager
     /**
      * Function checkBruteForce
      * 
-     * @param ip $ip IP address
+     * @param int $ip IP address
      * 
-     * @return [type]
+     * @return int
      */
     public function checkBruteForce($ip)
     {
@@ -23,9 +34,9 @@ class SecurityManager extends Manager
     /**
      * Function registerAttempt
      * 
-     * @param ip $ip IP address
+     * @param int $ip IP address
      * 
-     * @return [type]
+     * @return int
      */
     public function registerAttempt($ip) 
     {
@@ -37,7 +48,7 @@ class SecurityManager extends Manager
     /**
      * Function checkCSRF
      * 
-     * @return [type]
+     * @return mixed
      */
     public function checkCSRF() 
     {

@@ -1,16 +1,27 @@
 <?php 
-
+/**
+ * My own blog.
+ *
+ * Administrator Controller
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Model\PostManager;
 use \Philippe\Blog\Model\CategoryManager;
 use \Philippe\Blog\Model\CommentManager;
 use \Philippe\Blog\Core\Session;
 /**
- * Function admin
+ * Enter the admin part
  *
- * @param accessAdminToken $accessAdminToken token to access admin's part
+ * @param int $accessAdminToken token to access admin's part
  * 
- * @return [type]
+ * @return int
  */
 function admin($accessAdminToken)
 {
@@ -32,9 +43,9 @@ function admin($accessAdminToken)
     }
 }
 /**
- * Function managePosts
+ * Show the Post management's part
  * 
- * @return [type]
+ * @return mixed
  */
 function managePosts()
 {
@@ -58,17 +69,17 @@ function managePosts()
     include 'view/backend/Posts/managePosts.php';
 }
 /**
- * Function addPost
+ * Add a post
  * 
- * @param title            $title            the post's title we want to add
- * @param chapo            $chapo            the post's chapo we want to add
- * @param author           $author           post's writer
- * @param content          $content          the post's content we want to add
- * @param image            $image            the post's image we want to add
- * @param category         $category         the post's category we want to add
- * @param csrfAddPostToken $csrfAddPostToken the token to try to avoid csrf.
+ * @param string $title            the post's title we want to add
+ * @param string $chapo            the post's chapo we want to add
+ * @param string $author           post's writer
+ * @param string $content          the post's content we want to add
+ * @param string $image            the post's image we want to add
+ * @param string $category         the post's category we want to add
+ * @param string $csrfAddPostToken the token to try to avoid csrf.
  *
- * @return [type]
+ * @return mixed
  */
 function addPost($title, $chapo, $author, $content, $image, $category, 
     $csrfAddPostToken
@@ -142,16 +153,16 @@ function modifyPostPage($postId)
     include 'view/backend/Posts/modifyPostPage.php';
 }
 /**
- * Function modifyPost
+ * FModify a post
  * 
- * @param postId              $postId              the id of the post we want to modify
- * @param title               $title               the title of the post we want to modify
- * @param chapo               $chapo               the chapo of the post we want to modify
- * @param author              $author              the author of the post we want to modify
- * @param content             $content             the content of the post we want to modify
- * @param csrfModifyPostToken $csrfModifyPostToken token to try to avoid csrf
+ * @param int    $postId              the id of the post we want to modify
+ * @param string $title               the title of the post we want to modify
+ * @param string $chapo               the chapo of the post we want to modify
+ * @param string $author              the author of the post we want to modify
+ * @param string $content             the content of the post we want to modify
+ * @param string $csrfModifyPostToken token to try to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostToken)
 {
@@ -189,17 +200,16 @@ function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostT
     }
 }
 /**
- * Function deletePost
+ * Delete a post
  * 
- * @param postId              $postId              the post's id
- * @param csrfDeletePostToken $csrfDeletePostToken token to try to avoid csrf
+ * @param int    $postId              the post's id
+ * @param string $csrfDeletePostToken token to try to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function deletePost($postId, $csrfDeletePostToken)
 {
     $postManager = new PostManager();
-    $session = new Session();
     $_SESSION['csrfDeletePostToken'] = $csrfDeletePostToken;
     if (isset($_SESSION['csrfDeletePostToken']) AND isset($csrfDeletePostToken)
         AND !empty($_SESSION['csrfDeletePostToken']) AND !empty($csrfDeletePostToken)
@@ -226,9 +236,9 @@ function deletePost($postId, $csrfDeletePostToken)
     }
 }
 /**
- * Function manageComments
+ * Show the comment management's part
  * 
- * @return [type]
+ * @return mixed
  */
 function manageComments()
 {
@@ -238,18 +248,17 @@ function manageComments()
     include 'view/backend/Comments/manageComments.php';
 }
 /**
- * Function validateComment
+ * Validate a comment
  * 
- * @param commentId                $commentId                the comment's id
- * @param csrfValidateCommentToken $csrfValidateCommentToken the token to try to avoid csrf
+ * @param int    $commentId                the comment's id
+ * @param string $csrfValidateCommentToken the token to try to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function validateComment($commentId, $csrfValidateCommentToken)
 {
     $commentManager = new CommentManager();
     $validated = $commentManager->validateCommentRequest($commentId);
-    $session = new Session();
     $_SESSION['csrfValidateCommentToken'] = $csrfValidateCommentToken;
     if (isset($_SESSION['csrfValidateCommentToken'])  
         AND isset($csrfValidateCommentToken)
@@ -277,18 +286,17 @@ function validateComment($commentId, $csrfValidateCommentToken)
     }
 }
 /**
- * Function adminDeleteComment
+ * Delete a comment
  * 
- * @param commentId                   $commentId                   the comment's id
- * @param csrfAdminDeleteCommentToken $csrfAdminDeleteCommentToken the token to try to avoid csrf
+ * @param int    $commentId                   the comment's id
+ * @param string $csrfAdminDeleteCommentToken the token to try to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
 {
     $commentManager = new CommentManager();
     $commentManager->getComment($commentId);
-    $session = new Session();
     $_SESSION['csrfAdminDeleteCommentToken'] = $csrfAdminDeleteCommentToken;
     if (isset($_SESSION['csrfAdminDeleteCommentToken']) AND isset($csrfAdminDeleteCommentToken)
         AND !empty($_SESSION['csrfAdminDeleteCommentToken']) AND !empty($csrfAdminDeleteCommentToken)
@@ -316,9 +324,9 @@ function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
     }
 }
 /**
- * Function manageUsers
+ * Show the user management's part
  * 
- * @return [type]
+ * @return mixed
  */
 function manageUsers()
 {
@@ -327,12 +335,12 @@ function manageUsers()
     include 'view/backend/Users/user_mgmt.php';
 }
 /**
- * Function giveAdminRights
+ * Give admin Rights to a user
  * 
- * @param userId                   $userId                   the user's id
- * @param csrfGiveAdminRightsToken $csrfGiveAdminRightsToken the token to try to avoid csrf
+ * @param int    $userId                   the user's id
+ * @param string $csrfGiveAdminRightsToken the token to try to avoid csrf
  * 
- * @return [type]
+ * @return mixed
  */
 function giveAdminRights($userId, $csrfGiveAdminRightsToken)
 {
@@ -359,12 +367,12 @@ function giveAdminRights($userId, $csrfGiveAdminRightsToken)
     }
 }
 /**
- * Function stopAdminRights
+ * Cancel admin Rights to a user
  * 
- * @param userId                     $userId                     the user's id
- * @param csrfCancelAdminRightsToken $csrfCancelAdminRightsToken the token to try to avoid csrf
+ * @param int    $userId                     the user's id
+ * @param string $csrfCancelAdminRightsToken the token to try to avoid csrf
  * 
- * @return [type]
+ * @return [mixed
  */
 function stopAdminRights($userId, $csrfCancelAdminRightsToken)
 {
@@ -391,12 +399,12 @@ function stopAdminRights($userId, $csrfCancelAdminRightsToken)
     }
 }
 /**
- * Function deleteUser
+ * Delete a user
  * 
- * @param userId              $userId              the user's id
- * @param csrfDeleteUserToken $csrfDeleteUserToken the token to try to avoid csrf.
+ * @param int    $userId              the user's id
+ * @param string $csrfDeleteUserToken the token to try to avoid csrf.
  * 
- * @return [type]
+ * @return mixed
  */
 function deleteUser($userId, $csrfDeleteUserToken)
 {
@@ -422,12 +430,12 @@ function deleteUser($userId, $csrfDeleteUserToken)
     }
 }
 /**
- * Function addCategory
+ * Add a category
  * 
- * @param category             $category             the post's category
- * @param csrfAddCategoryToken $csrfAddCategoryToken the token to try to avoid csrf
+ * @param string $category             the post's category
+ * @param string $csrfAddCategoryToken the token to try to avoid csrf
  *
- * @return [type]
+ * @return mixed
  */
 function addCategory($category, $csrfAddCategoryToken)
 {

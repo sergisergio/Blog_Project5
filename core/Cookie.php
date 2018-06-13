@@ -1,11 +1,23 @@
 <?php
+/**
+ * My own blog.
+ *
+ * Cookie
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Core;
 use \Philippe\Blog\Model\UserManager;
 use \Philippe\Blog\Core\Session;
 /**
  * Function reconnect_from_cookie
  * 
- * @return [type]
+ * @return mixed
  */
 function reconnect_from_cookie()
 {

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * User manager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 
@@ -9,7 +20,7 @@ class UserManager extends Manager
     /**
      * Function getUsers
      * 
-     * @return [type]
+     * @return mixed
      */
     public function getUsers()
     {
@@ -29,9 +40,9 @@ class UserManager extends Manager
     /**
      * Function getUser
      * 
-     * @param userId $userId userId
+     * @param int $userId userId
      * 
-     * @return [type]
+     * @return int
      */
     public function getUser($userId)
     {
@@ -50,9 +61,9 @@ class UserManager extends Manager
     /**
      * Function getAuthorization
      * 
-     * @param pseudo $pseudo pseudo
+     * @param string $pseudo pseudo
      * 
-     * @return [type]
+     * @return string
      */
     public function getAuthorization($pseudo)
     {
@@ -72,11 +83,11 @@ class UserManager extends Manager
     /**
      * Function addUserRequest
      * 
-     * @param pseudo $pseudo pseudo
-     * @param email  $email  email
-     * @param passe  $passe  password
+     * @param string $pseudo pseudo
+     * @param string $email  email
+     * @param string $passe  password
      *
-     * @return [type]
+     * @return string
      */
     public function addUserRequest($pseudo, $email, $passe)
     {
@@ -114,9 +125,9 @@ class UserManager extends Manager
     /**
      * Function setActiveRequest
      * 
-     * @param userId $userId userId
+     * @param int $userId userId
      *
-     * @return [type]
+     * @return int
      */
     public function setActiveRequest($userId) 
     {
@@ -129,9 +140,9 @@ class UserManager extends Manager
     /**
      * Function existPseudo
      * 
-     * @param pseudo $pseudo pseudo
+     * @param string $pseudo pseudo
      * 
-     * @return [type]
+     * @return string
      */
     public function existPseudo($pseudo)
     {
@@ -145,9 +156,9 @@ class UserManager extends Manager
     /**
      * Function existMail
      * 
-     * @param email $email email
+     * @param string $email email
      * 
-     * @return [type]
+     * @return string
      */
     public function existMail($email)
     {
@@ -161,10 +172,10 @@ class UserManager extends Manager
     /**
      * Function loginRequest
      * 
-     * @param pseudo $pseudo pseudo
-     * @param passe  $passe  password
+     * @param string $pseudo pseudo
+     * @param string $passe  password
      * 
-     * @return [type]
+     * @return string
      */
     public function loginRequest($pseudo, $passe)
     {
@@ -179,14 +190,14 @@ class UserManager extends Manager
     /**
      * Function modifyProfileRequest
      * 
-     * @param userId      $userId      userId
-     * @param avatar      $avatar      avatar
-     * @param first_name  $first_name  $first_name
-     * @param name        $name        name
-     * @param email       $email       email
-     * @param description $description description
+     * @param int    $userId      userId
+     * @param string $avatar      avatar
+     * @param string $first_name  $first_name
+     * @param string $name        name
+     * @param string $email       email
+     * @param string $description description
      * 
-     * @return [type]
+     * @return [mixed
      */
     public function modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description) 
     {
@@ -205,9 +216,9 @@ class UserManager extends Manager
     /**
      * Function deleteAccountRequest
      * 
-     * @param userId $userId userId
+     * @param int $userId userId
      * 
-     * @return [type]
+     * @return int
      */
     public function deleteAccountRequest($userId)
     {
@@ -221,9 +232,9 @@ class UserManager extends Manager
     /**
      * Function forgetPasswordRequest
      * 
-     * @param email $email email
+     * @param string $email email
      * 
-     * @return [type]
+     * @return string
      */
     public function forgetPasswordRequest($email) 
     {
@@ -271,10 +282,10 @@ class UserManager extends Manager
     /**
      * Function changePasswordRequest
      * 
-     * @param userId $userId userId
-     * @param passe  $passe  password
+     * @param int    $userId userId
+     * @param string $passe  password
      * 
-     * @return [type]
+     * @return mixed
      */
     public function changePasswordRequest($userId, $passe) 
     {
@@ -290,10 +301,10 @@ class UserManager extends Manager
     /**
      * Function checkResetTokenRequest
      * 
-     * @param userId $userId userId
-     * @param token  $token  token
+     * @param int    $userId userId
+     * @param string $token  token
      * 
-     * @return [type]
+     * @return mixed
      */
     public function checkResetTokenRequest($userId, $token)
     {
@@ -310,9 +321,9 @@ class UserManager extends Manager
     /**
      * Function deleteUserRequest
      * 
-     * @param userId $userId ueserId
+     * @param int $userId ueserId
      * 
-     * @return [type]
+     * @return int
      */
     public function deleteUserRequest($userId)
     {
@@ -327,9 +338,9 @@ class UserManager extends Manager
     /**
      * Function giveAdminRightsRequest
      * 
-     * @param userId $userId userId
+     * @param int $userId userId
      * 
-     * @return [type]
+     * @return int
      */
     public function giveAdminRightsRequest($userId) 
     {
@@ -343,9 +354,9 @@ class UserManager extends Manager
     /**
      * FunctionstopAdminRightsRequest
      * 
-     * @param userId $userId userId
+     * @param int $userId userId
      * 
-     * @return [type]
+     * @return int
      */
     public function stopAdminRightsRequest($userId) 
     {
@@ -359,9 +370,9 @@ class UserManager extends Manager
     /**
      * Function userCookie
      * 
-     * @param cookiepseudo $cookiepseudo cookiepseudo
+     * @param string $cookiepseudo cookiepseudo
      * 
-     * @return [type]
+     * @return string
      */
     public function userCookie($cookiepseudo) 
     {

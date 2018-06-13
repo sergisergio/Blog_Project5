@@ -1,13 +1,29 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * Category manager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model;
 require_once "model/Manager.php";
 
 use \Philippe\Blog\Model\Entities\CategoryEntity;
-class categoryManager extends Manager
+class CategoryManager extends Manager
 {
- 
-    /* ************ 1 . ADD CATEGORY* *******************/
+    /**
+     * Add a category
+     * 
+     * @param string $category category
+     *
+     * @return string 
+     */
     public function addCategoryRequest($category)
     {
         $dbProjet5 = $this->dbConnect();
@@ -20,20 +36,28 @@ class categoryManager extends Manager
         $addedCategory = new CategoryEntity($data);
         return $addedCategory;
     }
-    /* ************ 2 . GET CATEGORIES *******************/
+    /**
+     * Get a category
+     * 
+     * @return mixed
+     */
     public function getCategoryRequest()
     {
         $dbProjet5 = $this->dbConnect();
         $getCategory = $dbProjet5->prepare('SELECT category_id, category FROM Category');
         $getCategory->execute();
         $categories = [];
-        while ($data = $getCategory->fetch()){
+        while ($data = $getCategory->fetch()) {
             $categories[] = new CategoryEntity($data);
         }
         $getCategory->closeCursor();
         return $categories;
     }
-    /* ************ 10 . SELECT CATEGORY ******************/
+    /**
+     * Find Posts where category is ...
+     * 
+     * @return mixed
+     */
     public function categoryPost()
     {
         $dbProjet5 = $this->dbConnect();
@@ -43,5 +67,4 @@ class categoryManager extends Manager
         $cPost = $categoryPost->fetch();
         return $cPost;
     }
-    
 }

@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * My own blog.
+ *
+ * User Entity
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @version  PHP 7.1.14
+ * @link     http://projet5.philippetraon.com
+ */
 namespace Philippe\Blog\Model\Entities;
 class UserEntity
 {
@@ -21,9 +32,9 @@ class UserEntity
     /**
      * Construct
      * 
-     * @param datas $datas datas
+     * @param array $datas datas
      *
-     * @return [type] 
+     * @return array 
      */
     public function __construct($datas) 
     {
@@ -33,9 +44,9 @@ class UserEntity
     /**
      * Hydrate
      * 
-     * @param datas $datas datas
+     * @param array $datas datas
      * 
-     * @return [type]
+     * @return array
      */
     public function hydrate($datas) 
     {
@@ -64,9 +75,9 @@ class UserEntity
     /**
      * Setter Id
      * 
-     * @param id $id id
+     * @param int $id id
      *
-     * @return [type] [<description>]
+     * @return int
      */
     public function setId($id)
     {
@@ -78,9 +89,9 @@ class UserEntity
     /**
      * Setter Firstname
      * 
-     * @param first_name $first_name first_name
+     * @param string $first_name first_name
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setFirstName($first_name)
     {
@@ -91,9 +102,9 @@ class UserEntity
     /**
      * Setter Lastname
      * 
-     * @param last_name $last_name last_name
+     * @param string $last_name last_name
      *
-     * @return [type] [<description>]
+     * @return string [<description>]
      */
     public function setLastName($last_name)
     {
@@ -104,9 +115,9 @@ class UserEntity
     /**
      * Setter Pseudo
      * 
-     * @param pseudo $pseudo pseudo
+     * @param string $pseudo pseudo
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setPseudo($pseudo)
     {
@@ -117,9 +128,9 @@ class UserEntity
     /**
      * Setter Password
      * 
-     * @param password $password password
+     * @param string $password password
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setPassword($password)
     {
@@ -130,9 +141,9 @@ class UserEntity
     /**
      * Setter Email
      * 
-     * @param email $email email
+     * @param string $email email
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setEmail($email)
     {
@@ -143,9 +154,9 @@ class UserEntity
     /**
      * Setter RegistrationDate
      * 
-     * @param registration_date $registration_date registration_date
+     * @param string $registration_date registration_date
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setRegistrationDate($registration_date)
     {
@@ -154,9 +165,9 @@ class UserEntity
     /**
      * Setter Authorization
      * 
-     * @param authorization $authorization authorization
+     * @param int $authorization authorization
      *
-     * @return [type] [<description>]
+     * @return int
      */
     public function setAuthorization($authorization)
     {
@@ -168,9 +179,9 @@ class UserEntity
     /**
      * Setter ConfirmationToken
      * 
-     * @param confirmation_token $confirmation_token confirmation_token
+     * @param string $confirmation_token confirmation_token
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setConfirmationToken($confirmation_token)
     {
@@ -181,9 +192,9 @@ class UserEntity
     /**
      * Setter Avatar
      * 
-     * @param avatar $avatar avatar
+     * @param string $avatar avatar
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setAvatar($avatar)
     {
@@ -194,9 +205,9 @@ class UserEntity
     /**
      * Setter Isactive
      * 
-     * @param is_active $is_active is_active
+     * @param int $is_active is_active
      *
-     * @return [type] [<description>]
+     * @return int
      */
     public function setIsActive($is_active)
     {
@@ -208,9 +219,9 @@ class UserEntity
     /**
      * Setter Description
      * 
-     * @param description $description description
+     * @param string $description description
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setDescription($description)
     {
@@ -221,9 +232,9 @@ class UserEntity
     /**
      * Setter ResetToken
      * 
-     * @param reset_token $reset_token reset_token
+     * @param string $reset_token reset_token
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setResetToken($reset_token)
     {
@@ -234,9 +245,9 @@ class UserEntity
     /**
      * Setter ResetAt
      * 
-     * @param reset_at $reset_at reset_at
+     * @param string $reset_at reset_at
      *
-     * @return [type] [<description>]
+     * @return string
      */
     public function setResetAt($reset_at)
     {
@@ -245,7 +256,7 @@ class UserEntity
     /**
      * Getter Id
      * 
-     * @return [type]
+     * @return int
      */
     public function getId()
     {
@@ -254,7 +265,7 @@ class UserEntity
     /**
      * Getter FirstName
      * 
-     * @return [type]
+     * @return string
      */
     public function getFirstName()
     {
@@ -263,7 +274,7 @@ class UserEntity
     /**
      * Getter LastName
      * 
-     * @return [type]
+     * @return string
      */
     public function getLastName()
     {
@@ -272,7 +283,7 @@ class UserEntity
     /**
      * Getter Pseudo
      * 
-     * @return [type]
+     * @return string
      */
     public function getPseudo()
     {
@@ -281,7 +292,7 @@ class UserEntity
     /**
      * Getter Password
      * 
-     * @return [type]
+     * @return string
      */
     public function getPassword()
     {
@@ -290,7 +301,7 @@ class UserEntity
     /**
      * Getter Email
      * 
-     * @return [type]
+     * @return string
      */
     public function getEmail()
     {
@@ -299,7 +310,7 @@ class UserEntity
     /**
      * Getter RegistrationDate
      * 
-     * @return [type]
+     * @return string
      */
     public function getRegistrationDate()
     {
@@ -308,7 +319,7 @@ class UserEntity
     /**
      * Getter Authorization
      * 
-     * @return [type]
+     * @return string
      */
     public function getAuthorization1()
     {
@@ -317,7 +328,7 @@ class UserEntity
     /**
      * Getter ConfirmationToken
      * 
-     * @return [type]
+     * @return string
      */
     public function getConfirmationToken()
     {
@@ -326,7 +337,7 @@ class UserEntity
     /**
      * Getter Avatar
      * 
-     * @return [type]
+     * @return string
      */
     public function getAvatar()
     {
@@ -335,7 +346,7 @@ class UserEntity
     /**
      * Getter IsActive
      * 
-     * @return [type]
+     * @return string
      */
     public function getIsActive()
     {
@@ -344,7 +355,7 @@ class UserEntity
     /**
      * Getter Description
      * 
-     * @return [type]
+     * @return string
      */
     public function getDescription()
     {
@@ -353,7 +364,7 @@ class UserEntity
     /**
      * Getter ResetToken
      * 
-     * @return [type]
+     * @return string
      */
     public function getResetToken()
     {
@@ -362,7 +373,7 @@ class UserEntity
     /**
      * Getter ResetAt
      * 
-     * @return [type]
+     * @return string
      */
     public function getResetAt()
     {
