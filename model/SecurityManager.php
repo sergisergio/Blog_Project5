@@ -18,9 +18,9 @@ class SecurityManager extends Manager
     /**
      * Function checkBruteForce
      * 
-     * @param int $ip IP address
+     * @param string $ip IP address
      * 
-     * @return int
+     * @return string
      */
     public function checkBruteForce($ip)
     {
@@ -34,9 +34,9 @@ class SecurityManager extends Manager
     /**
      * Function registerAttempt
      * 
-     * @param int $ip IP address
+     * @param string $ip IP address
      * 
-     * @return int
+     * @return string
      */
     public function registerAttempt($ip) 
     {

@@ -27,7 +27,7 @@ function reconnect_from_cookie()
     if (isset($_COOKIE['pseudo'], $_COOKIE['password']) && !isset($_SESSION['pseudo']) && !empty($_COOKIE['pseudo']) && !empty($_COOKIE['password'])) {
         $userManager = new UserManager();
         $session = new Session();
-        $user = $userManager->userCookie($_COOKIE['pseudo'], $_COOKIE['password']);
+        $user = $userManager->userCookie($_COOKIE['pseudo']);
         if ($user) {
             $session->launchSession($user);
         } else {

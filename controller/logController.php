@@ -176,8 +176,7 @@ function changePasswordPage($userId, $resetToken)
  */
 function changePassword($userId, $passe, $csrfChangePasswordToken)
 { 
-    $userManager = new UserManager();
-    $session = new Session(); 
+    $userManager = new UserManager(); 
     
     $_SESSION['csrfChangePasswordToken'] = $csrfChangePasswordToken; 
     if (!empty($_POST['passe']) && $_POST['passe'] == $_POST['passe2']) {

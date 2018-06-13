@@ -17,9 +17,9 @@ class Session
     /**
      * Launch Session
      * 
-     * @param int $user user
+     * @param string $user user
      * 
-     * @return int
+     * @return string
      */
     public function launchSession($user)
     {

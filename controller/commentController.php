@@ -64,7 +64,7 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
 /**
  * Function modifyCommentPage
  * 
- * @param int       $commentId the comment's id
+ * @param int    $commentId the comment's id
  * @param int    $postId    the post's id
  * 
  * @return mixed
@@ -140,10 +140,10 @@ function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
 /**
  * Function modifyComment
  * 
- * @param id                     $commentId              the comment's id
+ * @param int                    $commentId              the comment's id
  * @param string                 $author                 the author
  * @param string                 $content                the content
- * @param id                     $postId                 the post's id
+ * @param int                    $postId                 the post's id
  * @param string                 $csrfModifyCommentToken the token to try to avoid csrf
  * 
  * @return mixed

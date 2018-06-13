@@ -85,7 +85,6 @@ function addPost($title, $chapo, $author, $content, $image, $category,
     $csrfAddPostToken
 ) {
     $postManager = new PostManager();
-    $session = new Session();
 
     $file_extension = $_FILES['file_extension'];
     $file_extension_error = $_FILES['file_extension']['error'];
@@ -136,9 +135,9 @@ function addPost($title, $chapo, $author, $content, $image, $category,
 /**
  * Function modifyPostPage
  * 
- * @param postId $postId the post's id
+ * @param int $postId the post's id
  *
- * @return [type]
+ * @return int
  */
 function modifyPostPage($postId)
 {
@@ -153,7 +152,7 @@ function modifyPostPage($postId)
     include 'view/backend/Posts/modifyPostPage.php';
 }
 /**
- * FModify a post
+ * Modify a post
  * 
  * @param int    $postId              the id of the post we want to modify
  * @param string $title               the title of the post we want to modify
@@ -167,7 +166,6 @@ function modifyPostPage($postId)
 function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostToken)
 {
     $postManager = new PostManager();
-    $session = new Session();
     $_SESSION['csrfModifyPostToken'] = $csrfModifyPostToken; 
     if (isset($_SESSION['csrfModifyPostToken']) AND isset($csrfModifyPostToken)
         AND !empty($_SESSION['csrfModifyPostToken']) AND !empty($csrfModifyPostToken)
@@ -175,7 +173,7 @@ function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostT
         if ($_SESSION['csrfModifyPostToken'] == $csrfModifyPostToken) {
             if (isset($postId) && $postId > 0) {
                 if (!empty($title) && !empty($content) && !empty($chapo)) {
-                    $post = $postManager->getPost($postId);
+                    $postManager->getPost($postId);
                     $modify = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
                     if ($modify === false) {
                         $_SESSION['flash']['danger'] = 'Impossible de modifier l\'article';
@@ -216,7 +214,7 @@ function deletePost($postId, $csrfDeletePostToken)
     ) {
         if ($_SESSION['csrfDeletePostToken'] == $csrfDeletePostToken) {
             if (isset($postId) && $postId > 0) {
-                $post = $postManager->getPost($postId);
+                $postManager->getPost($postId);
                 $delete = $postManager->deletePostRequest($postId);
                 if ($delete === false) {
                     $_SESSION['flash']['danger'] = 'Impossible de supprimer l\'article';
@@ -345,7 +343,6 @@ function manageUsers()
 function giveAdminRights($userId, $csrfGiveAdminRightsToken)
 {
     $userManager = new UserManager();
-    $session = new Session();
     $_SESSION['csrfGiveAdminRightsToken'] = $csrfGiveAdminRightsToken;
     if (isset($_SESSION['csrfGiveAdminRightsToken']) AND isset($csrfGiveAdminRightsToken)
         AND !empty($_SESSION['csrfGiveAdminRightsToken']) AND !empty($csrfGiveAdminRightsToken)
@@ -372,12 +369,11 @@ function giveAdminRights($userId, $csrfGiveAdminRightsToken)
  * @param int    $userId                     the user's id
  * @param string $csrfCancelAdminRightsToken the token to try to avoid csrf
  * 
- * @return [mixed
+ * @return mixed
  */
 function stopAdminRights($userId, $csrfCancelAdminRightsToken)
 {
     $userManager = new UserManager();
-    $session = new Session();
     $_SESSION['csrfCancelAdminRightsToken'] = $csrfCancelAdminRightsToken;
     if (isset($_SESSION['csrfCancelAdminRightsToken']) AND isset($csrfCancelAdminRightsToken)
         AND !empty($_SESSION['csrfCancelAdminRightsToken']) AND !empty($csrfCancelAdminRightsToken)
@@ -440,7 +436,6 @@ function deleteUser($userId, $csrfDeleteUserToken)
 function addCategory($category, $csrfAddCategoryToken)
 {
     $categoryManager = new CategoryManager();
-    $session = new Session();
     $_SESSION['csrfAddCategoryToken'] = $csrfAddCategoryToken; 
     if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken)
         AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)

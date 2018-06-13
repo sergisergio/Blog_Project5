@@ -44,7 +44,6 @@ function profilePage($userId)
 function modifyProfile($userId, $avatar, $first_name, $name, $email, $description, $csrfProfileToken)
 {
     $userManager = new UserManager();
-    $session = new Session();
     $_SESSION['csrfProfileToken'] = $csrfProfileToken; 
 
     if (!empty($_POST['email'])) {
@@ -105,16 +104,15 @@ function deleteAccount($userId, $csrfDeleteAccountToken)
                     profilePage();
                 } else {
                     home();
-                    exit();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                profilePage();
+                profilePage($_SESSION['id']);
             }
         }
     } else {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet utilisateur !';
-        profilePage();
+        profilePage($_SESSION['id']);
     }
 }
 /**

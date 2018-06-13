@@ -41,7 +41,6 @@ function signupPage()
 function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
 {
     $userManager = new UserManager();
-    $session = new Session();
     $_SESSION['csrfSignupToken'] = $csrfSignupToken; 
     if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
         $user = $userManager->existPseudo($pseudo);
@@ -121,7 +120,6 @@ function confirmRegistration($userId, $userToken)
 {
     $userManager = new UserManager();
     $user = $userManager->getUser($userId);
-    $session = new Session();
     if (isset($_GET['id']) && isset($_GET['token'])) {
         if ($user &&  $user->getConfirmationToken() == $userToken) {
             $userManager->setActiveRequest($userId);
