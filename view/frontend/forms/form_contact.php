@@ -45,9 +45,6 @@
                     <input type="reset" value="Effacer" name="reset" class="btn btn-submit bm0" /> 
                 </div>
             </div>
-            <div>
-                <input type="hidden" name="token" id="token" value="<?= $csrfContactToken; ?>" />
-            </div>
             <input type="hidden" name="v_error" id="v-error" value="Required" />
             <input type="hidden" name="v_email" id="v-email" value="Enter a valid email" /> 
         </div>

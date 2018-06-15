@@ -1,10 +1,8 @@
-<?php $title = 'Mon blog'; ?>
+<?php $title = 'Résultats'; ?>
 <?php ob_start(); ?>
 <div class="container inner">
     <div class="blog box mgbottom2 row">
-        <!-- INCLUDE TOP -->
         <?php require 'view/frontend/includes/top.php' ?>
-        <!-- END INCLUDE TOP -->
     </div>
     <div class="blog list-view row">
         <div class="col-md-8 col-sm-12 content">
@@ -37,18 +35,14 @@
                 </div>
             </div>
         </div>
-        <!-- INCLUDE ASIDE -->
         <?php require "view/frontend/includes/aside.php"; ?>
-        <!-- END INCLUDE ASIDE -->
     </div>
 </div>
 <div class="container bottomcontainer">
     <div class="row">
-        <!-- INCLUDE FOOTER -->
         <?php require "view/frontend/includes/footer.php"; ?>
-        <!-- END INCLUDE FOOTER -->
     </div>
 </div>
-</div> <!-- end body-wrapper -->
+</div>
 <?php $content = ob_get_clean(); ?>
     <?php require 'view/frontend/templates/template.php'; ?>

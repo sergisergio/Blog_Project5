@@ -12,6 +12,8 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Model;
+use Philippe\Blog\core\Factories\DbFactory;
+use \PDO;
 require_once "model/Manager.php";
 
 use \Philippe\Blog\Model\Entities\PostEntity;
@@ -174,7 +176,7 @@ class PostManager extends Manager
     public function searchRequest($search)
     {
         $dbProjet5 = $this->dbConnect();
-        $results  = $dbProjet5->prepare(" SELECT id, title, intro, chapo, content, author, file_extension, creation_date AS creation_date_fr, last_updated AS last_updated_fr FROM Posts WHERE content LIKE '%$search%' ORDER BY id DESC ");
+        $results  = $dbProjet5->prepare(" SELECT id, title, intro, chapo, content, author, file_extension, category_id, creation_date AS creation_date_fr, last_updated AS last_updated_fr FROM Posts WHERE content LIKE '%$search%' ORDER BY id DESC ");
         $results->execute();
         $searchResults = [];
         while ($data = $results->fetch()) {

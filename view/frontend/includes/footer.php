@@ -4,7 +4,7 @@
         $_SESSION['accessAdminToken'] = $accessAdminToken;
     ?>
     <p class="pull-left">
-        <btn class="btn btn-default"><a href="index.php?action=admin&amp;token=<?php echo $accessAdminToken ?>">Administration</a></btn>
+        <a href="index.php?action=admin&amp;token=<?php echo $accessAdminToken ?>" class="btn btn-default btn-lg" role="button">Administration</a>
     </p>
     <ul class="social pull-right">
         <li><a href="https://fr.pinterest.com/ptraon/" target="_blank"><i class="icon-s-pinterest"></i></a></li>

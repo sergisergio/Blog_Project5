@@ -36,17 +36,15 @@
             </div>
         </div>
         <div class="body-wrapper">
-            <!-- INCLUDE NAV -->
             <?php require "includes/nav.php"; ?>
-            <!-- END INCLUDE NAV -->
             <section id="home" class="naked">
                 <div class="fullscreenbanner-container revolution">
                     <div class="fullscreenbanner">
                         <ul>
                             <li data-transition="fade">
                                 <h1 class="tp-caption caption large sfb" data-x="center" data-y="center" data-voffset="-25" data-speed="900" data-start="1000" data-endspeed="100" data-easing="Sine.easeOut">Philippe Traon</h1>
-                                <div class="tp-caption small tp-fade fadeout tp-resizeme" data-x="center" data-y="center" data-voffset="25" data-speed="100" data-start="1500" data-easing="Power4.easeOut" data-splitin="chars" data-splitout="chars" data-elementdelay="0.03" data-endelementdelay="0" data-endspeed="100" data-endeasing="Power1.easeOut" style="z-index: 3; max-width: auto; max-height: auto; white-space: nowrap;">Développeur web</div>
-                                <div class="tp-caption small tp-fade fadeout tp-resizeme" data-x="center" data-y="center" data-voffset="75" data-speed="100" data-start="1500" data-easing="Power4.easeOut" data-splitin="chars" data-splitout="chars" data-elementdelay="0.03" data-endelementdelay="0" data-endspeed="100" data-endeasing="Power1.easeOut" style="z-index: 3; max-width: auto; max-height: auto; white-space: nowrap;">PHP / Symfony</div>
+                                <div class="tp-caption small tp-fade fadeout tp-resizeme" data-x="center" data-y="center" data-voffset="25" data-speed="100" data-start="1500" data-easing="Power4.easeOut" data-splitin="chars" data-splitout="chars" data-elementdelay="0.03" data-endelementdelay="0" data-endspeed="100" data-endeasing="Power1.easeOut" style="z-index: 3; white-space: nowrap;">Développeur web</div>
+                                <div class="tp-caption small tp-fade fadeout tp-resizeme" data-x="center" data-y="center" data-voffset="75" data-speed="100" data-start="1500" data-easing="Power4.easeOut" data-splitin="chars" data-splitout="chars" data-elementdelay="0.03" data-endelementdelay="0" data-endspeed="100" data-endeasing="Power1.easeOut" style="z-index: 3; white-space: nowrap;">PHP / Symfony</div>
                                 <div class="arrow smooth"><a href="#portfolio"><i class="icon-down-open-big"></i></a></div>
                             </li>
                         </ul>
@@ -55,20 +53,16 @@
                 </div>
             </section>
             <div class="container">
-                <!-- INCLUDE SECTIONS -->
                 <?php require "includes/section1_portfolio.php"; ?>
                 <?php require "includes/section2_about.php"; ?>
                 <?php require "includes/section3_skills.php"; ?>
-                <!-- INCLUDE SECTIONS -->
                 <section id="contact">
                     <div class="box">
                         <h2 class="section-title">Me contacter</h2>
-                        <p></p>
                         <div class="divide20"></div>
                         <div class="row text-center services-2">
                             <div class="col-md-3 col-sm-12"> <i class="budicon-map"></i>
-                                <p>17 Place Saint-Pierre
-                                <br /> 75018 PARIS</p>
+                                <p>17 Place Saint-Pierre<br /> 75018 PARIS</p>
                             </div>
                             <div class="col-md-3 col-sm-12"> <i class="budicon-telephone"></i>
                                 <p>01 42 76 03 81</p>
@@ -77,21 +71,17 @@
                                 <p>06 47 51 22 85</p>
                             </div>
                             <div class="col-md-3 col-sm-12"> <i class="budicon-mail"></i>
-                                <p> <a class="nocolor" href="mailto:#">contact@philippetraon.com</a> </p>
+                                <p><a class="nocolor" href="mailto:#">contact@philippetraon.com</a></p>
                             </div>
                         </div>
                         <div class="divide30"></div>
                         <div class="form-container">
-                            <div class="response alert alert-success" style="text-align-center"></div>
-                                <!-- FORM CONTACT -->
-                                <?php require "forms/form_contact.php"; ?>
-                                <!-- END FORM CONTACT -->
+                            <div class="response alert alert-success"></div>
+                            <?php require "forms/form_contact.php"; ?>
                         </div>
                     </div>
                 </section>
-                <!-- INCLUDE FOOTER -->
                 <?php require "includes/footer.php"; ?>
-                <!-- END INCLUDE FOOTER -->
             </div>
         </div>
         <script src="public/js/jquery.min.js"></script>

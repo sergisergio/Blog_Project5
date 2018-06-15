@@ -3,7 +3,7 @@
 ?>
 <form action="index.php?action=modifyProfile&amp;id=<?= $_SESSION['id'] ?>" method="post" enctype="multipart/form-data">
     <div>
-        <label for="content">Ajouter un avatar (1M max: jpg, jpeg, gif, png)</label><br />
+        <label>Ajouter un avatar (1M max: jpg, jpeg, gif, png)</label><br />
         <input style="text-align: center;margin: 0 auto;" type="file" name="avatar" />
     </div>
     <div>
@@ -21,7 +21,7 @@
     </div>
     <div>
         <label for="description">Description (max : 600 caractères)</label><br />
-        <textarea type="text" id="description" name="description" /><?= $post->getDescription() ?></textarea>
+        <textarea id="description" name="description" ><?= $post->getDescription() ?></textarea>
     </div>
     <div class="text-center">
         <input  class="btn btn-default validate" type="submit" />

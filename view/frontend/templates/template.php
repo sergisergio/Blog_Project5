@@ -14,10 +14,10 @@
         <link rel="icon" type="image/ico" href="public/images/Philippe.ico" />
         <title>Philippe Traon - Développeur web</title>
         <!-- Bootstrap core CSS -->
-        <link href="public/css/bootstrap.min.css" rel="stylesheet">
-        <link href="public/css/plugins.css" rel="stylesheet">
-        <link href="public/css/prettify.css" rel="stylesheet">
-        <link href="public/style.css" rel="stylesheet">
+        <link href="./public/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/public/css/plugins.css" rel="stylesheet">
+        <link href="/public/css/prettify.css" rel="stylesheet">
+        <link href="./public/style.css" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <link href="public/css/color/green.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Raleway:400,800,700,600,500,300' rel='stylesheet' type='text/css'>
@@ -47,21 +47,6 @@
         <script>
             $.backstretch(["public/images/art/react2.png"]);
         </script>
-        <!--<script>
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip({
-                    trigger: 'manual'
-                }).tooltip('show');
-            });
-            $(window).scroll(function () {
-                if ($(window).scrollTop() > 2600) { // scroll down abit and get the action   
-                    $(".progress-bar").each(function () {
-                        each_bar_width = $(this).attr('aria-valuenow');
-                        $(this).width(each_bar_width + '%');
-                    });
-                }
-            });
-        </script>-->
         <script>
             $(".popconfirm").popConfirm();
             $("[data-toggle='confirmation']").popConfirm({

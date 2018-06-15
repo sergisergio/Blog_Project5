@@ -12,18 +12,22 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Model;
-
+use \PDO;
+/**
+ * Class Manager is for our database
+ */
 class Manager
 {
-    
+    protected $dbProjet5;
     /**
-     * Function dbConnect
+     * Connect to the database
      * 
      * @return mixed
      */
     protected function dbConnect()
     {
-        $dbProjet5 = new \PDO('mysql:host=localhost;dbname=Projet5;charset=utf8', 'root', 'root');
+        $dbProjet5 = new PDO('mysql:host=localhost;dbname=Projet5;charset=utf8', 'root', 'root');
+        $dbProjet5->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $dbProjet5;
     }
 }

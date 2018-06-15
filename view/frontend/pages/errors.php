@@ -4,25 +4,21 @@
                     <section>
                         <div class="blog box mgbottom2 row">
                             <div class="col-md-12">
-                                <!-- INCLUDE TOP -->
                                 <?php require 'view/frontend/includes/top.php' ?>
-                                <!-- END INCLUDE TOP -->
                             </div>
                         </div>
                         <div class="box">
                             <p></p>
                             <div class="divide30"></div>
                             <div class="form-container">
-                                <!-- RESPONSE -->
                                 <?php require 'view/frontend/includes/responseAlert.php'; ?>
-                                <!-- END RESPONSE -->
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <btn class="btn btn-default pull-right"><a href="index.php">Accueil</a></btn>
+                                    <a href="index.php" class="btn btn-default btn-lg pull-right" role="button">Accueil</a>
                                 </div>
                                 <div class="col-md-6">
-                                    <btn class="btn btn-default pull-left"><a href="index.php?action=blog">blog</a></btn>
+                                    <a href="index.php?action=blog" class="btn btn-default btn-lg pull-left" role="button">Blog</a>
                                 </div>
                             </div>
                         </div>

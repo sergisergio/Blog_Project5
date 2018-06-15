@@ -12,8 +12,8 @@
             <form action="index.php?action=forgetPassword" method="POST">
         <div class="col-md-offset-3 col-md-6 col-sm-12">
             <div class="form-group">
-                <label for="">Email</label>
-                <input type="email" name="email" class="form-control"/>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control"/>
             </div>
         </div>
         <div class="col-md-offset-3 col-md-6 col-sm-12 text-center">

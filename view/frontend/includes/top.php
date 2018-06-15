@@ -1,24 +1,14 @@
 <?php if (isset($_SESSION['pseudo'])) : ?>
-    <p class="pull-left">
-        <btn class="btn btn-default"> 
-            <a href="index.php?action=profilePage">Voir mon profil</a> 
-        </btn>
-    </p>
+    <a href="index.php?action=profilePage" class="btn btn-default btn-lg pull-left" role="button">Voir mon profil</a>
     <p class="pull-right">
-        <btn class="btn btn-default logoutbtn"> 
-            <a href="index.php?action=logout">Déconnexion</a> 
-        </btn>
+        <a href="index.php?action=logout" class="btn btn-default btn-lg logoutbtn pull-right" role="button">Déconnexion</a>
         <?php if ($_SESSION['avatar'] != '') : ?>
-            <img class="img-responsive img-circle avatarblogpage" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+            <img class="img-responsive img-circle avatarblogpage" alt="avatar" src="public/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
         <?php else: ?> 
-            <img class="img-responsive img-circle avatarblogpagedefault" src="public/images/avatar/avatardefaut.png" />
+            <img class="img-responsive img-circle avatarblogpagedefault" alt="avatar" src="public/images/avatar/avatardefaut.png" />
         <?php endif; ?>
     </p>
 <?php else: ?>
-    <p class="pull-right">
-        <btn class="btn btn-default"> <a href="index.php?action=loginPage">Connexion</a> </btn>
-    </p>
-    <p class="pull-right">
-        <btn class="btn btn-default"> <a href="index.php?action=signupPage">Inscription</a> </btn>&nbsp;&nbsp; 
-    </p>
+    <a href="index.php?action=loginPage" class="btn btn-default btn-lg pull-right" role="button">Connexion</a>
+    <a href="index.php?action=signupPage" class="btn btn-default btn-lg pull-right" role="button">Inscription</a>&nbsp;&nbsp;
 <?php endif; ?>

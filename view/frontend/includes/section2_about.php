@@ -15,12 +15,10 @@
         </div>
         <div class="clearfix"></div>
         <div class="divide40"></div>
-        <h2 class="section-title"></h2>
         <div class="divide10"></div>
         <div class="services-1">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 class="section-title"></h3>
                     <div id="map"></div>
                     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1xdEVYy8IZdBKJGQp_QpDWaNQT7ZHGhY&sensor=false&extension=.js"></script>
                     <script>
