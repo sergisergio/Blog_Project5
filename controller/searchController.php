@@ -11,9 +11,9 @@
  * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
-use \Philippe\Blog\Model\Entities\PostEntity;
-use \Philippe\Blog\Model\PostManager;
-use \Philippe\Blog\Model\CategoryManager;
+use \Philippe\Blog\Lib\Entities\PostEntity;
+use \Philippe\Blog\Lib\Model\PostManager;
+use \Philippe\Blog\Lib\Model\CategoryManager;
 
 /**
  * Function search
@@ -37,7 +37,7 @@ function search($search, $csrfSearchToken)
                 $countSearchResults = $postManager->countSearchRequest($search);
                 $nbResults = $countSearchResults->rowCount();
                 $searchResults = $postManager->searchRequest($search);
-                include 'view/frontend/pages/searchresults.php';
+                include 'App/frontend/Modules/Blog/Search/searchresults.php';
             } else {
                 echo "Erreur de vérification";
             }

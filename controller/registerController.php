@@ -25,7 +25,7 @@ use PHPMailer\PHPMailer\Exception;
  */
 function signupPage()
 {
-    include 'view/frontend/pages/signup.php';
+    include 'App/frontend/Modules/Blog/Signup/signup.php';
 }
 /**
  * Function addUser

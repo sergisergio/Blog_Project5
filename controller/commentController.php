@@ -11,13 +11,13 @@
  * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
-use \Philippe\Blog\Model\Entities\PostEntity;
-use \Philippe\Blog\Model\Entities\CommentEntity;
-use \Philippe\Blog\Model\Entities\UserEntity;
-use \Philippe\Blog\Model\UserManager;
-use \Philippe\Blog\Model\PostManager;
-use \Philippe\Blog\Model\CommentManager;
-use \Philippe\Blog\Core\Session;
+use \Philippe\Blog\Lib\Entities\PostEntity;
+use \Philippe\Blog\Lib\Entities\CommentEntity;
+use \Philippe\Blog\Lib\Entities\UserEntity;
+use \Philippe\Blog\Lib\Model\UserManager;
+use \Philippe\Blog\Lib\Model\PostManager;
+use \Philippe\Blog\Lib\Model\CommentManager;
+use \Philippe\Blog\Lib\Core\Session;
 
 /**
  * Function addComment
@@ -95,7 +95,7 @@ function modifyCommentPage($commentId, $postId)
             $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
             errors();
         } else {
-            include 'view/frontend/pages/modifyCommentPage.php';
+            include 'App/frontend/Modules/Blog/Comments/modifyCommentPage.php';
         }
     }
 }

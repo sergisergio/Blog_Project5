@@ -11,9 +11,10 @@
  * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
-use \Philippe\Blog\Model\Entities\UserEntity;
-use \Philippe\Blog\Model\UserManager;
-use \Philippe\Blog\Core\Session;
+use \Philippe\Blog\Lib\Entities\UserEntity;
+use \Philippe\Blog\Lib\Model\UserManager;
+use \Philippe\Blog\Lib\Model\CommentManager;
+use \Philippe\Blog\Lib\Core\Session;
 
 /**
  * Function profilePage
@@ -26,7 +27,7 @@ function profilePage($userId)
 {
     $userManager = new UserManager();
     $post = $userManager->getUser($userId);
-    include 'view/frontend/pages/profile.php';
+    include 'App/frontend/Modules/Blog/Profiles/Private/profile.php';
 }
 /**
  * Function modifyProfile
@@ -126,5 +127,5 @@ function publicProfile($commentAuthor)
 {
     $commentManager = new CommentManager();
     $user = $commentManager->getUserByCommentRequest($commentAuthor);
-    include 'view/frontend/pages/publicProfile.php';
+    include 'App/frontend/Modules/Blog/Profiles/Public/publicProfile.php';
 }

@@ -21,11 +21,10 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         ),
         'P' => 
         array (
-            'Philippe\\Blog\\Model\\Entities\\' => 29,
-            'Philippe\\Blog\\Model\\' => 20,
-            'Philippe\\Blog\\Core\\Factories\\' => 29,
-            'Philippe\\Blog\\Core\\Database\\' => 28,
-            'Philippe\\Blog\\Core\\' => 19,
+            'Philippe\\Blog\\Lib\\Model\\' => 24,
+            'Philippe\\Blog\\Lib\\Entities\\' => 27,
+            'Philippe\\Blog\\Lib\\Core\\' => 23,
+            'Philippe\\Blog\\Lib\\' => 18,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
@@ -50,25 +49,21 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'Philippe\\Blog\\Model\\Entities\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/Entities',
-        ),
-        'Philippe\\Blog\\Model\\' => 
+        'Philippe\\Blog\\Lib\\Model\\' => 
         array (
             0 => __DIR__ . '/../..' . '/model',
         ),
-        'Philippe\\Blog\\Core\\Factories\\' => 
+        'Philippe\\Blog\\Lib\\Entities\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/core/Factories',
+            0 => __DIR__ . '/../..' . '/Entities',
         ),
-        'Philippe\\Blog\\Core\\Database\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/Database',
-        ),
-        'Philippe\\Blog\\Core\\' => 
+        'Philippe\\Blog\\Lib\\Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core',
+        ),
+        'Philippe\\Blog\\Lib\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/lib',
         ),
         'PHPMailer\\PHPMailer\\' => 
         array (

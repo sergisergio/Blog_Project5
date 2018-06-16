@@ -6,9 +6,10 @@
     },
     "autoload": {
     	"psr-4" : {
-            "Philippe\\Blog\\Model\\" : "model/",
-            "Philippe\\Blog\\Core\\" : "core/",
-            "Philippe\\Blog\\Model\\Entities\\" : "Entities/",
+            "Philippe\\Blog\\Lib\\" : "lib/",
+            "Philippe\\Blog\\Lib\\Model\\" : "model/",
+            "Philippe\\Blog\\Lib\\Core\\" : "core/",
+            "Philippe\\Blog\\Lib\\Entities\\" : "Entities/",
             "" : "controller"}
     },
     "require-dev": {

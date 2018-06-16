@@ -18,6 +18,6 @@
  */
 function home()
 {
-    include 'view/frontend/index.php';
+    include 'App/frontend/Modules/Home/index.php';
 }
 

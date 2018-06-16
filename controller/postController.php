@@ -11,15 +11,15 @@
  * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
-use \Philippe\Blog\Model\Entities\PostEntity;
-use \Philippe\Blog\Model\Entities\CommentEntity;
-use \Philippe\Blog\Model\Entities\UserEntity;
-use \Philippe\Blog\Model\Entities\CategoryEntity;
-use \Philippe\Blog\Model\UserManager;
-use \Philippe\Blog\Model\PostManager;
-use \Philippe\Blog\Model\CategoryManager;
-use \Philippe\Blog\Model\CommentManager;
-use \Philippe\Blog\Core\Session;
+use \Philippe\Blog\Lib\Entities\PostEntity;
+use \Philippe\Blog\Lib\Entities\CommentEntity;
+use \Philippe\Blog\Lib\Entities\UserEntity;
+use \Philippe\Blog\Lib\Entities\CategoryEntity;
+use \Philippe\Blog\Lib\Model\UserManager;
+use \Philippe\Blog\Lib\Model\PostManager;
+use \Philippe\Blog\Lib\Model\CategoryManager;
+use \Philippe\Blog\Lib\Model\CommentManager;
+use \Philippe\Blog\Lib\Core\Session;
 
 /**
  * Show all blog posts
@@ -45,7 +45,7 @@ function listPosts()
     $postsAside = $postManager->getPosts(0, 5);
     $categories = $categoryManager->getCategoryRequest();
 
-    include 'view/frontend/pages/blog.php';
+    include 'App/frontend/Modules/Blog/blog.php';
 }
 /**
  * Show only one blog post
@@ -75,7 +75,7 @@ function listPost($postId)
             $comment = $commentManager->getComments($postId);
             $user = $userManager->getUser($postId);
             $nbCount = $commentManager->countCommentRequest($postId);
-            include 'view/frontend/pages/blog_post.php';
+            include 'App/frontend/Modules/Blog/blog_post.php';
         }
     } else {
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';

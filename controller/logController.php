@@ -11,10 +11,10 @@
  * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
-use \Philippe\Blog\Model\Entities\UserEntity;
-use \Philippe\Blog\Model\UserManager;
-use \Philippe\Blog\Core\Session;
-use \Philippe\Blog\Model\SecurityManager;
+use \Philippe\Blog\Lib\Entities\UserEntity;
+use \Philippe\Blog\Lib\Model\UserManager;
+use \Philippe\Blog\Lib\Core\Session;
+use \Philippe\Blog\Lib\Model\SecurityManager;
 
 /**
  * Function loginPage
@@ -23,7 +23,7 @@ use \Philippe\Blog\Model\SecurityManager;
  */
 function loginPage()
 {
-    include 'view/frontend/pages/login.php';
+    include 'App/frontend/Modules/Blog/Login/login.php';
 }
 /**
  * Function login
@@ -98,7 +98,7 @@ function logout()
  */
 function forgetPasswordPage()
 {
-    include 'view/frontend/pages/forgetPasswordPage.php';
+    include 'App/frontend/Modules/Blog/ForgetPassword/forgetPasswordPage.php';
 }
 /**
  * Function forgetPassword

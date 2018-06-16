@@ -18,7 +18,7 @@
  */
 function errors()
 {
-    include 'view/frontend/pages/errors.php';
+    include 'App/frontend/pages/errors.php';
 }
 /**
  * Function noAdmin
@@ -27,5 +27,5 @@ function errors()
  */
 function noAdmin()
 {
-    include 'view/frontend/pages/noadmin.php';
+    include 'App/frontend/pages/noadmin.php';
 }

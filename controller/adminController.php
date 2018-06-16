@@ -11,11 +11,11 @@
  * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
-use \Philippe\Blog\Model\UserManager;
-use \Philippe\Blog\Model\PostManager;
-use \Philippe\Blog\Model\CategoryManager;
-use \Philippe\Blog\Model\CommentManager;
-use \Philippe\Blog\Core\Session;
+use \Philippe\Blog\Lib\Model\UserManager;
+use \Philippe\Blog\Lib\Model\PostManager;
+use \Philippe\Blog\Lib\Model\CategoryManager;
+use \Philippe\Blog\Lib\Model\CommentManager;
+use \Philippe\Blog\Lib\Core\Session;
 /**
  * Enter the admin part
  *
@@ -35,7 +35,7 @@ function admin($accessAdminToken)
                 header('Location: index.php?action=noAdmin');
                 exit();
             } else {
-                include 'view/backend/admin.php';
+                include 'App/backend/admin.php';
             }
         } else {
             echo 'Erreur de vérification';
@@ -66,7 +66,7 @@ function managePosts()
     }
     $start = ($currentPage-1)*$postsPerPage;
     $posts = $postManager->getPosts($start, $postsPerPage);
-    include 'view/backend/Posts/managePosts.php';
+    include 'App/backend/Posts/managePosts.php';
 }
 /**
  * Add a post
@@ -149,7 +149,7 @@ function modifyPostPage($postId)
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
         managePosts();
     }
-    include 'view/backend/Posts/modifyPostPage.php';
+    include 'App/backend/Posts/modifyPostPage.php';
 }
 /**
  * Modify a post
@@ -243,7 +243,7 @@ function manageComments()
     $commentManager = new CommentManager();
     $nbCount = $commentManager->countCommentBackRequest();
     $submittedComment = $commentManager->submittedCommentRequest();
-    include 'view/backend/Comments/manageComments.php';
+    include 'App/backend/Comments/manageComments.php';
 }
 /**
  * Validate a comment
@@ -330,7 +330,7 @@ function manageUsers()
 {
     $userManager = new UserManager();
     $users = $userManager->getUsers();
-    include 'view/backend/Users/user_mgmt.php';
+    include 'App/backend/Users/user_mgmt.php';
 }
 /**
  * Give admin Rights to a user
