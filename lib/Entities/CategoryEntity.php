@@ -14,7 +14,7 @@
 namespace Philippe\Blog\Lib\Entities;
 class CategoryEntity
 {
-    //use Hydrator;
+    use Constructor, Hydrator;
 
     private $category_id;
     private $category;
@@ -26,7 +26,7 @@ class CategoryEntity
      *
      * @return array 
      */
-    public function __construct($data) 
+    /*public function __construct($data) 
     {
         $this->hydrate($data);
     }
@@ -38,18 +38,18 @@ class CategoryEntity
      * 
      * @return array
      */
-    public function hydrate($datas) 
+    /*public function hydrate($datas) 
     {
-          /*foreach ($data as $key => $value) {
+          foreach ($data as $key => $value) {
               $method = 'set'.ucfirst($key);
               
               if (method_exists($this, $method)) {
                   $this->$method($value);
               }
-          }*/
+          }
           $this->setCategory_id($datas['category_id']);
           $this->setCategory($datas['category']);
-    }
+    }*/
     /**
      * Setter Id
      * 

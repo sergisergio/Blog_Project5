@@ -14,7 +14,7 @@
 namespace Philippe\Blog\Lib\Entities;
 class CommentEntity
 {
-    use Hydrator;
+    use Constructor, Hydrator;
 
     private $id;
     private $post_id;
@@ -28,11 +28,11 @@ class CommentEntity
     /**
      * Construct
      * 
-     * @param array $datas datas
+     * @param array $data datas
      *
      * @return array
      */
-    public function __construct($data) 
+    /*public function __construct($data) 
     {
         $this->hydrate($data);
     }
@@ -40,11 +40,11 @@ class CommentEntity
     /**
      * Hydrate
      * 
-     * @param array $datas datas
+     * @param array $data datas
      * 
      * @return array
      */
-    /*public function hydrate($datas) 
+    /*public function hydrate($data) 
     {
           foreach ($data as $key => $value) {
               $method = 'set'.ucfirst($key);

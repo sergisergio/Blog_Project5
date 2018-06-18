@@ -12,10 +12,11 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Lib\Entities;
+
 class PostEntity
 {
 
-    use Hydrator;
+    use Constructor, Hydrator;
 
     private $id;
     private $title;
@@ -35,11 +36,10 @@ class PostEntity
      *
      * @return array 
      */
-    public function __construct($data) 
+    /*public function __construct($data) 
     {
         $this->hydrate($data);
     }
-    //use Hydrator;
     /**
      * Hydrate
      * 
@@ -47,25 +47,25 @@ class PostEntity
      * 
      * @return array
      */
-    /*public function hydrate($datas) 
+    /*public function hydrate($data) 
     {
-          foreach ($data as $key => $value) {
+          foreach ((array)$data as $key => $value) {
               $method = 'set'.ucfirst($key);
               
               if (method_exists($this, $method)) {
                   $this->$method($value);
               }
           }
-          $this->setId($datas['id']);
-          $this->setTitle($datas['title']);
-          $this->setChapo($datas['chapo']);
-          $this->setIntro($datas['intro']);
-          $this->setContent($datas['content']);
-          $this->setAuthor($datas['author']);
-          $this->setCreation_date($datas['creation_date']);
-          $this->setLast_updated($datas['last_updated']);
-          $this->setFile_extension($datas['file_extension']);
-          $this->setCategory($datas['category_id']);
+          $this->setId($data['id']);
+          $this->setTitle($data['title']);
+          $this->setChapo($data['chapo']);
+          $this->setIntro($data['intro']);
+          $this->setContent($data['content']);
+          $this->setAuthor($data['author']);
+          $this->setCreation_date($data['creation_date']);
+          $this->setLast_updated($data['last_updated']);
+          $this->setFile_extension($data['file_extension']);
+          $this->setCategory($data['category_id']);
     }*/
     /**
      * Setter Id
