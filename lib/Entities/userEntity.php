@@ -16,6 +16,7 @@ namespace Philippe\Blog\Lib\Entities;
 
 class UserEntity
 {
+    
     use Constructor, Hydrator;
 
     private $id;
