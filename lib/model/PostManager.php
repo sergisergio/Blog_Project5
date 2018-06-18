@@ -12,7 +12,6 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Lib\Model;
-use \PDO;
 require_once "lib/model/Manager.php";
 
 use \Philippe\Blog\Lib\Entities\PostEntity;
@@ -30,7 +29,7 @@ class PostManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $getPosts = $dbProjet5->query(
-            'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.category_id, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
+            'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.category_id, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage
@@ -53,7 +52,7 @@ class PostManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $getPost = $dbProjet5->prepare(
-            'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.category_id, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated_fr 
+            'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.category_id, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
 			WHERE p.id = :id'
@@ -175,7 +174,7 @@ class PostManager extends Manager
     public function searchRequest($search)
     {
         $dbProjet5 = $this->dbConnect();
-        $results  = $dbProjet5->prepare(" SELECT id, title, intro, chapo, content, author, file_extension, category_id, creation_date AS creation_date_fr, last_updated AS last_updated_fr FROM Posts WHERE content LIKE '%$search%' ORDER BY id DESC ");
+        $results  = $dbProjet5->prepare(" SELECT id, title, intro, chapo, content, author, file_extension, category_id, creation_date AS creation_date, last_updated AS last_updated FROM Posts WHERE content LIKE '%$search%' ORDER BY id DESC ");
         $results->execute();
         $searchResults = [];
         while ($data = $results->fetch()) {
@@ -210,7 +209,7 @@ class PostManager extends Manager
     function categoryResultsRequest($categoryId)
     {
         $dbProjet5 = $this->dbConnect();
-        $catResults  = $dbProjet5->prepare(' SELECT id, title, author, file_extension, category_id, chapo, intro, content, creation_date AS creation_date_fr, last_updated AS last_updated_fr FROM Posts WHERE category_id = :id ORDER BY id DESC ');
+        $catResults  = $dbProjet5->prepare(' SELECT id, title, author, file_extension, category_id, chapo, intro, content, creation_date AS creation_date, last_updated AS last_updated FROM Posts WHERE category_id = :id ORDER BY id DESC ');
         $catResults->bindParam(':id', $categoryId);
         $catResults->execute();
         $cResults = [];

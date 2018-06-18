@@ -8,11 +8,11 @@
     </div>
     <div>
         <label for="first_name">Prénom</label><br />
-        <input type="text" id="first_name" name="first_name" value="<?= $post->getFirstName() ?>" />
+        <input type="text" id="first_name" name="first_name" value="<?= $post->getFirst_name() ?>" />
     </div>
     <div>
         <label for="name">Nom</label><br />
-        <input type="text" id="name" name="name" value="<?= $post->getLastname() ?>" />
+        <input type="text" id="name" name="name" value="<?= $post->getLast_name() ?>" />
     </div>
 
     <div>

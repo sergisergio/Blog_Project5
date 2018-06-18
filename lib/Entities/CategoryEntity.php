@@ -14,6 +14,8 @@
 namespace Philippe\Blog\Lib\Entities;
 class CategoryEntity
 {
+    //use Hydrator;
+
     private $category_id;
     private $category;
 
@@ -24,9 +26,9 @@ class CategoryEntity
      *
      * @return array 
      */
-    public function __construct($datas) 
+    public function __construct($data) 
     {
-        $this->hydrate($datas);
+        $this->hydrate($data);
     }
 
     /**
@@ -45,7 +47,7 @@ class CategoryEntity
                   $this->$method($value);
               }
           }*/
-          $this->setCategoryId($datas['category_id']);
+          $this->setCategory_id($datas['category_id']);
           $this->setCategory($datas['category']);
     }
     /**
@@ -55,7 +57,7 @@ class CategoryEntity
      *
      * @return int
      */
-    public function setCategoryId($category_id)
+    public function setCategory_id($category_id)
     {
         $category_id = (int)$category_id;
         if ($category_id > 0) {
@@ -80,7 +82,7 @@ class CategoryEntity
      * 
      * @return id
      */
-    public function getCategoryId()
+    public function getCategory_id()
     {
         return $this->category_id;
     }

@@ -26,17 +26,17 @@
                             <div class="meta">
                                 <span class="date"></span>
                                 <?php
-                                if ($p->getLastUpdated()) {
-                                    echo ($p->getLastUpdated());
+                                if ($p->getLast_updated()) {
+                                    echo ($p->getLast_updated());
                                 }
                                 else {
-                                    echo ($p->getCreationdate());
+                                    echo ($p->getCreation_date());
                                 }
                                 ?>
                             </div> 
                             <div class="divide30"></div>
-                                <?php if ($p->getFileExtension() != '') : ?>
-                                <img src="Web/images/posts/<?php echo $p->getFileExtension(); ?>" class="img-responsive imageblog1" alt="imagePosts" />
+                                <?php if ($p->getFile_extension() != '') : ?>
+                                <img src="Web/images/posts/<?php echo $p->getFile_extension(); ?>" class="img-responsive imageblog1" alt="imagePosts" />
                                 <?php else: ?>
                                 <img src="Web/images/posts/default.jpg" class="img-responsive imageblog1" alt="imagePosts" />
                                 <?php endif; ?>

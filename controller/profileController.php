@@ -56,7 +56,7 @@ function modifyProfile($userId, $avatar, $first_name, $name, $email, $descriptio
                         $extension_upload = $infosfichier['extension']; 
                         $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
                         if (in_array($extension_upload, $extensions_autorisees)) {
-                            move_uploaded_file($_FILES['avatar']['tmp_name'], 'public/images/avatar/' . basename($_FILES['avatar']['name'])); 
+                            move_uploaded_file($_FILES['avatar']['tmp_name'], 'Web/images/avatar/' . basename($_FILES['avatar']['name'])); 
                             echo "L'envoi a bien été effectué !";
                         }
                     }

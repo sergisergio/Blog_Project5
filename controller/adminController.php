@@ -66,7 +66,7 @@ function managePosts()
     }
     $start = ($currentPage-1)*$postsPerPage;
     $posts = $postManager->getPosts($start, $postsPerPage);
-    include 'App/backend/Posts/managePosts.php';
+    include 'App/backend/Modules/Posts/managePosts.php';
 }
 /**
  * Add a post
@@ -81,11 +81,10 @@ function managePosts()
  *
  * @return mixed
  */
-function addPost($title, $chapo, $author, $content, $image, $category, 
-    $csrfAddPostToken
-) {
+function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddPostToken) 
+{
     $postManager = new PostManager();
-
+    $_SESSION['csrfAddPostToken'] = $csrfAddPostToken; 
     $file_extension = $_FILES['file_extension'];
     $file_extension_error = $_FILES['file_extension']['error'];
     $file_extension_size = $_FILES['file_extension']['size'];
@@ -149,7 +148,7 @@ function modifyPostPage($postId)
         $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
         managePosts();
     }
-    include 'App/backend/Posts/modifyPostPage.php';
+    include 'App/backend/Modules/Posts/modifyPostPage.php';
 }
 /**
  * Modify a post
@@ -243,7 +242,7 @@ function manageComments()
     $commentManager = new CommentManager();
     $nbCount = $commentManager->countCommentBackRequest();
     $submittedComment = $commentManager->submittedCommentRequest();
-    include 'App/backend/Comments/manageComments.php';
+    include 'App/backend/Modules/Comments/manageComments.php';
 }
 /**
  * Validate a comment
@@ -330,7 +329,7 @@ function manageUsers()
 {
     $userManager = new UserManager();
     $users = $userManager->getUsers();
-    include 'App/backend/Users/user_mgmt.php';
+    include 'App/backend/Modules/Users/user_mgmt.php';
 }
 /**
  * Give admin Rights to a user

@@ -14,6 +14,8 @@
 namespace Philippe\Blog\Lib\Entities;
 class CommentEntity
 {
+    use Hydrator;
+
     private $id;
     private $post_id;
     private $author;
@@ -30,9 +32,9 @@ class CommentEntity
      *
      * @return array
      */
-    public function __construct($datas) 
+    public function __construct($data) 
     {
-        $this->hydrate($datas);
+        $this->hydrate($data);
     }
 
     /**
@@ -42,24 +44,24 @@ class CommentEntity
      * 
      * @return array
      */
-    public function hydrate($datas) 
+    /*public function hydrate($datas) 
     {
-          /*foreach ($data as $key => $value) {
+          foreach ($data as $key => $value) {
               $method = 'set'.ucfirst($key);
               
               if (method_exists($this, $method)) {
                   $this->$method($value);
               }
-          }*/
+          }
           $this->setId($datas['id']);
-          $this->setPostId($datas['post_id']);
+          $this->setPost_id($datas['post_id']);
           $this->setAuthor($datas['author']);
           $this->setContent($datas['content']);
-          $this->setCreationDate($datas['creation_date_fr']);
-          $this->setLastUpdated($datas['last_updated_fr']);
+          $this->setCreation_date($datas['creation_date']);
+          $this->setLast_updated($datas['last_updated']);
           $this->setValidation($datas['validation']);
           $this->setAvatar($datas['avatar']);
-    }
+    }*/
     /**
      * Setter Id
      * 
@@ -81,7 +83,7 @@ class CommentEntity
      *
      * @return int
      */
-    public function setPostId($post_id)
+    public function setPost_id($post_id)
     {
         $post_id = (int)$post_id;
         if ($post_id) {
@@ -121,7 +123,7 @@ class CommentEntity
      *
      * @return string
      */
-    public function setLastUpdated($last_updated)
+    public function setLast_updated($last_updated)
     {
         $this->last_updated = $last_updated;
     }
@@ -132,7 +134,7 @@ class CommentEntity
      *
      * @return string
      */
-    public function setCreationDate($creation_date)
+    public function setCreation_date($creation_date)
     {
         $this->creation_date = $creation_date;
     }
@@ -177,7 +179,7 @@ class CommentEntity
      * 
      * @return int
      */
-    public function getPostId()
+    public function getPost_id()
     {
         return $this->post_id;
     }
@@ -204,7 +206,7 @@ class CommentEntity
      * 
      * @return string
      */
-    public function getCreationDate()
+    public function getCreation_date()
     {
         return $this->creation_date;
     }
@@ -213,7 +215,7 @@ class CommentEntity
      * 
      * @return string
      */
-    public function getLastUpdated()
+    public function getLast_updated()
     {
         return $this->last_updated;
     }

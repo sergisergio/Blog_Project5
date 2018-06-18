@@ -16,17 +16,17 @@
                             <h4 class="post-title">Auteur : <?php echo ($post->getAuthor()); ?></h4>
                             <div class="meta"> <span class="date">date de dernière publication</span>le 
                                 <?php
-                                if (($post->getLastUpdated() != null)) {
-                                    echo ($post->getLastUpdated());
+                                if (($post->getLast_updated() != null)) {
+                                    echo ($post->getLast_updated());
                                 }
                                 else {
-                                    echo ($post->getCreationDate());
+                                    echo ($post->getCreation_date());
                                 }
                                 ?> 
                             </div>
                             <div class="divide30"></div>
-                            <?php if ($post->getFileExtension() != '') : ?>
-                            <img src="Web/images/posts/<?php echo $post->getFileExtension() ?>" class="img-responsive"  alt="imagepost"/>
+                            <?php if ($post->getFile_extension() != '') : ?>
+                            <img src="Web/images/posts/<?php echo $post->getFile_extension() ?>" class="img-responsive"  alt="imagepost"/>
                             <div class="divide30"></div>
                             <?php else: ?>
                             <img src="Web/images/posts/default.jpg" class="img-responsive"  alt="imagepost"/>
@@ -52,17 +52,17 @@
                             <p>
                             <div class="row">
                                 <div class="col-md-1 col-sm-1 col-xs-2">
-                                    <img class="img-responsive img-circle" src="Web/images/avatar/<?= $c->getAvatar() ?>" alt="imageavatar" />
+                                    <img class="img-responsive img-circle" src="Web/images/avatar/<?= $c->getAvatar(); ?>" alt="imageavatar" />
                                 </div>
                                 <div class="col-md-11 col-sm-11 col-xs-10">
                                     <a href="index.php?action=publicProfile&id=<?php echo $c->getAuthor() ?>"><strong><?php echo htmlspecialchars($c->getAuthor()) ?></strong></a> 
                                     <em style="font-weight: 200">le 
                                     <?php
-                                        if ($c->getLastUpdated()) {
-                                            echo ($c->getLastUpdated());
+                                        if ($c->getLast_updated()) {
+                                            echo ($c->getLast_updated());
                                         }
                                         else {
-                                            echo ($c->getCreationDate());
+                                            echo ($c->getCreation_date());
                                         }
                                     ?> 
                                     </em>

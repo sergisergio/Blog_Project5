@@ -25,14 +25,14 @@ class Session
     {
         $_SESSION['pseudo'] = $user->getPseudo();
         $_SESSION['id'] = $user->getId();
-        $_SESSION['prenom'] = $user->getFirstName();
-        $_SESSION['nom'] = $user->getlastName();
+        $_SESSION['prenom'] = $user->getFirst_name();
+        $_SESSION['nom'] = $user->getLast_name();
         $_SESSION['email'] = $user->getEmail();
         $_SESSION['password'] = $user->getPassword();
-        $_SESSION['autorisation'] = $user->getAuthorization1();
+        $_SESSION['autorisation'] = $user->getAuthorization();
         $_SESSION['avatar'] = $user->getAvatar();
-        $_SESSION['registration'] = $user->getRegistrationDate();
-        $_SESSION['is_active'] = $user->getIsActive();
+        $_SESSION['registration'] = $user->getRegistration_date();
+        $_SESSION['is_active'] = $user->getIs_active();
         $_SESSION['description'] = $user->getDescription();
         header('Location: index.php?action=blog');
         exit();

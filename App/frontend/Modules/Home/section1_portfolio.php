@@ -12,7 +12,7 @@
         <div id="grid-container" class="cbp-l-grid-masonry">
             <ul>
                 <li class="cbp-item frame wordpress">
-                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/postchalets.php">
+                    <a class="cbp-caption cbp-singlePage" href="App/frontend/Home/detail/postchalets.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="Web/images/ChaletcaviarBLANC_400x246-150x92.png" alt=""> 
                         </div>
@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame html javascript">
-                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/postfestival.php">
+                    <a class="cbp-caption cbp-singlePage" href="App/frontend/Home/detail/postfestival.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="Web/images/festival.png" class="white" alt=""> 
                         </div>
@@ -55,7 +55,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame php">
-                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/post2.php">
+                    <a class="cbp-caption cbp-singlePage" href="App/frontend/Home/detail/post2.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="Web/images/minichat.png" alt=""> 
                         </div>
@@ -69,7 +69,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame wordpress">
-                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/post4.php">
+                    <a class="cbp-caption cbp-singlePage" href="App/frontend/Home/detail/post4.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="Web/images/logo-image-atelier-des-chefs.jpg" alt="" class="white p20"> 
                         </div>
@@ -113,7 +113,7 @@
                 <li class="cbp-item frame php">
                     <a class="cbp-caption " href="http://www.soltexpertiz.com/" target="_blank">
                         <div class="cbp-caption-defaultWrap"> 
-                            <img src="public/images/logo_final.png" alt=""> 
+                            <img src="Web/images/logo_final.png" alt=""> 
                         </div>
                         <div class="cbp-caption-activeWrap">
                             <div class="cbp-l-caption-alignCenter">
@@ -125,9 +125,9 @@
                     </a>
                 </li>
                 <li class="cbp-item frame javascript">
-                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/postsnake.php">
+                    <a class="cbp-caption cbp-singlePage" href="App/frontend/Home/detail/postsnake.php">
                         <div class="cbp-caption-defaultWrap"> 
-                            <img src="projets/javascript/snake.png" alt=""> 
+                            <img src="Web/images/snake.png" alt=""> 
                         </div>
                         <div class="cbp-caption-activeWrap">
                             <div class="cbp-l-caption-alignCenter">
@@ -139,7 +139,7 @@
                     </a>
                 </li>
                 <li class="cbp-item frame html php">
-                    <a class="cbp-caption cbp-singlePage" href="view/frontend/detail/post5.php">
+                    <a class="cbp-caption cbp-singlePage" href="App/frontend/Home/detail/post5.php">
                         <div class="cbp-caption-defaultWrap"> 
                             <img src="Web/images/NONO.PNG" alt=""> 
                         </div>

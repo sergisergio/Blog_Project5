@@ -8,9 +8,39 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
 <?php ob_start(); ?>
 <body class="full-layout">
     <div class="body-wrapper">
-        <?php require "App/frontend/includes/nav.php"; ?>
+        <?php require "App/frontend/Modules/Nav/nav.php"; ?>
         <div class="container">
-            <?php require "App/backend/includes/management.php"; ?>
+            <section style="margin-bottom: 50px;">
+                  <div class="box">
+                    <div class="col-md-12">
+                      <?php if (isset($_SESSION['pseudo'])) : ?>
+                        <p class="pull-center"><h2>Espace administrateur</h2></p>
+                        <p class="pull-right">
+                        <btn class="btn btn-default logoutbtn"> <a href="index.php?action=logout">Déconnexion</a> </btn>
+                        <?php if ($_SESSION['avatar'] != '') : ?> <img style="width: 10%;float: right;margin: 0 20px;" class="img-responsive img-circle" src="Web/images/avatar/<?php echo $_SESSION['avatar']; ?>" />
+                        <?php else: ?> <img style="width: 5%;float: right;margin: 0 20px;" class="img-responsive img-circle" style="width: 5%;" src="Web/images/avatar/avatardefaut.png" />
+                        <?php endif; ?>
+                        </p>
+                        <?php else: ?> 
+                        <p class="pull-right"><btn class="btn btn-default"> <a href="index.php?action=loginPage">Connexion</a></btn></p>
+                        <p class="pull-right"><btn class="btn btn-default"> <a href="index.php?action=signupPage">Inscription</a> </btn>&nbsp;&nbsp; </p>
+                        <?php endif; ?>
+                    </div>
+                    <p></p>
+                    <div class="divide30"></div>
+                    <ul class="nav nav-tabs menuadmin">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="index.php?action=manage_posts">Gestion articles</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="index.php?action=manage_comments">Gestion commentaires</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="index.php?action=manage_users">Gestion membres</a>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
             
             <div class="post box">
                     
@@ -28,7 +58,7 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                         <?php endif; ?>
                     </h5>
                     <div class="divide20"></div>
-                    <?php require 'App/frontend/includes/responseAlert.php'; ?>
+                    <?php require 'App/frontend/Modules/responseAlert/responseAlert.php'; ?>
             </div>
             <?php
             
@@ -37,8 +67,8 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
             ?>
             <div class="post box">
             <div class="row">
-                <h3><?php echo htmlspecialchars($s->getPostId()); ?></h3>
-                <p>Commentaire de <?php echo htmlspecialchars($s->getAuthor()); ?> publié le <?php echo htmlspecialchars($s->getCreationDate()); ?></p>
+                <h3><?php echo htmlspecialchars($s->getPost_id()); ?></h3>
+                <p>Commentaire de <?php echo htmlspecialchars($s->getAuthor()); ?> publié le <?php echo htmlspecialchars($s->getCreation_date()); ?></p>
                 <p><?php echo htmlspecialchars($s->getContent()); ?></p>
             </div>
             <?php      

@@ -14,12 +14,12 @@
                             <div class="col-sm-12 post-content">
                                 <img class="img-responsive img-circle avatarblogpage2" src="Web/images/avatar/<?php echo $user->getAvatar() ?>" />
                                 Pseudo : <?php echo $user->getPseudo() ?><br />
-                                Prénom : <?php echo $user->getFirstName() ?><br />
-                                Nom : <?php echo $user->getLastName() ?><br />
+                                Prénom : <?php echo $user->getFirst_name() ?><br />
+                                Nom : <?php echo $user->getLast_name() ?><br />
                                 Email : <?php echo $user->getEmail() ?><br />
-                                Date d'inscription : <?php echo $user->getRegistrationDate() ?><br />
+                                Date d'inscription : <?php echo $user->getRegistration_date() ?><br />
                                 Statut : 
-                                <?php if($user->getAuthorization1() == 1) : ?>
+                                <?php if($user->getAuthorization() == 1) : ?>
                                     <?php echo 'Administrateur' ?><br />
                                 <?php else: ?>
                                     <?php echo 'Utilisateur' ?><br />

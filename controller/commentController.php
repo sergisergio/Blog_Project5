@@ -17,6 +17,7 @@ use \Philippe\Blog\Lib\Entities\UserEntity;
 use \Philippe\Blog\Lib\Model\UserManager;
 use \Philippe\Blog\Lib\Model\PostManager;
 use \Philippe\Blog\Lib\Model\CommentManager;
+use \Philippe\Blog\Lib\Model\CategoryManager;
 use \Philippe\Blog\Lib\Core\Session;
 
 /**
@@ -33,7 +34,7 @@ function addComment($postId, $author, $content, $csrfAddCommentToken)
 {
     $commentManager = new CommentManager();
     
-    $_SESSION['csrfAddPostToken'] = $csrfAddPostToken; 
+    $_SESSION['csrfAddPostToken'] = $csrfAddCommentToken; 
     if (isset($postId) && $postId > 0) {
         if (!empty($content)) {
             if (isset($_SESSION['csrfAddCommentToken']) AND isset($csrfAddCommentToken) AND !empty($_SESSION['csrfAddCommentToken']) AND !empty($csrfAddCommentToken)) {
@@ -74,12 +75,14 @@ function modifyCommentPage($commentId, $postId)
     $postManager = new PostManager();
     $commentManager = new CommentManager();
     $userManager = new UserManager();
+    $categoryManager = new CategoryManager();
     $session = new Session();
     $comment = $commentManager->getComment($commentId);
-    $post = $postManager->getPost($comment->getPostId());
+    $post = $postManager->getPost($comment->getPost_id());
     $postsAside = $postManager->getPosts(0, 5);
     $isComment = $commentManager->checkExistComment($commentId);
     $isPost = $postManager->checkExistPost($postId);
+    $categories = $categoryManager->getCategoryRequest();
 
     if (empty($comment) || $commentId <= 0 ) {
         $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';

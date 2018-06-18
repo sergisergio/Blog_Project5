@@ -26,7 +26,7 @@ class UserManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $getUsers = $dbProjet5->query(
-            'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description, reset_token, reset_at
+            'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date, authorization, is_active, avatar, description, reset_token, reset_at
 			FROM Users 
 			ORDER BY pseudo'
         );
@@ -48,7 +48,7 @@ class UserManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $getUser = $dbProjet5->prepare(
-            'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date_fr, authorization, is_active, avatar, description, reset_token, reset_at
+            'SELECT id, first_name, last_name, pseudo, password, email, confirmation_token, DATE_FORMAT(registration_date, \'%d/%m/%Y à %Hh%i\') AS registration_date, authorization, is_active, avatar, description, reset_token, reset_at
 			FROM Users 
 			WHERE id = :id'
         );
@@ -65,7 +65,7 @@ class UserManager extends Manager
      * 
      * @return string
      */
-    public function getAuthorization($pseudo)
+    /*public function getAuthorization($pseudo)
     {
         $dbProjet5 = $this->dbConnect();
         $getAuthorization = $dbProjet5->prepare(
@@ -160,7 +160,7 @@ class UserManager extends Manager
      * 
      * @return string
      */
-    public function existMail($email)
+    /*public function existMail($email)
     {
         $dbProjet5 = $this->dbConnect();
         $existMail = $dbProjet5->prepare('SELECT id FROM Users WHERE email = :email');

@@ -27,7 +27,7 @@ class Manager
     protected function dbConnect()
     {
         $dbProjet5 = new PDO('mysql:host=localhost;dbname=Projet5;charset=utf8', 'root', 'root');
-        $dbProjet5->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //$dbProjet5->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $dbProjet5;
     }
 }

@@ -16,7 +16,7 @@
             <div class="news">
               <h3>
                 <?php echo htmlspecialchars($post->getTitle()) ?>
-                <em>le <?php echo $post->getCreationDate() ?></em>
+                <em>le <?php echo $post->getCreation_date() ?></em>
               </h3>
               <p>
                 <?php echo nl2br(htmlspecialchars($post->getIntro())) ?>...
@@ -34,7 +34,7 @@
     </div>
       <div class="container bottomcontainer">
         <div class="row">
-            <?php require "App/frontend/Modules/Footerfooter.php"; ?>
+            <?php require "App/frontend/Modules/Footer/footer.php"; ?>
         </div>
       </div>
   </div>

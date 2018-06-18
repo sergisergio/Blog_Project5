@@ -50,7 +50,7 @@ function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
                 $count = $securityManager->checkBruteForce($ip);
                 if ($count < 3) {
                     if (password_verify($passe, $user->getPassword())) {
-                        if ($user->getIsActive() == 1) {
+                        if ($user->getIs_active() == 1) {
                             
                             if (isset($remember)) {
                                 setcookie('pseudo', $pseudo, time() + 60 * 60 * 24 * 7);
@@ -155,13 +155,13 @@ function changePasswordPage($userId, $resetToken)
     if ((isset($_GET['id']) && $_GET['id'] > 0) && isset($_GET['token'])) {
         $user = $userManager->checkResetTokenRequest($userId, $resetToken);
         if ($user &&  $user['reset_token'] == $resetToken) {
-            include 'view/frontend/pages/changePasswordPage.php';
+            include 'App/frontend/Modules/Blog/ForgetPassword/changePasswordPage.php';
         } else {
             $_SESSION['flash']['danger'] = 'Ce token n\' est plus valide ! Veuillez réessayer !';
             forgetPasswordPage();
         }
     } else {
-        $_SESSION['flash']['danger'] = 'Aucun id ou token ne coresspond à cet email, veuillez réessayer !';
+        $_SESSION['flash']['danger'] = 'Aucun id ou token ne correspond à cet email, veuillez réessayer !';
         forgetPasswordPage();
     }
 }

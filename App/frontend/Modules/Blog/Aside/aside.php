@@ -25,7 +25,7 @@
             ?>
             <ul>
                 <li>
-                    <a href="index.php?action=categoryresults&amp;id=<?php echo $c->getCategoryId() ?>"><?php echo htmlspecialchars($c->getCategory()); ?></a>
+                    <a href="index.php?action=categoryresults&amp;id=<?php echo $c->getCategory_id() ?>"><?php echo htmlspecialchars($c->getCategory()); ?></a>
                 </li>
             </ul>
             <?php  
@@ -108,7 +108,7 @@
                             <li><a href="https://www.php-fig.org/psr/" target="_blank">PSR</a></li>
                             <li><a href="https://www.grafikart.fr/formations/programmation-objet-php" target="_blank">Grafikart POO</a></li>
                             <li><a href="http://fr2.php.net/ini.core" target="_blank">PHP.ini</a></li>
-                            <li><a href="http://fr2.php.net/ini.core" target="_blank">https://phpunit.de</a></li>
+                            <li><a href="https://phpunit.de" target="_blank">PHPUnit</a></li>
                         </ul>
                     </div>
                 </div>

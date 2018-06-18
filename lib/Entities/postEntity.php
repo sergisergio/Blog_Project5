@@ -14,6 +14,9 @@
 namespace Philippe\Blog\Lib\Entities;
 class PostEntity
 {
+
+    use Hydrator;
+
     private $id;
     private $title;
     private $chapo;
@@ -32,10 +35,11 @@ class PostEntity
      *
      * @return array 
      */
-    public function __construct($datas) 
+    public function __construct($data) 
     {
-        $this->hydrate($datas);
+        $this->hydrate($data);
     }
+    //use Hydrator;
     /**
      * Hydrate
      * 
@@ -43,26 +47,26 @@ class PostEntity
      * 
      * @return array
      */
-    public function hydrate($datas) 
+    /*public function hydrate($datas) 
     {
-          /*foreach ($data as $key => $value) {
+          foreach ($data as $key => $value) {
               $method = 'set'.ucfirst($key);
               
               if (method_exists($this, $method)) {
                   $this->$method($value);
               }
-          }*/
+          }
           $this->setId($datas['id']);
           $this->setTitle($datas['title']);
           $this->setChapo($datas['chapo']);
           $this->setIntro($datas['intro']);
           $this->setContent($datas['content']);
           $this->setAuthor($datas['author']);
-          $this->setCreationDate($datas['creation_date_fr']);
-          $this->setLastUpdated($datas['last_updated_fr']);
-          $this->setFileExtension($datas['file_extension']);
+          $this->setCreation_date($datas['creation_date']);
+          $this->setLast_updated($datas['last_updated']);
+          $this->setFile_extension($datas['file_extension']);
           $this->setCategory($datas['category_id']);
-    }
+    }*/
     /**
      * Setter Id
      * 
@@ -149,7 +153,7 @@ class PostEntity
      *
      * @return string
      */
-    public function setCreationDate($creation_date)
+    public function setCreation_date($creation_date)
     {
         $this->creation_date = $creation_date;
     }
@@ -160,7 +164,7 @@ class PostEntity
      *
      * @return string
      */
-    public function setLastUpdated($last_updated)
+    public function setLast_updated($last_updated)
     {
         $this->last_updated = $last_updated;
     }
@@ -171,7 +175,7 @@ class PostEntity
      *
      * @return string
      */
-    public function setFileExtension($file_extension)
+    public function setFile_extension($file_extension)
     {
         if (is_string($file_extension)) {
             $this->file_extension = $file_extension;
@@ -250,7 +254,7 @@ class PostEntity
      * 
      * @return string
      */
-    public function getCreationDate()
+    public function getCreation_date()
     {
         return $this->creation_date;
     }
@@ -259,7 +263,7 @@ class PostEntity
      * 
      * @return string
      */
-    public function getLastUpdated()
+    public function getLast_updated()
     {
         return $this->last_updated;
     }
@@ -268,7 +272,7 @@ class PostEntity
      * 
      * @return string
      */
-    public function getFileExtension()
+    public function getFile_extension()
     {
         return $this->file_extension;
     }

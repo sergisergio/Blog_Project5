@@ -1,6 +1,6 @@
 <div class="form-container">
     <div class="response alert"></div>
-        <?php require 'App/frontend/includes/responseAlert.php'; ?> 
+        <?php require 'App/frontend/Modules/ResponseAlert/responseAlert.php'; ?> 
         <?php      
             $csrfAddPostToken = md5(time()*rand(1, 1000));       
         ?>
@@ -32,7 +32,7 @@
                 foreach ($categories as $c)
                 {
            
-                echo "<option value='".$c->getCategoryId()."'>".$c->getCategory()."</option>";
+                echo "<option value='".$c->getCategory_id()."'>".$c->getCategory()."</option>";
             
                 }
             ?>

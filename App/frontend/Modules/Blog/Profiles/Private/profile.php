@@ -29,10 +29,10 @@
                                         <?php echo $post->getPseudo(); ?>&nbsp;&nbsp;
                                     </p>
                                     <p>Date d'inscription :
-                                        <?php echo $post->getRegistrationDate(); ?>
+                                        <?php echo $post->getRegistration_date(); ?>
                                     </p>
                                     <p>Mode :
-                                        <?php if($post->getAuthorization1() == 1) : ?>
+                                        <?php if($post->getAuthorization() == 1) : ?>
                                         <?php echo 'Administrateur' ?>
                                         <?php else: ?>
                                         <?php echo 'Utilisateur' ?>

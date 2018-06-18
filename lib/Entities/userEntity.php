@@ -12,8 +12,11 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Lib\Entities;
+
 class UserEntity
 {
+    use Hydrator;
+
     private $id;
     private $first_name;
     private $last_name;
@@ -36,10 +39,11 @@ class UserEntity
      *
      * @return array 
      */
-    public function __construct($datas) 
+    public function __construct($data) 
     {
-        $this->hydrate($datas);
+        $this->hydrate($data);
     }
+    
 
     /**
      * Hydrate
@@ -48,29 +52,28 @@ class UserEntity
      * 
      * @return array
      */
-    public function hydrate($datas) 
+    public function hydrate($data) 
     {
-          /*foreach ($data as $key => $value) {
-              $method = 'set'.ucfirst($key);
-              
-              if (method_exists($this, $method)) {
-                  $this->$method($value);
-              }
-          }*/
-          $this->setId($datas['id']);
-          $this->setFirstName($datas['first_name']);
-          $this->setLastName($datas['last_name']);
-          $this->setPseudo($datas['pseudo']);
-          $this->setPassword($datas['password']);
-          $this->setEmail($datas['email']);
-          $this->setRegistrationDate($datas['registration_date_fr']);
-          $this->setAuthorization($datas['authorization']);
-          $this->setConfirmationToken($datas['confirmation_token']);
-          $this->setAvatar($datas['avatar']);
-          $this->setIsActive($datas['is_active']);
-          $this->setDescription($datas['description']);
-          $this->setResetToken($datas['reset_token']);
-          $this->setResetAt($datas['reset_at']);
+        foreach ((array)$data as $key => $value) {
+            $method = 'set'.ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+          /*$this->setId($data['id']);
+          $this->setFirst_name($data['first_name']);
+          $this->setLast_name($data['last_name']);
+          $this->setPseudo($data['pseudo']);
+          $this->setPassword($data['password']);
+          $this->setEmail($data['email']);
+          $this->setRegistration_date($data['registration_date']);
+          $this->setAuthorization($data['authorization']);
+          $this->setConfirmation_token($data['confirmation_token']);
+          $this->setAvatar($data['avatar']);
+          $this->setIs_active($data['is_active']);
+          $this->setDescription($data['description']);
+          $this->setReset_token($data['reset_token']);
+          $this->setReset_at($data['reset_at']);*/
     }
     /**
      * Setter Id
@@ -93,7 +96,7 @@ class UserEntity
      *
      * @return string
      */
-    public function setFirstName($first_name)
+    public function setFirst_name($first_name)
     {
         if (is_string($first_name)) {
             $this->first_name = $first_name;
@@ -106,7 +109,7 @@ class UserEntity
      *
      * @return string [<description>]
      */
-    public function setLastName($last_name)
+    public function setLast_name($last_name)
     {
         if (is_string($last_name)) {
             $this->last_name = $last_name;
@@ -158,7 +161,7 @@ class UserEntity
      *
      * @return string
      */
-    public function setRegistrationDate($registration_date)
+    public function setRegistration_date($registration_date)
     {
         $this->registration_date = $registration_date;
     }
@@ -183,7 +186,7 @@ class UserEntity
      *
      * @return string
      */
-    public function setConfirmationToken($confirmation_token)
+    public function setConfirmation_token($confirmation_token)
     {
         if (is_string($confirmation_token)) {
             $this->confirmation_token = $confirmation_token;
@@ -209,7 +212,7 @@ class UserEntity
      *
      * @return int
      */
-    public function setIsActive($is_active)
+    public function setIs_active($is_active)
     {
         $is_active = (int)$is_active;
         if ($is_active >= 0) {
@@ -236,7 +239,7 @@ class UserEntity
      *
      * @return string
      */
-    public function setResetToken($reset_token)
+    public function setReset_token($reset_token)
     {
         if (is_string($reset_token)) {
             $this->reset_token = $reset_token;
@@ -249,7 +252,7 @@ class UserEntity
      *
      * @return string
      */
-    public function setResetAt($reset_at)
+    public function setReset_at($reset_at)
     {
         $this->reset_at = $reset_at;
     }
@@ -267,7 +270,7 @@ class UserEntity
      * 
      * @return string
      */
-    public function getFirstName()
+    public function getFirst_name()
     {
         return $this->first_name;
     }
@@ -276,7 +279,7 @@ class UserEntity
      * 
      * @return string
      */
-    public function getLastName()
+    public function getLast_name()
     {
         return $this->last_name;
     }
@@ -312,7 +315,7 @@ class UserEntity
      * 
      * @return string
      */
-    public function getRegistrationDate()
+    public function getRegistration_date()
     {
         return $this->registration_date;
     }
@@ -321,7 +324,7 @@ class UserEntity
      * 
      * @return string
      */
-    public function getAuthorization1()
+    public function getAuthorization()
     {
         return $this->authorization;
     }
@@ -330,7 +333,7 @@ class UserEntity
      * 
      * @return string
      */
-    public function getConfirmationToken()
+    public function getConfirmation_token()
     {
         return $this->confirmation_token;
     }
@@ -348,7 +351,7 @@ class UserEntity
      * 
      * @return string
      */
-    public function getIsActive()
+    public function getIs_active()
     {
         return $this->is_active;
     }
@@ -366,7 +369,7 @@ class UserEntity
      * 
      * @return string
      */
-    public function getResetToken()
+    public function getReset_token()
     {
         return $this->reset_token;
     }
@@ -375,7 +378,7 @@ class UserEntity
      * 
      * @return string
      */
-    public function getResetAt()
+    public function getReset_at()
     {
         return $this->reset_at;
     }
