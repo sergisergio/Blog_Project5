@@ -8,13 +8,13 @@ $baseDir = dirname($vendorDir);
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
-    'Philippe\\Blog\\Lib\\Model\\' => array($baseDir . '/model'),
-    'Philippe\\Blog\\Lib\\Entities\\' => array($baseDir . '/Entities'),
-    'Philippe\\Blog\\Lib\\Core\\' => array($baseDir . '/core'),
-    'Philippe\\Blog\\Lib\\' => array($baseDir . '/lib'),
+    'Philippe\\Blog\\Src\\Model\\' => array($baseDir . '/model'),
+    'Philippe\\Blog\\Src\\Entities\\' => array($baseDir . '/entities'),
+    'Philippe\\Blog\\Src\\Core\\' => array($baseDir . '/core'),
+    'Philippe\\Blog\\Src\\Controller\\' => array($baseDir . '/controller'),
+    'Philippe\\Blog\\Src\\' => array($baseDir . '/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Michelf\\' => array($vendorDir . '/michelf/php-markdown/Michelf'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
-    '' => array($baseDir . '/controller'),
 );

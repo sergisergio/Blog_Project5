@@ -21,10 +21,11 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         ),
         'P' => 
         array (
-            'Philippe\\Blog\\Lib\\Model\\' => 24,
-            'Philippe\\Blog\\Lib\\Entities\\' => 27,
-            'Philippe\\Blog\\Lib\\Core\\' => 23,
-            'Philippe\\Blog\\Lib\\' => 18,
+            'Philippe\\Blog\\Src\\Model\\' => 24,
+            'Philippe\\Blog\\Src\\Entities\\' => 27,
+            'Philippe\\Blog\\Src\\Core\\' => 23,
+            'Philippe\\Blog\\Src\\Controller\\' => 29,
+            'Philippe\\Blog\\Src\\' => 18,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
@@ -49,21 +50,25 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'Philippe\\Blog\\Lib\\Model\\' => 
+        'Philippe\\Blog\\Src\\Model\\' => 
         array (
             0 => __DIR__ . '/../..' . '/model',
         ),
-        'Philippe\\Blog\\Lib\\Entities\\' => 
+        'Philippe\\Blog\\Src\\Entities\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/Entities',
+            0 => __DIR__ . '/../..' . '/entities',
         ),
-        'Philippe\\Blog\\Lib\\Core\\' => 
+        'Philippe\\Blog\\Src\\Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core',
         ),
-        'Philippe\\Blog\\Lib\\' => 
+        'Philippe\\Blog\\Src\\Controller\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/lib',
+            0 => __DIR__ . '/../..' . '/controller',
+        ),
+        'Philippe\\Blog\\Src\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'PHPMailer\\PHPMailer\\' => 
         array (
@@ -81,10 +86,6 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
-    );
-
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/../..' . '/controller',
     );
 
     public static $prefixesPsr0 = array (
@@ -560,20 +561,30 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         'PharIo\\Version\\VersionConstraintParser' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintParser.php',
         'PharIo\\Version\\VersionConstraintValue' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintValue.php',
         'PharIo\\Version\\VersionNumber' => __DIR__ . '/..' . '/phar-io/version/src/VersionNumber.php',
-        'Philippe\\Blog\\Lib\\Core\\Factories\\DbFactory' => __DIR__ . '/../..' . '/lib/core/factories/DbFactory.php',
-        'Philippe\\Blog\\Lib\\Core\\Session' => __DIR__ . '/../..' . '/lib/core/Session.php',
-        'Philippe\\Blog\\Lib\\Entities\\CategoryEntity' => __DIR__ . '/../..' . '/lib/Entities/CategoryEntity.php',
-        'Philippe\\Blog\\Lib\\Entities\\CommentEntity' => __DIR__ . '/../..' . '/lib/Entities/commentEntity.php',
-        'Philippe\\Blog\\Lib\\Entities\\Constructor' => __DIR__ . '/../..' . '/lib/core/traits/constructor.php',
-        'Philippe\\Blog\\Lib\\Entities\\Hydrator' => __DIR__ . '/../..' . '/lib/core/traits/hydrator.php',
-        'Philippe\\Blog\\Lib\\Entities\\PostEntity' => __DIR__ . '/../..' . '/lib/Entities/postEntity.php',
-        'Philippe\\Blog\\Lib\\Entities\\UserEntity' => __DIR__ . '/../..' . '/lib/Entities/userEntity.php',
-        'Philippe\\Blog\\Lib\\Model\\CategoryManager' => __DIR__ . '/../..' . '/lib/model/categoryManager.php',
-        'Philippe\\Blog\\Lib\\Model\\CommentManager' => __DIR__ . '/../..' . '/lib/model/CommentManager.php',
-        'Philippe\\Blog\\Lib\\Model\\Manager' => __DIR__ . '/../..' . '/lib/model/Manager.php',
-        'Philippe\\Blog\\Lib\\Model\\PostManager' => __DIR__ . '/../..' . '/lib/model/PostManager.php',
-        'Philippe\\Blog\\Lib\\Model\\SecurityManager' => __DIR__ . '/../..' . '/lib/model/SecurityManager.php',
-        'Philippe\\Blog\\Lib\\Model\\UserManager' => __DIR__ . '/../..' . '/lib/model/UserManager.php',
+        'Philippe\\Blog\\Src\\Controller\\adminController' => __DIR__ . '/../..' . '/src/controller/adminController.php',
+        'Philippe\\Blog\\Src\\Controller\\categoryController' => __DIR__ . '/../..' . '/src/controller/categoryController.php',
+        'Philippe\\Blog\\Src\\Controller\\commentController' => __DIR__ . '/../..' . '/src/controller/commentController.php',
+        'Philippe\\Blog\\Src\\Controller\\contactController' => __DIR__ . '/../..' . '/src/controller/contactController.php',
+        'Philippe\\Blog\\Src\\Controller\\defaultController' => __DIR__ . '/../..' . '/src/controller/defaultController.php',
+        'Philippe\\Blog\\Src\\Controller\\errorsController' => __DIR__ . '/../..' . '/src/controller/errorsController.php',
+        'Philippe\\Blog\\Src\\Controller\\logController' => __DIR__ . '/../..' . '/src/controller/logController.php',
+        'Philippe\\Blog\\Src\\Controller\\postController' => __DIR__ . '/../..' . '/src/controller/postController.php',
+        'Philippe\\Blog\\Src\\Controller\\profileController' => __DIR__ . '/../..' . '/src/controller/profileController.php',
+        'Philippe\\Blog\\Src\\Controller\\registerController' => __DIR__ . '/../..' . '/src/controller/registerController.php',
+        'Philippe\\Blog\\Src\\Controller\\searchController' => __DIR__ . '/../..' . '/src/controller/searchController.php',
+        'Philippe\\Blog\\Src\\Core\\Session' => __DIR__ . '/../..' . '/src/core/Session.php',
+        'Philippe\\Blog\\Src\\Entities\\CategoryEntity' => __DIR__ . '/../..' . '/src/entities/categoryEntity.php',
+        'Philippe\\Blog\\Src\\Entities\\CommentEntity' => __DIR__ . '/../..' . '/src/entities/commentEntity.php',
+        'Philippe\\Blog\\Src\\Entities\\Constructor' => __DIR__ . '/../..' . '/src/entities/constructor.php',
+        'Philippe\\Blog\\Src\\Entities\\Hydrator' => __DIR__ . '/../..' . '/src/entities/hydrator.php',
+        'Philippe\\Blog\\Src\\Entities\\PostEntity' => __DIR__ . '/../..' . '/src/entities/postEntity.php',
+        'Philippe\\Blog\\Src\\Entities\\UserEntity' => __DIR__ . '/../..' . '/src/entities/userEntity.php',
+        'Philippe\\Blog\\Src\\Model\\CategoryManager' => __DIR__ . '/../..' . '/src/model/categoryManager.php',
+        'Philippe\\Blog\\Src\\Model\\CommentManager' => __DIR__ . '/../..' . '/src/model/commentManager.php',
+        'Philippe\\Blog\\Src\\Model\\Manager' => __DIR__ . '/../..' . '/src/model/manager.php',
+        'Philippe\\Blog\\Src\\Model\\PostManager' => __DIR__ . '/../..' . '/src/model/postManager.php',
+        'Philippe\\Blog\\Src\\Model\\SecurityManager' => __DIR__ . '/../..' . '/src/model/securityManager.php',
+        'Philippe\\Blog\\Src\\Model\\UserManager' => __DIR__ . '/../..' . '/src/model/userManager.php',
         'Prophecy\\Argument' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument.php',
         'Prophecy\\Argument\\ArgumentsWildcard' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument/ArgumentsWildcard.php',
         'Prophecy\\Argument\\Token\\AnyValueToken' => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy/Argument/Token/AnyValueToken.php',
@@ -846,7 +857,6 @@ class ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe::$prefixesPsr0;
             $loader->classMap = ComposerStaticInita5923d9877bcd5b93096d3c8dc527fbe::$classMap;
 
