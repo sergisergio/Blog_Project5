@@ -12,6 +12,7 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Core;
+
 use \Philippe\Blog\Src\Model\UserManager;
 use \Philippe\Blog\Src\Core\Session;
 /**

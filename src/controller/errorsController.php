@@ -13,24 +13,24 @@
  */
 namespace Philippe\Blog\Src\Controller;
 
-class errorsController
+class ErrorsController
 {
-	/**
-	 * Function errors
-	 * 
-	 * @return mixed
-	 */
-	function errors()
-	{
-	    include 'views/frontend/Modules/Blog/Errors/errors.php';
-	}
-	/**
-	 * Function noAdmin
-	 * 
-	 * @return mixed
-	 */
-	function noAdmin()
-	{
-	    include 'views/frontend/Modules/Blog/Errors/noadmin.php';
-	}
+    /**
+     * Function errors
+     * 
+     * @return mixed
+     */
+    public function errors()
+    {
+        include 'views/frontend/Modules/Blog/Errors/errors.php';
+    }
+    /**
+     * Function noAdmin
+     * 
+     * @return mixed
+     */
+    public function noAdmin()
+    {
+        include 'views/frontend/Modules/Blog/Errors/noadmin.php';
+    }
 }

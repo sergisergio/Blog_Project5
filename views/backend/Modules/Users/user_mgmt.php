@@ -2,7 +2,7 @@
 <?php ob_start(); ?>
 <body class="full-layout">
     <div class="body-wrapper">
-        <?php require "App/frontend/Modules/Nav/nav.php"; ?>
+        <?php require "views/frontend/Modules/Nav/nav.php"; ?>
         <div class="container">
             <section style="margin-bottom: 50px;">
                   <div class="box">
@@ -92,4 +92,4 @@
                 <div class="divide100"></div>
         </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'App/backend/templates/template.php'; ?>
+<?php require 'views/backend/templates/template.php'; ?>

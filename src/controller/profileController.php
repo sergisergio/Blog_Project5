@@ -18,7 +18,7 @@ use \Philippe\Blog\Src\Model\UserManager;
 use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Core\Session;
 
-class profileController 
+class ProfileController
 {
     /**
      * Function profilePage
@@ -27,7 +27,7 @@ class profileController
      * 
      * @return mixed
      */
-    function profilePage($userId)
+    public function profilePage($userId)
     {
         $userManager = new UserManager();
         $post = $userManager->getUser($userId);
@@ -46,7 +46,7 @@ class profileController
      * 
      * @return mixed
      */
-    function modifyProfile($userId, $avatar, $first_name, $name, $email, $description, $csrfProfileToken)
+    public function modifyProfile($userId, $avatar, $first_name, $name, $email, $description, $csrfProfileToken)
     {
         $userManager = new UserManager();
         $_SESSION['csrfProfileToken'] = $csrfProfileToken; 
@@ -93,7 +93,7 @@ class profileController
      * 
      * @return mixed
      */
-    function deleteAccount($userId, $csrfDeleteAccountToken)
+    public function deleteAccount($userId, $csrfDeleteAccountToken)
     {
         $userManager = new UserManager();
         $session = new Session();
@@ -127,7 +127,7 @@ class profileController
      * 
      * @return mixed
      */
-    function publicProfile($commentAuthor)
+    public function publicProfile($commentAuthor)
     {
         $commentManager = new CommentManager();
         $user = $commentManager->getUserByCommentRequest($commentAuthor);

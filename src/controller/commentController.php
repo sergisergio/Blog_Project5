@@ -23,19 +23,20 @@ use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Core\Session;
 
-class commentController {
+class CommentController
+{
 
     /**
      * Function addComment
      * 
-     * @param int                 $postId              the post's id
-     * @param string              $author              the author
-     * @param string              $content             the content
-     * @param string              $csrfAddCommentToken the token to tryto avoid csrf
+     * @param int    $postId              the post's id
+     * @param string $author              the author
+     * @param string $content             the content
+     * @param string $csrfAddCommentToken the token to tryto avoid csrf
      *
      * @return mixed
      */
-    function addComment($postId, $author, $content, $csrfAddCommentToken)
+    public function addComment($postId, $author, $content, $csrfAddCommentToken)
     {
         $commentManager = new CommentManager();
         
@@ -70,12 +71,12 @@ class commentController {
     /**
      * Function modifyCommentPage
      * 
-     * @param int    $commentId the comment's id
-     * @param int    $postId    the post's id
+     * @param int $commentId the comment's id
+     * @param int $postId    the post's id
      * 
      * @return mixed
      */
-    function modifyCommentPage($commentId, $postId)
+    public function modifyCommentPage($commentId, $postId)
     {
         $postManager = new PostManager();
         $commentManager = new CommentManager();
@@ -110,13 +111,13 @@ class commentController {
     /**
      * Function deleteComment
      * 
-     * @param int                    $commentId              the comment's id
-     * @param int                    $postId                 the post's id
-     * @param string                 $csrfDeleteCommentToken the token to try to avoid csrf
+     * @param int    $commentId              the comment's id
+     * @param int    $postId                 the post's id
+     * @param string $csrfDeleteCommentToken the token to try to avoid csrf
      * 
      * @return mixed
      */
-    function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
+    public function deleteComment($commentId, $postId, $csrfDeleteCommentToken)
     {
         $commentManager = new CommentManager();
         $_SESSION['csrfDeleteCommentToken'] = $csrfDeleteCommentToken;
@@ -148,15 +149,15 @@ class commentController {
     /**
      * Function modifyComment
      * 
-     * @param int                    $commentId              the comment's id
-     * @param string                 $author                 the author
-     * @param string                 $content                the content
-     * @param int                    $postId                 the post's id
-     * @param string                 $csrfModifyCommentToken the token to try to avoid csrf
+     * @param int    $commentId              the comment's id
+     * @param string $author                 the author
+     * @param string $content                the content
+     * @param int    $postId                 the post's id
+     * @param string $csrfModifyCommentToken the token to try to avoid csrf
      * 
      * @return mixed
      */
-    function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommentToken)
+    public function modifyComment($commentId, $author, $content, $postId, $csrfModifyCommentToken)
     {
         $commentManager = new CommentManager();
         $comment = $commentManager->getComment($commentId);

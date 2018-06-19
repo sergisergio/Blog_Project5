@@ -19,14 +19,15 @@ use \Philippe\Blog\Src\Model\UserManager;
 use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Model\SecurityManager;
 
-class logController {
+class LogController
+{
 
     /**
      * Function loginPage
      * 
      * @return mixed
      */
-    function loginPage()
+    public function loginPage()
     {
         include 'views/frontend/Modules/Blog/Login/login.php';
     }
@@ -41,7 +42,7 @@ class logController {
      * 
      * @return mixed
      */
-    function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
+    public function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
     {
         $userManager = new UserManager();
         $session = new Session();
@@ -91,7 +92,7 @@ class logController {
      * 
      * @return mixed
      */
-    function logout()
+    public function logout()
     {
         $session = new Session();
         $session->stopSession();
@@ -101,7 +102,7 @@ class logController {
      * 
      * @return mixed
      */
-    function forgetPasswordPage()
+    public function forgetPasswordPage()
     {
         include 'views/frontend/Modules/Blog/ForgetPassword/forgetPasswordPage.php';
     }
@@ -113,7 +114,7 @@ class logController {
      * 
      * @return mixed
      */
-    function forgetPassword($email, $csrfForgetToken)
+    public function forgetPassword($email, $csrfForgetToken)
     {
         $userManager = new UserManager(); 
 
@@ -152,7 +153,7 @@ class logController {
      * 
      * @return mixed
      */
-    function changePasswordPage($userId, $resetToken)
+    public function changePasswordPage($userId, $resetToken)
     {
         $userManager = new UserManager();
         $session = new Session(); 
@@ -179,7 +180,7 @@ class logController {
      * 
      * @return mixed
      */
-    function changePassword($userId, $passe, $csrfChangePasswordToken)
+    public function changePassword($userId, $passe, $csrfChangePasswordToken)
     { 
         $userManager = new UserManager(); 
         

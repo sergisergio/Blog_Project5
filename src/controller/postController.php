@@ -23,14 +23,14 @@ use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Core\Session;
 
-class postController
+class PostController
 {
     /**
      * Show all blog posts
      * 
      * @return mixed
      */
-    function listPosts()
+    public function listPosts()
     {
         $postManager = new PostManager();
         $categoryManager = new CategoryManager();
@@ -58,7 +58,7 @@ class postController
      * 
      * @return mixed
      */
-    function listPost($postId)
+    public function listPost($postId)
     {
         $postManager = new PostManager();
         $commentManager = new CommentManager();

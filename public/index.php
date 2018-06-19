@@ -2,7 +2,7 @@
 /**
  * My own blog.
  *
- * Default Controller
+ * Index
  *
  * @category PHP
  * @package  Default
@@ -11,18 +11,9 @@
  * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
-namespace Philippe\Blog\Src\Controller;
-/**
- * Show the homepage
- * 
- * @return mixed
- */
-class DefaultController
-{
+session_start();
+require "vendor/autoload.php";
+require 'config/router.php';
 
-    public function home()
-    {
-        include 'views/frontend/Modules/Home/index.php';
-    }
-}
-
+$router = new Router();
+$router->run();

@@ -18,8 +18,9 @@ use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Core\Session;
+use \Exception;
 
-class adminController
+class AdminController
 {
     /**
      * Enter the admin part
@@ -28,7 +29,7 @@ class adminController
      * 
      * @return int
      */
-    function admin($accessAdminToken)
+    public function admin($accessAdminToken)
     {
         $session = new Session();
 
@@ -52,7 +53,7 @@ class adminController
      * 
      * @return mixed
      */
-    function managePosts()
+    public function managePosts()
     {
         $postManager = new PostManager();
         $categoryManager = new CategoryManager();
@@ -86,7 +87,7 @@ class adminController
      *
      * @return mixed
      */
-    function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddPostToken) 
+    public function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddPostToken) 
     {
         $postManager = new PostManager();
         $_SESSION['csrfAddPostToken'] = $csrfAddPostToken; 
@@ -120,10 +121,10 @@ class adminController
                     );
                     if ($addedPost === false) {
                         $_SESSION['flash']['danger'] = 'impossible d\'ajouter l\'article !';
-                        managePosts();
+                        self::managePosts();
                     } else {
                         $_SESSION['flash']['success'] = 'L\'article a bien été ajouté !';
-                        managePosts();
+                        self::managePosts();
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Un ou plusieurs champs ne sont pas remplis !';
@@ -143,7 +144,7 @@ class adminController
      *
      * @return int
      */
-    function modifyPostPage($postId)
+    public function modifyPostPage($postId)
     {
         $postManager = new PostManager();
         $post = $postManager->getPost($postId);
@@ -151,7 +152,7 @@ class adminController
 
         if (empty($post) || $postId <= 0) {
             $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
-            managePosts();
+            self::managePosts();
         }
         include 'views/backend/Modules/Posts/modifyPostPage.php';
     }
@@ -167,7 +168,7 @@ class adminController
      * 
      * @return mixed
      */
-    function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostToken)
+    public function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostToken)
     {
         $postManager = new PostManager();
         $_SESSION['csrfModifyPostToken'] = $csrfModifyPostToken; 
@@ -209,7 +210,7 @@ class adminController
      * 
      * @return mixed
      */
-    function deletePost($postId, $csrfDeletePostToken)
+    public function deletePost($postId, $csrfDeletePostToken)
     {
         $postManager = new PostManager();
         $_SESSION['csrfDeletePostToken'] = $csrfDeletePostToken;
@@ -229,11 +230,11 @@ class adminController
                     }
                 } elseif ($postId <= 0) {
                     $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
-                    managePosts();
+                    self::managePosts();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                managePosts();
+                self::managePosts();
             }
         }
     }
@@ -242,7 +243,7 @@ class adminController
      * 
      * @return mixed
      */
-    function manageComments()
+    public function manageComments()
     {
         $commentManager = new CommentManager();
         $nbCount = $commentManager->countCommentBackRequest();
@@ -257,7 +258,7 @@ class adminController
      * 
      * @return mixed
      */
-    function validateComment($commentId, $csrfValidateCommentToken)
+    public function validateComment($commentId, $csrfValidateCommentToken)
     {
         $commentManager = new CommentManager();
         $validated = $commentManager->validateCommentRequest($commentId);
@@ -279,11 +280,11 @@ class adminController
                     }
                 } elseif ($commentId <= 0) {
                     $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
-                    manageComments();
+                    self::manageComments();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                manageComments();
+                self::manageComments();
             }
         }
     }
@@ -295,7 +296,7 @@ class adminController
      * 
      * @return mixed
      */
-    function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
+    public function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
     {
         $commentManager = new CommentManager();
         $commentManager->getComment($commentId);
@@ -317,11 +318,11 @@ class adminController
                     }
                 } elseif ($commentId <= 0) {
                     $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
-                    manageComments();
+                    self::manageComments();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                manageComments();
+                self::manageComments();
             }
         }
     }
@@ -330,7 +331,7 @@ class adminController
      * 
      * @return mixed
      */
-    function manageUsers()
+    public function manageUsers()
     {
         $userManager = new UserManager();
         $users = $userManager->getUsers();
@@ -344,7 +345,7 @@ class adminController
      * 
      * @return mixed
      */
-    function giveAdminRights($userId, $csrfGiveAdminRightsToken)
+    public function giveAdminRights($userId, $csrfGiveAdminRightsToken)
     {
         $userManager = new UserManager();
         $_SESSION['csrfGiveAdminRightsToken'] = $csrfGiveAdminRightsToken;
@@ -363,7 +364,7 @@ class adminController
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                manageUsers();
+                self::manageUsers();
             }
         }
     }
@@ -375,7 +376,7 @@ class adminController
      * 
      * @return mixed
      */
-    function stopAdminRights($userId, $csrfCancelAdminRightsToken)
+    public function stopAdminRights($userId, $csrfCancelAdminRightsToken)
     {
         $userManager = new UserManager();
         $_SESSION['csrfCancelAdminRightsToken'] = $csrfCancelAdminRightsToken;
@@ -394,7 +395,7 @@ class adminController
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                manageUsers();
+                self::manageUsers();
             }
         }
     }
@@ -406,7 +407,7 @@ class adminController
      * 
      * @return mixed
      */
-    function deleteUser($userId, $csrfDeleteUserToken)
+    public function deleteUser($userId, $csrfDeleteUserToken)
     {
         $userManager = new UserManager();
         $_SESSION['csrfDeleteUserToken'] = $csrfDeleteUserToken;
@@ -425,7 +426,7 @@ class adminController
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                manageUsers();
+                self::manageUsers();
             }
         }
     }
@@ -437,7 +438,7 @@ class adminController
      *
      * @return mixed
      */
-    function addCategory($category, $csrfAddCategoryToken)
+    public function addCategory($category, $csrfAddCategoryToken)
     {
         $categoryManager = new CategoryManager();
         $_SESSION['csrfAddCategoryToken'] = $csrfAddCategoryToken; 

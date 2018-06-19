@@ -8,7 +8,7 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
 <?php ob_start(); ?>
 <body class="full-layout">
     <div class="body-wrapper">
-        <?php require "App/frontend/Modules/Nav/nav.php"; ?>
+        <?php require "views/frontend/Modules/Nav/nav.php"; ?>
             <div class="container">
                 <section style="margin-bottom: 50px;">
                   <div class="box">
@@ -45,11 +45,11 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                 <div class="post box">
                     <div class="row">
                         <h2>Modifier l'article</h2>
-                        <?php require "App/backend/Modules/Posts/form_modifypost.php" ?>
+                        <?php require "views/backend/Modules/Posts/form_modifypost.php" ?>
                     </div>
                 </div>
             </div>
         </div>
         <div class="divide50"></div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'App/backend/templates/template.php'; ?>
+<?php require 'views/backend/templates/template.php'; ?>

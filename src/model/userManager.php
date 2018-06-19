@@ -15,6 +15,9 @@ namespace Philippe\Blog\Src\Model;
 require_once "src/model/Manager.php";
 
 use \Philippe\Blog\Src\Entities\UserEntity;
+/**
+ * Class UserManager
+ */
 class UserManager extends Manager
 {
     /**
@@ -57,28 +60,6 @@ class UserManager extends Manager
         $data = $getUser->fetch();
         $post = new UserEntity($data);
         return $post;
-    }
-    /**
-     * Function getAuthorization
-     * 
-     * @param string $pseudo pseudo
-     * 
-     * @return string
-     */
-    /*public function getAuthorization($pseudo)
-    {
-        $dbProjet5 = $this->dbConnect();
-        $getAuthorization = $dbProjet5->prepare(
-            'SELECT authorization
-			FROM Users 
-			WHERE pseudo = :pseudo
-			'
-        );
-        $getAuthorization->bindParam(':id', $pseudo);
-        $getAuthorization->execute();
-        $data = $getAuthorization->fetch();
-        $access = new UserEntity($data);
-        return $access;
     }
     /**
      * Function addUserRequest

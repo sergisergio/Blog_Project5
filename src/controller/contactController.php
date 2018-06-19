@@ -17,7 +17,7 @@ namespace Philippe\Blog\Src\Controller;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class contactController 
+class ContactController
 {
     /**
      * Function contact
@@ -31,7 +31,7 @@ class contactController
      * 
      * @return mixed
      */
-    function contact($name, $email, $subject, $message, $response, $remoteip)
+    public function contact($name, $email, $subject, $message, $response, $remoteip)
     {
         if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
             

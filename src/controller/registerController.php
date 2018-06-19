@@ -21,14 +21,14 @@ use \Philippe\Blog\Src\Model\SecurityManager;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class registerController 
+class RegisterController
 {
     /**
      * Function signupPage
      * 
      * @return mixed
      */
-    function signupPage()
+    public function signupPage()
     {
         include 'views/frontend/Modules/Blog/Signup/signup.php';
     }
@@ -43,7 +43,7 @@ class registerController
      *
      * @return mixed
      */
-    function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
+    public function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
     {
         $userManager = new UserManager();
         $_SESSION['csrfSignupToken'] = $csrfSignupToken; 
@@ -121,7 +121,7 @@ class registerController
      * 
      * @return mixed
      */
-    function confirmRegistration($userId, $userToken)
+    public function confirmRegistration($userId, $userToken)
     {
         $userManager = new UserManager();
         $user = $userManager->getUser($userId);
@@ -161,7 +161,7 @@ class registerController
      *
      * @return mixed
      */
-    function setActiveUser($userId)
+    public function setActiveUser($userId)
     {
         $userManager = new UserManager();
         $activeUser = $userManager->setActiveRequest($userId);

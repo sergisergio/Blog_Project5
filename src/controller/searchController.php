@@ -18,7 +18,7 @@ use \Philippe\Blog\Src\Entities\PostEntity;
 use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
 
-class searchController 
+class SearchController
 {
     /**
      * Function search
@@ -28,7 +28,7 @@ class searchController
      * 
      * @return string
      */
-    function search($search, $csrfSearchToken)
+    public function search($search, $csrfSearchToken)
     {
         $postManager = new PostManager();
         $categoryManager = new CategoryManager();
