@@ -23,6 +23,17 @@ use PHPMailer\PHPMailer\Exception;
 
 class RegisterController
 {
+    private $_userManager;
+    private $_logController;
+
+    /**
+     * Function construct
+     */
+    public function __construct() 
+    {
+        $this->_userManager = new UserManager();
+        $this->_logController = new LogController();
+    }
     /**
      * Function signupPage
      * 
@@ -45,36 +56,35 @@ class RegisterController
      */
     public function addUser($pseudo, $email, $passe, $passe2, $csrfSignupToken)
     {
-        $userManager = new UserManager();
         $_SESSION['csrfSignupToken'] = $csrfSignupToken; 
         if (!empty($pseudo) && !empty($email) && !empty($passe) && !empty($passe2)) {
-            $user = $userManager->existPseudo($pseudo);
-            $usermail = $userManager->existMail($email);
+            $user = $this->_userManager->existPseudo($pseudo);
+            $usermail = $this->_userManager->existMail($email);
             if ($user) {
                 $_SESSION['flash']['danger'] = 'Ce pseudo est déjà pris !';
-                signupPage();
+                RegisterController::signupPage();
             } elseif ($usermail) {
                 $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
-                signupPage();
+                RegisterController::signupPage();
             } elseif (empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) {
                 $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide (caractères alphanumériques et underscore permis... !';
-                signupPage();
+                RegisterController::signupPage();
             } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
-                signupPage();
+                RegisterController::signupPage();
             } elseif (empty($passe) || $passe != $_POST['passe2']) {
                 $_SESSION['flash']['danger'] = 'Vous devez entrer un mot de passe valide !';
-                signupPage();
+                RegisterController::signupPage();
             } elseif (strlen($passe) < 6 || strlen($passe) > 50) {
                 $_SESSION['flash']['danger'] = 'Votre mot de passe doit faire entre 6 et 50 caractères !';
-                signupPage();
+                RegisterController::signupPage();
             } else {
                 if (isset($_SESSION['csrfSignupToken']) AND isset($csrfSignupToken) AND !empty($_SESSION['csrfSignupToken']) AND !empty($csrfSignupToken)) {
                     if ($_SESSION['csrfSignupToken'] == $csrfSignupToken) {
-                        $users = $userManager->addUserRequest($pseudo, $email, $passe);
+                        $users = $this->_userManager->addUserRequest($pseudo, $email, $passe);
                         if ($users === false) {
                             $_SESSION['flash']['danger'] = 'Inscription impossible !';
-                            signupPage();
+                            RegisterController::signupPage();
                         } else {   
                             //$user_id = $users->getId();
                             //$token = $users->getConfirmationToken();
@@ -97,20 +107,20 @@ class RegisterController
                             echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
                             }*/
                             $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
-                            loginPage();
+                            $this->_logController->loginPage();
                         }    
                         /* test mail local */
                         //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
                         /* test mail online */
                     } else {
                         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                        loginPage();
+                        $this->_logController->loginPage();
                     }
                 }
             }                
         } else {
             $_SESSION['flash']['danger'] = 'Vous devez remplir tous les champs !';
-            signupPage();
+            RegisterController::signupPage();
         }
     }
     /**
@@ -123,13 +133,12 @@ class RegisterController
      */
     public function confirmRegistration($userId, $userToken)
     {
-        $userManager = new UserManager();
-        $user = $userManager->getUser($userId);
+        $user = $this->_userManager->getUser($userId);
         if (isset($_GET['id']) && isset($_GET['token'])) {
             if ($user &&  $user->getConfirmationToken() == $userToken) {
-                $userManager->setActiveRequest($userId);
+                $this->_userManager->setActiveRequest($userId);
                 $_SESSION['flash']['success'] = 'Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !';
-                loginPage();
+                $this->_logController->loginPage();
                 /*$mail = new PHPMailer(true);                             
                     try {
                         $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
@@ -147,11 +156,11 @@ class RegisterController
                     }*/
             } else {
                 $_SESSION['flash']['danger'] = 'Ce token n est plus valide ! Veuillez réessayer ! !';
-                signupPage();
+                RegisterController::signupPage();
             } 
         } else {
             $_SESSION['flash']['danger'] = 'Echec de l\'inscription ! Veuillez réessayer sinon contactez l\'administrateur';
-            signupPage();
+            RegisterController::signupPage();
         }  
     }
     /**
@@ -163,7 +172,6 @@ class RegisterController
      */
     public function setActiveUser($userId)
     {
-        $userManager = new UserManager();
-        $activeUser = $userManager->setActiveRequest($userId);
+        $activeUser = $this->_userManager->setActiveRequest($userId);
     }
 }

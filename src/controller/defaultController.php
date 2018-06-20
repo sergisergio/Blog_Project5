@@ -19,7 +19,11 @@ namespace Philippe\Blog\Src\Controller;
  */
 class DefaultController
 {
-
+    /**
+     * Get Homepage
+     * 
+     * @return mixed
+     */
     public function home()
     {
         include 'views/frontend/Modules/Home/index.php';

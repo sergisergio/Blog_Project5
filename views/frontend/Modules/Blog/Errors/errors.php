@@ -11,7 +11,7 @@
                             <p></p>
                             <div class="divide30"></div>
                             <div class="form-container">
-                                <?php require 'views/frontend/Modules/Blog/responseAlert/responseAlert.php'; ?>
+                                <?php require 'views/frontend/Modules/responseAlert/responseAlert.php'; ?>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">

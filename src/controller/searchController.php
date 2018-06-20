@@ -20,6 +20,17 @@ use \Philippe\Blog\Src\Model\CategoryManager;
 
 class SearchController
 {
+    private $_postManager;
+    private $_categoryManager;
+
+    /**
+     * Function construct
+     */
+    public function __construct() 
+    {
+        $this->_postManager = new PostManager();
+        $this->_categoryManager = new CategoryManager();
+    }
     /**
      * Function search
      * 
@@ -30,18 +41,16 @@ class SearchController
      */
     public function search($search, $csrfSearchToken)
     {
-        $postManager = new PostManager();
-        $categoryManager = new CategoryManager();
         $_SESSION['csrfSearchToken'] = $csrfSearchToken;
         if (isset($search) && $search != null) {
             if (isset($_SESSION['csrfSearchToken']) AND isset($csrfSearchToken) AND !empty($_SESSION['csrfSearchToken']) AND !empty($csrfSearchToken)) {
                 if ($_SESSION['csrfSearchToken'] == $csrfSearchToken) {
-                    $posts1 = $postManager->getPosts(0, 5);
-                    $postsAside = $postManager->getPosts(0, 5);
-                    $categories = $categoryManager->getCategoryRequest();
-                    $countSearchResults = $postManager->countSearchRequest($search);
+                    $posts1 = $this->_postManager->getPosts(0, 5);
+                    $postsAside = $this->_postManager->getPosts(0, 5);
+                    $categories = $this->_categoryManager->getCategoryRequest();
+                    $countSearchResults = $this->_postManager->countSearchRequest($search);
                     $nbResults = $countSearchResults->rowCount();
-                    $searchResults = $postManager->searchRequest($search);
+                    $searchResults = $this->_postManager->searchRequest($search);
                     include 'views/frontend/Modules/Blog/Search/searchresults.php';
                 } else {
                     echo "Erreur de vérification";

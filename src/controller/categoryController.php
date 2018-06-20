@@ -20,6 +20,17 @@ use \Philippe\Blog\Src\Model\CategoryManager;
 
 class CategoryController
 {
+    private $_postManager;
+    private $_categoryManager;
+
+    /**
+     * Function construct
+     */
+    public function __construct() 
+    {
+        $this->_postManager = new PostManager();
+        $this->_categoryManager = new CategoryManager();
+    }
     /**
      * Function categoryResults
      * 
@@ -29,11 +40,9 @@ class CategoryController
      */
     public function categoryResults($categoryId)
     {
-        $postManager = new PostManager();
-        $categoryManager = new CategoryManager();
-        $postsAside = $postManager->getPosts(0, 5);
-        $categories = $categoryManager->getCategoryRequest();
-        $cResults = $postManager->categoryResultsRequest($categoryId);
+        $postsAside = $this->_postManager->getPosts(0, 5);
+        $categories = $this->_categoryManager->getCategoryRequest();
+        $cResults = $this->_postManager->categoryResultsRequest($categoryId);
         include 'views/frontend/Modules/Blog/Categories/categoryresults.php';
     }
 }

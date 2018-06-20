@@ -15,11 +15,32 @@ namespace Philippe\Blog\Src\Controller;
 
 use \Philippe\Blog\Src\Entities\UserEntity;
 use \Philippe\Blog\Src\Model\UserManager;
+use \Philippe\Blog\Src\Model\PostManager;
+use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Core\Session;
 
 class ProfileController
 {
+    private $_postmanager;
+    private $_userManager;
+    private $_categoryManager;
+    private $_commentManager;
+    private $_defaultController;
+    private $_session;
+
+    /**
+     * Function construct
+     */
+    public function __construct() 
+    {
+        $this->_postManager = new PostManager();
+        $this->_userManager = new UserManager();
+        $this->_categoryManager = new CategoryManager();
+        $this->_commentManager = new CommentManager();
+        $this->_defaultController = new DefaultController();
+        $this->_session = new Session();
+    }
     /**
      * Function profilePage
      * 
@@ -29,8 +50,7 @@ class ProfileController
      */
     public function profilePage($userId)
     {
-        $userManager = new UserManager();
-        $post = $userManager->getUser($userId);
+        $post = $this->_userManager->getUser($userId);
         include 'views/frontend/Modules/Blog/Profiles/Private/profile.php';
     }
     /**
@@ -48,7 +68,6 @@ class ProfileController
      */
     public function modifyProfile($userId, $avatar, $first_name, $name, $email, $description, $csrfProfileToken)
     {
-        $userManager = new UserManager();
         $_SESSION['csrfProfileToken'] = $csrfProfileToken; 
 
         if (!empty($_POST['email'])) {
@@ -65,24 +84,24 @@ class ProfileController
                             }
                         }
                     }
-                    $modifiedProfile = $userManager->modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description);
+                    $modifiedProfile = $this->_userManager->modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description);
                     if ($modifiedProfile === false) {
                         $_SESSION['flash']['danger'] = 'Impossible de modifier le profil !';
-                        profilePage($_SESSION['id']);
+                        ProfileController::profilePage($_SESSION['id']);
                     } else {
                         $_SESSION['flash']['success'] = 'Modification effectuée !';
-                        profilePage($_SESSION['id']);
+                        ProfileController::profilePage($_SESSION['id']);
                         unset($_SESSION['avatar']);
                         $_SESSION['avatar'] = $avatar;
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                    profilePage($_SESSION['id']);
+                    ProfileController::profilePage($_SESSION['id']);
                 }
             }
         } else {
             $_SESSION['flash']['danger'] = 'Tous les champs ne sont pas remplis !';
-            profilePage($_SESSION['id']);
+            ProfileController::profilePage($_SESSION['id']);
         }
     }
     /**
@@ -95,29 +114,26 @@ class ProfileController
      */
     public function deleteAccount($userId, $csrfDeleteAccountToken)
     {
-        $userManager = new UserManager();
-        $session = new Session();
-        
         $_SESSION['csrfDeleteAccountToken'] = $csrfDeleteAccountToken;  
         if (isset($userId)) {
             if (isset($_SESSION['csrfDeleteAccountToken']) AND isset($csrfDeleteAccountToken) AND !empty($_SESSION['csrfDeleteAccountToken']) AND !empty($csrfDeleteAccountToken)) {
                 if ($_SESSION['csrfDeleteAccountToken'] == $csrfDeleteAccountToken) {
-                    $deleteAccount = $userManager->deleteAccountRequest($userId);
-                    $session->stopSession();
+                    $deleteAccount = $this->_userManager->deleteAccountRequest($userId);
+                    $this->_session->stopSession();
                     if ($deleteAccount === false) {
                         $_SESSION['flash']['danger'] = 'Impossible de supprimer le profil !';
-                        profilePage();
+                        ProfileController::profilePage();
                     } else {
-                        home();
+                        $this->_defaultController->home();
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                    profilePage($_SESSION['id']);
+                    ProfileController::profilePage($_SESSION['id']);
                 }
             }
         } else {
             $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet utilisateur !';
-            profilePage($_SESSION['id']);
+            ProfileController::profilePage($_SESSION['id']);
         }
     }
     /**
@@ -129,8 +145,7 @@ class ProfileController
      */
     public function publicProfile($commentAuthor)
     {
-        $commentManager = new CommentManager();
-        $user = $commentManager->getUserByCommentRequest($commentAuthor);
+        $user = $this->_commentManager->getUserByCommentRequest($commentAuthor);
         include 'views/frontend/Modules/Blog/Profiles/Public/publicProfile.php';
     }
 }

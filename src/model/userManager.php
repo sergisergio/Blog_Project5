@@ -141,7 +141,7 @@ class UserManager extends Manager
      * 
      * @return string
      */
-    /*public function existMail($email)
+    public function existMail($email)
     {
         $dbProjet5 = $this->dbConnect();
         $existMail = $dbProjet5->prepare('SELECT id FROM Users WHERE email = :email');

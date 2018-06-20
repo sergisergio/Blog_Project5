@@ -15,8 +15,7 @@ trait Hydrator
      */    
     public function hydrate($data)
     {
-        foreach ((array)$data as $key => $value)
-        {
+        foreach ((array)$data as $key => $value) {
             $method = 'set'.ucfirst($key);
             if (method_exists($this, $method)) {
                 $this->$method($value);

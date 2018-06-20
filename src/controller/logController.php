@@ -16,12 +16,26 @@ namespace Philippe\Blog\Src\Controller;
 
 use \Philippe\Blog\Src\Entities\UserEntity;
 use \Philippe\Blog\Src\Model\UserManager;
+use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Model\SecurityManager;
 
 class LogController
 {
+    private $_postManager;
+    private $_securityManager;
+    private $_session;
 
+    /**
+     * Function construct
+     */
+    public function __construct() 
+    {
+        $this->_postManager = new PostManager();
+        $this->_userManager = new UserManager();
+        $this->_securityManager = new SecurityManager();
+        $this->_session = new Session();
+    }
     /**
      * Function loginPage
      * 
@@ -44,46 +58,42 @@ class LogController
      */
     public function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
     {
-        $userManager = new UserManager();
-        $session = new Session();
-        $securityManager = new SecurityManager();
-
         $_SESSION['csrfLoginToken'] = $csrfLoginToken;  
         if (isset($_SESSION['csrfLoginToken']) AND isset($csrfLoginToken) AND !empty($_SESSION['csrfLoginToken']) AND !empty($csrfLoginToken)) {
             if ($_SESSION['csrfLoginToken'] == $csrfLoginToken) {
                 if (!empty($pseudo) && !empty($passe)) {
-                    $user = $userManager->loginRequest($pseudo, $passe);
-                    $count = $securityManager->checkBruteForce($ip);
+                    $user = $this->_userManager->loginRequest($pseudo, $passe);
+                    $count = $this->_securityManager->checkBruteForce($ip);
                     if ($count < 3) {
                         if (password_verify($passe, $user->getPassword())) {
                             if ($user->getIs_active() == 1) {
                                 
                                 if (isset($remember)) {
                                     setcookie('pseudo', $pseudo, time() + 60 * 60 * 24 * 7);
-                                    $userManager->userCookie($_COOKIE['pseudo']);
+                                    $this->_userManager->userCookie($_COOKIE['pseudo']);
                                 }
-                                $session->launchSession($user);
+                                $this->_session->launchSession($user);
                             } else {
                                 $_SESSION['flash']['success'] = 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !';
-                                loginPage();
+                                LogController::loginPage();
                             }
                         } else {
                             sleep(1);
-                            $securityManager->registerAttempt($ip);
+                            $this->_securityManager->registerAttempt($ip);
                             $_SESSION['flash']['danger'] = 'Mauvais identifiant ou mot de passe !';
-                            loginPage();
+                            LogController::loginPage();
                         }
                     } else {
                         $_SESSION['flash']['danger'] = '4 tentatives ont été effectuées : veuillez contacter l\'administrateur pour vous reconnecter !';
-                        errors();
+                        LogController::loginPage();
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Vous devez remplir tous les champs !';
-                    loginPage();
+                    LogController::loginPage();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                loginPage();
+                LogController::loginPage();
             }
         }
     }
@@ -94,8 +104,7 @@ class LogController
      */
     public function logout()
     {
-        $session = new Session();
-        $session->stopSession();
+        $this->_session->stopSession();
     }
     /**
      * Function forgetPasswordPage
@@ -116,31 +125,29 @@ class LogController
      */
     public function forgetPassword($email, $csrfForgetToken)
     {
-        $userManager = new UserManager(); 
-
         $_SESSION['forgetToken'] = $csrfForgetToken;  
         if (empty($email)) {
             $_SESSION['flash']['danger'] = 'Veuillez renseigner un email !';
-            forgetPasswordPage();
+            LogController::forgetPasswordPage();
         } else {
             if (isset($_SESSION['forgetToken']) AND isset($csrfForgetToken) AND !empty($_SESSION['forgetToken']) AND !empty($csrfForgetToken)) {
                 if ($_SESSION['forgetToken'] == $csrfForgetToken) {
                     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        $user = $userManager->forgetPasswordRequest($email);
+                        $user = $this->_userManager->forgetPasswordRequest($email);
                         if ($user === false) {
                             $_SESSION['flash']['danger'] = 'Une erreur est survenue !';
-                            loginPage();
+                            LogController::loginPage();
                         } else {
                             $_SESSION['flash']['success'] = 'Vous allez recevoir un email pour réinitialiser votre mot de passe !';
-                            loginPage();
+                            LogController::loginPage();
                         } 
                     } else {
                         $_SESSION['flash']['danger'] = 'Cet email n\'est pas valide !';
-                        loginPage();
+                        LogController::loginPage();
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                    forgetPasswordPage();
+                    LogController::forgetPasswordPage();
                 }
             }
         }
@@ -155,20 +162,17 @@ class LogController
      */
     public function changePasswordPage($userId, $resetToken)
     {
-        $userManager = new UserManager();
-        $session = new Session(); 
-            
         if ((isset($_GET['id']) && $_GET['id'] > 0) && isset($_GET['token'])) {
-            $user = $userManager->checkResetTokenRequest($userId, $resetToken);
+            $user = $this->_userManager->checkResetTokenRequest($userId, $resetToken);
             if ($user &&  $user['reset_token'] == $resetToken) {
                 include 'views/frontend/Modules/Blog/ForgetPassword/changePasswordPage.php';
             } else {
                 $_SESSION['flash']['danger'] = 'Ce token n\' est plus valide ! Veuillez réessayer !';
-                forgetPasswordPage();
+                LogController::forgetPasswordPage();
             }
         } else {
             $_SESSION['flash']['danger'] = 'Aucun id ou token ne correspond à cet email, veuillez réessayer !';
-            forgetPasswordPage();
+            LogController::forgetPasswordPage();
         }
     }
     /**
@@ -182,23 +186,21 @@ class LogController
      */
     public function changePassword($userId, $passe, $csrfChangePasswordToken)
     { 
-        $userManager = new UserManager(); 
-        
         $_SESSION['csrfChangePasswordToken'] = $csrfChangePasswordToken; 
         if (!empty($_POST['passe']) && $_POST['passe'] == $_POST['passe2']) {
             if (isset($_SESSION['csrfChangePasswordToken']) AND isset($csrfChangePasswordToken) AND !empty($_SESSION['csrfChangePasswordToken']) AND !empty($csrfChangePasswordToken)) {
                 if ($_SESSION['csrfChangePasswordToken'] == $csrfChangePasswordToken) {
-                    $userManager->changePasswordRequest($userId, $passe);
+                    $this->_userManager->changePasswordRequest($userId, $passe);
                     $_SESSION['flash']['success'] = 'Le mot de passe a bien été réinitialisé !';
-                    loginPage();
+                    LogController::loginPage();
                 } else {
                     $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                    loginPage();
+                    LogController::loginPage();
                 }
             }
         } else {
             $_SESSION['flash']['danger'] = 'Veuillez entrer un mot de passe !';
-            forgetPasswordPage();
+            LogController::forgetPasswordPage();
         }
     }
 }

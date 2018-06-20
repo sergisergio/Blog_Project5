@@ -25,6 +25,24 @@ use \Philippe\Blog\Src\Core\Session;
 
 class PostController
 {
+    private $_postmanager;
+    private $_userManager;
+    private $_categoryManager;
+    private $_commentManager;
+    private $_logController;
+
+    /**
+     * Function construct
+     */
+    public function __construct() 
+    {
+        $this->_postManager = new PostManager();
+        $this->_userManager = new UserManager();
+        $this->_categoryManager = new CategoryManager();
+        $this->_commentManager = new CommentManager();
+        $this->_logController = new LogController();
+    }
+
     /**
      * Show all blog posts
      * 
@@ -32,9 +50,7 @@ class PostController
      */
     public function listPosts()
     {
-        $postManager = new PostManager();
-        $categoryManager = new CategoryManager();
-        $postsTotal = $postManager->countPosts();
+        $postsTotal = $this->_postManager->countPosts();
         $postsPerPage = 5;
         $totalPages = ceil($postsTotal / $postsPerPage);
 
@@ -45,9 +61,9 @@ class PostController
             $currentPage = 1;
         }
         $start = ($currentPage-1)*$postsPerPage;
-        $posts = $postManager->getPosts($start, $postsPerPage);
-        $postsAside = $postManager->getPosts(0, 5);
-        $categories = $categoryManager->getCategoryRequest();
+        $posts = $this->_postManager->getPosts($start, $postsPerPage);
+        $postsAside = $this->_postManager->getPosts(0, 5);
+        $categories = $this->_categoryManager->getCategoryRequest();
 
         include 'views/frontend/Modules/Blog/blog.php';
     }
@@ -60,30 +76,24 @@ class PostController
      */
     public function listPost($postId)
     {
-        $postManager = new PostManager();
-        $commentManager = new CommentManager();
-        $userManager = new UserManager();
-        $categoryManager = new CategoryManager();
-        $session = new Session();
-
-        $post = $postManager->getPost($postId);
-        $postsAside = $postManager->getPosts(0, 5);
-        $isPost = $postManager->checkExistPost($postId);
-        $categories = $categoryManager->getCategoryRequest();
+        $post = $this->_postManager->getPost($postId);
+        $postsAside = $this->_postManager->getPosts(0, 5);
+        $isPost = $this->_postManager->checkExistPost($postId);
+        $categories = $this->_categoryManager->getCategoryRequest();
 
         if (isset($postId) && $postId > 0) {
             if ($isPost == false) {
                 $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
-                errors();
+                $this->_logController->errors();
             } else {
-                $comment = $commentManager->getComments($postId);
-                $user = $userManager->getUser($postId);
-                $nbCount = $commentManager->countCommentRequest($postId);
+                $comment = $this->_commentManager->getComments($postId);
+                $user = $this->_userManager->getUser($postId);
+                $nbCount = $this->_commentManager->countCommentRequest($postId);
                 include 'views/frontend/Modules/Blog/blog_post.php';
             }
         } else {
             $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
-            errors();
+            $this->_logController->errors();
         }
     }
 }

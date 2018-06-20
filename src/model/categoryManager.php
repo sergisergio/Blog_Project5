@@ -28,10 +28,8 @@ class CategoryManager extends Manager
     {
         $dbProjet5 = $this->dbConnect();
         $addCategory = $dbProjet5->prepare('INSERT INTO Category(category) VALUES(:category)');
- 
         $addCategory->bindParam(':category', $category);
         $addCategory->execute();
-         
         $data = $addCategory->fetch();
         $addedCategory = new CategoryEntity($data);
         return $addedCategory;

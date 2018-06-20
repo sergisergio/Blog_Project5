@@ -18,10 +18,28 @@ use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Core\Session;
+use \Philippe\Blog\Src\Controller\ErrorsController;
 use \Exception;
 
 class AdminController
 {
+    private $_errorsController;
+    private $_postManager;
+    private $_categoryManager;
+    private $_commentManager;
+    private $_userManager;
+
+    /**
+     * Function construct
+     */
+    public function __construct() 
+    {
+        $this->_errorsController = new ErrorsController();
+        $this->_postManager = new PostManager();
+        $this->_categoryManager = new CategoryManager();
+        $this->_commentManager = new CommentManager();
+        $this->_userManager = new UserManager();
+    }
     /**
      * Enter the admin part
      *
@@ -31,15 +49,10 @@ class AdminController
      */
     public function admin($accessAdminToken)
     {
-        $session = new Session();
-
-        if (isset($_SESSION['accessAdminToken']) AND isset($accessAdminToken)  
-            AND !empty($_SESSION['accessAdminToken']) AND !empty($accessAdminToken)
-        ) {
+        if (isset($_SESSION['accessAdminToken']) AND isset($accessAdminToken) AND !empty($_SESSION['accessAdminToken']) AND !empty($accessAdminToken)) {
             if ($_SESSION['accessAdminToken'] == $accessAdminToken) {
                 if (!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
-                    header('Location: index.php?action=noAdmin');
-                    exit();
+                    $this->_errorsController->noAdmin();
                 } else {
                     include 'views/backend/admin.php';
                 }
@@ -55,23 +68,19 @@ class AdminController
      */
     public function managePosts()
     {
-        $postManager = new PostManager();
-        $categoryManager = new CategoryManager();
-        $postsTotal = $postManager->countPosts();
+        $postsTotal = $this->_postManager->countPosts();
         $postsPerPage = 5;
         $totalPages = ceil($postsTotal / $postsPerPage);
-        $categories = $categoryManager->getCategoryRequest();
+        $categories = $this->_categoryManager->getCategoryRequest();
 
-        if (isset($_GET['page']) AND !empty($_GET['page'])  
-            AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)
-        ) {
+        if (isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
             $_GET['page'] = intval($_GET['page']);
             $currentPage = $_GET['page'];
         } else {
             $currentPage = 1;
         }
         $start = ($currentPage-1)*$postsPerPage;
-        $posts = $postManager->getPosts($start, $postsPerPage);
+        $posts = $this->_postManager->getPosts($start, $postsPerPage);
         include 'views/backend/Modules/Posts/managePosts.php';
     }
     /**
@@ -89,16 +98,13 @@ class AdminController
      */
     public function addPost($title, $chapo, $author, $content, $image, $category, $csrfAddPostToken) 
     {
-        $postManager = new PostManager();
         $_SESSION['csrfAddPostToken'] = $csrfAddPostToken; 
         $file_extension = $_FILES['file_extension'];
         $file_extension_error = $_FILES['file_extension']['error'];
         $file_extension_size = $_FILES['file_extension']['size'];
         $file_extension_tmp = $_FILES['file_extension']['tmp_name'];
 
-        if (isset($_SESSION['csrfAddPostToken']) AND isset($csrfAddPostToken) 
-            AND !empty($_SESSION['csrfAddPostToken']) AND !empty($csrfAddPostToken)
-        ) {
+        if (isset($_SESSION['csrfAddPostToken']) AND isset($csrfAddPostToken) AND !empty($_SESSION['csrfAddPostToken']) AND !empty($csrfAddPostToken)) {
             if ($_SESSION['csrfAddPostToken'] == $csrfAddPostToken) {
                 if (!empty($title) && !empty($content) && !empty($chapo)) {
                     if (isset($file_extension) AND $file_extension_error == 0) {
@@ -115,25 +121,21 @@ class AdminController
                             }
                         }
                     }
-                    $addedPost = $postManager->addPostRequest(
-                        $title, $chapo, 
-                        $author, $content, $category, $image
-                    );
+                    $addedPost = $this->_postManager->addPostRequest($title, $chapo, $author, $content, $category, $image);
                     if ($addedPost === false) {
                         $_SESSION['flash']['danger'] = 'impossible d\'ajouter l\'article !';
-                        self::managePosts();
+                        AdminController::managePosts();
                     } else {
                         $_SESSION['flash']['success'] = 'L\'article a bien été ajouté !';
-                        self::managePosts();
+                        AdminController::managePosts();
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Un ou plusieurs champs ne sont pas remplis !';
-                    errors();
+                    AdminController::managePosts();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                header('Location: index.php?action=manage_posts');
-                exit();
+                AdminController::managePosts();
             }
         }
     }
@@ -146,13 +148,12 @@ class AdminController
      */
     public function modifyPostPage($postId)
     {
-        $postManager = new PostManager();
-        $post = $postManager->getPost($postId);
-        $session = new Session();
+        $post = $this->_postManager->getPost($postId);
+        $isPost = $this->_postManager->checkExistPost($postId);
 
-        if (empty($post) || $postId <= 0) {
+        if (empty($isPost) || $postId <= 0 ) {
             $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
-            self::managePosts();
+            AdminController::managePosts();
         }
         include 'views/backend/Modules/Posts/modifyPostPage.php';
     }
@@ -170,7 +171,6 @@ class AdminController
      */
     public function modifyPost($postId, $title, $chapo, $author, $content, $csrfModifyPostToken)
     {
-        $postManager = new PostManager();
         $_SESSION['csrfModifyPostToken'] = $csrfModifyPostToken; 
         if (isset($_SESSION['csrfModifyPostToken']) AND isset($csrfModifyPostToken)
             AND !empty($_SESSION['csrfModifyPostToken']) AND !empty($csrfModifyPostToken)
@@ -178,27 +178,26 @@ class AdminController
             if ($_SESSION['csrfModifyPostToken'] == $csrfModifyPostToken) {
                 if (isset($postId) && $postId > 0) {
                     if (!empty($title) && !empty($content) && !empty($chapo)) {
-                        $postManager->getPost($postId);
-                        $modify = $postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
+                        $this->_postManager->getPost($postId);
+                        $modify = $this->_postManager->modifyPostRequest($postId, $title, $chapo, $author, $content);
                         if ($modify === false) {
                             $_SESSION['flash']['danger'] = 'Impossible de modifier l\'article';
-                            modifyPostPage($postId);
+                            AdminController::modifyPostPage($postId);
                         } else {
                             $_SESSION['flash']['success'] = 'L\'article a bien été modifié !';
-                            header('Location: index.php?action=manage_posts');
-                            exit();
+                            AdminController::managePosts();
                         }
                     } else {
                         $_SESSION['flash']['danger'] = 'Veuillez remplir les champs !';
-                        modifyPostPage($postId);
+                        AdminController::modifyPostPage($postId);
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Pas d\'identifiant d\'article envoyé !';
-                    modifyPostPage($postId);
+                    AdminController::modifyPostPage($postId);
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                modifyPostPage($postId);
+                AdminController::modifyPostPage($postId);
             }
         }
     }
@@ -212,29 +211,28 @@ class AdminController
      */
     public function deletePost($postId, $csrfDeletePostToken)
     {
-        $postManager = new PostManager();
         $_SESSION['csrfDeletePostToken'] = $csrfDeletePostToken;
         if (isset($_SESSION['csrfDeletePostToken']) AND isset($csrfDeletePostToken)
             AND !empty($_SESSION['csrfDeletePostToken']) AND !empty($csrfDeletePostToken)
         ) {
             if ($_SESSION['csrfDeletePostToken'] == $csrfDeletePostToken) {
                 if (isset($postId) && $postId > 0) {
-                    $postManager->getPost($postId);
-                    $delete = $postManager->deletePostRequest($postId);
+                    $this->_postManager->getPost($postId);
+                    $delete = $this->_postManager->deletePostRequest($postId);
                     if ($delete === false) {
                         $_SESSION['flash']['danger'] = 'Impossible de supprimer l\'article';
-                        header('Location: index.php?action=manage_posts');
+                        AdminController::managePosts();
                     } else {
                         $_SESSION['flash']['success'] = 'L\'article a bien été supprimé !';
-                        header('Location: index.php?action=manage_posts');
+                        AdminController::managePosts();
                     }
                 } elseif ($postId <= 0) {
                     $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
-                    self::managePosts();
+                    AdminController::managePosts();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                self::managePosts();
+                AdminController::managePosts();
             }
         }
     }
@@ -245,9 +243,8 @@ class AdminController
      */
     public function manageComments()
     {
-        $commentManager = new CommentManager();
-        $nbCount = $commentManager->countCommentBackRequest();
-        $submittedComment = $commentManager->submittedCommentRequest();
+        $nbCount = $this->_commentManager->countCommentBackRequest();
+        $submittedComment = $this->_commentManager->submittedCommentRequest();
         include 'views/backend/Modules/Comments/manageComments.php';
     }
     /**
@@ -260,31 +257,25 @@ class AdminController
      */
     public function validateComment($commentId, $csrfValidateCommentToken)
     {
-        $commentManager = new CommentManager();
-        $validated = $commentManager->validateCommentRequest($commentId);
+        $validated = $this->_commentManager->validateCommentRequest($commentId);
         $_SESSION['csrfValidateCommentToken'] = $csrfValidateCommentToken;
-        if (isset($_SESSION['csrfValidateCommentToken'])  
-            AND isset($csrfValidateCommentToken)
-            AND !empty($_SESSION['csrfValidateCommentToken']) AND !empty($csrfValidateCommentToken)
-        ) {
+        if (isset($_SESSION['csrfValidateCommentToken']) AND isset($csrfValidateCommentToken) AND !empty($_SESSION['csrfValidateCommentToken']) AND !empty($csrfValidateCommentToken)) {
             if ($_SESSION['csrfValidateCommentToken'] == $csrfValidateCommentToken) {
                 if (isset($commentId) && $commentId > 0) {
                     if ($validated === false) {
                         $_SESSION['flash']['danger'] = 'Impossible de valider le commentaire';
-                        header('Location: index.php?action=manage_comments');
-                        exit();
+                        AdminController::manageComments();
                     } else {
                         $_SESSION['flash']['success'] = 'Le commentaire a bien été validé !';
-                        header('Location: index.php?action=manage_comments');
-                        exit();
+                        AdminController::manageComments();
                     }
                 } elseif ($commentId <= 0) {
                     $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
-                    self::manageComments();
+                    AdminController::manageComments();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                self::manageComments();
+                AdminController::manageComments();
             }
         }
     }
@@ -298,31 +289,26 @@ class AdminController
      */
     public function adminDeleteComment($commentId, $csrfAdminDeleteCommentToken)
     {
-        $commentManager = new CommentManager();
-        $commentManager->getComment($commentId);
+        $this->_commentManager->getComment($commentId);
         $_SESSION['csrfAdminDeleteCommentToken'] = $csrfAdminDeleteCommentToken;
-        if (isset($_SESSION['csrfAdminDeleteCommentToken']) AND isset($csrfAdminDeleteCommentToken)
-            AND !empty($_SESSION['csrfAdminDeleteCommentToken']) AND !empty($csrfAdminDeleteCommentToken)
-        ) {
+        if (isset($_SESSION['csrfAdminDeleteCommentToken']) AND isset($csrfAdminDeleteCommentToken) AND !empty($_SESSION['csrfAdminDeleteCommentToken']) AND !empty($csrfAdminDeleteCommentToken)) {
             if ($_SESSION['csrfAdminDeleteCommentToken'] == $csrfAdminDeleteCommentToken) {
                 if (isset($commentId) && $commentId > 0) {
-                    $success = $commentManager->deleteCommentRequest($commentId);
+                    $success = $this->_commentManager->deleteCommentRequest($commentId);
                     if ($success === false) {
                         $_SESSION['flash']['danger'] = 'Impossible de supprimer le commentaire !';
-                        header('Location: index.php?action=manage_comments');
-                        exit();
+                        AdminController::manageComments();
                     } else {   
                         $_SESSION['flash']['success'] = 'Le commentaire a bien été supprimé !';
-                        header('Location: index.php?action=manage_comments');
-                        exit();
+                        AdminController::manageComments();
                     }
                 } elseif ($commentId <= 0) {
                     $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce commentaire !';
-                    self::manageComments();
+                    AdminController::manageComments();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                self::manageComments();
+                AdminController::manageComments();
             }
         }
     }
@@ -333,8 +319,7 @@ class AdminController
      */
     public function manageUsers()
     {
-        $userManager = new UserManager();
-        $users = $userManager->getUsers();
+        $users = $this->_userManager->getUsers();
         include 'views/backend/Modules/Users/user_mgmt.php';
     }
     /**
@@ -347,24 +332,22 @@ class AdminController
      */
     public function giveAdminRights($userId, $csrfGiveAdminRightsToken)
     {
-        $userManager = new UserManager();
         $_SESSION['csrfGiveAdminRightsToken'] = $csrfGiveAdminRightsToken;
-        if (isset($_SESSION['csrfGiveAdminRightsToken']) AND isset($csrfGiveAdminRightsToken)
-            AND !empty($_SESSION['csrfGiveAdminRightsToken']) AND !empty($csrfGiveAdminRightsToken)
+        if (isset($_SESSION['csrfGiveAdminRightsToken']) AND isset($csrfGiveAdminRightsToken) AND !empty($_SESSION['csrfGiveAdminRightsToken']) AND !empty($csrfGiveAdminRightsToken)
         ) {
             if ($_SESSION['csrfGiveAdminRightsToken'] == $csrfGiveAdminRightsToken) {
                 if (isset($userId) && $userId > 0) {
-                    $adminRights = $userManager->giveAdminRightsRequest($userId);
+                    $adminRights = $this->_userManager->giveAdminRightsRequest($userId);
 
                     if ($adminRights === false) {
                         throw new Exception('Impossible de donner les droits admin');
                     } else {
-                        header('Location: index.php?action=manage_users');
+                        AdminController::manageUsers();
                     }
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                self::manageUsers();
+                AdminController::manageUsers();
             }
         }
     }
@@ -378,24 +361,22 @@ class AdminController
      */
     public function stopAdminRights($userId, $csrfCancelAdminRightsToken)
     {
-        $userManager = new UserManager();
         $_SESSION['csrfCancelAdminRightsToken'] = $csrfCancelAdminRightsToken;
-        if (isset($_SESSION['csrfCancelAdminRightsToken']) AND isset($csrfCancelAdminRightsToken)
-            AND !empty($_SESSION['csrfCancelAdminRightsToken']) AND !empty($csrfCancelAdminRightsToken)
+        if (isset($_SESSION['csrfCancelAdminRightsToken']) AND isset($csrfCancelAdminRightsToken) AND !empty($_SESSION['csrfCancelAdminRightsToken']) AND !empty($csrfCancelAdminRightsToken)
         ) {
             if ($_SESSION['csrfCancelAdminRightsToken'] == $csrfCancelAdminRightsToken) {
                 if (isset($userId) && $userId > 0) {
-                    $adminRights = $userManager->stopAdminRightsRequest($userId);
+                    $adminRights = $this->_userManager->stopAdminRightsRequest($userId);
 
                     if ($adminRights === false) {
                         throw new Exception('Impossible de retirer les droits admin');
                     } else {
-                        header('Location: index.php?action=manage_users');
+                        AdminController::manageUsers();
                     }
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                self::manageUsers();
+                AdminController::manageUsers();
             }
         }
     }
@@ -409,24 +390,22 @@ class AdminController
      */
     public function deleteUser($userId, $csrfDeleteUserToken)
     {
-        $userManager = new UserManager();
         $_SESSION['csrfDeleteUserToken'] = $csrfDeleteUserToken;
-        if (isset($_SESSION['csrfDeleteUserToken']) AND isset($csrfDeleteUserToken)
-            AND !empty($_SESSION['csrfDeleteUserToken']) AND !empty($csrfDeleteUserToken)
+        if (isset($_SESSION['csrfDeleteUserToken']) AND isset($csrfDeleteUserToken) AND !empty($_SESSION['csrfDeleteUserToken']) AND !empty($csrfDeleteUserToken)
         ) {
             if ($_SESSION['csrfDeleteUserToken'] == $csrfDeleteUserToken) {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    $affectedUser = $userManager->deleteUserRequest($userId);
+                    $affectedUser = $this->_userManager->deleteUserRequest($userId);
 
                     if ($affectedUser === false) {
                         throw new Exception('Impossible de supprimer ce membre');
                     } else {
-                        header('Location: index.php?action=manage_users');
+                        AdminController::manageUsers();
                     }
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                self::manageUsers();
+                AdminController::manageUsers();
             }
         }
     }
@@ -440,30 +419,27 @@ class AdminController
      */
     public function addCategory($category, $csrfAddCategoryToken)
     {
-        $categoryManager = new CategoryManager();
         $_SESSION['csrfAddCategoryToken'] = $csrfAddCategoryToken; 
-        if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken)
-            AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)
+        if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken) AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)
         ) {
             
             if ($_SESSION['csrfAddCategoryToken'] == $csrfAddCategoryToken) {
                 if (!empty($category)) {
-                    $categoryManager->addCategoryRequest($category);
-                    if ($categoryManager === false) {
+                    $this->_categoryManager->addCategoryRequest($category);
+                    if ($this->_categoryManager === false) {
                         $_SESSION['flash']['danger'] = 'Impossible d\'ajouter cette catégorie !';
-                        managePosts();
+                        AdminController::managePosts();
                     } else {
                         $_SESSION['flash']['success'] = 'La catégorie a bien été ajoutée !';
-                        managePosts();
+                        AdminController::managePosts();
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Le champ est vide !';
-                    managePosts();
+                    AdminController::managePosts();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                header('Location: index.php?action=manage_posts');
-                exit();
+                AdminController::managePosts();
             }
         }    
     }
