@@ -11,7 +11,6 @@
  * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
-
 namespace Philippe\Blog\Src\Controller;
 
 use \Philippe\Blog\Src\Entities\PostEntity;
@@ -51,7 +50,8 @@ class SearchController
                     $countSearchResults = $this->_postManager->countSearchRequest($search);
                     $nbResults = $countSearchResults->rowCount();
                     $searchResults = $this->_postManager->searchRequest($search);
-                    include 'views/frontend/Modules/Blog/Search/searchresults.php';
+                    $accessAdminToken = md5(time()*rand(1, 1000));
+                    include 'views/frontend/modules/blog/search/searchresults.php';
                 } else {
                     echo "Erreur de vérification";
                 }

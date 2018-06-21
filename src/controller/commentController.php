@@ -55,7 +55,7 @@ class CommentController
      */
     public function addComment($postId, $author, $content, $csrfAddCommentToken)
     {
-        $_SESSION['csrfAddPostToken'] = $csrfAddCommentToken; 
+        $_SESSION['csrfAddCommentToken'] = $csrfAddCommentToken;
         if (isset($postId) && $postId > 0) {
             if (!empty($content)) {
                 if (isset($_SESSION['csrfAddCommentToken']) AND isset($csrfAddCommentToken) AND !empty($_SESSION['csrfAddCommentToken']) AND !empty($csrfAddCommentToken)) {
@@ -114,7 +114,10 @@ class CommentController
                 $_SESSION['flash']['danger'] = 'Vous pouvez seulement modifier vos propres commentaires !';
                 $this->_errorsController->errors();
             } else {
-                include 'views/frontend/Modules/Blog/Comments/modifyCommentPage.php';
+                $accessAdminToken = md5(time()*rand(1, 1000));
+                $csrfSearchToken = md5(time()*rand(1, 1000));
+                $csrfModifyCommentToken = md5(time()*rand(1, 1000));
+                include 'views/frontend/modules/blog/comments/modifyCommentPage.php';
             }
         }
     }

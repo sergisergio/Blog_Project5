@@ -8,7 +8,7 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
 <?php ob_start(); ?>
 <body class="full-layout">
     <div class="body-wrapper">
-            <?php require "views/frontend/Modules/Nav/nav.php"; ?>
+            <?php require "views/frontend/modules/nav/nav.php"; ?>
             <div class="container">
                 <section style="margin-bottom: 50px;">
                   <div class="box">
@@ -45,14 +45,14 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                 <div class="divide20"></div>
                 <div class="post box">
                     <h2>Ajouter un article</h2>
-                    <?php require 'views/frontend/Modules/ResponseAlert/responseAlert.php'; ?> 
-                    <?php require "views/backend/Modules/Posts/form_addpost.php"; ?>
+                    <?php require 'views/frontend/modules/responseAlert/responseAlert.php'; ?> 
+                    <?php require "views/backend/modules/posts/form_addpost.php"; ?>
                 </div>
                 <div class="divide20"></div>
                 <h2 class="text-center">Ajouter une catégorie</h2>
                 <div class="divide20"></div>
                 <div class="post box">
-                <?php require "views/backend/Modules/Posts/form_addcategory.php"; ?>
+                <?php require "views/backend/modules/posts/form_addcategory.php"; ?>
                 </div>
                 <div class="divide20"></div>
                 <h2 class="text-center">Modifier/Supprimer un article</h2>

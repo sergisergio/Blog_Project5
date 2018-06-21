@@ -22,7 +22,6 @@ use Philippe\Blog\Src\Controller\ProfileController;
 use Philippe\Blog\Src\Controller\ErrorsController;
 use Philippe\Blog\Src\Controller\CategoryController;
 use Philippe\Blog\Src\Controller\AdminController;
-
 /**
  *  Class Router
  *
@@ -116,9 +115,7 @@ class Router
                 } elseif ($_GET['action'] == 'modifyProfile') {
                     $this->_profileController->modifyProfile($_POST['userId'], $_FILES['avatar']['name'], $_POST['first_name'], $_POST['name'], $_POST['email'], $_POST['description'], $_POST['token']);
                 } elseif ($_GET['action'] == 'publicProfile') {
-                    if (isset($_GET['id'])) {
-                        $this->_profileController->publicProfile($_GET['id']);
-                    }
+                    $this->_profileController->publicProfile($_GET['id']);
                 } elseif ($_GET['action'] == 'noAdmin') {
                     $this->_errorsController->noAdmin();
                 } elseif ($_GET['action'] == 'categoryresults') {

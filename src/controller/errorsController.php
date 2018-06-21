@@ -22,7 +22,7 @@ class ErrorsController
      */
     public function errors()
     {
-        include 'views/frontend/Modules/Blog/Errors/errors.php';
+        include 'views/frontend/modules/blog/errors/errors.php';
     }
     /**
      * Function noAdmin
@@ -31,6 +31,6 @@ class ErrorsController
      */
     public function noAdmin()
     {
-        include 'views/frontend/Modules/Blog/Errors/noadmin.php';
+        include 'views/frontend/modules/blog/errors/noadmin.php';
     }
 }

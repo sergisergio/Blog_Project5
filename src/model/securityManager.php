@@ -12,7 +12,7 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
-require_once "src/model/Manager.php";
+require_once "src/model/manager.php";
 class SecurityManager extends Manager
 {
     /**
@@ -44,16 +44,5 @@ class SecurityManager extends Manager
         $req = $dbProjet5->prepare('INSERT INTO connexion(ip) VALUES(:ip)');
         $req->bindParam(':ip', $ip);
         $req->execute();
-    }
-    /**
-     * Function checkCSRF
-     * 
-     * @return mixed
-     */
-    public function checkCSRF() 
-    {
-        if (!isset($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = md5(time()*rand(1, 1000));
-        }
     }
 }

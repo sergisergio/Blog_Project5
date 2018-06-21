@@ -41,7 +41,8 @@ class RegisterController
      */
     public function signupPage()
     {
-        include 'views/frontend/Modules/Blog/Signup/signup.php';
+        $csrfSignupToken = md5(time()*rand(1, 1000)); 
+        include 'views/frontend/modules/blog/signup/signup.php';
     }
     /**
      * Function addUser

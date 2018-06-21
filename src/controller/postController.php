@@ -21,6 +21,7 @@ use \Philippe\Blog\Src\Model\UserManager;
 use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Model\CommentManager;
+use \Philippe\Blog\Src\Controller\ErrorsController;
 use \Philippe\Blog\Src\Core\Session;
 
 class PostController
@@ -40,7 +41,7 @@ class PostController
         $this->_userManager = new UserManager();
         $this->_categoryManager = new CategoryManager();
         $this->_commentManager = new CommentManager();
-        $this->_logController = new LogController();
+        $this->_errorsController = new ErrorsController();
     }
 
     /**
@@ -50,6 +51,8 @@ class PostController
      */
     public function listPosts()
     {
+        $accessAdminToken = md5(time()*rand(1, 1000));
+        $csrfSearchToken = md5(time()*rand(1, 1000));
         $postsTotal = $this->_postManager->countPosts();
         $postsPerPage = 5;
         $totalPages = ceil($postsTotal / $postsPerPage);
@@ -65,7 +68,7 @@ class PostController
         $postsAside = $this->_postManager->getPosts(0, 5);
         $categories = $this->_categoryManager->getCategoryRequest();
 
-        include 'views/frontend/Modules/Blog/blog.php';
+        include 'views/frontend/modules/blog/blog.php';
     }
     /**
      * Show only one blog post
@@ -76,6 +79,8 @@ class PostController
      */
     public function listPost($postId)
     {
+        $accessAdminToken = md5(time()*rand(1, 1000));
+        $csrfSearchToken = md5(time()*rand(1, 1000));
         $post = $this->_postManager->getPost($postId);
         $postsAside = $this->_postManager->getPosts(0, 5);
         $isPost = $this->_postManager->checkExistPost($postId);
@@ -84,16 +89,17 @@ class PostController
         if (isset($postId) && $postId > 0) {
             if ($isPost == false) {
                 $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
-                $this->_logController->errors();
+                $this->_errorsController->errors();
             } else {
+                $csrfAddCommentToken = md5(time()*rand(1, 1000));
                 $comment = $this->_commentManager->getComments($postId);
                 $user = $this->_userManager->getUser($postId);
                 $nbCount = $this->_commentManager->countCommentRequest($postId);
-                include 'views/frontend/Modules/Blog/blog_post.php';
+                include 'views/frontend/modules/blog/blog_post.php';
             }
         } else {
             $_SESSION['flash']['danger'] = 'Aucun id ne correspond à ce billet !';
-            $this->_logController->errors();
+            $this->_errorsController->errors();
         }
     }
 }

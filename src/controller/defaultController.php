@@ -26,7 +26,8 @@ class DefaultController
      */
     public function home()
     {
-        include 'views/frontend/Modules/Home/index.php';
+    	$accessAdminToken = md5(time()*rand(1, 1000));
+        include 'views/frontend/modules/home/index.php';
     }
 }
 

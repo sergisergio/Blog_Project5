@@ -1,6 +1,3 @@
-<?php      
-    $csrfProfileToken = md5(time()*rand(1, 1000));       
-?>
 <form action="index.php?action=modifyProfile&amp;id=<?= $_SESSION['id'] ?>" method="post" enctype="multipart/form-data">
     <div>
         <label>Ajouter un avatar (1M max: jpg, jpeg, gif, png)</label><br />

@@ -1,6 +1,6 @@
 <div class="form-container">
     <div class="response alert"></div>
-        <?php include 'views/frontend/Modules/ResponseAlert/responseAlert.php'; ?>
+        <?php include 'views/frontend/modules/responseAlert/responseAlert.php'; ?>
         <?php      
             $csrfModifyPostToken = md5(time()*rand(1, 1000));       
         ?>

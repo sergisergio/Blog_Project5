@@ -24,44 +24,7 @@ class CommentEntity
     private $last_updated;
     private $validation;
     private $avatar;
-
-    /**
-     * Construct
-     * 
-     * @param array $data datas
-     *
-     * @return array
-     */
-    /*public function __construct($data) 
-    {
-        $this->hydrate($data);
-    }
-
-    /**
-     * Hydrate
-     * 
-     * @param array $data datas
-     * 
-     * @return array
-     */
-    /*public function hydrate($data) 
-    {
-          foreach ($data as $key => $value) {
-              $method = 'set'.ucfirst($key);
-              
-              if (method_exists($this, $method)) {
-                  $this->$method($value);
-              }
-          }
-          $this->setId($datas['id']);
-          $this->setPost_id($datas['post_id']);
-          $this->setAuthor($datas['author']);
-          $this->setContent($datas['content']);
-          $this->setCreation_date($datas['creation_date']);
-          $this->setLast_updated($datas['last_updated']);
-          $this->setValidation($datas['validation']);
-          $this->setAvatar($datas['avatar']);
-    }*/
+    
     /**
      * Setter Id
      * 

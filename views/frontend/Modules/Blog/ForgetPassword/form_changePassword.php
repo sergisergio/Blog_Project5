@@ -4,9 +4,6 @@
         <p></p><div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
-            <?php      
-                $csrfChangePasswordToken = md5(time()*rand(1, 1000));       
-            ?>
             <form action="index.php?action=changePassword" method="post">
                 <fieldset>
                     <div class="row">

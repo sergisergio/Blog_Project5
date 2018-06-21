@@ -16,7 +16,6 @@ namespace Philippe\Blog\Src\Entities;
 
 class UserEntity
 {
-    
     use Constructor, Hydrator;
 
     private $id;
@@ -34,50 +33,6 @@ class UserEntity
     private $reset_token;
     private $reset_at;
 
-    /**
-     * Construct
-     * 
-     * @param array $datas datas
-     *
-     * @return array 
-     */
-    /*public function __construct($data) 
-    {
-        $this->hydrate($data);
-    }
-    
-
-    /**
-     * Hydrate
-     * 
-     * @param array $datas datas
-     * 
-     * @return array
-     */
-    /*public function hydrate($data) 
-    {
-        foreach ((array)$data as $key => $value) {
-            $method = 'set'.ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
-          /*$this->setId($data['id']);
-          $this->setFirst_name($data['first_name']);
-          $this->setLast_name($data['last_name']);
-          $this->setPseudo($data['pseudo']);
-          $this->setPassword($data['password']);
-          $this->setEmail($data['email']);
-          $this->setRegistration_date($data['registration_date']);
-          $this->setAuthorization($data['authorization']);
-          $this->setConfirmation_token($data['confirmation_token']);
-          $this->setAvatar($data['avatar']);
-          $this->setIs_active($data['is_active']);
-          $this->setDescription($data['description']);
-          $this->setReset_token($data['reset_token']);
-          $this->setReset_at($data['reset_at']);
-    }
-    */
     /**
      * Setter Id
      * 

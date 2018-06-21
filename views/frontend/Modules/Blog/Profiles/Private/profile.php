@@ -3,7 +3,7 @@
     <div class="container inner">
         <div class="blog box mgbottom2 row">
             <div class="col-md-12">
-                <?php require 'views/frontend/Modules/Blog/Top/top.php' ?>
+                <?php include 'views/frontend/modules/blog/top/top.php' ?>
             </div>
         </div>
         <div class="blog list-view row">
@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-sm-12 post-content">
                                 <div class="meta">
-                                    <?php require 'views/frontend/Modules/ResponseAlert/responseAlert.php'; ?>
+                                    <?php include 'views/frontend/modules/responseAlert/responseAlert.php'; ?>
                                     <div class="row">
                                         <div class="col-md-4">
                                     <p>
@@ -41,9 +41,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <?php require 'views/frontend/Modules/Blog/Profiles/Private/formProfile.php' ?>
+                                <?php include 'views/frontend/modules/blog/profiles/private/formProfile.php' ?>
                                 <hr>
-                                <?php require 'views/frontend/Modules/Blog/Profiles/Private/form_deleteAccount.php' ?>
+                                <?php include 'views/frontend/modules/blog/profiles/private/form_deleteAccount.php' ?>
                             </div>
                         </div>
                     </div>
@@ -54,9 +54,9 @@
     </div>
     <div class="container bottomcontainer">
         <div class="row">
-            <?php require "views/frontend/Modules/Footer/footer.php"; ?>
+            <?php include "views/frontend/modules/footer/footer.php"; ?>
         </div>
     </div>
 </div>
 <?php $content = ob_get_clean(); ?>
-    <?php require 'views/frontend/templates/template.php'; ?>
+    <?php include 'views/frontend/templates/template.php'; ?>

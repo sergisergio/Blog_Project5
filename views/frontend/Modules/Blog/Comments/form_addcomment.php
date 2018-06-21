@@ -1,10 +1,6 @@
 <div class="form-container">
     <div class="response alert"></div>
-    <?php require 'views/frontend/Modules/responseAlert/responseAlert.php'; ?>       
-    <?php      
-        $csrfAddCommentToken = md5(time()*rand(1, 1000));
-        $_SESSION['csrfAddCommentToken'] = $csrfAddCommentToken;        
-    ?>
+    <?php include 'views/frontend/modules/responseAlert/responseAlert.php'; ?>
 <form action="index.php?action=addcomment&amp;id=<?= $post->getId() ?>" method="post">
     <div>
         <label for="content">Commentaire</label>

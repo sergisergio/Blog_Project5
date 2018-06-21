@@ -4,7 +4,7 @@
                     <section>
                         <div class="blog box mgbottom2 row">
                             <div class="col-md-12">
-                                <?php require 'views/frontend/Modules/Blog/Top/top.php' ?>
+                                <?php include 'views/frontend/modules/blog/top/top.php' ?>
                             </div>
                         </div>
                         <div class="box">
@@ -26,4 +26,4 @@
                 </div>
         </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'views/frontend/templates/template.php'; ?>
+<?php include 'views/frontend/templates/template.php'; ?>

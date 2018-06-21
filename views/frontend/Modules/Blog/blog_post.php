@@ -3,7 +3,7 @@
     <div class="container inner">
         <div class="blog box mgbottom2 row">
             <div class="col-md-12">
-                <?php require 'views/frontend/Modules/Blog/Top/top.php' ?>
+                <?php include 'views/frontend/modules/blog/top/top.php' ?>
             </div>
         </div>
         <div class="single blog row">
@@ -97,7 +97,7 @@
                     <div class="post box">
                         <h3>Ajouter un commentaire</h3>
                             <?php if (isset($_SESSION['pseudo'])) : ?>       
-                                <?php include "views/frontend/Modules/Blog/Comments/form_addcomment.php"; ?>
+                                <?php include "views/frontend/modules/blog/comments/form_addcomment.php"; ?>
                             <?php else: ?> 
                                 <p>Vous devez être inscrit et connecté pour ajouter un commentaire !</p>
                                 <a href="index.php?action=signupPage">M'inscrire</a>&nbsp;&nbsp;
@@ -107,14 +107,14 @@
                 </div>
                 <div class="divide60"></div>
             </div>
-            <?php require "views/frontend/Modules/Blog/Aside/aside.php";?>
+            <?php include "views/frontend/modules/blog/aside/aside.php";?>
             </div>
             <div class="container bottomcontainer">
                 <div class="row">
-                    <?php require "views/frontend/Modules/Footer/footer.php"; ?>
+                    <?php include "views/frontend/modules/footer/footer.php"; ?>
                 </div>
             </div>
         </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'views/frontend/templates/template.php'; ?>
+<?php include 'views/frontend/templates/template.php'; ?>

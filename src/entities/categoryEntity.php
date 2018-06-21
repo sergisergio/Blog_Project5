@@ -20,37 +20,6 @@ class CategoryEntity
     private $category;
 
     /**
-     * Construct
-     *
-     * @param array $datas datas
-     *
-     * @return array 
-     */
-    /*public function __construct($data) 
-    {
-        $this->hydrate($data);
-    }
-
-    /**
-     * Hydrate
-     * 
-     * @param array $datas datas
-     * 
-     * @return array
-     */
-    /*public function hydrate($datas) 
-    {
-          foreach ($data as $key => $value) {
-              $method = 'set'.ucfirst($key);
-              
-              if (method_exists($this, $method)) {
-                  $this->$method($value);
-              }
-          }
-          $this->setCategory_id($datas['category_id']);
-          $this->setCategory($datas['category']);
-    }*/
-    /**
      * Setter Id
      * 
      * @param int $category_id category's id

@@ -5,10 +5,7 @@
         <div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
-            <?php require 'views/frontend/Modules/ResponseAlert/responseAlert.php'; ?> 
-            <?php      
-                $csrfSignupToken = md5(time()*rand(1, 1000));       
-            ?>
+            <?php include 'views/frontend/modules/responseAlert/responseAlert.php'; ?>
             <form action="index.php?action=addUser" method="post">
                 <fieldset>
                     <div class="row">

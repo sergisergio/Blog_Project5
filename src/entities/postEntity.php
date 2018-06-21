@@ -15,7 +15,6 @@ namespace Philippe\Blog\Src\Entities;
 
 class PostEntity
 {
-
     use Constructor, Hydrator;
 
     private $id;
@@ -29,44 +28,6 @@ class PostEntity
     private $file_extension;
     private $category;
 
-    /**
-     * Construct
-     * 
-     * @param array $datas datas
-     *
-     * @return array 
-     */
-    /*public function __construct($data) 
-    {
-        $this->hydrate($data);
-    }
-    /**
-     * Hydrate
-     * 
-     * @param array $datas datas
-     * 
-     * @return array
-     */
-    /*public function hydrate($data) 
-    {
-          foreach ((array)$data as $key => $value) {
-              $method = 'set'.ucfirst($key);
-              
-              if (method_exists($this, $method)) {
-                  $this->$method($value);
-              }
-          }
-          $this->setId($data['id']);
-          $this->setTitle($data['title']);
-          $this->setChapo($data['chapo']);
-          $this->setIntro($data['intro']);
-          $this->setContent($data['content']);
-          $this->setAuthor($data['author']);
-          $this->setCreation_date($data['creation_date']);
-          $this->setLast_updated($data['last_updated']);
-          $this->setFile_extension($data['file_extension']);
-          $this->setCategory($data['category_id']);
-    }*/
     /**
      * Setter Id
      * 

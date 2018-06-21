@@ -40,9 +40,11 @@ class CategoryController
      */
     public function categoryResults($categoryId)
     {
+        $accessAdminToken = md5(time()*rand(1, 1000));
+        $csrfSearchToken = md5(time()*rand(1, 1000));
         $postsAside = $this->_postManager->getPosts(0, 5);
         $categories = $this->_categoryManager->getCategoryRequest();
         $cResults = $this->_postManager->categoryResultsRequest($categoryId);
-        include 'views/frontend/Modules/Blog/Categories/categoryresults.php';
+        include 'views/frontend/modules/blog/categories/categoryresults.php';
     }
 }

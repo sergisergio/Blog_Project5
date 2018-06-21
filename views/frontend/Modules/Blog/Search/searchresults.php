@@ -2,7 +2,7 @@
 <?php ob_start(); ?>
 <div class="container inner">
     <div class="blog box mgbottom2 row">
-        <?php require 'views/frontend/Modules/Blog/Top/top.php' ?>
+        <?php include 'views/frontend/modules/blog/top/top.php' ?>
     </div>
     <div class="blog list-view row">
         <div class="col-md-8 col-sm-12 content">
@@ -35,14 +35,14 @@
                 </div>
             </div>
         </div>
-        <?php require "views/frontend/Modules/Blog/Aside/aside.php"; ?>
+        <?php include "views/frontend/modules/blog/aside/aside.php"; ?>
     </div>
 </div>
 <div class="container bottomcontainer">
     <div class="row">
-        <?php require "views/frontend/Modules/Footer/footer.php"; ?>
+        <?php include "views/frontend/modules/footer/footer.php"; ?>
     </div>
 </div>
 </div>
 <?php $content = ob_get_clean(); ?>
-    <?php require 'views/frontend/templates/template.php'; ?>
+    <?php include 'views/frontend/templates/template.php'; ?>

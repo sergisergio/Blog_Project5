@@ -8,7 +8,7 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
 <?php ob_start(); ?>
 <body class="full-layout">
     <div class="body-wrapper">
-        <?php require "views/frontend/Modules/Nav/nav.php"; ?>
+        <?php require "views/frontend/modules/nav/nav.php"; ?>
         <div class="container">
             <section style="margin-bottom: 50px;">
                   <div class="box">
@@ -58,7 +58,7 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                         <?php endif; ?>
                     </h5>
                     <div class="divide20"></div>
-                    <?php require 'views/frontend/Modules/responseAlert/responseAlert.php'; ?>
+                    <?php require 'views/frontend/modules/responseAlert/responseAlert.php'; ?>
             </div>
             <?php
             

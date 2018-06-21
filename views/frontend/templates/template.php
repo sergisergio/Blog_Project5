@@ -32,7 +32,7 @@
     </head>
     <body class="full-layout">
         <div class="body-wrapper">
-            <?php require "views/frontend/Modules/Nav/nav.php"; ?>
+            <?php require "views/frontend/modules/nav/nav.php"; ?>
                         
             <?php echo $content ?>
 

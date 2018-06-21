@@ -43,7 +43,8 @@ class LogController
      */
     public function loginPage()
     {
-        include 'views/frontend/Modules/Blog/Login/login.php';
+        $csrfLoginToken = md5(time()*rand(1, 1000));
+        include 'views/frontend/modules/blog/login/login.php';
     }
     /**
      * Function login
@@ -113,7 +114,8 @@ class LogController
      */
     public function forgetPasswordPage()
     {
-        include 'views/frontend/Modules/Blog/ForgetPassword/forgetPasswordPage.php';
+        $csrfForgetToken = md5(time()*rand(1, 1000));
+        include 'views/frontend/modules/blog/forgetPassword/forgetPasswordPage.php'; 
     }
     /**
      * Function forgetPassword
@@ -165,7 +167,8 @@ class LogController
         if ((isset($_GET['id']) && $_GET['id'] > 0) && isset($_GET['token'])) {
             $user = $this->_userManager->checkResetTokenRequest($userId, $resetToken);
             if ($user &&  $user['reset_token'] == $resetToken) {
-                include 'views/frontend/Modules/Blog/ForgetPassword/changePasswordPage.php';
+                $csrfChangePasswordToken = md5(time()*rand(1, 1000));
+                include 'views/frontend/modules/blog/forgetPassword/changePasswordPage.php';
             } else {
                 $_SESSION['flash']['danger'] = 'Ce token n\' est plus valide ! Veuillez réessayer !';
                 LogController::forgetPasswordPage();

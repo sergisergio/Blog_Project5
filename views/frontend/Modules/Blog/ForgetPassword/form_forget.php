@@ -5,10 +5,7 @@
         <div class="divide30"></div>
         <div class="form-container">
             <div class="response alert"></div>
-            <?php require 'views/frontend/Modules/ResponseAlert/responseAlert.php'; ?>
-            <?php      
-                $csrfForgetToken = md5(time()*rand(1, 1000));      
-            ?>
+            <?php include 'views/frontend/modules/responseAlert/responseAlert.php'; ?>
             <form action="index.php?action=forgetPassword" method="POST">
         <div class="col-md-offset-3 col-md-6 col-sm-12">
             <div class="form-group">

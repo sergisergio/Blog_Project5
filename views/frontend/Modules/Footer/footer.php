@@ -1,8 +1,4 @@
 <footer class="footer box">
-    <?php      
-        $accessAdminToken = md5(time()*rand(1, 1000));
-        $_SESSION['accessAdminToken'] = $accessAdminToken;
-    ?>
     <p class="pull-left">
         <a href="index.php?action=admin&amp;token=<?php echo $accessAdminToken ?>" class="btn btn-default btn-lg" role="button">Administration</a>
     </p>

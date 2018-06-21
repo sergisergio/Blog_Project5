@@ -2,7 +2,7 @@
 <?php ob_start(); ?>
 <body class="full-layout">
     <div class="body-wrapper">
-        <?php require "views/frontend/Modules/Nav/nav.php"; ?>
+        <?php require "views/frontend/modules/nav/nav.php"; ?>
         <div class="container">
             <section style="margin-bottom: 50px;">
                   <div class="box">

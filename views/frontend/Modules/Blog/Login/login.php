@@ -1,7 +1,7 @@
 <?php $title = 'Connexion'; ?>
 <?php ob_start(); ?>
     <div class="container">
-        <?php require "views/frontend/Modules/Blog/Login/form_login.php"; ?></div>
+        <?php include "views/frontend/modules/blog/login/form_login.php"; ?></div>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'views/frontend/templates/template.php'; ?>
+<?php include 'views/frontend/templates/template.php'; ?>

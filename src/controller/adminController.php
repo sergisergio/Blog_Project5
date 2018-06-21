@@ -49,6 +49,7 @@ class AdminController
      */
     public function admin($accessAdminToken)
     {
+        $_SESSION['accessAdminToken'] = $accessAdminToken;
         if (isset($_SESSION['accessAdminToken']) AND isset($accessAdminToken) AND !empty($_SESSION['accessAdminToken']) AND !empty($accessAdminToken)) {
             if ($_SESSION['accessAdminToken'] == $accessAdminToken) {
                 if (!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
@@ -81,7 +82,7 @@ class AdminController
         }
         $start = ($currentPage-1)*$postsPerPage;
         $posts = $this->_postManager->getPosts($start, $postsPerPage);
-        include 'views/backend/Modules/Posts/managePosts.php';
+        include 'views/backend/modules/posts/managePosts.php';
     }
     /**
      * Add a post
@@ -155,7 +156,7 @@ class AdminController
             $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
             AdminController::managePosts();
         }
-        include 'views/backend/Modules/Posts/modifyPostPage.php';
+        include 'views/backend/modules/posts/modifyPostPage.php';
     }
     /**
      * Modify a post
@@ -245,7 +246,7 @@ class AdminController
     {
         $nbCount = $this->_commentManager->countCommentBackRequest();
         $submittedComment = $this->_commentManager->submittedCommentRequest();
-        include 'views/backend/Modules/Comments/manageComments.php';
+        include 'views/backend/modules/comments/manageComments.php';
     }
     /**
      * Validate a comment
@@ -320,7 +321,7 @@ class AdminController
     public function manageUsers()
     {
         $users = $this->_userManager->getUsers();
-        include 'views/backend/Modules/Users/user_mgmt.php';
+        include 'views/backend/modules/users/user_mgmt.php';
     }
     /**
      * Give admin Rights to a user

@@ -50,8 +50,11 @@ class ProfileController
      */
     public function profilePage($userId)
     {
+        $accessAdminToken = md5(time()*rand(1, 1000));
         $post = $this->_userManager->getUser($userId);
-        include 'views/frontend/Modules/Blog/Profiles/Private/profile.php';
+        $csrfProfileToken = md5(time()*rand(1, 1000)); 
+        $csrfDeleteAccountToken = md5(time()*rand(1, 1000));
+        include 'views/frontend/modules/blog/profiles/private/profile.php';
     }
     /**
      * Function modifyProfile
@@ -68,8 +71,7 @@ class ProfileController
      */
     public function modifyProfile($userId, $avatar, $first_name, $name, $email, $description, $csrfProfileToken)
     {
-        $_SESSION['csrfProfileToken'] = $csrfProfileToken; 
-
+        $_SESSION['csrfProfileToken'] = $csrfProfileToken;
         if (!empty($_POST['email'])) {
             if (isset($_SESSION['csrfProfileToken']) AND isset($csrfProfileToken) AND !empty($_SESSION['csrfProfileToken']) AND !empty($csrfProfileToken)) {
                 if ($_SESSION['csrfProfileToken'] == $csrfProfileToken) {
@@ -145,7 +147,10 @@ class ProfileController
      */
     public function publicProfile($commentAuthor)
     {
-        $user = $this->_commentManager->getUserByCommentRequest($commentAuthor);
-        include 'views/frontend/Modules/Blog/Profiles/Public/publicProfile.php';
+        if (isset($commentAuthor)) {
+            $accessAdminToken = md5(time()*rand(1, 1000));
+            $user = $this->_commentManager->getUserByCommentRequest($commentAuthor);
+            include 'views/frontend/modules/blog/profiles/public/publicProfile.php';
+        }
     }
 }

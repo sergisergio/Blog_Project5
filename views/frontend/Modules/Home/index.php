@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="author" content="Philippe Traon">
         <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Philippe Traon | Développeur web" />
         <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article" />
         <meta prefix="og: http://ogp.me/ns#" property="og:url" content="http://philippetraon.com/?42" />
@@ -12,7 +12,6 @@
         <meta property="og:image:width" content="180" />
         <link rel="icon" type="image/ico" href="public/images/Philippe.ico" />
         <title>Philippe Traon - Développeur web</title>
-        <!-- Bootstrap core CSS -->
         <link href="public/css/bootstrap.min.css" rel="stylesheet">
         <link href="public/css/plugins.css" rel="stylesheet">
         <link href="public/css/prettify.css" rel="stylesheet">
@@ -53,9 +52,9 @@
                 </div>
             </section>
             <div class="container">
-                <?php include "views/frontend/Modules/Home/section1_portfolio.php"; ?>
-                <?php include "views/frontend/Modules/Home/section2_about.php"; ?>
-                <?php include "views/frontend/Modules/Home/section3_skills.php"; ?>
+                <?php include "views/frontend/modules/home/section1_portfolio.php"; ?>
+                <?php include "views/frontend/modules/home/section2_about.php"; ?>
+                <?php include "views/frontend/modules/home/section3_skills.php"; ?>
                 <section id="contact">
                     <div class="box">
                         <h2 class="section-title">Me contacter</h2>
@@ -77,24 +76,20 @@
                         <div class="divide30"></div>
                         <div class="form-container">
                             <div class="response alert alert-success"></div>
-                            <?php include "views/frontend/Modules/Home/form_contact.php"; ?>
+                            <?php include "views/frontend/modules/home/form_contact.php"; ?>
                         </div>
                     </div>
                 </section>
-                <?php include "views/frontend/Modules/Footer/footer.php"; ?>
+                <?php include "views/frontend/modules/footer/footer.php"; ?>
             </div>
         </div>
-
         <script src="public/js/jquery.min.js"></script>
         <script src="public/js/bootstrap.min.js"></script>
-        <!--<script src="public/js/jquery.popconfirm.js"></script>-->
         <script src="public/js/jquery.themepunch.tools.min.js"></script>
         <script src="public/js/classie.js"></script>
         <script src="public/js/plugins.js"></script>
         <script src="public/js/scripts.js"></script>
-        
         <script src='https://www.google.com/recaptcha/api.js'></script>
-
         <script>
             $.backstretch(["public/images/art/react2.png"]);
         </script>
@@ -113,15 +108,5 @@
                 }
             });
         </script>
-        <!--<script>
-            $(".popconfirm").popConfirm();
-            $("[data-toggle='confirmation']").popConfirm({
-                title: "Certain ?",
-                content: "Dernière chance !",
-                placement: "left",
-                yesBtn: 'Oui',
-              noBtn: 'Non'
-            });
-        </script>-->
     </body>
 </html>

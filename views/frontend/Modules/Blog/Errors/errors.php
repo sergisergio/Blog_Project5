@@ -4,14 +4,14 @@
                     <section>
                         <div class="blog box mgbottom2 row">
                             <div class="col-md-12">
-                                <?php require 'views/frontend/Modules/Blog/Top/top.php' ?>
+                                <?php include 'views/frontend/modules/blog/top/top.php' ?>
                             </div>
                         </div>
                         <div class="box">
                             <p></p>
                             <div class="divide30"></div>
                             <div class="form-container">
-                                <?php require 'views/frontend/Modules/responseAlert/responseAlert.php'; ?>
+                                <?php include 'views/frontend/modules/responseAlert/responseAlert.php'; ?>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -26,4 +26,4 @@
                 </div>
         </div>
 <?php $content = ob_get_clean(); ?>
-<?php require 'views/frontend/templates/template.php'; ?>
+<?php include 'views/frontend/templates/template.php'; ?>

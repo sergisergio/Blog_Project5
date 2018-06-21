@@ -88,7 +88,7 @@
                             <h4 class="panel-title"> <a data-toggle="collapse" class="panel-toggle" data-parent="#accordion" href="#collapseFour">CMS</a> </h4> 
                         </div>
                         <div id="collapseFour" class="panel-collapse collapse">
-                            <div class="panel-body">Le plus connu et le plus utilisé étant Wordpress, je m'intéresse plutôt à ce CMS (d'autant plus pour PHP et SQL). Cependant, j'ai pour projet, en parallèle, de développer des sites avec Drupal, Prestashop et d'autres CMS
+                            <div class="panel-body">Le plus connu et le plus utilisé étant Wordpress, je m'intéresse plutôt à ce CMS (d'autant plus pour PHP et SQL). Cependant, j'ai pour projet, en parallèle, de développer des sites avec Drupal, Prestashop et d'autres CMS.
                             </div>
                         </div>
                     </div>
