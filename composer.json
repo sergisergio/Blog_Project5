@@ -17,11 +17,7 @@
     },
     "autoload": {
     	"psr-4" : {
-            "Philippe\\Blog\\Src\\" : "src/",
-            "Philippe\\Blog\\Src\\Model\\" : "model/",
-            "Philippe\\Blog\\Src\\Core\\" : "core/",
-            "Philippe\\Blog\\Src\\Entities\\" : "entities/",
-            "Philippe\\Blog\\Src\\Controller\\" : "controller/"}
+            "Philippe\\Blog\\Src\\" : "src/"}
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*"

@@ -13,7 +13,7 @@
  */
 session_start();
 require "vendor/autoload.php";
-require 'config/router.php';
+require 'src/router.php';
 
 $router = new Router();
 $router->run();

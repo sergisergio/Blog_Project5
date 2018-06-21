@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="body-wrapper">
-            <?php require "views/frontend/Modules/Nav/nav.php"; ?>
+            <?php include "views/frontend/Modules/Nav/nav.php"; ?>
             <section id="home" class="naked">
                 <div class="fullscreenbanner-container revolution">
                     <div class="fullscreenbanner">
@@ -53,9 +53,9 @@
                 </div>
             </section>
             <div class="container">
-                <?php require "views/frontend/Modules/Home/section1_portfolio.php"; ?>
-                <?php require "views/frontend/Modules/Home/section2_about.php"; ?>
-                <?php require "views/frontend/Modules/Home/section3_skills.php"; ?>
+                <?php include "views/frontend/Modules/Home/section1_portfolio.php"; ?>
+                <?php include "views/frontend/Modules/Home/section2_about.php"; ?>
+                <?php include "views/frontend/Modules/Home/section3_skills.php"; ?>
                 <section id="contact">
                     <div class="box">
                         <h2 class="section-title">Me contacter</h2>
@@ -77,20 +77,22 @@
                         <div class="divide30"></div>
                         <div class="form-container">
                             <div class="response alert alert-success"></div>
-                            <?php require "views/frontend/Modules/Home/form_contact.php"; ?>
+                            <?php include "views/frontend/Modules/Home/form_contact.php"; ?>
                         </div>
                     </div>
                 </section>
-                <?php require "views/frontend/Modules/Footer/footer.php"; ?>
+                <?php include "views/frontend/Modules/Footer/footer.php"; ?>
             </div>
         </div>
+
         <script src="public/js/jquery.min.js"></script>
         <script src="public/js/bootstrap.min.js"></script>
-        <script src="public/js/jquery.popconfirm.js"></script>
+        <!--<script src="public/js/jquery.popconfirm.js"></script>-->
         <script src="public/js/jquery.themepunch.tools.min.js"></script>
         <script src="public/js/classie.js"></script>
         <script src="public/js/plugins.js"></script>
         <script src="public/js/scripts.js"></script>
+        
         <script src='https://www.google.com/recaptcha/api.js'></script>
 
         <script>
@@ -111,7 +113,7 @@
                 }
             });
         </script>
-        <script>
+        <!--<script>
             $(".popconfirm").popConfirm();
             $("[data-toggle='confirmation']").popConfirm({
                 title: "Certain ?",
@@ -120,6 +122,6 @@
                 yesBtn: 'Oui',
               noBtn: 'Non'
             });
-        </script>
+        </script>-->
     </body>
 </html>

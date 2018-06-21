@@ -298,7 +298,7 @@ jQuery(document).ready(function() {
                     t.updateSinglePage(result);
                 })
                 .fail(function() {
-                    t.updateSinglePage("Error! Please refresh the page!");
+                    t.updateSinglePage("Une erreur est survenue!");
                 });
         }
     });
