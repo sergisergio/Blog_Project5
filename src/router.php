@@ -147,7 +147,7 @@ class Router
                 } elseif ($_GET['action'] == 'deleteUser') {
                     $this->_adminController->deleteUser($_GET['id'], $_GET['token']);
                 } elseif ($_GET['action'] == 'addcategory') {
-                    $this->_adminController->addCategory($_POST['category'], $_POST['token']);
+                    $this->_categoryController->addCategory($_POST['category'], $_POST['token']);
                 }
             } else { 
                 $this->_defaultController->home();

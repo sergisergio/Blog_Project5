@@ -12,10 +12,11 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
-require_once "src/model/manager.php";
 
+require_once "src/model/manager.php";
 use \Philippe\Blog\Src\Entities\CommentEntity;
 use \Philippe\Blog\Src\Entities\UserEntity;
+
 class CommentManager extends Manager
 {
     /**
@@ -34,7 +35,7 @@ class CommentManager extends Manager
             INNER JOIN Users u ON u.id = c.author
 			WHERE c.post_id = :id
 			AND c.validation = 1
-			ORDER BY creation_date'
+			ORDER BY c.creation_date'
         );
         $getComments->bindParam(':id', $postId);
         $getComments->execute();

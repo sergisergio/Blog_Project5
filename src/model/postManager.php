@@ -12,9 +12,10 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
-require_once "src/model/manager.php";
 
+require_once "src/model/manager.php";
 use \Philippe\Blog\Src\Entities\PostEntity;
+
 class PostManager extends Manager
 {
     /**
@@ -32,7 +33,7 @@ class PostManager extends Manager
             'SELECT p.id, p.title, p.chapo, p.intro, p.content, u.pseudo AS author, p.category_id, p.file_extension, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\') AS creation_date, DATE_FORMAT(p.last_updated, \'%d/%m/%Y à %Hh%i\') AS last_updated 
 			FROM Posts p
             INNER JOIN Users u ON u.id = p.author
-			ORDER BY creation_date DESC LIMIT '.$start.', '.$postsPerPage
+			ORDER BY p.creation_date DESC LIMIT '.$start.', '.$postsPerPage
         );
         $posts = [];
         while ($data = $getPosts->fetch()) {

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="author" content="Philippe Traon">
         <meta name="robots" content="noindex, nofollow">
         <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Philippe Traon | Développeur web" />
         <meta prefix="og: http://ogp.me/ns#" property="og:type" content="article" />
@@ -13,7 +13,6 @@
         <meta property="og:image:width" content="180" />
         <link rel="icon" type="image/ico" href="public/images/Philippe.ico" />
         <title>Philippe Traon - Développeur web</title>
-        <!-- Bootstrap core CSS -->
         <link href="./public/css/bootstrap.min.css" rel="stylesheet">
         <link href="/public/css/plugins.css" rel="stylesheet">
         <link href="/public/css/prettify.css" rel="stylesheet">

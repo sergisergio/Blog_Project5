@@ -12,9 +12,10 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
-require_once "src/model/manager.php";
 
+require_once "src/model/manager.php";
 use \Philippe\Blog\Src\Entities\CategoryEntity;
+
 class CategoryManager extends Manager
 {
     /**
@@ -64,5 +65,21 @@ class CategoryManager extends Manager
         $categoryPost->execute();
         $cPost = $categoryPost->fetch();
         return $cPost;
+    }
+    /**
+     * Function existCategory
+     * 
+     * @param string $email email
+     * 
+     * @return string
+     */
+    public function existCategory($category)
+    {
+        $dbProjet5 = $this->dbConnect();
+        $existCategory = $dbProjet5->prepare('SELECT category FROM Category WHERE category = :category');
+        $existCategory->bindParam(':category', $category);
+        $existCategory->execute();
+        $userCategory = $existCategory->fetch();
+        return $userCategory;
     }
 }

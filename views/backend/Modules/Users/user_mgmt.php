@@ -2,7 +2,7 @@
 <?php ob_start(); ?>
 <body class="full-layout">
     <div class="body-wrapper">
-        <?php require "views/frontend/modules/nav/nav.php"; ?>
+        <?php include "views/frontend/modules/nav/nav.php"; ?>
         <div class="container">
             <section style="margin-bottom: 50px;">
                   <div class="box">
@@ -59,26 +59,17 @@
                         Administrateur : 
                         <?php if ($u->getAuthorization() == 1) : ?>
                                 <?php echo 'Oui'; ?><br />
-                                <?php      
-                                    $csrfCancelAdminRightsToken = md5(time()*rand(1, 1000));
-                                ?>
                                 <btn class="btn btn-default">
                                     <a href="index.php?action=cancelAdminRights&amp;id=<?php echo $u->getId() ?>&amp;token=<?php echo $csrfCancelAdminRightsToken ?>" data-toggle='confirmation' id="important_action">Retirer les droits admin</a>
                                 </btn>
                             <?php else: ?>
                                 <?php echo 'Non'; ?>
                                 <br />
-                                <?php      
-                                    $csrfGiveAdminRightsToken = md5(time()*rand(1, 1000));
-                                ?>
                                 <btn class="btn btn-default">
                                     <a href="index.php?action=giveAdminRights&amp;id=<?php echo $u->getId() ?>&amp;token=<?php echo $csrfGiveAdminRightsToken ?>" data-toggle='confirmation' id="important_action">Donner les droits admin</a>
                                 </btn>
                             <?php endif; ?>
                     </h5>
-                    <?php      
-                        $csrfDeleteUserToken = md5(time()*rand(1, 1000));
-                    ?>
                     <btn class="btn btn-default" style="float: right;">
                         <a href="index.php?action=deleteUser&amp;id=<?php echo $u->getId() ?>&amp;token=<?php echo $csrfDeleteUserToken ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
                     </btn>

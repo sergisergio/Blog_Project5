@@ -1,14 +1,8 @@
-<?php
-if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
-    header('Location: index.php?action=noAdmin');
-    exit();
-}
-?>
 <?php $title = 'Gestion des articles'; ?>
 <?php ob_start(); ?>
 <body class="full-layout">
     <div class="body-wrapper">
-            <?php require "views/frontend/modules/nav/nav.php"; ?>
+            <?php include "views/frontend/modules/nav/nav.php"; ?>
             <div class="container">
                 <section style="margin-bottom: 50px;">
                   <div class="box">
@@ -67,15 +61,12 @@ if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
                     <a href="index.php?action=blogpost&amp;id=<?php echo $p->getId() ?>" target="_blank"><?php echo htmlspecialchars($p->getTitle()); ?></a>
                 </h2>
                 <?php if ($p->getFile_extension() != '') : ?>
-                        <img src="public/images/posts/<?php echo $p->getFile_extension(); ?>" class="img-responsive" style="width: 10%;" />
-                        <?php else: ?>
-                        <img src="public/images/posts/default.jpg" class="img-responsive" style="width: 10%;" />
-                        <?php endif; ?>
-                <?php      
-                    $csrfDeletePostToken = md5(time()*rand(1, 1000));
-                ?>
-                    <a  class="btn btn-default" style="float: right;" href="index.php?action=deletePost&amp;id=<?php echo $p->getId() ?>&amp;token=<?php echo $csrfDeletePostToken ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
-                    <a  class="btn btn-default" style="float: right;" href="index.php?action=modifyPostPage&amp;id=<?php echo $p->getId() ?>">Modifier</a>
+                    <img src="public/images/posts/<?php echo $p->getFile_extension(); ?>" class="img-responsive" style="width: 10%;" />
+                <?php else: ?>
+                    <img src="public/images/posts/default.jpg" class="img-responsive" style="width: 10%;" />
+                <?php endif; ?>
+                <a  class="btn btn-default" style="float: right;" href="index.php?action=deletePost&amp;id=<?php echo $p->getId() ?>&amp;token=<?php echo $csrfDeletePostToken ?>" data-toggle='confirmation' id="important_action">Supprimer</a>
+                <a  class="btn btn-default" style="float: right;" href="index.php?action=modifyPostPage&amp;id=<?php echo $p->getId() ?>">Modifier</a>
                 </div>
                 </div>
                 <?php

@@ -41,7 +41,7 @@ class AdminController
         $this->_userManager = new UserManager();
     }
     /**
-     * Enter the admin part
+     * Enter the admin part (security with a token and also authorization in database).
      *
      * @param int $accessAdminToken token to access admin's part
      * 
@@ -69,20 +69,27 @@ class AdminController
      */
     public function managePosts()
     {
-        $postsTotal = $this->_postManager->countPosts();
-        $postsPerPage = 5;
-        $totalPages = ceil($postsTotal / $postsPerPage);
-        $categories = $this->_categoryManager->getCategoryRequest();
-
-        if (isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
-            $_GET['page'] = intval($_GET['page']);
-            $currentPage = $_GET['page'];
+        if (!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+            $this->_errorsController->noAdmin();
         } else {
-            $currentPage = 1;
+            $csrfAddPostToken = md5(time()*rand(1, 1000)); 
+            $csrfAddCategoryToken = md5(time()*rand(1, 1000));
+            $csrfDeletePostToken = md5(time()*rand(1, 1000));
+            $postsTotal = $this->_postManager->countPosts();
+            $postsPerPage = 5;
+            $totalPages = ceil($postsTotal / $postsPerPage);
+            $categories = $this->_categoryManager->getCategoryRequest();
+
+            if (isset($_GET['page']) AND !empty($_GET['page']) AND ($_GET['page'] > 0 ) AND ($_GET['page'] <= $totalPages)) {
+                $_GET['page'] = intval($_GET['page']);
+                $currentPage = $_GET['page'];
+            } else {
+                $currentPage = 1;
+            }
+            $start = ($currentPage-1)*$postsPerPage;
+            $posts = $this->_postManager->getPosts($start, $postsPerPage);
+            include 'views/backend/modules/posts/managePosts.php';
         }
-        $start = ($currentPage-1)*$postsPerPage;
-        $posts = $this->_postManager->getPosts($start, $postsPerPage);
-        include 'views/backend/modules/posts/managePosts.php';
     }
     /**
      * Add a post
@@ -149,14 +156,20 @@ class AdminController
      */
     public function modifyPostPage($postId)
     {
-        $post = $this->_postManager->getPost($postId);
-        $isPost = $this->_postManager->checkExistPost($postId);
+        if (!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+            $this->_errorsController->noAdmin();
+        } else {
+            $post = $this->_postManager->getPost($postId);
+            $isPost = $this->_postManager->checkExistPost($postId);
 
-        if (empty($isPost) || $postId <= 0 ) {
-            $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
-            AdminController::managePosts();
+            if (empty($isPost) || $postId <= 0 ) {
+                $_SESSION['flash']['danger'] = 'Aucun id ne correspond à cet article !';
+                AdminController::managePosts();
+            } else {
+                $csrfModifyPostToken = md5(time()*rand(1, 1000));
+                include 'views/backend/modules/posts/modifyPostPage.php';
+            }
         }
-        include 'views/backend/modules/posts/modifyPostPage.php';
     }
     /**
      * Modify a post
@@ -244,9 +257,15 @@ class AdminController
      */
     public function manageComments()
     {
-        $nbCount = $this->_commentManager->countCommentBackRequest();
-        $submittedComment = $this->_commentManager->submittedCommentRequest();
-        include 'views/backend/modules/comments/manageComments.php';
+        if (!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+            $this->_errorsController->noAdmin();
+        } else {
+            $csrfValidateCommentToken = md5(time()*rand(1, 1000));
+            $csrfAdminDeleteCommentToken = md5(time()*rand(1, 1000));
+            $nbCount = $this->_commentManager->countCommentBackRequest();
+            $submittedComment = $this->_commentManager->submittedCommentRequest();
+            include 'views/backend/modules/comments/manageComments.php';
+        }
     }
     /**
      * Validate a comment
@@ -320,8 +339,15 @@ class AdminController
      */
     public function manageUsers()
     {
-        $users = $this->_userManager->getUsers();
-        include 'views/backend/modules/users/user_mgmt.php';
+        if (!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
+            $this->_errorsController->noAdmin();
+        } else {
+            $csrfCancelAdminRightsToken = md5(time()*rand(1, 1000));
+            $csrfGiveAdminRightsToken = md5(time()*rand(1, 1000));
+            $csrfDeleteUserToken = md5(time()*rand(1, 1000));
+            $users = $this->_userManager->getUsers();
+            include 'views/backend/modules/users/user_mgmt.php';
+        }
     }
     /**
      * Give admin Rights to a user
@@ -409,39 +435,5 @@ class AdminController
                 AdminController::manageUsers();
             }
         }
-    }
-    /**
-     * Add a category
-     * 
-     * @param string $category             the post's category
-     * @param string $csrfAddCategoryToken the token to try to avoid csrf
-     *
-     * @return mixed
-     */
-    public function addCategory($category, $csrfAddCategoryToken)
-    {
-        $_SESSION['csrfAddCategoryToken'] = $csrfAddCategoryToken; 
-        if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken) AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)
-        ) {
-            
-            if ($_SESSION['csrfAddCategoryToken'] == $csrfAddCategoryToken) {
-                if (!empty($category)) {
-                    $this->_categoryManager->addCategoryRequest($category);
-                    if ($this->_categoryManager === false) {
-                        $_SESSION['flash']['danger'] = 'Impossible d\'ajouter cette catégorie !';
-                        AdminController::managePosts();
-                    } else {
-                        $_SESSION['flash']['success'] = 'La catégorie a bien été ajoutée !';
-                        AdminController::managePosts();
-                    }
-                } else {
-                    $_SESSION['flash']['danger'] = 'Le champ est vide !';
-                    AdminController::managePosts();
-                }
-            } else {
-                $_SESSION['flash']['danger'] = 'Erreur de vérification !';
-                AdminController::managePosts();
-            }
-        }    
-    }
+    }   
 }

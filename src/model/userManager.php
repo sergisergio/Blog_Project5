@@ -12,8 +12,8 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
-require_once "src/model/manager.php";
 
+require_once "src/model/manager.php";
 use \Philippe\Blog\Src\Entities\UserEntity;
 /**
  * Class UserManager
@@ -333,7 +333,7 @@ class UserManager extends Manager
         return $adminRights;
     }
     /**
-     * FunctionstopAdminRightsRequest
+     * Function stopAdminRightsRequest
      * 
      * @param int $userId userId
      * 
@@ -349,18 +349,40 @@ class UserManager extends Manager
         return $adminRights;
     }
     /**
+     * Function add Remember Token
+     * 
+     * @param int $userId userId
+     * 
+     * @return int
+     */
+    public function rememberToken($pseudo) 
+    {
+        $dbProjet5 = $this->dbConnect();
+        function str_random($length)
+        {
+            $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+            return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
+        }
+        $token = str_random(100);
+        $remember = $dbProjet5->prepare('UPDATE Users SET remember_token = :token WHERE pseudo = :pseudo');
+        $remember->bindParam(':token', $token);
+        $remember->bindParam(':pseudo', $pseudo);
+        $rememberOK = $remember->execute();
+        return $rememberOK;
+    }
+    /**
      * Function userCookie
      * 
      * @param string $cookiepseudo cookiepseudo
      * 
      * @return string
      */
-    public function userCookie($cookiepseudo) 
+    public function userCookie($user_id) 
     {
         $dbProjet5 = $this->dbConnect();
 
-        $req = $dbProjet5->prepare('SELECT * FROM users WHERE pseudo = :pseudo AND password = :password');
-        $req->bindParam(':pseudo', $cookiepseudo);
+        $req = $dbProjet5->prepare('SELECT * FROM users WHERE id = :id');
+        $req->bindParam(':id', $user_id);
         $req->execute();
         $user = $req->fetch();
         return $user;

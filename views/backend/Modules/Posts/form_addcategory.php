@@ -1,8 +1,5 @@
 <div class="form-container">
     <div class="response alert"></div>
-        <?php      
-            $csrfAddCategoryToken = md5(time()*rand(1, 1000));
-        ?>
 <form action="index.php?action=addcategory" method="post">
     <div class="row">
     <div class="col-md-offset-3 col-md-6 col-sm-12">

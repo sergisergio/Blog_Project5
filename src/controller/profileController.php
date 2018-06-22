@@ -73,6 +73,12 @@ class ProfileController
     {
         $_SESSION['csrfProfileToken'] = $csrfProfileToken;
         if (!empty($_POST['email'])) {
+            $usermail = $this->_userManager->existMail($email);
+            if ($usermail && $email !== $_SESSION['email'])
+            {
+                $_SESSION['flash']['danger'] = 'Cette adresse email est déjà utilisée !';
+                ProfileController::profilePage($_SESSION['id']);
+            }
             if (isset($_SESSION['csrfProfileToken']) AND isset($csrfProfileToken) AND !empty($_SESSION['csrfProfileToken']) AND !empty($csrfProfileToken)) {
                 if ($_SESSION['csrfProfileToken'] == $csrfProfileToken) {
                     if (isset($_FILES['avatar']) AND $_FILES['avatar']['error'] == 0) {
@@ -81,8 +87,7 @@ class ProfileController
                             $extension_upload = $infosfichier['extension']; 
                             $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
                             if (in_array($extension_upload, $extensions_autorisees)) {
-                                move_uploaded_file($_FILES['avatar']['tmp_name'], 'public/images/avatar/' . basename($_FILES['avatar']['name'])); 
-                                echo "L'envoi a bien été effectué !";
+                                move_uploaded_file($_FILES['avatar']['tmp_name'], 'public/images/avatar/' . basename($_FILES['avatar']['name']));
                             }
                         }
                     }
@@ -91,10 +96,10 @@ class ProfileController
                         $_SESSION['flash']['danger'] = 'Impossible de modifier le profil !';
                         ProfileController::profilePage($_SESSION['id']);
                     } else {
-                        $_SESSION['flash']['success'] = 'Modification effectuée !';
-                        ProfileController::profilePage($_SESSION['id']);
                         unset($_SESSION['avatar']);
                         $_SESSION['avatar'] = $avatar;
+                        $_SESSION['flash']['success'] = 'Modification effectuée !';
+                        ProfileController::profilePage($_SESSION['id']);
                     }
                 } else {
                     $_SESSION['flash']['danger'] = 'Erreur de vérification !';

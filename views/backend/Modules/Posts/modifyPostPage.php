@@ -1,9 +1,3 @@
-<?php 
-if(!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
-    header('Location: index.php?action=noAdmin');
-    exit();
-}
-?>
 <?php $title = 'Modification des articles'; ?>
 <?php ob_start(); ?>
 <body class="full-layout">

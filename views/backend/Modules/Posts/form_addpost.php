@@ -1,9 +1,6 @@
 <div class="form-container">
     <div class="response alert"></div>
-        <?php require 'views/frontend/modules/responseAlert/responseAlert.php'; ?> 
-        <?php      
-            $csrfAddPostToken = md5(time()*rand(1, 1000));       
-        ?>
+        <?php include 'views/frontend/modules/responseAlert/responseAlert.php'; ?>
 <form action="index.php?action=addpost" method="post" enctype="multipart/form-data">
     <div>
         <label for="title">Titre</label><br />

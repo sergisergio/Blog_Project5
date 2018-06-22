@@ -12,7 +12,9 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
+
 require_once "src/model/manager.php";
+
 class SecurityManager extends Manager
 {
     /**
