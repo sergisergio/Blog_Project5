@@ -4,11 +4,13 @@
  *
  * Search Controller
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Controller;
@@ -16,7 +18,15 @@ namespace Philippe\Blog\Src\Controller;
 use \Philippe\Blog\Src\Entities\PostEntity;
 use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
-
+/**
+ *  Class SearchController
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class SearchController
 {
     private $_postManager;

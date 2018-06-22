@@ -4,11 +4,13 @@
  *
  * Post Controller
  *
+ * PHP Version 7
+ *
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Controller;
@@ -23,7 +25,15 @@ use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Controller\ErrorsController;
 use \Philippe\Blog\Src\Core\Session;
-
+/**
+ *  Class PostController
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class PostController
 {
     private $_postmanager;

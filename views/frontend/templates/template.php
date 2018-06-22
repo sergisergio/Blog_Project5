@@ -31,7 +31,7 @@
     </head>
     <body class="full-layout">
         <div class="body-wrapper">
-            <?php require "views/frontend/modules/nav/nav.php"; ?>
+            <?php include "views/frontend/modules/nav/nav.php"; ?>
                         
             <?php echo $content ?>
 

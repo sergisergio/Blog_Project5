@@ -4,20 +4,31 @@
  *
  * Category manager
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
 
 require_once "src/model/manager.php";
 use \Philippe\Blog\Src\Entities\CategoryEntity;
-
+/**
+ *  Class CategoryManager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class CategoryManager extends Manager
 {
+    private $category;
     /**
      * Add a category
      * 
@@ -69,7 +80,7 @@ class CategoryManager extends Manager
     /**
      * Function existCategory
      * 
-     * @param string $email email
+     * @param string $category category
      * 
      * @return string
      */

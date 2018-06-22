@@ -2,13 +2,15 @@
 /**
  * My own blog.
  *
+ * PHP Version 7
+ * 
  * Register Controller
  *
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 
@@ -20,7 +22,15 @@ use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Model\SecurityManager;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
+/**
+ *  Class RegisterController
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class RegisterController
 {
     private $_userManager;
@@ -68,7 +78,7 @@ class RegisterController
                 $_SESSION['flash']['danger'] = 'Cet email est déjà utilisé !';
                 RegisterController::signupPage();
             } elseif (empty($pseudo) || !preg_match('/^[a-zA-Z0-9_@#&é§è!çà^¨$*`£ù%=+:\;.,?°<>]+$/', $pseudo)) {
-                $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide (caractères alphanumériques et underscore permis... !';
+                $_SESSION['flash']['danger'] = 'Votre pseudo n\'est pas valide';
                 RegisterController::signupPage();
             } elseif (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['flash']['danger'] = 'Votre email n\'est pas valide !';
@@ -86,7 +96,7 @@ class RegisterController
                         if ($users === false) {
                             $_SESSION['flash']['danger'] = 'Inscription impossible !';
                             RegisterController::signupPage();
-                        } else {   
+                        } else {
                             //$user_id = $users->getId();
                             //$token = $users->getConfirmationToken();
                             //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
@@ -140,21 +150,6 @@ class RegisterController
                 $this->_userManager->setActiveRequest($userId);
                 $_SESSION['flash']['success'] = 'Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !';
                 $this->_logController->loginPage();
-                /*$mail = new PHPMailer(true);                             
-                    try {
-                        $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
-                        $mail->addAddress($user['email'], $user['pseudo']);
-                        $mail->addReplyTo('contact@philippetraon.com', 'Information');
-                        $mail->isHTML(true);                                  
-                        $mail->Subject = 'Bienvenue !';
-                        $mail->Body = '<b>Votre inscription a bien été prise en compte ! Bienvenue sur le blog !  </b>' . '<a href="http://projet5.philippetraon.com">http://projet5.philippetraon.com</a>';
-                        //$mail->AltBody = 'Message non-HTML : '.$message;
-                        $mail->send();
-                        // echo 'Le message a bien été envoyé';
-                    } 
-                    catch (Exception $e) {
-                    echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
-                    }*/
             } else {
                 $_SESSION['flash']['danger'] = 'Ce token n est plus valide ! Veuillez réessayer ! !';
                 RegisterController::signupPage();

@@ -4,22 +4,39 @@
  *
  * User manager
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
 
 require_once "src/model/manager.php";
 use \Philippe\Blog\Src\Entities\UserEntity;
+use \Philippe\Blog\Src\Model\SecurityManager;
 /**
- * Class UserManager
+ *  Class UserManager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
  */
 class UserManager extends Manager
 {
+    private $_securityManager;
+    /**
+     * Function construct
+     */
+    public function __construct() 
+    {
+        $this->_securityManager = new SecurityManager();
+    }
     /**
      * Function getUsers
      * 
@@ -75,13 +92,7 @@ class UserManager extends Manager
         $dbProjet5 = $this->dbConnect();
         $addUser = $dbProjet5->prepare('INSERT INTO Users(pseudo, email, password, confirmation_token) VALUES(:pseudo, :email, :password, :confirmationtoken)');
         $passe = password_hash($passe, PASSWORD_BCRYPT);
-        function str_random($length)
-        {
-            $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-            return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
-        }
-        $token = str_random(100);
-
+        $token = $this->_securityManager->str_random(100);
         $addUser->bindParam(':pseudo', $pseudo);
         $addUser->bindParam(':email', $email);
         $addUser->bindParam(':password', $passe);
@@ -183,7 +194,6 @@ class UserManager extends Manager
     public function modifyProfileRequest($userId, $avatar, $first_name, $name, $email, $description) 
     {
         $dbProjet5 = $this->dbConnect();
-
         $modifyProfile = $dbProjet5->prepare('UPDATE Users SET avatar = :avatar, first_name = :firstname, last_name = :lastname, email = :email, description = :description WHERE id = :id');
         $modifyProfile->bindParam(':avatar', $avatar);
         $modifyProfile->bindParam(':firstname', $first_name);
@@ -220,20 +230,12 @@ class UserManager extends Manager
     public function forgetPasswordRequest($email) 
     {
         $dbProjet5 = $this->dbConnect();
-        
         $forgetPassword = $dbProjet5->prepare('SELECT * FROM Users where email = :email AND registration_date IS NOT NULL');
         $forgetPassword->bindParam(':email', $email);
         $forgetPassword->execute();
         $user = $forgetPassword->fetch();
         if ($user) {
-
-            function str_random($length)
-            {
-                $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-                return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
-            }
-
-            $reset_token = str_random(100);
+            $reset_token = $this->_securityManager->str_random(100);
             $user_id = $user['id'];
             $forgetUpdate = $dbProjet5->prepare('UPDATE Users SET reset_token = :token, reset_at = NOW() WHERE id = :id');
             $forgetUpdate->bindParam(':token', $reset_token);
@@ -271,7 +273,6 @@ class UserManager extends Manager
     public function changePasswordRequest($userId, $passe) 
     {
         $dbProjet5 = $this->dbConnect();
-        
         $passe = password_hash($passe, PASSWORD_BCRYPT);
         $changePassword = $dbProjet5->prepare('UPDATE Users SET password = :password, reset_token = NULL, reset_at = NULL WHERE id = :id');
         $changePassword->bindParam(':password', $passe);
@@ -291,7 +292,6 @@ class UserManager extends Manager
     {
 
         $dbProjet5 = $this->dbConnect();
-
         $checkResetToken = $dbProjet5->prepare('SELECT * FROM Users WHERE id = :id AND reset_token IS NOT NULL AND reset_token = :token AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
         $checkResetToken->bindParam(':id', $userId);
         $checkResetToken->bindParam(':token', $token);
@@ -309,10 +309,8 @@ class UserManager extends Manager
     public function deleteUserRequest($userId)
     {
         $dbProjet5 = $this->dbConnect();
-
         $deleteUser = $dbProjet5->prepare('DELETE FROM Users WHERE id = :id');
         $deleteUser->bindParam(':id', $userId);
-
         $affectedUser = $deleteUser->execute();
         return $affectedUser;
     }
@@ -326,7 +324,6 @@ class UserManager extends Manager
     public function giveAdminRightsRequest($userId) 
     {
         $dbProjet5 = $this->dbConnect();
-
         $giveAdminRights = $dbProjet5->prepare('UPDATE Users SET authorization = 1 WHERE id = :id');
         $giveAdminRights->bindParam(':id', $userId);
         $adminRights = $giveAdminRights->execute();
@@ -342,7 +339,6 @@ class UserManager extends Manager
     public function stopAdminRightsRequest($userId) 
     {
         $dbProjet5 = $this->dbConnect();
-
         $stopAdminRights = $dbProjet5->prepare('UPDATE Users SET authorization = 0 WHERE id = :id');
         $stopAdminRights->bindParam(':id', $userId);
         $adminRights = $stopAdminRights->execute();
@@ -351,19 +347,14 @@ class UserManager extends Manager
     /**
      * Function add Remember Token
      * 
-     * @param int $userId userId
+     * @param string $pseudo pseudo
      * 
      * @return int
      */
     public function rememberToken($pseudo) 
     {
         $dbProjet5 = $this->dbConnect();
-        function str_random($length)
-        {
-            $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-            return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
-        }
-        $token = str_random(100);
+        $token = $this->_securityManager->str_random(100);
         $remember = $dbProjet5->prepare('UPDATE Users SET remember_token = :token WHERE pseudo = :pseudo');
         $remember->bindParam(':token', $token);
         $remember->bindParam(':pseudo', $pseudo);
@@ -373,14 +364,13 @@ class UserManager extends Manager
     /**
      * Function userCookie
      * 
-     * @param string $cookiepseudo cookiepseudo
+     * @param int $user_id user_id
      * 
-     * @return string
+     * @return int
      */
     public function userCookie($user_id) 
     {
         $dbProjet5 = $this->dbConnect();
-
         $req = $dbProjet5->prepare('SELECT * FROM users WHERE id = :id');
         $req->bindParam(':id', $user_id);
         $req->execute();

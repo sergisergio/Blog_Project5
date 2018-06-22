@@ -4,18 +4,28 @@
  *
  * Post manager
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
 
 require_once "src/model/manager.php";
 use \Philippe\Blog\Src\Entities\PostEntity;
-
+/**
+ *  Class PostManager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class PostManager extends Manager
 {
     /**

@@ -2,20 +2,28 @@
 /**
  * My own blog.
  *
+ * PHP Version 7
+ * 
  * Main manager
  *
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
 
 use \PDO;
 /**
- * Class Manager is for our database
+ *  Class Manager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
  */
 class Manager
 {

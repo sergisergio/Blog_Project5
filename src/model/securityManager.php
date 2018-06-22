@@ -4,17 +4,27 @@
  *
  * Security manager
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
 
 require_once "src/model/manager.php";
-
+/**
+ *  Class SecurityManager
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class SecurityManager extends Manager
 {
     /**
@@ -47,4 +57,16 @@ class SecurityManager extends Manager
         $req->bindParam(':ip', $ip);
         $req->execute();
     }
+    /**
+     * Function str_random
+     * 
+     * @param int $length length
+     * 
+     * @return int
+     */
+    public function str_random($length)
+        {
+            $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+            return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length); 
+        }
 }

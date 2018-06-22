@@ -4,11 +4,13 @@
  *
  * Router
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 use Philippe\Blog\Src\Controller\DefaultController;
@@ -29,7 +31,6 @@ use Philippe\Blog\Src\Controller\AdminController;
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
  * @link     http://projet5.philippetraon.com
  */
 class Router
@@ -87,7 +88,7 @@ class Router
                 } elseif ($_GET['action'] == 'loginPage') {
                     $this->_logController->loginPage();
                 } elseif ($_GET['action'] == 'login') {
-                    $this->_logController->login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR'], $_POST['token'], $_POST['remember']);
+                    $this->_logController->login($_POST['pseudo'], $_POST['passe'], $_SERVER['REMOTE_ADDR'], $_POST['token']);
                 } elseif ($_GET['action'] == 'logout') {
                     $this->_logController->logout();
                 } elseif ($_GET['action'] == 'forgetPasswordPage') {

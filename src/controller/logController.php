@@ -4,11 +4,13 @@
  *
  * Log Controller
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 
@@ -20,7 +22,15 @@ use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Core\Cookie;
 use \Philippe\Blog\Src\Model\SecurityManager;
-
+/**
+ *  Class LogController
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class LogController
 {
     private $_postManager;
@@ -47,8 +57,7 @@ class LogController
     public function loginPage()
     {
         $csrfLoginToken = md5(time()*rand(1, 1000));
-        if (isset($_COOKIE['pseudo']) && !isset($_SESSION['pseudo']))
-        {
+        if (isset($_COOKIE['pseudo']) && !isset($_SESSION['pseudo'])) {
             $remember_token = $_COOKIE['remember'];
             $parts = explode('==', $remember_token);
             $user_id = $parts[0];
@@ -65,35 +74,30 @@ class LogController
      * @param string $passe          password
      * @param string $ip             IP address
      * @param string $csrfLoginToken token to avoid csrf
-     * @param string $remember       remember session to reconnect
      * 
      * @return mixed
      */
-    public function login($pseudo,$passe, $ip, $csrfLoginToken, $remember)
+    public function login($pseudo,$passe, $ip, $csrfLoginToken)
     {
         $_SESSION['csrfLoginToken'] = $csrfLoginToken;  
-        if (isset($_SESSION['csrfLoginToken']) AND isset($csrfLoginToken) AND !empty($_SESSION['csrfLoginToken']) AND !empty($csrfLoginToken)) 
-        {
-            if ($_SESSION['csrfLoginToken'] == $csrfLoginToken) 
-            {
-                if (!empty($pseudo) && !empty($passe)) 
-                {
+        if (isset($_SESSION['csrfLoginToken']) AND isset($csrfLoginToken) AND !empty($_SESSION['csrfLoginToken']) AND !empty($csrfLoginToken)) {
+            if ($_SESSION['csrfLoginToken'] == $csrfLoginToken) {
+                if (!empty($pseudo) && !empty($passe)) {
                     $user = $this->_userManager->loginRequest($pseudo, $passe);
                     $count = $this->_securityManager->checkBruteForce($ip);
-                    if ($count < 3) 
-                    {
-                        if (password_verify($passe, $user->getPassword())) 
-                        {
-                            if ($user->getIs_active() == 1) 
-                            {
-                                if ($remember) 
-                                {
+                    if ($count < 3) {
+                        if (password_verify($passe, $user->getPassword())) {
+                            if ($user->getIs_active() == 1) {
+                                if (isset($_POST['remember'])) {
                                     //setcookie('pseudo', $pseudo, time() + 60 * 60 * 24 * 7);
                                     //$this->_userManager->userCookie($_COOKIE['pseudo']);
                                     $this->_userManager->rememberToken($pseudo);
                                     setcookie('remember', $pseudo . '==' . $remember_token . sha1($pseudo . 'philippe'), time() + 60 * 60 * 24 * 7);
                                     $this->_session->launchSession($user);
+                                } else {
+                                    $this->_session->launchSession($user);
                                 }
+                                
                             } else {
                                 $_SESSION['flash']['success'] = 'Vous devez activer votre compte via le lien de confirmation dans le mail envoyé !';
                                 LogController::loginPage();

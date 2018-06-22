@@ -4,11 +4,13 @@
  *
  * Profile Controller
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Controller;
@@ -19,7 +21,15 @@ use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Core\Session;
-
+/**
+ *  Class ProfileController
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class ProfileController
 {
     private $_postmanager;
@@ -74,8 +84,7 @@ class ProfileController
         $_SESSION['csrfProfileToken'] = $csrfProfileToken;
         if (!empty($_POST['email'])) {
             $usermail = $this->_userManager->existMail($email);
-            if ($usermail && $email !== $_SESSION['email'])
-            {
+            if ($usermail && $email !== $_SESSION['email']) {
                 $_SESSION['flash']['danger'] = 'Cette adresse email est déjà utilisée !';
                 ProfileController::profilePage($_SESSION['id']);
             }

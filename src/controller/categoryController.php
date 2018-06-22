@@ -4,11 +4,13 @@
  *
  * Category Controller
  *
+ * PHP Version 7
+ * 
  * @category PHP
  * @package  Default
  * @author   Philippe Traon <ptraon@gmail.com>
  * @license  http://projet5.philippetraon.com Phil Licence
- * @version  PHP 7.1.14
+ * @version  GIT: $Id$ In development.
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Controller;
@@ -18,7 +20,15 @@ use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Entities\CategoryEntity;
 use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Controller\AdminController;
-
+/**
+ *  Class CategoryController
+ *
+ * @category PHP
+ * @package  Default
+ * @author   Philippe Traon <ptraon@gmail.com>
+ * @license  http://projet5.philippetraon.com Phil Licence
+ * @link     http://projet5.philippetraon.com
+ */
 class CategoryController
 {
     private $_postManager;
@@ -44,14 +54,12 @@ class CategoryController
     public function addCategory($category, $csrfAddCategoryToken)
     {
         $_SESSION['csrfAddCategoryToken'] = $csrfAddCategoryToken;
-        if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken) AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)) 
-        {
+        if (isset($_SESSION['csrfAddCategoryToken']) AND isset($csrfAddCategoryToken) AND !empty($_SESSION['csrfAddCategoryToken']) AND !empty($csrfAddCategoryToken)) {
             $userCategory = $this->_categoryManager->existCategory($category);
             if ($userCategory) {
                 $_SESSION['flash']['danger'] = 'Cette catégorie a déjà été ajoutée !';
                 $this->_adminController->managePosts();
-            }
-            elseif ($_SESSION['csrfAddCategoryToken'] == $csrfAddCategoryToken) {
+            } elseif ($_SESSION['csrfAddCategoryToken'] == $csrfAddCategoryToken) {
                 if (!empty($category)) {
                     $this->_categoryManager->addCategoryRequest($category);
                     if ($this->_categoryManager === false) {
