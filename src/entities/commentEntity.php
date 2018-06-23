@@ -23,10 +23,8 @@ namespace Philippe\Blog\Src\Entities;
  * @license  http://projet5.philippetraon.com Phil Licence
  * @link     http://projet5.philippetraon.com
  */
-class CommentEntity
+class CommentEntity extends Entity
 {
-    use Constructor, Hydrator;
-
     private $id;
     private $post_id;
     private $author;

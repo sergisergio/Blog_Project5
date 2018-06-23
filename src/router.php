@@ -24,6 +24,9 @@ use Philippe\Blog\Src\Controller\ProfileController;
 use Philippe\Blog\Src\Controller\ErrorsController;
 use Philippe\Blog\Src\Controller\CategoryController;
 use Philippe\Blog\Src\Controller\AdminController;
+use Philippe\Blog\Src\Controller\AdminPostController;
+use Philippe\Blog\Src\Controller\AdminCommentController;
+use Philippe\Blog\Src\Controller\AdminUserController;
 /**
  *  Class Router
  *
@@ -37,6 +40,9 @@ class Router
 {
     private $_defaultController;
     private $_adminController;
+    private $_adminPostController;
+    private $_adminCommentController;
+    private $_adminUserController;
     private $_postController;
     private $_commentController;
     private $_logController;
@@ -63,6 +69,9 @@ class Router
         $this->_errorsController = new ErrorsController();
         $this->_categoryController = new CategoryController();
         $this->_adminController = new AdminController();
+        $this->_adminPostController = new AdminPostController();
+        $this->_adminCommentController = new AdminCommentController();
+        $this->_adminUserController = new AdminUserController();
     }
     /**
      * Function run
@@ -124,29 +133,29 @@ class Router
                 } elseif ($_GET['action'] == 'admin') {
                     $this->_adminController->admin($_GET['token']);
                 } elseif ($_GET['action'] == 'manage_posts') {
-                    $this->_adminController->managePosts();
+                    $this->_adminPostController->managePosts();
                 } elseif ($_GET['action'] == 'manage_comments') {
-                    $this->_adminController->manageComments();
+                    $this->_adminCommentController->manageComments();
                 } elseif ($_GET['action'] == 'addpost') {
-                    $this->_adminController->addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name'], $_POST['category'], $_POST['token']);
+                    $this->_adminPostController->addPost($_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_FILES['file_extension']['name'], $_POST['category'], $_POST['token']);
                 } elseif ($_GET['action'] == 'modifyPostPage') {
-                    $this->_adminController->modifyPostPage($_GET['id']);
+                    $this->_adminPostController->modifyPostPage($_GET['id']);
                 } elseif ($_GET['action'] == 'modifyPost') {
-                    $this->_adminController->modifyPost($_GET['id'], $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_POST['token']);
+                    $this->_adminPostController->modifyPost($_GET['id'], $_POST['title'], $_POST['chapo'], $_SESSION['id'], $_POST['content'], $_POST['token']);
                 } elseif ($_GET['action'] == 'deletePost') {
-                    $this->_adminController->deletePost($_GET['id'], $_GET['token']);
+                    $this->_adminPostController->deletePost($_GET['id'], $_GET['token']);
                 } elseif ($_GET['action'] == 'validateComment') {
-                    $this->_adminController->validateComment($_GET['id'], $_GET['token']);
+                    $this->_adminCommentController->validateComment($_GET['id'], $_GET['token']);
                 } elseif ($_GET['action'] == 'adminDeleteComment') {
-                    $this->_adminController->adminDeleteComment($_GET['id'], $_GET['token']);
+                    $this->_adminCommentController->adminDeleteComment($_GET['id'], $_GET['token']);
                 } elseif ($_GET['action'] == 'manage_users') {
-                    $this->_adminController->manageUsers();
+                    $this->_adminUserController->manageUsers();
                 } elseif ($_GET['action'] == 'giveAdminRights') {
                     $this->_adminController->giveAdminRights($_GET['id'], $_GET['token']);
                 } elseif ($_GET['action'] == 'cancelAdminRights') {
-                    $this->_adminController->stopAdminRights($_GET['id'], $_GET['token']);
+                    $this->_adminUserController->stopAdminRights($_GET['id'], $_GET['token']);
                 } elseif ($_GET['action'] == 'deleteUser') {
-                    $this->_adminController->deleteUser($_GET['id'], $_GET['token']);
+                    $this->_adminUserController->deleteUser($_GET['id'], $_GET['token']);
                 } elseif ($_GET['action'] == 'addcategory') {
                     $this->_categoryController->addCategory($_POST['category'], $_POST['token']);
                 }

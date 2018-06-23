@@ -14,13 +14,13 @@
                             <h2><?php echo htmlspecialchars($post->getTitle()) ?></h2>
                             <h3 class="post-title"><?php echo htmlspecialchars($post->getChapo()); ?></h3>
                             <h4 class="post-title">Auteur : <?php echo ($post->getAuthor()); ?></h4>
-                            <div class="meta"> <span class="date">date de dernière publication</span>le 
+                            <div class="meta">
                                 <?php
                                 if (($post->getLast_updated() != null)) {
-                                    echo ($post->getLast_updated());
+                                    echo 'mis à jour le '.$post->getLast_updated();
                                 }
                                 else {
-                                    echo ($post->getCreation_date());
+                                    echo 'publié le '.$post->getCreation_date();
                                 }
                                 ?> 
                             </div>
@@ -31,7 +31,8 @@
                             <?php else: ?>
                             <img src="public/images/posts/default.jpg" class="img-responsive"  alt="imagepost"/>
                             <?php endif; ?>
-                                <?php echo nl2br(htmlspecialchars_decode($post->getContent())) ?>
+                            <div class="divide40"></div>
+                            <?php echo nl2br(htmlspecialchars_decode($post->getContent())) ?>
                         </div>
                         <div class="divide20"></div>
                     </div>

@@ -23,10 +23,8 @@ namespace Philippe\Blog\Src\Entities;
  * @license  http://projet5.philippetraon.com Phil Licence
  * @link     http://projet5.philippetraon.com
  */
-class CategoryEntity
+class CategoryEntity extends Entity
 {
-    use Constructor, Hydrator;
-
     private $category_id;
     private $category;
 

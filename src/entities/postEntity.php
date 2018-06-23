@@ -23,10 +23,8 @@ namespace Philippe\Blog\Src\Entities;
  * @license  http://projet5.philippetraon.com Phil Licence
  * @link     http://projet5.philippetraon.com
  */
-class PostEntity
+class PostEntity extends Entity
 {
-    use Constructor, Hydrator;
-
     private $id;
     private $title;
     private $chapo;
