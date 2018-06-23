@@ -16,12 +16,10 @@
 
 namespace Philippe\Blog\Src\Controller;
 
-use \Philippe\Blog\Src\Entities\UserEntity;
 use \Philippe\Blog\Src\Model\UserManager;
-use \Philippe\Blog\Src\Model\PostManager;
+use \Philippe\Blog\Src\Model\SecurityManager;
 use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Core\Cookie;
-use \Philippe\Blog\Src\Model\SecurityManager;
 /**
  *  Class LogController
  *
@@ -33,7 +31,7 @@ use \Philippe\Blog\Src\Model\SecurityManager;
  */
 class LogController
 {
-    private $_postManager;
+    private $_userManager;
     private $_securityManager;
     private $_session;
     private $_cookie;
@@ -43,7 +41,6 @@ class LogController
      */
     public function __construct() 
     {
-        $this->_postManager = new PostManager();
         $this->_userManager = new UserManager();
         $this->_securityManager = new SecurityManager();
         $this->_session = new Session();
@@ -62,8 +59,6 @@ class LogController
             $parts = explode('==', $remember_token);
             $user_id = $parts[0];
             $this->_userManager->userCookie($user_id);
-            
-
         }
         include 'views/frontend/modules/blog/login/login.php';
     }
@@ -89,8 +84,6 @@ class LogController
                         if (password_verify($passe, $user->getPassword())) {
                             if ($user->getIs_active() == 1) {
                                 if (isset($_POST['remember'])) {
-                                    //setcookie('pseudo', $pseudo, time() + 60 * 60 * 24 * 7);
-                                    //$this->_userManager->userCookie($_COOKIE['pseudo']);
                                     $this->_userManager->rememberToken($pseudo);
                                     setcookie('remember', $pseudo . '==' . $remember_token . sha1($pseudo . 'philippe'), time() + 60 * 60 * 24 * 7);
                                     $this->_session->launchSession($user);

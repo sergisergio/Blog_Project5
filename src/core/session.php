@@ -56,8 +56,7 @@ class Session
     public function stopSession()
     {
         session_start();
-        setcookie('pseudo', null, -1);
-        setcookie('password', null, -1);
+        setcookie('remember', null, -1);
         unset($_SESSION);
         session_destroy();
         header('Location: index.php?action=blog');

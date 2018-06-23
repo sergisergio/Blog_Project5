@@ -18,6 +18,7 @@
                             <p>Aucun résultat n'a été trouvé.</p>
                             <?php endif; ?>
 
+                            <?php if($searchResults >= 0) : ?>
                             <?php
                             foreach ($searchResults as $sr)
                             {
@@ -30,6 +31,9 @@
                             <?php  
                             } 
                             ?>
+                            <?php else: ?>
+                                <p>Le champ est vide !</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

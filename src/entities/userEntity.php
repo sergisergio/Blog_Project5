@@ -15,6 +15,7 @@
  */
 
 namespace Philippe\Blog\Src\Entities;
+require_once "src/entities/entity.php";
 /**
  *  Class UserEntity
  *
@@ -35,6 +36,7 @@ class UserEntity extends Entity
     private $registration_date;
     private $authorization;
     private $confirmation_token;
+    private $remember_token;
     private $avatar;
     private $is_active;
     private $description;
@@ -156,6 +158,19 @@ class UserEntity extends Entity
     {
         if (is_string($confirmation_token)) {
             $this->confirmation_token = $confirmation_token;
+        }
+    }
+    /**
+     * Setter RememberToken
+     * 
+     * @param string $remember_token confirmation_token
+     *
+     * @return string
+     */
+    public function setRemember_token($remember_token)
+    {
+        if (is_string($remember_token)) {
+            $this->remember_token = $remember_token;
         }
     }
     /**
@@ -302,6 +317,15 @@ class UserEntity extends Entity
     public function getConfirmation_token()
     {
         return $this->confirmation_token;
+    }
+    /**
+     * Getter RememberToken
+     * 
+     * @return string
+     */
+    public function getRemember_token()
+    {
+        return $this->remember_token;
     }
     /**
      * Getter Avatar

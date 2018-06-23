@@ -16,14 +16,10 @@
 
 namespace Philippe\Blog\Src\Controller;
 
-use \Philippe\Blog\Src\Entities\PostEntity;
-use \Philippe\Blog\Src\Entities\CommentEntity;
-use \Philippe\Blog\Src\Entities\UserEntity;
-use \Philippe\Blog\Src\Model\UserManager;
-use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CommentManager;
+use \Philippe\Blog\Src\Controller\ErrorsController;
+use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
-use \Philippe\Blog\Src\Core\Session;
 /**
  *  Class CommentController
  *
@@ -35,23 +31,20 @@ use \Philippe\Blog\Src\Core\Session;
  */
 class CommentController
 {
+    private $_commentManager;
     private $_errorsController;
     private $_postManager;
     private $_categoryManager;
-    private $_commentManager;
-    private $_userManager;
 
     /**
      * Function construct
      */
     public function __construct() 
     {
-        
+        $this->_commentManager = new CommentManager();
         $this->_errorsController = new ErrorsController();
         $this->_postManager = new PostManager();
         $this->_categoryManager = new CategoryManager();
-        $this->_commentManager = new CommentManager();
-        $this->_userManager = new UserManager();
     }
     /**
      * Function addComment

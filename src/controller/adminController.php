@@ -15,13 +15,7 @@
  */
 namespace Philippe\Blog\Src\Controller;
 
-use \Philippe\Blog\Src\Model\UserManager;
-use \Philippe\Blog\Src\Model\PostManager;
-use \Philippe\Blog\Src\Model\CategoryManager;
-use \Philippe\Blog\Src\Model\CommentManager;
-use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Controller\ErrorsController;
-use \Exception;
 /**
  *  Class AdminController
  *
@@ -34,10 +28,6 @@ use \Exception;
 class AdminController
 {
     private $_errorsController;
-    private $_postManager;
-    private $_categoryManager;
-    private $_commentManager;
-    private $_userManager;
 
     /**
      * Function construct
@@ -45,10 +35,6 @@ class AdminController
     public function __construct() 
     {
         $this->_errorsController = new ErrorsController();
-        $this->_postManager = new PostManager();
-        $this->_categoryManager = new CategoryManager();
-        $this->_commentManager = new CommentManager();
-        $this->_userManager = new UserManager();
     }
     /**
      * Enter the admin part (security with a token and also authorization in database).

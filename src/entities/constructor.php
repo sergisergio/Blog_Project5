@@ -23,13 +23,12 @@ namespace Philippe\Blog\Src\Entities;
  */   
 trait Constructor
 {
-   
     /**
      * Data
      * 
-     * @var array $data array of datas
+     *  array $data array of datas
      */
-    private $data;
+    protected $data;
     /**
      * Construct
      * 

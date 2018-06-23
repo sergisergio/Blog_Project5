@@ -24,6 +24,12 @@ namespace Philippe\Blog\Src\Entities;
 trait Hydrator
 {
     /**
+     * Data
+     * 
+     *  array $data array of datas
+     */
+    protected $data;
+    /**
      * Hydrate
      * 
      * @param array $data datas

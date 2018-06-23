@@ -16,12 +16,9 @@
 
 namespace Philippe\Blog\Src\Controller;
 
-use \Philippe\Blog\Src\Entities\UserEntity;
 use \Philippe\Blog\Src\Model\UserManager;
 use \Philippe\Blog\Src\Core\Session;
-use \Philippe\Blog\Src\Model\SecurityManager;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use \Philippe\Blog\Src\Controller\LogController;
 /**
  *  Class RegisterController
  *
@@ -146,7 +143,7 @@ class RegisterController
     {
         $user = $this->_userManager->getUser($userId);
         if (isset($_GET['id']) && isset($_GET['token'])) {
-            if ($user &&  $user->getConfirmationToken() == $userToken) {
+            if ($user &&  $user->getConfirmation_token() == $userToken) {
                 $this->_userManager->setActiveRequest($userId);
                 $_SESSION['flash']['success'] = 'Votre inscription a bien été prise en compte ! Vous pouvez vous connecter !';
                 $this->_logController->loginPage();

@@ -15,9 +15,8 @@
  */
 namespace Philippe\Blog\Src\Controller;
 
-use \Philippe\Blog\Src\Model\CommentManager;
-use \Philippe\Blog\Src\Model\UserManager;
 use \Philippe\Blog\Src\Controller\ErrorsController;
+use \Philippe\Blog\Src\Model\UserManager;
 /**
  *  Class AdminUserController
  *
@@ -31,14 +30,12 @@ class AdminUserController
 {
     private $_errorsController;
     private $_userManager;
-	private $_postManager;
     /**
      * Function construct
      */
     public function __construct() 
     {
         $this->_errorsController = new ErrorsController();
-        $this->_commentManager = new CommentManager();
         $this->_userManager = new UserManager();
     }
 	
@@ -47,7 +44,7 @@ class AdminUserController
      * 
      * @return mixed
      */
-    public function manageUsers()
+    public static function manageUsers()
     {
         if (!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
             $this->_errorsController->noAdmin();

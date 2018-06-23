@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="body-wrapper">
-            <?php include "views/frontend/Modules/Nav/nav.php"; ?>
+            <?php include "views/frontend/modules/nav/nav.php"; ?>
             <section id="home" class="naked">
                 <div class="fullscreenbanner-container revolution">
                     <div class="fullscreenbanner">

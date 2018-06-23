@@ -25,7 +25,7 @@ use \PDO;
  * @license  http://projet5.philippetraon.com Phil Licence
  * @link     http://projet5.philippetraon.com
  */
-class Manager
+abstract class Manager
 {
     protected $dbProjet5;
     /**

@@ -77,7 +77,18 @@
     border: 1px solid #111;
 }
 input {
-    background-color: rgba(30,30,31,0.85);
+    background-color: rgba(30,30,31,0.85) !important;
+}
+@-webkit-keyframes autofill {
+    to {
+        color: white;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
 }
 .logoutbtn {
     float: right;
@@ -186,7 +197,7 @@ iframe {
     border: none
 }
 ::selection {
-    background: #fefac7; /* Safari */
+    background: rgba(30,30,31,0.85) !important; /* Safari */
     color: #2f2f2f;
 }
 ::-moz-selection {

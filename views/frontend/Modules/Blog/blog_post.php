@@ -53,7 +53,11 @@
                             <p>
                             <div class="row">
                                 <div class="col-md-1 col-sm-1 col-xs-2">
+                                    <?php if($c->getAvatar() !== '') : ?>
                                     <img class="img-responsive img-circle" src="public/images/avatar/<?= $c->getAvatar(); ?>" alt="imageavatar" />
+                                    <?php else: ?>
+                                    <img class="img-responsive img-circle" src="public/images/avatar/avatardefaut.png" alt="imageavatar" />
+                                    <?php endif; ?>
                                 </div>
                                 <div class="col-md-11 col-sm-11 col-xs-10">
                                     <a href="index.php?action=publicProfile&id=<?php echo $c->getAuthor() ?>"><strong><?php echo htmlspecialchars($c->getAuthor()) ?></strong></a> 

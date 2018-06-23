@@ -17,6 +17,7 @@ namespace Philippe\Blog\Src\Controller;
 
 use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
+use \Philippe\Blog\Src\Controller\ErrosController;
 /**
  *  Class AdminPostController
  *
@@ -30,6 +31,7 @@ class AdminPostController
 {
     private $_postManager;
     private $_categoryManager;
+    private $_errorsController;
     /**
      * Function construct
      */
@@ -37,6 +39,7 @@ class AdminPostController
     {
         $this->_postManager = new PostManager();
         $this->_categoryManager = new CategoryManager();
+        $this->_errorsController = new ErrorsController();
     }
 	/**
      * Show the Post management's part
@@ -95,13 +98,12 @@ class AdminPostController
                         if ($file_extension_size <= 1000000) {
                             $infosfichier = pathinfo($image);
                             $extension_upload = $infosfichier['extension'];
-                            $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
-                            if (in_array($extension_upload, $extensions_autorisees)) {
+                            $extensions_access = array('jpg', 'jpeg', 'gif', 'png');
+                            if (in_array($extension_upload, $extensions_access)) {
                                 move_uploaded_file(
                                     $file_extension_tmp,
                                     'public/images/posts/' . basename($image)
                                 );
-                                echo "L'envoi a bien été effectué !";
                             }
                         }
                     }

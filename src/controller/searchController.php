@@ -15,7 +15,6 @@
  */
 namespace Philippe\Blog\Src\Controller;
 
-use \Philippe\Blog\Src\Entities\PostEntity;
 use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
 /**
@@ -66,6 +65,13 @@ class SearchController
                     echo "Erreur de vérification";
                 }
             }
+        } elseif (empty($search)) {
+            $postsAside = $this->_postManager->getPosts(0, 5);
+            $categories = $this->_categoryManager->getCategoryRequest();
+            $countSearchResults = $this->_postManager->countSearchRequest($search);
+            $nbResults = -1;
+            $searchResults = -1;
+            include 'views/frontend/modules/blog/search/searchresults.php';
         }
     }
 }

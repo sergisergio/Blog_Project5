@@ -16,6 +16,7 @@
 namespace Philippe\Blog\Src\Controller;
 
 use \Philippe\Blog\Src\Model\CommentManager;
+use \Philippe\Blog\Src\Controller\ErrorsController;
 /**
  *  Class AdminCommentController
  *
@@ -27,14 +28,15 @@ use \Philippe\Blog\Src\Model\CommentManager;
  */
 class AdminCommentController
 {
-	private $_postManager;
-    private $_categoryManager;
+	private $_commentManager;
+    private $_errorsController;
     /**
      * Function construct
      */
     public function __construct() 
     {
         $this->_commentManager = new CommentManager();
+        $this->_errorsController = new ErrorsController();
     }
 	/**
      * Show the comment management's part

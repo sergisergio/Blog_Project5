@@ -15,12 +15,10 @@
  */
 namespace Philippe\Blog\Src\Controller;
 
-use \Philippe\Blog\Src\Entities\UserEntity;
 use \Philippe\Blog\Src\Model\UserManager;
-use \Philippe\Blog\Src\Model\PostManager;
-use \Philippe\Blog\Src\Model\CategoryManager;
-use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Core\Session;
+use \Philippe\Blog\Src\Controller\DefaultController;
+use \Philippe\Blog\Src\Model\CommentManager;
 /**
  *  Class ProfileController
  *
@@ -32,24 +30,20 @@ use \Philippe\Blog\Src\Core\Session;
  */
 class ProfileController
 {
-    private $_postmanager;
     private $_userManager;
-    private $_categoryManager;
-    private $_commentManager;
-    private $_defaultController;
     private $_session;
+    private $_defaultController;
+    private $_commentManager;
 
     /**
      * Function construct
      */
     public function __construct() 
     {
-        $this->_postManager = new PostManager();
         $this->_userManager = new UserManager();
-        $this->_categoryManager = new CategoryManager();
-        $this->_commentManager = new CommentManager();
-        $this->_defaultController = new DefaultController();
         $this->_session = new Session();
+        $this->_defaultController = new DefaultController();
+        $this->_commentManager = new CommentManager();
     }
     /**
      * Function profilePage
