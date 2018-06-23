@@ -152,7 +152,7 @@ class CommentController
                     }
                 } elseif (empty($comment) || $commentId <= 0 ) {
                     $_SESSION['flash']['danger'] = 'Cet identifiant ne correspond à aucun commentaire !';
-                    errors();
+                    $this->_errorsController->errors();
                 }
             } else {
                 $_SESSION['flash']['danger'] = 'Erreur de vérification !';

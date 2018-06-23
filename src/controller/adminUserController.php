@@ -44,7 +44,7 @@ class AdminUserController
      * 
      * @return mixed
      */
-    public static function manageUsers()
+    public function manageUsers()
     {
         if (!isset($_SESSION['pseudo']) || ($_SESSION['autorisation']) != 1 ) {
             $this->_errorsController->noAdmin();

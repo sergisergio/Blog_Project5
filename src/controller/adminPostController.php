@@ -17,7 +17,7 @@ namespace Philippe\Blog\Src\Controller;
 
 use \Philippe\Blog\Src\Model\PostManager;
 use \Philippe\Blog\Src\Model\CategoryManager;
-use \Philippe\Blog\Src\Controller\ErrosController;
+use \Philippe\Blog\Src\Controller\ErrorsController;
 /**
  *  Class AdminPostController
  *
