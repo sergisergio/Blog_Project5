@@ -17,8 +17,11 @@
 namespace Philippe\Blog\Src\Controller;
 
 use \Philippe\Blog\Src\Model\UserManager;
+use \Philippe\Blog\Src\Entities\UserEntity;
 use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Controller\LogController;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 /**
  *  Class RegisterController
  *
@@ -32,6 +35,8 @@ class RegisterController
 {
     private $_userManager;
     private $_logController;
+    private $_userEntity;
+    //private $data;
 
     /**
      * Function construct
@@ -40,6 +45,7 @@ class RegisterController
     {
         $this->_userManager = new UserManager();
         $this->_logController = new LogController();
+        //$this->_userEntity = new UserEntity($data);
     }
     /**
      * Function signupPage
@@ -94,32 +100,23 @@ class RegisterController
                             $_SESSION['flash']['danger'] = 'Inscription impossible !';
                             RegisterController::signupPage();
                         } else {
-                            //$user_id = $users->getId();
-                            //$token = $users->getConfirmationToken();
-                            //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
-                            /*$mail = new PHPMailer(true);                             
+                            $mail = new PHPMailer(true);                             
                             try {
                                 $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
                                 $mail->addAddress($email, $pseudo);
                                 $mail->addReplyTo('contact@philippetraon.com', 'Information');
                                 $mail->isHTML(true);                                  
                                 $mail->Subject = 'Message';
-                                $mail->Body = '<b>Blog de Philippe Traon : </b>' . '<br />' . 'Afin de valider votre compte, merci de cliquer sur ce lien : ' . '<br />' . 
-                                //'<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$user_id.'&token='.$token.'>'.'Lien de confirmation</a>';
-                                '<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$user_id.'&token='.$token.'">'.'Lien de confirmation</a>';
-                                //$mail->AltBody = 'Message non-HTML : '.$message;
+                                $mail->Body = '<b>Blog de Philippe Traon : </b>' . '<br />' . 'Afin de valider votre compte, merci de cliquer sur ce lien : ' . '<br />' . '<a href="http://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id='.$users->getId().'&token='.$users->getConfirmation_token().'">'.'Lien de confirmation</a>';
                                 $mail->send();
-                                // echo 'Le message a bien été envoyé';
+                                
+                                $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
+                                $this->_logController->loginPage();
                             } 
                             catch (Exception $e) {
                             echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
-                            }*/
-                            $_SESSION['flash']['success'] = 'Un mail de confirmation vous a été envoyé pour valider votre compte';
-                            $this->_logController->loginPage();
-                        }    
-                        /* test mail local */
-                        //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
-                        /* test mail online */
+                            }
+                        }
                     } else {
                         $_SESSION['flash']['danger'] = 'Erreur de vérification !';
                         $this->_logController->loginPage();

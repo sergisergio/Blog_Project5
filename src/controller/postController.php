@@ -20,9 +20,6 @@ use \Philippe\Blog\Src\Model\CategoryManager;
 use \Philippe\Blog\Src\Controller\ErrorsController;
 use \Philippe\Blog\Src\Model\CommentManager;
 use \Philippe\Blog\Src\Model\UserManager;
-
-
-
 use \Philippe\Blog\Src\Core\Session;
 /**
  *  Class PostController

@@ -100,18 +100,7 @@ class UserManager extends Manager
         $addUser->execute();
         $data = $addUser->fetch();
         $user_id = $dbProjet5->lastInsertId();
-
-        $to      = $email;
-        $subject = 'Confirmation de votre compte';
-        $message = "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token";
-        $headers = 'From: contact@philippetraon.com' . "\r\n" .
-        'Reply-To: contact@philippetraon.com' . "\r\n" .
-        'X-Mailer: PHP/' . phpversion();
-
-        mail($to, $subject, $message, $headers);
-        //mail($email, 'Confirmation de votre compte', "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://www.projet5.philippetraon.com/index.php?action=confirmRegistration&id=$user_id&token=$token");*/
-
-        $users = new UserEntity($data);
+        $users = self::getUser($user_id);
         return $users;
     }
     /**
@@ -241,22 +230,9 @@ class UserManager extends Manager
             $forgetUpdate->bindParam(':token', $reset_token);
             $forgetUpdate->bindParam(':id', $user_id);
             $forgetUpdate->execute();
-
-            /*$subject = 'Changement de votre mot de passe';
-            $body = "Afin de changer votre mot de passe, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=changePasswordPage&id=$user_id&token=$reset_token";
-            mail($email, $subject, $body);*/
-
-            $to      = $email;
-            $subject = 'Changement de votre mot de passe';
-            $message = "Afin de changer votre mot de passe, merci de cliquer sur ce lien :\n\nhttp://www.projet5.philippetraon.com/index.php?action=changePasswordPage&id=$user_id&token=$reset_token";
-            $headers = 'From: contact@philippetraon.com' . "\r\n" .
-            'Reply-To: contact@philippetraon.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-
-            mail($to, $subject, $message, $headers);
-
-            /* test mail local */
-            //mail($email, $subject, "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8888/Blog_Project5/index.php?action=confirmRegistration&id=$user_id&token=$token");
+            $data = $forgetUpdate->fetch();
+            $users = self::getUser($user_id);
+            return $users;
         } else {
             echo 'Aucun compte ne correspond à cette adresse';
         } 

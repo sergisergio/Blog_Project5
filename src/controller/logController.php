@@ -20,6 +20,8 @@ use \Philippe\Blog\Src\Model\UserManager;
 use \Philippe\Blog\Src\Model\SecurityManager;
 use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Core\Cookie;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 /**
  *  Class LogController
  *
@@ -34,7 +36,6 @@ class LogController
     private $_userManager;
     private $_securityManager;
     private $_session;
-    private $_cookie;
 
     /**
      * Function construct
@@ -44,7 +45,6 @@ class LogController
         $this->_userManager = new UserManager();
         $this->_securityManager = new SecurityManager();
         $this->_session = new Session();
-        $this->_cookie = new Cookie();
     }
     /**
      * Function loginPage
@@ -55,10 +55,22 @@ class LogController
     {
         $csrfLoginToken = md5(time()*rand(1, 1000));
         if (isset($_COOKIE['pseudo']) && !isset($_SESSION['pseudo'])) {
-            $remember_token = $_COOKIE['remember'];
-            $parts = explode('==', $remember_token);
+            $rememberOK = $_COOKIE['remember'];
+            $parts = explode('==', $rememberOK);
             $user_id = $parts[0];
             $this->_userManager->userCookie($user_id);
+            if ($user) {
+                $expected = $user_id . '==' . $rememberOK . sha1($pseudo . 'philippe');
+                if ($expected == $rememberOK) {
+                    session_start();
+                    $this->_session->launchSession($user);
+                    setcookie('remember', $rememberOK, time() + 60 * 60 * 24 * 7);
+                } else {
+                    setcookie('remember', null, -1);
+                }
+            } else {
+                setcookie('remember', null, -1);
+            }
         }
         include 'views/frontend/modules/blog/login/login.php';
     }
@@ -85,7 +97,7 @@ class LogController
                             if ($user->getIs_active() == 1) {
                                 if (isset($_POST['remember'])) {
                                     $this->_userManager->rememberToken($pseudo);
-                                    setcookie('remember', $pseudo . '==' . $remember_token . sha1($pseudo . 'philippe'), time() + 60 * 60 * 24 * 7);
+                                    setcookie('remember', $pseudo . '==' . $rememberOK . sha1($pseudo . 'philippe'), time() + 60 * 60 * 24 * 7);
                                     $this->_session->launchSession($user);
                                 } else {
                                     $this->_session->launchSession($user);
@@ -152,13 +164,27 @@ class LogController
             if (isset($_SESSION['forgetToken']) AND isset($csrfForgetToken) AND !empty($_SESSION['forgetToken']) AND !empty($csrfForgetToken)) {
                 if ($_SESSION['forgetToken'] == $csrfForgetToken) {
                     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        $user = $this->_userManager->forgetPasswordRequest($email);
-                        if ($user === false) {
+                        $users = $this->_userManager->forgetPasswordRequest($email);
+                        if ($users === false) {
                             $_SESSION['flash']['danger'] = 'Une erreur est survenue !';
                             LogController::loginPage();
                         } else {
-                            $_SESSION['flash']['success'] = 'Vous allez recevoir un email pour réinitialiser votre mot de passe !';
-                            LogController::loginPage();
+                            $mail = new PHPMailer(true);                             
+                            try {
+                                $mail->setFrom('contact@philippetraon.com', 'Philippe Traon');
+                                $mail->addAddress($email, $pseudo);
+                                $mail->addReplyTo('contact@philippetraon.com', 'Information');
+                                $mail->isHTML(true);                                  
+                                $mail->Subject = 'Message';
+                                $mail->Body = '<b>Blog de Philippe Traon : </b>' . '<br />' . 'Afin de changer votre mot de passe, merci de cliquer sur ce lien : ' . '<br />' . '<a href="http://www.projet5.philippetraon.com/index.php?action=changePasswordPage&id='.$users->getId().'&token='.$users->getReset_token().'">'.'Lien de modification du mot de passe</a>';
+                                $mail->send();
+                                $_SESSION['flash']['success'] = 'Vous allez recevoir un email pour réinitialiser votre mot de passe !';
+                                LogController::loginPage();
+                            } 
+                            catch (Exception $e) {
+                            echo 'Un problème est survenu ! Le message n\'a pas pu être envoyé : ', $mail->ErrorInfo;
+                            }
+                            
                         } 
                     } else {
                         $_SESSION['flash']['danger'] = 'Cet email n\'est pas valide !';

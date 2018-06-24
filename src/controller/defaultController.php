@@ -36,4 +36,3 @@ class DefaultController
         include 'views/frontend/modules/home/index.php';
     }
 }
-
