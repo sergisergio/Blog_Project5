@@ -19,7 +19,6 @@ namespace Philippe\Blog\Src\Controller;
 use \Philippe\Blog\Src\Model\UserManager;
 use \Philippe\Blog\Src\Model\SecurityManager;
 use \Philippe\Blog\Src\Core\Session;
-use \Philippe\Blog\Src\Core\Cookie;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 /**

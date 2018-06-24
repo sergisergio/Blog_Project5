@@ -17,7 +17,6 @@
 namespace Philippe\Blog\Src\Controller;
 
 use \Philippe\Blog\Src\Model\UserManager;
-use \Philippe\Blog\Src\Entities\UserEntity;
 use \Philippe\Blog\Src\Core\Session;
 use \Philippe\Blog\Src\Controller\LogController;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -35,8 +34,6 @@ class RegisterController
 {
     private $_userManager;
     private $_logController;
-    private $_userEntity;
-    //private $data;
 
     /**
      * Function construct
@@ -45,7 +42,6 @@ class RegisterController
     {
         $this->_userManager = new UserManager();
         $this->_logController = new LogController();
-        //$this->_userEntity = new UserEntity($data);
     }
     /**
      * Function signupPage
