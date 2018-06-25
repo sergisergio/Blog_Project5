@@ -14,8 +14,7 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
-
-require_once "src/model/manager.php";
+use \Philippe\Blog\Src\Model\Manager;
 /**
  *  Class SecurityManager
  *

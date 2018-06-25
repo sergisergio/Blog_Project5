@@ -15,7 +15,7 @@
  */
 
 namespace Philippe\Blog\Src\Entities;
-require_once "src/entities/entity.php";
+use \Philippe\Blog\Src\Entities\Entity;
 /**
  *  Class UserEntity
  *

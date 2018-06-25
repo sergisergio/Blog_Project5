@@ -15,7 +15,7 @@
  */
 namespace Philippe\Blog\Src\Model;
 
-require_once "src/model/manager.php";
+use \Philippe\Blog\Src\Model\Manager;
 use \Philippe\Blog\Src\Entities\CommentEntity;
 use \Philippe\Blog\Src\Entities\UserEntity;
 /**

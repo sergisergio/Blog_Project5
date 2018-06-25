@@ -14,7 +14,7 @@
  * @link     http://projet5.philippetraon.com
  */
 namespace Philippe\Blog\Src\Model;
-
+use \Philippe\Blog\Src\Model\Manager;
 use \PDO;
 /**
  *  Class Manager
